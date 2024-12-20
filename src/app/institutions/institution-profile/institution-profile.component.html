@@ -1,0 +1,250 @@
+<div class="container">
+    <h1 class="mb-4">Institutional Profile</h1>
+
+    <div class="col-12 mb-3">
+        <p>Welcome {{institution.name}}, Institutional Nodal Officer, {{institution.name_district_health_officer}},
+            {{institution.address}}</p>
+    </div>
+
+    <!-- Edit Button -->
+    <button *ngIf="!isEditMode" (click)="toggleEditMode()" class="btn btn-primary mb-4">Edit</button>
+
+
+    <form #institutionForm="ngForm" (ngSubmit)="submitChanges(institutionForm)">
+
+        <div class="row mb-4">
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="institutionName">Name of Institution</label>
+                    <input type="text" class="form-control" id="institutionName" [(ngModel)]="institution.name"
+                        name="name" #name="ngModel" placeholder="" [disabled]="true" required />
+                    <div *ngIf="name.invalid && name.touched" class="text-danger">Name is required</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="mccode">Institute FAP Code</label>
+                    <input type="text" class="form-control" id="mccode" [(ngModel)]="institution.mccode" name="mccode"
+                        #mccode="ngModel" placeholder="" [disabled]="true" required />
+                    <div *ngIf="mccode.invalid && mccode.touched" class="text-danger">Institute FAP Code is required
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="yearStarting">Year of Starting</label>
+                    <input type="text" class="form-control" id="yearStarting" [(ngModel)]="institution.year_of_starting"
+                        name="year_of_starting" #yearOfStarting="ngModel" placeholder="" [disabled]="!isEditMode"
+                        required />
+                    <div *ngIf="yearOfStarting.invalid && yearOfStarting.touched" class="text-danger">Year of Starting
+                        is required</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="row mb-4">
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="address">Institute Address</label>
+                    <input type="text" class="form-control" id="address" [(ngModel)]="institution.address"
+                        name="address" #address="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="address.invalid && address.touched" class="text-danger">Address is required</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="website">Website</label>
+                    <input type="text" class="form-control" id="website" [(ngModel)]="institution.website"
+                        name="website" #website="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="website.invalid && website.touched" class="text-danger">website is required</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="mbbsAdmissions">No of MBBS Admissions per year</label>
+                    <input type="text" class="form-control" id="mbbsAdmissions" [(ngModel)]="institution.no_mbbs_adm_yr"
+                        name="no_mbbs_adm_yr" #mbbsAdmissions="ngModel" placeholder="" [disabled]="!isEditMode" required/>
+                    <div *ngIf="mbbsAdmissions.invalid && mbbsAdmissions.touched" class="text-danger">website is
+                        required</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Row -->
+        <div class="row mb-4">
+            <!-- City -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city" [(ngModel)]="institution.city" name="city"
+                        #city="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="city.invalid && city.touched" class="text-danger">City is required</div>
+                </div>
+            </div>
+
+            <!-- District -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="district">District</label>
+                    <input type="text" class="form-control" id="district" [(ngModel)]="institution.district_id"
+                        name="district" #district="ngModel" placeholder="" [disabled]="true" required />
+                    <div *ngIf="district.invalid && district.touched" class="text-danger">District is required</div>
+                </div>
+            </div>
+
+            <!-- Email ID -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="emailId">Email ID</label>
+                    <input type="email" class="form-control" id="emailId" [(ngModel)]="institution.email" name="emailId"
+                        #emailId="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="emailId.invalid && emailId.touched" class="text-danger">Email ID is required</div>
+                </div>
+            </div>
+        </div>
+        <!-- Additional Fields -->
+        <div class="row mb-4">
+            <!-- Name of RHTC -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="rhtc">Name of RHTC</label>
+                    <input type="text" class="form-control" id="rhtc" [(ngModel)]="institution.name_rhtc"
+                        name="name_rhtc" #rhtc="ngModel" placeholder="" [disabled]="!isEditMode" />
+                    <div *ngIf="rhtc.invalid && rhtc.touched" class="text-danger">RHTC name is required</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Principal/Dean Section -->
+        <div class="row mb-4">
+            <!-- Name of Principal/Dean -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="namePrincipal">Name of Principal/Dean</label>
+                    <input type="text" class="form-control" id="namePrincipal" [(ngModel)]="institution.name_principal"
+                        name="name_principal" #namePrincipal="ngModel" placeholder="" [disabled]="!isEditMode"
+                        required />
+                    <div *ngIf="namePrincipal.invalid && namePrincipal.touched" class="text-danger">Principal's name is
+                        required</div>
+                </div>
+            </div>
+
+            <!-- Mobile Number of Principal/Dean -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="mobilePrincipal">Mobile Number of Principal/Dean</label>
+                    <input type="text" class="form-control" id="mobilePrincipal"
+                        [(ngModel)]="institution.mobile_principal" name="mobile_principal" #mobilePrincipal="ngModel"
+                        placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="mobilePrincipal.invalid && mobilePrincipal.touched" class="text-danger">Mobile number is
+                        required</div>
+                </div>
+            </div>
+
+            <!-- Email of Principal/Dean -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="emailPrincipal">Email of Principal/Dean</label>
+                    <input type="email" class="form-control" id="emailPrincipal"
+                        [(ngModel)]="institution.email_principal" name="email_principal" #emailPrincipal="ngModel"
+                        placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="emailPrincipal.invalid && emailPrincipal.touched" class="text-danger">Valid email is
+                        required</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vice Principal Section -->
+        <div class="row mb-4">
+            <!-- Name of Vice Principal -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="nameVP">Name of Vice Principal</label>
+                    <input type="text" class="form-control" id="nameVP" [(ngModel)]="institution.name_vp" name="name_vp"
+                        #nameVP="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="nameVP.invalid && nameVP.touched" class="text-danger">Vice Principal's name is required
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Number of Vice Principal -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="mobileVP">Mobile Number of Vice Principal</label>
+                    <input type="text" class="form-control" id="mobileVP" [(ngModel)]="institution.mobile_vp"
+                        name="mobile_vp" #mobileVP="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="mobileVP.invalid && mobileVP.touched" class="text-danger">Mobile number is required
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email of Vice Principal -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="emailVP">Email of Vice Principal</label>
+                    <input type="email" class="form-control" id="emailVP" [(ngModel)]="institution.email_vp"
+                        name="email_vp" #emailVP="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="emailVP.invalid && emailVP.touched" class="text-danger">Valid email is required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <!-- Name of District Health Officer -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="nameDistrictHealthOfficer">Name of District Health Officer</label>
+                    <input type="text" class="form-control" id="nameDistrictHealthOfficer"
+                        [(ngModel)]="institution.name_district_health_officer" name="name_district_health_officer"
+                        #nameDistrictHealthOfficer="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="nameDistrictHealthOfficer.invalid && nameDistrictHealthOfficer.touched"
+                        class="text-danger">
+                        Name is required
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile of District Health Officer -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="mobileDistrictHealthOfficer">Mobile of District Health Officer</label>
+                    <input type="text" class="form-control" id="mobileDistrictHealthOfficer"
+                        [(ngModel)]="institution.mobile_district_health_officer" name="mobile_district_health_officer"
+                        #mobileDistrictHealthOfficer="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="mobileDistrictHealthOfficer.invalid && mobileDistrictHealthOfficer.touched"
+                        class="text-danger">
+                        Mobile number is required
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email of District Health Officer -->
+            <div class="col-12 col-md-4 mb-3">
+                <div class="form-group">
+                    <label for="emailDistrictHealthOfficer">Email of District Health Officer</label>
+                    <input type="email" class="form-control" id="emailDistrictHealthOfficer"
+                        [(ngModel)]="institution.email_district_health_officer" name="email_district_health_officer"
+                        #emailDistrictHealthOfficer="ngModel" placeholder="" [disabled]="!isEditMode" required />
+                    <div *ngIf="emailDistrictHealthOfficer.invalid && emailDistrictHealthOfficer.touched"
+                        class="text-danger">
+                        Valid email is required
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Section -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <button *ngIf="isEditMode" type="submit" class="btn btn-success">Submit</button>
+                <button *ngIf="isEditMode" type="button" class="btn btn-secondary"
+                    (click)="toggleEditMode()">Close</button>
+            </div>
+
+
+        </div>
+
+    </form>
+
+</div>

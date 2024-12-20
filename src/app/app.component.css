@@ -1,0 +1,21 @@
+/* app.component.css or global styles */
+.app-container {
+    display: flex;
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .app-container .content {
+    transition: margin-left 0.3s ease-in-out;
+    flex: 1;
+    margin-left: 250px; /* Default margin when sidebar is expanded */
+  }
+  
+  .app-container.sidebar-minimized .content {
+    margin-left: 50px; /* Adjust the content when the sidebar is collapsed */
+  }
+  
+
+  .login-register-form{
+    padding-top: 10%;
+}
+

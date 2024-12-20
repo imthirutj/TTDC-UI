@@ -1,0 +1,55 @@
+
+/* Sidebar Styling */
+.sidebar {
+    position: fixed;
+    top:136px;
+    left: 0;
+    height: calc(100vh - 136px);
+    width: 250px;
+    background-color: #343a40;
+    color: white;
+    transition: width 0.3s ease;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    z-index: 100; /* Ensure sidebar stays above other content */
+}
+
+
+
+    .sidebar.collapsed {
+        width: 60px;
+    }
+
+    .sidebar h3 {
+        padding: 15px;
+        font-size: 1.2rem;
+        text-align: center;
+        background-color: #495057;
+    }
+
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        transition: background 0.3s ease;
+    }
+
+        .sidebar a i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #007bff;
+        }
+
+    .sidebar.collapsed a {
+        justify-content: center;
+    }
+
+        .sidebar.collapsed a span {
+            display: none;
+        }
+
+      

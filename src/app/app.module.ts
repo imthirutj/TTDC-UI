@@ -1,0 +1,78 @@
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';  // Import this
+import { FormsModule } from '@angular/forms'; 
+import { MatDialogModule } from '@angular/material/dialog';
+
+import { AppComponent } from './app.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { HeaderComponent } from './header/header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackBarComponent } from './utils/widgets/snack-bar/snack-bar/snack-bar.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AuthInterceptor } from './auth.interceptor';
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+
+import { MatSelectModule } from '@angular/material/select';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { InstitutionProfileComponent } from './institutions/institution-profile/institution-profile.component';
+import { CommonDialogComponent } from './common/common-dialog/common-dialog.component';
+import { UnitsComponent } from './units/units.component';
+
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    SidebarComponent,
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent,
+    DashboardComponent,
+    SnackBarComponent,
+    InstitutionProfileComponent,
+    CommonDialogComponent,
+    UnitsComponent,
+  ],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    ReactiveFormsModule ,
+    FormsModule,
+    RouterModule,
+    FontAwesomeModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    NgSelectModule,
+    SelectDropDownModule
+    
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

@@ -1,0 +1,102 @@
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.dialog-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+}
+
+.dialog-header {
+  color:black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.close-icon {
+  cursor: pointer;
+  font-size: 24px;
+  color: #000;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btncancel {
+  background-color: #f0f0f0;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.btnsubmit {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.btncancel:hover,
+.btnsubmit:hover {
+  opacity: 0.8;
+}
+
+
+/* Dialog Body Styles */
+.dialog-body {
+  max-height: 77vh; /* Adjust the max-height to your needs */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
+}
+
+/* Custom scrollbar styles */
+.dialog-body::-webkit-scrollbar {
+  width: 8px; /* Adjust the width of the scrollbar */
+}
+
+.dialog-body::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 4px;
+}
+
+.dialog-body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* For mobile devices */
+@media (max-width: 767px) {
+  .dialog-body {
+    max-height: 60vh; /* Adjust max-height for smaller screens */
+  }
+}
+
+/* For tablet-sized screens */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .dialog-body {
+    max-height: 70vh; /* Adjust max-height for tablet-sized screens */
+  }
+}

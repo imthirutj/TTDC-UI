@@ -1,0 +1,26 @@
+/* Scoped styling using custom class */
+.profile-dialog .container {
+    font-family: Arial, sans-serif;
+  }
+  
+  .profile-dialog h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .profile-dialog .list-group-item {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .profile-dialog .list-group-item strong {
+    color: #000;
+  }
+  
+  .profile-dialog .img-fluid {
+    max-width: 120px;
+    height: 120px;
+    object-fit: cover;
+  }
+  

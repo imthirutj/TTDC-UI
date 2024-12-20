@@ -1,0 +1,86 @@
+<div class="header">
+  <img src="assets/images/logo/logo_1.jpg" alt="Logo" />
+  <div style="padding: 10px;" class="header-text">
+    <p class="left-align" style="font-size:25px">Community First Dashboard</p>
+    <p class="left-align">Family Adoption & Community Mentorship Program</p>
+    <p class="left-align">A Department of Medical Education & Research, Government of TamilNadu Initiative</p>
+  </div>
+  <img *ngIf="false" src="assets/images/logo/logo_2.jpg" alt="Logo" />
+
+  <!-- Profile icon and logout modal trigger -->
+  <div class="profile-container d-flex align-items-center" style="margin-left: auto;">
+    <i (click)="toggleProfileDialog()" class="fa fa-user-circle profile-icon" data-toggle="modal"
+      data-target="#profileModal" style="cursor: pointer; font-size: 40px;"></i>
+  </div>
+
+  <!-- Profile Dialog -->
+  <app-common-dialog 
+  [showDialog]="showProfileDialog" 
+  [dialogTitle]="'Profile'" 
+  [showClearButton]="false"
+  [showSubmitButton]="isEditMode" 
+  [showCloseIcon]="true" 
+  [showCustomButton]="dataService.getUser()" 
+  [customButtonName]="'Logout'" 
+  (closeDialog)="showProfileDialog = false" 
+  (submitDialog)="onSubmit()" 
+  (customButton)="logout()">
+
+    <!-- Profile Details Section -->
+    <div class="profile-dialog container py-3">
+      <div class="row">
+        <div class="col-md-4 d-flex justify-content-center">
+          <img src="assets/images/icons/profile.png" alt="Profile Picture" class="img-fluid rounded-circle" />
+        </div>
+        <div class="col-md-8">
+          <div class="list-group">
+            <!-- User ID: non-editable -->
+            <div class="list-group-item">
+              <strong>User ID:</strong> {{ userData.userId }}
+            </div>
+
+            <!-- Editable Name -->
+            <div class="list-group-item">
+              <strong>Name:</strong>
+              <span *ngIf="!isEditMode">{{ userData.name }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="userData.name" class="form-control" />
+            </div>
+
+            <!-- Editable User Type -->
+            <div class="list-group-item">
+              <strong>User Type:</strong>
+              <span *ngIf="!isEditMode">{{ userData.user_type }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="userData.user_type" class="form-control" />
+            </div>
+
+            <!-- Editable Email -->
+            <div class="list-group-item">
+              <strong>Email:</strong>
+              <span *ngIf="!isEditMode">{{ userData.email }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="userData.email" class="form-control" />
+            </div>
+
+            <!-- Editable Gender -->
+            <div class="list-group-item">
+              <strong>Gender:</strong>
+              <span *ngIf="!isEditMode">{{ userData.gender }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="userData.gender" class="form-control" />
+            </div>
+
+            <!-- Editable Mobile Number -->
+            <div class="list-group-item">
+              <strong>Phone:</strong>
+              <span *ngIf="!isEditMode">{{ userData.mobile_no }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="userData.mobile_no" class="form-control" />
+            </div>
+          </div>
+
+          <!-- Edit button to toggle edit mode -->
+          <button style="margin-top: 11px;" *ngIf="!isEditMode" class="btn btn-primary" (click)="isEditMode = true">Edit</button>
+        </div>
+      </div>
+    </div>
+
+   
+  </app-common-dialog>
+</div>
