@@ -22,54 +22,54 @@ const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { 
-    path: 'dashboard', 
+  {
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    data: {   data: { roles: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.INSTITUTION_ADMIN] }, },
-   },
-   { 
-    path: 'inst_profile/:institution_id', 
+    data: { data: { roles: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.INSTITUTION_ADMIN] }, },
+  },
+  {
+    path: 'inst_profile/:institution_id',
     component: InstitutionProfileComponent,
     canActivate: [AuthGuard],
-    data: {   data: { roles: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.INSTITUTION_ADMIN] }, },
-   },
+    data: { data: { roles: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.INSTITUTION_ADMIN] }, },
+  },
 
-   { 
-    path: 'units', 
+  {
+    path: 'units',
     component: UnitsComponent,
     canActivate: [AuthGuard],
-    data: {   data: { roles: ['ALL'] }, },
-   },
+    data: { data: { roles: ['ALL'] }, },
+  },
 
-   { 
-    path: 'savestate', 
+  {
+    path: 'savestate',
     component: StateComponent,
-   },
-   {
-    path:'state',
+  },
+  {
+    path: 'state',
     component: ListComponent
-   },
-   {
-    path:'city',
+  },
+  {
+    path: 'city',
     component: CityComponent
-   },
-   {
-    path:'category',
+  },
+  {
+    path: 'category',
     component: CategoryComponent
-   },
-   {
-    path:'department',
+  },
+  {
+    path: 'department',
     component: DepartmentComponent
-   },
-   {
-    path:'company',
+  },
+  {
+    path: 'company',
     component: CompanyComponent
-   },
-   {
-    path:'designation',
+  },
+  {
+    path: 'designation',
     component: DesignationComponent
-   },
+  },
 
 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
