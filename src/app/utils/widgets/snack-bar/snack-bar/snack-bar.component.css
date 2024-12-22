@@ -1,0 +1,37 @@
+
+
+  
+ /* snack-bar.component.scss */
+::ng-deep .mdc-snackbar__surface {
+    background-color: rgb(8, 184, 253) !important;
+    max-height: 50px;
+    border: 1px solid #EDEFEF;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  
+  ::ng-deep .mat-mdc-snack-bar-container {
+    top: 80% !important;            /* Align to the top */
+    transform: translateX(0%);  /* Center it */
+    position: fixed !important;   /* Fix the position */
+  }
+  
+  .snack-bar-content {
+    display: flex;
+    align-items: center;               
+  }
+  
+  .snack-bar-content svg {
+    margin-right: 5%; /* Adds space between the icon and the text */
+  }
+  
+  .snack-bar-message {
+    flex: 1;                         
+    color: #ffffff;   
+    font-size: 15px;        
+    font-weight: 500;       
+    margin-right: 16px;              
+  }
+  
+  

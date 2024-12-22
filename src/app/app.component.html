@@ -1,0 +1,26 @@
+<!-- app.component.html -->
+<div class="spinner-container" *ngIf="(loadingService.isLoading | async) === true">
+
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<section *ngIf="isCurrentPage('/login') || isCurrentPage('/register')">
+  <!-- <app-header></app-header> -->
+  <section style="position: relative; top:160px">
+    <app-login *ngIf="isCurrentPage('/login')"></app-login>
+    <app-register *ngIf="isCurrentPage('/register')"></app-register>
+  </section>
+</section>
+
+<div *ngIf="!isCurrentPage('/login') && !isCurrentPage('/register')" class="app-container" [ngClass]="{'sidebar-minimized': isSidebarMinimized}">
+  <!-- Conditionally show sidebar and header based on route -->
+  <app-sidebar (sidebarToggled)="onSidebarToggled($event)"></app-sidebar>
+  <div class="content">
+    <!-- <app-header></app-header> -->
+
+    <!-- Main content area -->
+    <div class="my-body">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

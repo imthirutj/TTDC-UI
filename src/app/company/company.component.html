@@ -1,0 +1,22 @@
+<div class="company-list-container">
+    <h3>Company List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Company ID</th>
+          <th>Company FName</th>
+          <th>Company SName</th>        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of Company; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ company.companyId  }}</td>
+            <td>{{ company.companyFName }}</td>
+            <td>{{ company.companySName }}</td>
+          </tr>          
+      </tbody>
+    </table>
+  </div>
+  

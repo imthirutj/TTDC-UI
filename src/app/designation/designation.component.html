@@ -1,0 +1,20 @@
+<div class="designation-list-container">
+    <h3>designation List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Designation ID</th>
+          <th>Designation Name</th>          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let designation of Designation; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ designation.designationId }}</td>
+          <td>{{ designation.designationName }}</td>          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

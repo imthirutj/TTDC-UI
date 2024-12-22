@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="">
+        <div class="card shadow">
+          <div class="card-header bg-red text-white text-center">
+            <h4>Login</h4>
+          </div>
+          <div class="card-body">
+            <!-- Login Form -->
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+              <!-- <div class="mb-3">
+                <label for="userType" class="form-label">Select User Type</label>
+                <mat-select formControlName="userType" id="userType" class="form-control">
+                  <mat-option value="" disabled>Select User Type</mat-option>
+                  <mat-option *ngFor="let type of userTypes" [value]="type.key">
+                    {{ type.value }}
+                  </mat-option>
+                </mat-select>
+              </div> -->
+              
+
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" class="form-control" formControlName="username" placeholder="Enter username" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" formControlName="password" placeholder="Enter password" required>
+              </div>
+              
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+              </div>
+            </form>
+
+            <!-- <div class="text-center mt-3">
+              <button class="btn btn-link" (click)="navigateToRegister()">Register</button>
+            </div> -->
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

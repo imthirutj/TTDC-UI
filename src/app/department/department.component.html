@@ -1,0 +1,22 @@
+<div class="Department-list-container">
+    <h3>Department List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Department ID</th>
+          <th>Department FName</th>
+          <th>Department SName</th>        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let department of Department; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ department.departmentId  }}</td>
+            <td>{{ department.departmentFName }}</td>
+            <td>{{ department.departmentSName }}</td>
+          </tr>          
+      </tbody>
+    </table>
+  </div>
+  

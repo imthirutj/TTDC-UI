@@ -1,0 +1,25 @@
+<div *ngIf="showDialog" class="dialog hidden">
+  <div class="dialog-overlay" (click)="onClose()"></div>
+  <div class="dialog-content">
+    <form>
+      <div class="dialog-header">
+        <p style="font-size: x-large;" mat-dialog-title>{{ dialogTitle }}</p>
+        <span *ngIf="showCloseIcon" class="close-icon" (click)="onClose()">&#10006;</span>
+      </div>
+      
+      <div   mat-dialog-content class="dialog-body overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
+        <ng-content></ng-content> <!-- Content slot -->
+      </div>
+
+      <div class="dialog-footer">
+        <button *ngIf="showClearButton" class="btn btn-secondary" (click)="onClose()">Clear</button>
+        <button *ngIf="showSubmitButton" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+        
+        <!-- Custom button -->
+        <button *ngIf="showCustomButton" class="btn btn-danger" (click)="onCustomButtonClick()">
+          {{ customButtonName }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

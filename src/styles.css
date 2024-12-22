@@ -1,0 +1,153 @@
+@import '~font-awesome/css/font-awesome.css';
+
+html, body { height: 100%; }
+body { 
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+    scrollbar-width: thin; /* Thin scrollbar for Firefox */
+    scrollbar-color: #aaa #f0f0f0; /* Thumb and track colors for Firefox */
+ }
+
+ 
+::-webkit-scrollbar {
+    width: 1px;
+  height: 8px;
+  background-color: #aaa;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #007bff; /* Scrollbar thumb color */
+    border-radius: 3px; /* Rounded edges */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f0f0f0; /* Scrollbar track color */
+}
+
+
+.spinner-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+/* Main Content Styling */
+.content {
+    margin-left: 250px;
+    padding-top: 80px; /* To avoid overlap with the header */
+    height: 100vh;
+    overflow-y: auto; /* Enable vertical scrolling */
+    transition: margin-left 0.3s ease;
+}
+
+/*When the sidebar (.sidebar) has the collapsed class, the following rule will be applied to the .content sibling:*/
+.sidebar.collapsed ~ .content {
+    margin-left: 60px;
+}
+
+/* Header Styling */
+.header {
+    max-height: 136px;
+    min-height: 136px; /* Ensure the header doesn't shrink below this height */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #b22222;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ensure content that exceeds the max-height is hidden */
+}
+
+
+
+.dashboard-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+    .dashboard-card i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+.left-align {
+    text-align: left;
+    margin-bottom: 10px; /* Add spacing between elements if needed */
+}
+
+.my-body {
+    padding: 27px;
+    position: relative;
+    /* top: -10px; */
+    top: 60px;
+}
+
+.btn-primary {
+    background-color: #b22222;
+    border-color: #b22222;
+}
+
+
+.bg-red {
+    background-color: #b22222 !important;
+}
+
+
+/* Hide the header-text on mobile screens */
+@media (max-width: 768px) {
+    .header-text {
+        display: none; /* Hide the header text on screens smaller than 768px */
+    }
+
+    .sidebar {
+        width: 100% !important; /* Hide the header text on screens smaller than 768px */
+    }
+
+    .sidebar.collapsed {
+        width: 60px!important;
+    }
+
+    .content {
+        margin-left: 60px;
+    }
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Stack label on top of the input */
+    margin-bottom: 20px; /* Add spacing between form groups */
+}
+
+.form-group label {
+    font-weight: bold; /* Highlight the label */
+    margin-bottom: 5px; /* Add spacing below the label */
+}
+
+.form-group input {
+    padding: 10px; /* Provide padding inside the input */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Add rounded corners */
+    font-size: 14px; /* Standardize font size */
+}

@@ -1,0 +1,19 @@
+<div class="state-list-container">
+  <h3>state List</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>state ID</th>
+        <th>state Name</th>                
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let state of states; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ state.stateId  }}</td>
+          <td>{{ state.stateName }}</td>        
+        </tr>          
+    </tbody>
+  </table>
+</div>

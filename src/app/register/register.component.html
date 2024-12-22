@@ -1,0 +1,172 @@
+
+
+<div class="container">
+  <div class="row justify-content-center">
+      <div class="">
+          <div class="card shadow">
+              <div class="card-header bg-red text-white text-center">
+                  <h4>Register</h4>
+              </div>
+              <div class="card-body">
+                  <!-- Login Form -->
+                  <form [formGroup]="registerForm" (ngSubmit)="register()" >
+                    <section>
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="userType" class="form-label">User Type</label>
+                            <select id="userType" class="form-select" formControlName="userType" (change)="onUserTypeChange()">
+                              <option value="" disabled>Select User Type</option>
+                              <option *ngFor="let type of userTypes" [value]="type">{{ type }}</option>
+                            </select>
+                          </div>
+                        </div>
+                  
+                        <div class="col-12 col-md-6" *ngIf="registerForm.controls['userType'].value === 'INSTITUTION_ADMIN'">
+                          <div class="mb-3">
+                            <label for="medicalColleges" class="form-label">Medical College</label>
+                            <ngx-select-dropdown 
+                              formControlName="medicalCollege"
+                              [options]="medicalColleges"
+                              [multiple]="false"
+                              (change)="selectionChanged($event)"
+                              [config]="dropDownConfigService.getDefaultConfig()">
+                            </ngx-select-dropdown>
+                          </div>
+                        </div>
+                        
+                        
+                        <!-- IFPU Data Field -->
+                        <div class="col-12 col-md-6" *ngIf="registerForm.controls['userType'].value === 'IFPU'">
+                          <div class="mb-3">
+                            <label for="ifpu" class="form-label">IFPU Data</label>
+                            <ngx-select-dropdown
+                              formControlName="ifpuData"
+                              [options]="ifpuData"
+                              [multiple]="false"
+                              (change)="selectionChanged($event)"
+                              [config]="dropDownConfigService.getDefaultConfig()">
+                            </ngx-select-dropdown>
+                          </div>
+                        </div>
+
+                        <!-- FSU Data Field -->
+                        <div class="col-12 col-md-6" *ngIf="registerForm.controls['userType'].value === 'FSU'">
+                          <div class="mb-3">
+                            <label for="fsu" class="form-label">FSU Data</label>
+                            <ngx-select-dropdown
+                              formControlName="fsuData"
+                              [options]="fsuData"
+                              [multiple]="false"
+                              (change)="selectionChanged($event)"
+                              [config]="dropDownConfigService.getDefaultConfig()">
+                            </ngx-select-dropdown>
+                          </div>
+                        </div>
+
+                        <!-- SFU Data Field -->
+                        <div class="col-12 col-md-6" *ngIf="registerForm.controls['userType'].value === 'SFU'">
+                          <div class="mb-3">
+                            <label for="sfu" class="form-label">SFU Data</label>
+                            <ngx-select-dropdown
+                              formControlName="sfuData"
+                              [options]="sfuData"
+                              [multiple]="false"
+                              (change)="selectionChanged($event)"
+                              [config]="dropDownConfigService.getDefaultConfig()">
+                            </ngx-select-dropdown>
+                          </div>
+                        </div>
+
+
+                      </div>
+                  
+                      <!-- Rest of the fields (Name, Username, Mobile, Email, etc.) -->
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="reg-username" class="form-label">Username</label>
+                            <input type="text" id="reg-username" class="form-control" formControlName="username" placeholder="Enter username" required>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="reg-name" class="form-label">Name</label>
+                            <input type="text" id="reg-name" class="form-control" formControlName="name" placeholder="Enter name" required>
+                          </div>
+                        </div>
+                      </div>
+                  
+                      <!-- Mobile and Email Fields in 2x2 -->
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="reg-mobile" class="form-label">Mobile</label>
+                            <input type="tel" id="reg-mobile" class="form-control" formControlName="mobile" placeholder="Enter mobile number" required>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="reg-email" class="form-label">Email</label>
+                            <input type="email" id="reg-email" class="form-control" formControlName="email" placeholder="Enter email" required>
+                          </div>
+                        </div>
+                      </div>
+                  
+                      <!-- Password Field in 2x2 -->
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="reg-password" class="form-label">Password</label>
+                            <input type="password" id="reg-password" class="form-control" formControlName="password" placeholder="Enter password" required>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="reg-password" class="form-label">Confirm Password</label>
+                            <input type="password" id="reg-conf-password" class="form-control" formControlName="confirmPassword" placeholder="Enter Confirm password" required>
+                          </div>
+                        </div>
+                      </div>
+                  
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="department" class="form-label">Department</label>
+                            <input type="text" id="department" class="form-control" formControlName="department" placeholder="Enter department" required>
+                          </div>
+                        </div>
+                  
+                        <div class="col-12 col-md-6">
+                          <div class="mb-3">
+                            <label for="genderType" class="form-label">Gender Type</label>
+                            <select id="genderType" class="form-select" formControlName="genderType" required>
+                              <option value="" disabled>Select Gender Type</option>
+                              <option *ngFor="let type of genderTypes" [value]="type">{{ type }}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                  
+                      <!-- File Upload -->
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="mb-3">
+                            <label for="photo" class="form-label">Photo</label>
+                            <input type="file" id="photo" class="form-control" (change)="onFileChange($event)" formControlName="photo">
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary bg-red" [disabled]="registerForm.invalid">Register</button>
+                    </div>
+                  </form>
+                  
+                    
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

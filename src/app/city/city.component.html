@@ -1,0 +1,24 @@
+<div class="City-list-container">
+    <h3>City List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>State ID</th>
+          <th>State Name</th>
+          <th>City ID</th>
+          <th>City Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let city of city; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ city.stateId }}</td>
+          <td>{{ city.stateName }}</td>
+          <td>{{ city.cityId }}</td>
+          <td>{{ city.cityName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

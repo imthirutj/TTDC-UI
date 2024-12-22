@@ -1,0 +1,23 @@
+<div class="Category-list-container">
+    <h3>Category List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Category ID</th>
+          <th>Category FName</th>
+          <th>Category SName</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let Category of Category; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ Category.categoryId }}</td>
+          <td>{{ Category.categoryFName }}</td>
+          <td>{{ Category.categorySName }}</td>          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
