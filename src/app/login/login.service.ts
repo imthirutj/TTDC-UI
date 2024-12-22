@@ -13,7 +13,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   validate(payload: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}user/Validate?skipSetAuth=true`, payload);
+    return this.http.post(`${this.apiUrl}Login/ValidateUser?skipSetAuth=true&LoginName=`+payload.LoginName+`&LoginPassword=`+payload.LoginPassword+``, payload);
   }
 
 }

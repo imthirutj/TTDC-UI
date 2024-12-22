@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit {
     // Initialize the form group with controls and validators
     this.loginForm = this.fb.group({
       // userType:['', Validators.required],
-      username: ['', Validators.required], // Add validation
-      password: ['', Validators.required],
-      rememberMe: [false]
+      LoginName: ['', Validators.required], // Add validation
+      LoginPassword: ['', Validators.required],
+      // rememberMe: [false]
     });
   }
 
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
   login(): void {
     if (this.loginForm.valid) {
       var payload = this.loginForm.value;
-
+console.log(payload)
       this.loginService.validate(payload).subscribe(
         (response: any) => {
           console.log(response);

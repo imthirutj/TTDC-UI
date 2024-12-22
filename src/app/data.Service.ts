@@ -105,7 +105,8 @@ export class DataService {
   }
 
   isLoggedIn(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}auth/validate_token`);
+    // return this.http.get<any>(`${this.apiUrl}auth/validate_token`);
+    return this.http.get<any>(`${this.apiUrl}User/getUserList?UserId=`+this.user.userId+``);
   }
 
 
