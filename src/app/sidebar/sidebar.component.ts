@@ -29,6 +29,7 @@ export class SidebarComponent {
       this.isCollapsed = true;
     }
   }
+  
 
   ngOnInit(): void {
     // this.dataService.getUserAccessLevel().then((ut) => {
