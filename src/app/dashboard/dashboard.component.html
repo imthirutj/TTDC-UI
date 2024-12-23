@@ -1,1 +1,56 @@
-<p>dashboard worksss!</p>
+<!-- <div
+  style="display: flex; flex-direction: column; align-items: center; justify-content: center; 
+         width: 300px; height: 200px; border: 1px solid #ccc; border-radius: 8px; 
+         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background-color: #fff; 
+         padding: 16px; margin: 16px; text-align: center;"
+>
+  <h3 style="margin: 0 0 8px; color: #333;">Dashboard Box</h3>
+  <p style="margin: 0; color: #555;">This is a sample dashboard box.</p>
+</div> -->
+
+<div class="container mt-4">
+    <!-- Filters -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <label for="yearSelect" class="form-label">Select Year</label>
+        <select
+          id="yearSelect"
+          class="form-select"
+          [(ngModel)]="selectedYear"
+        >
+          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="monthSelect" class="form-label">Select Month</label>
+        <select
+          id="monthSelect"
+          class="form-select"
+          [(ngModel)]="selectedMonth"
+        >
+          <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- Dashboard Boxes -->
+    <div class="row">
+      <div class="col-md-4 mb-4"  *ngFor="let box of arraybox_list" >
+        <div
+          class="card shadow-sm"
+          style="height: 100px; display: flex; justify-content: center; align-items: center; 
+                 text-align: center; background-color: #f8f9fa; border-radius: 8px; background-color: #fff;"
+        >
+          <div class="card-body">
+            <h5 class="card-title">{{box.count}}</h5>
+            <p class="card-text">{{box.label}}</p>
+            <!-- <p class="card-text">
+              Selected Year: {{ selectedYear }}<br>
+              Selected Month: {{ selectedMonth }}
+            </p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

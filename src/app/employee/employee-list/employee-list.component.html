@@ -1,0 +1,30 @@
+<div class="Department-list-container">
+    <h3>Employee List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Designation Name</th>  
+          <th>Company Name</th>      
+          <th>Department Name</th>      
+          <th>Category Name</th>      
+          <th>City</th>      
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let department of Department; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ department.employeeId  }}</td>
+            <td>{{ department.employeeName }}</td>
+            <td>{{ department.designationName }}</td>
+            <td>{{ department.companyFName }}</td>
+            <td>{{ department.departmentFName }}</td>
+            <td>{{ department.categoryFName }} </td>
+            <td>{{ department.cityName }} </td>
+          </tr>          
+      </tbody>
+    </table>
+  </div>
+  

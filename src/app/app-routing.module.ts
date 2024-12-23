@@ -15,6 +15,10 @@ import { CategoryComponent } from './category/category.component';
 import { DepartmentComponent } from './department/department.component';
 import { CompanyComponent } from './company/company.component';
 import { DesignationComponent } from './designation/designation.component';
+import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
+import { PayslipRecordsComponent } from './payslip/payslip-records/payslip-records.component';
+import { PaySlipComponent } from './payslip/pay-slip/pay-slip.component';
+import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component';
 
 
 
@@ -25,20 +29,20 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     data: { data: { roles: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.INSTITUTION_ADMIN] }, },
   },
   {
     path: 'inst_profile/:institution_id',
     component: InstitutionProfileComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     data: { data: { roles: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.INSTITUTION_ADMIN] }, },
   },
 
   {
     path: 'units',
     component: UnitsComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     data: { data: { roles: ['ALL'] }, },
   },
 
@@ -70,6 +74,23 @@ const routes: Routes = [
     path: 'designation',
     component: DesignationComponent
   },
+  {
+    path: 'employee',
+    component: EmployeeListComponent
+  },
+  {
+    path: 'payslip-records',
+    component: PayslipRecordsComponent
+  },
+  {
+    path: 'payslip-records-waiting',
+    component: PayslipNotComponent
+  },
+  {
+    path: 'payslip/:payId',
+    component: PaySlipComponent
+  },
+
 
 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

@@ -70,6 +70,26 @@ export class MasterDataService {
   getDesignation(): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/GetDesignationsList`);
   }
+
+
+  getEmployeeList(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Employee/GetEmployees`+query);
+  }
+  getpayslipList(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}payroll/getpaysliprecords`+query);
+  }
+  payslips(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}payroll/getpayslipbyEmpId`+query);
+  }
+  payslipdetails(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Payroll/ViewPayslip`+query);
+  }
+
+  generatePay(query:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}payroll/generatePayslip`,query);
+  }
+
+  
   
   
   

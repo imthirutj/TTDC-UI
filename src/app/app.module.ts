@@ -40,6 +40,10 @@ import { CategoryComponent } from './category/category.component';
 import { DepartmentComponent } from './department/department.component';
 import { CompanyComponent } from './company/company.component';
 import { DesignationComponent } from './designation/designation.component';
+import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
+import { PayslipRecordsComponent } from './payslip/payslip-records/payslip-records.component';
+import { PaySlipComponent } from './payslip/pay-slip/pay-slip.component';
+import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component';
 
 
 
@@ -62,6 +66,10 @@ import { DesignationComponent } from './designation/designation.component';
     DepartmentComponent,
     CompanyComponent,
     DesignationComponent,
+    EmployeeListComponent,
+    PayslipRecordsComponent,
+    PaySlipComponent,
+    PayslipNotComponent,
   ],
   imports: [
     HttpClientModule,

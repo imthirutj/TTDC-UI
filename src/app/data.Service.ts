@@ -40,9 +40,11 @@ export class DataService {
  
 
   public initializeUser(): void {
+    
     this.user = JSON.parse(
       localStorage.getItem('user') || sessionStorage.getItem('user') || '{}'
     );
+    console.log(this.user)
   }
 
   private getToken(): string | null {
@@ -67,14 +69,16 @@ export class DataService {
   ): Promise<void> {
     // Remove the token from the user object
     delete user.token;
-    if (rememberMe) {
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      // Store token separately
-    } else {
-      sessionStorage.setItem('user', JSON.stringify(user)); // Store user without token
-      sessionStorage.setItem('authToken', token); // Store token separately
-    }
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    // if (rememberMe) {
+    //   localStorage.setItem('authToken', token);
+    //   localStorage.setItem('user', JSON.stringify(user));
+    //   // Store token separately
+    // } else {
+    //   sessionStorage.setItem('user', JSON.stringify(user)); // Store user without token
+    //   sessionStorage.setItem('authToken', token); // Store token separately
+    // }
     this.initializeUser();
   }
 

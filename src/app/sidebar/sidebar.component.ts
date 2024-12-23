@@ -18,8 +18,7 @@ export class SidebarComponent {
   userType: UserType | null = null; 
 
 
-  allMenuItems = [
-  ];
+  allMenuItems = [ ];
 
   constructor(private dataService: DataService,
     private router: Router
@@ -32,6 +31,7 @@ export class SidebarComponent {
   
 
   ngOnInit(): void {
+    this.menuItems = this.getMenuItemsBasedOnUserType(this.userType);
     // this.dataService.getUserAccessLevel().then((ut) => {
     //   this.userType = ut; // Default to STATE_ADMIN if userType is empty
 
@@ -58,20 +58,69 @@ export class SidebarComponent {
         label: 'Dashboard', 
         icon: 'fa-tachometer', 
         route: '/dashboard', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.IFPU, UserType.FSU, UserType.SFU] 
-      },
-      { 
-        label: 'Institutional Profile', 
-        icon: 'fa-folder', 
-        route: `/inst_profile/${this.dataService.getInstitutionId()}`, 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.INSTITUTION_ADMIN] 
-      },
-      { 
-        label: 'Institutional Field Practice Units', 
-        icon: 'fa-folder', 
-        route: `/units`, 
         allowedUserTypes: [ 'ALL'] 
       },
+      // { 
+      //   label: 'Institutional Profile', 
+      //   icon: 'fa-folder', 
+      //   route: `/inst_profile/${this.dataService.getInstitutionId()}`, 
+      //   allowedUserTypes: [ 'ALL'] 
+      // },
+      { 
+        label: 'Employee List', 
+        icon: 'fa-folder', 
+        route: `/employee`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      { 
+        label: 'Pay Generated', 
+        icon: 'fa-folder', 
+        route: `/payslip-records`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      { 
+        label: 'Pay Not Generated', 
+        icon: 'fa-folder', 
+        route: `/payslip-records-waiting`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      { 
+        label: 'State List', 
+        icon: 'fa-folder', 
+        route: `/state`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      { 
+        label: 'city List', 
+        icon: 'fa-folder', 
+        route: `/city`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      { 
+        label: 'Category List', 
+        icon: 'fa-folder', 
+        route: `/category`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      { 
+        label: 'Department', 
+        icon: 'fa-folder', 
+        route: `/department`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      { 
+        label: 'Company List', 
+        icon: 'fa-folder', 
+        route: `/company`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      { 
+        label: 'Designation List', 
+        icon: 'fa-folder', 
+        route: `/designation`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
+      
     
     ];
 

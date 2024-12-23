@@ -2,7 +2,7 @@
 /* Sidebar Styling */
 .sidebar {
     position: fixed;
-    top:136px;
+    top:110px;
     left: 0;
     height: calc(100vh - 136px);
     width: 250px;

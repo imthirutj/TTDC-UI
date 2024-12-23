@@ -35,6 +35,12 @@ export class LoginComponent implements OnInit {
       LoginPassword: ['', Validators.required],
       // rememberMe: [false]
     });
+    let user = JSON.parse(
+      localStorage.getItem('user') || '{}'
+    );
+    if(user){
+      this.router.navigate(['/dashboard']); 
+    }
   }
 
 
