@@ -17,7 +17,7 @@ export class CompanyComponent implements OnInit {
   }
 
   getCompanyList(): void {
-    this.masterDataService.getCompany().subscribe(
+    this.masterDataService.getCompany({}).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {

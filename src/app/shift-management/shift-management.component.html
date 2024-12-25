@@ -10,55 +10,47 @@
                 <div class="col-md-4">
                     <label for="state">State</label>
                     <select id="state" class="form-control" [(ngModel)]="selectedStateId" (change)="onStateChange()">
+                        <option value="" disabled selected>Select State</option>
                         <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
                     </select>
                 </div>
-
+    
                 <!-- City Dropdown -->
                 <div class="col-md-4">
                     <label for="city">City</label>
                     <select id="city" class="form-control" [(ngModel)]="selectedCityId" (change)="onCityChange()">
-                        <option *ngFor="let city of cities" [value]="city.cityId"
-                            [hidden]="city.stateId !== selectedStateId">
-                            {{ city.cityName }}
-                        </option>
+                        <option value="" disabled selected>Select City</option>
+                        <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
                     </select>
                 </div>
-
+    
                 <!-- Company Dropdown -->
                 <div class="col-md-4">
                     <label for="company">Company</label>
-                    <select id="company" class="form-control" [(ngModel)]="selectedCompanyId"
-                        (change)="onCompanyChange()">
-                        <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyFName }}
-                        </option>
+                    <select id="company" class="form-control" [(ngModel)]="selectedCompanyId" (change)="onCompanyChange()">
+                        <option value="" disabled selected>Select Company</option>
+                        <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyFName }}</option>
                     </select>
                 </div>
             </div>
-
-            <!-- Month and Year Selection Section -->
+    
+            <!-- Date Selection Section -->
             <div class="row mb-4">
-                <!-- Month Dropdown -->
                 <div class="col-md-4">
-                    <label for="month">Month</label>
-                    <select id="month" class="form-control" [(ngModel)]="selectedMonth" (change)="onMonthYearChange()">
-                        <option *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" [value]="month">{{ month
-                            }}</option>
-                    </select>
+                    <label for="fromDate">From Date</label>
+                    <input id="fromDate" type="date" class="form-control" [(ngModel)]="fromDate" />
                 </div>
-
-                <!-- Year Dropdown -->
+    
                 <div class="col-md-4">
-                    <label for="year">Year</label>
-                    <select id="year" class="form-control" [(ngModel)]="selectedYear" (change)="onMonthYearChange()">
-                        <option *ngFor="let year of [2023, 2024]" [value]="year">{{ year }}</option>
-                    </select>
+                    <label for="toDate">To Date</label>
+                    <input id="toDate" type="date" class="form-control" [(ngModel)]="toDate" />
                 </div>
             </div>
-
+    
+            <button class="btn btn-primary" (click)="filterEmployees()">Filter</button>
         </div>
     </div>
-
+    
 
     <br>
 
@@ -79,7 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let employee of filteredEmployees">
+                                <tr *ngFor="let employee of employees">
                                     <td>{{ employee.employeeName }}</td>
                                     <td>{{ employee.shift }}</td>
                                     <td>

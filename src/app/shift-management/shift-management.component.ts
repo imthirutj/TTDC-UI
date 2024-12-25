@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { DropdownConfigService } from '../utils/shared/dropdown-config.service';
 import { MasterDataService } from '../services/master-data.service';
 import { DataService } from '../data.Service';
+import { ShiftManagementService } from './shift-management.service';
 
 @Component({
   selector: 'app-shift-management',
@@ -14,10 +15,7 @@ export class ShiftManagementComponent {
   // Mocked data from the APIs
   states:any[] = [];
 
-  cities:any[] = [
-    { cityId: 1, cityName: 'Chennai', stateId: 1, stateName: 'Tamilnadu' },
-    { cityId: 2, cityName: 'Coimbatore', stateId: 1, stateName: 'Tamilnadu' }
-  ];
+  cities:any[] = [];
 
   companies:any[] = [
     { companyId: 1, companyFName: 'Default' },
@@ -30,20 +28,20 @@ export class ShiftManagementComponent {
   ];
 
   // Selected values for dropdowns
-  selectedStateId: number | null = null;
-  selectedCityId: number | null = null;
-  selectedCompanyId: number | null = null;
-  selectedMonth: number | null = null;
-  selectedYear: number | null = null;
+  selectedStateId: any  = '';
+  selectedCityId: any  = '';
+  selectedCompanyId: any  = '';
 
-  // This will hold the filtered employee list
-  filteredEmployees:any[] = [];
+  fromDate: string | null = null;
+  toDate: string | null = null;
+
 
   constructor(
         private fb: FormBuilder,
         public dropDownConfigService: DropdownConfigService,
         private masterDataService: MasterDataService,
         private dataService: DataService, 
+        private shiftManagementService: ShiftManagementService
   ) { 
 
 
@@ -65,6 +63,7 @@ export class ShiftManagementComponent {
     });
   }
 
+  //#region  Fetch
   fetchCities() {
     var payload = {
       stateId:this.selectedStateId
@@ -76,33 +75,60 @@ export class ShiftManagementComponent {
     });
   }
 
+  fetchCompanies() {
+    var payload ={
+      cityId:this.selectedCityId
+    }
+    this.masterDataService.getCompany(payload).subscribe((response) => {
+      if(response.success){
+        this.companies = response.data;
+      }
+    });
+  }
+
+  filterEmployees() {
+    if (!this.fromDate || !this.toDate) {
+     this.dataService.showSnackBar('From Date and To Date are mandatory.');
+      return;
+    }
+    if (this.toDate < this.fromDate) {
+      this.dataService.showSnackBar('To Date cannot be earlier than From Date.');
+      return;
+    }
+
+    var payload = {
+      cityId: this.selectedCityId,
+      companyId: this.selectedCompanyId,
+      fromDate: this.fromDate,
+      toDate: this.toDate
+    };
+    console.log('Filter payload:', payload);
+    this.shiftManagementService.getEmployeeShifts(payload).subscribe((response) => {
+      if (response.success) {
+        this.employees = response.data;
+      }
+    });
+  }
+  //#endregion
+
 
   //#region OnChange Event
   onStateChange() {
-    this.selectedCityId = null; 
-    this.selectedCompanyId = null;
-    this.selectedMonth = null;
-    this.selectedYear = null;
+    this.selectedCityId  = '';
+    this.selectedCompanyId  = '';
     this.fetchCities();
 
   }
 
   onCityChange() {
-    this.selectedCompanyId = null;
-    this.selectedMonth = null;
-    this.selectedYear = null;
+    this.selectedCompanyId  = '';
+    this.fetchCompanies();
   }
 
   onCompanyChange() {
     
-    this.filteredEmployees = this.employees;
   }
 
-  onMonthYearChange() {
-    if (this.selectedCompanyId) {
-      this.filteredEmployees = this.employees;
-    }
-  }
 //#endregion
 
   editShift(employee: any) {

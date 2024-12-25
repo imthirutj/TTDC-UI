@@ -7,7 +7,8 @@ import { Injectable } from '@angular/core';
 export class DropdownConfigService {
   // Define the default configuration for your dropdowns
   private defaultConfig = {
-    displayKey: 'name',           // Field to display in the dropdown
+    displayKey: 'name',     
+    valueKey:'id',      // Field to display in the dropdown
     search: true,                 // Enable search functionality
     placeholder: 'Select an Option',
     limitTo: 0,                  // No limit on the number of options

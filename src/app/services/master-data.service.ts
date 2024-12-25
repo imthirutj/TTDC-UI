@@ -70,8 +70,9 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Master/GetDepartmentList`);
   }
 
-  getCompany(): Observable<any> {
-    return this.http.get(`${this.apiUrl}Master/GetCompanyList`);
+  getCompany(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Master/GetCompanyList?${queryParams}`);
   }
 
   getDesignation(): Observable<any> {

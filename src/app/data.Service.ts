@@ -6,6 +6,8 @@ import { environment } from '../environment/environment';
 import { Router } from '@angular/router';
 import { UserService } from './users/user.service';
 import { UserType } from './common/user-type.enum';
+import { SnackBarComponent } from './utils/widgets/snack-bar/snack-bar/snack-bar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +35,8 @@ export class DataService {
 
   constructor(private http: HttpClient,
     private router: Router,
-    private userService: UserService) {
+    private userService: UserService,
+    private snackBar: MatSnackBar) {
     this.initializeUser();
   }
 
@@ -152,6 +155,13 @@ export class DataService {
     }
 
     return queryParams;
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.openFromComponent(SnackBarComponent, {
+            data: { message: message },  
+            duration: 5000
+          });
   }
 
 }
