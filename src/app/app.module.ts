@@ -46,7 +46,7 @@ import { PaySlipComponent } from './payslip/pay-slip/pay-slip.component';
 import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component';
 import { ShiftManagementComponent } from './shift-management/shift-management.component';
 
-
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -91,7 +91,8 @@ import { ShiftManagementComponent } from './shift-management/shift-management.co
     MatProgressSpinnerModule,
     MatSelectModule,
     NgSelectModule,
-    SelectDropDownModule
+    SelectDropDownModule,
+    FullCalendarModule 
     
   ],
   providers: [
