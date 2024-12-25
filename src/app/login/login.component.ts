@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit {
     let user = JSON.parse(
       localStorage.getItem('user') || '{}'
     );
-    if(user){
-      this.router.navigate(['/dashboard']); 
+    if (user && Object.keys(user).length > 0) {
+      this.router.navigate(['/dashboard']);
     }
   }
   
