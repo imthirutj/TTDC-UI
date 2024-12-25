@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../users/user.service';
 import { environment } from 'src/environment/environment';
 import { Observable } from 'rxjs';
+import { DataService } from '../data.Service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class MasterDataService {
 
   constructor(private http: HttpClient,
     private router: Router,
-    private userService: UserService) {
+    private userService: UserService,
+    private  dataService:DataService
+    ) {
  
   }
 
@@ -51,9 +54,13 @@ export class MasterDataService {
   }
 
 
-  getcity():Observable<any>{
-    return this.http.get(`${this.apiUrl}Master/GetCityList`);
+  getCity(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Master/GetCityList?${queryParams}`;
+    return this.http.get(url);
   }
+  
+  
 
   getCategory():Observable<any>{
     return this.http.get(`${this.apiUrl}Master/GetCategoryList`);

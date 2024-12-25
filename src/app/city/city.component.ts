@@ -18,7 +18,7 @@ export class CityComponent implements OnInit {
   }
 
   getcityList(): void {
-    this.masterDataService.getcity().subscribe(
+    this.masterDataService.getCity(null).subscribe(
       (response: any) => {
         if (response.success) {
           this.city = response.data; 

@@ -120,7 +120,12 @@ export class SidebarComponent {
         route: `/designation`, 
         allowedUserTypes: [ 'ALL'] 
       },
-      
+      {
+        label: 'Shift Management',
+        icon: 'fa-folder',
+        route: '/shift-management',
+        allowedUserTypes: ['ALL'] 
+      }
     
     ];
 

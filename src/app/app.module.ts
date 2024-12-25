@@ -44,6 +44,7 @@ import { EmployeeListComponent } from './employee/employee-list/employee-list.co
 import { PayslipRecordsComponent } from './payslip/payslip-records/payslip-records.component';
 import { PaySlipComponent } from './payslip/pay-slip/pay-slip.component';
 import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component';
+import { ShiftManagementComponent } from './shift-management/shift-management.component';
 
 
 
@@ -70,6 +71,7 @@ import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component
     PayslipRecordsComponent,
     PaySlipComponent,
     PayslipNotComponent,
+    ShiftManagementComponent,
   ],
   imports: [
     HttpClientModule,
