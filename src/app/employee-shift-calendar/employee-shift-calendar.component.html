@@ -59,7 +59,7 @@
         </div>
     </div>
     
-    <!-- Employee Shifts Table -->
+<!-- Employee Shifts Table -->
 <div style="overflow-y: auto; max-height: 500px;">
     <table class="table table-bordered">
         <thead class="sticky-header">
@@ -74,17 +74,21 @@
         <tbody>
             <tr *ngFor="let employee of employees">
                 <td>{{ employee.name }}</td>
-                <td *ngFor="let date of getCurrentDates()">
-                    <select class="form-control shift-select" [(ngModel)]="employee.shifts[date]"
-                        (change)="onShiftChange(employee, date)">
-                        <option *ngFor="let shift of shiftTypes" [value]="shift">{{ shift }}</option>
+                <td *ngFor="let date of getCurrentDates()"
+                [ngStyle]="{ 'background-color': getShiftColor(employee.shifts[date]) }">
+                    <select class="form-control shift-select" 
+                            [(ngModel)]="employee.shifts[date]"
+                            (change)="onShiftChange(employee, date)"
+                            >
+                        <option *ngFor="let shift of shiftTypes" [value]="shift">
+                            {{ shift }}
+                        </option>
                     </select>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
-
 
 
 

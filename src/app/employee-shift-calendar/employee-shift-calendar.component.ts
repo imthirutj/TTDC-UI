@@ -56,6 +56,18 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   currentPage: number = 0;
   daysPerPage: number = 7;  // Show 7 days per page
 
+  // In your component
+shiftColors:any = {
+  "Weekly Off": "#F5A623", // Example color
+  "Fixed Shift": "#50E3C2",
+  "NoShift": "#D0021B",
+  "Holiday": "#4A90E2",
+  "General": "#B8E986",
+  "Sample Calendar": "#9013FE",
+  "Night Shift": "#F8E71C"
+};
+
+
   constructor(private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private masterDataService: MasterDataService,
@@ -68,6 +80,10 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     this.fetchStates();
     this.fetchShifts();
     this.generateDateRange();
+  }
+
+  getShiftColor(shift: string): string {
+    return this.shiftColors[shift] || '#FFFFFF'; // Default color if shift is not found
   }
 
   //#region  Fetch
