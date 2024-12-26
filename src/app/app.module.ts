@@ -47,6 +47,7 @@ import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component
 import { ShiftManagementComponent } from './shift-management/shift-management.component';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employee-shift-calendar.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     PaySlipComponent,
     PayslipNotComponent,
     ShiftManagementComponent,
+    EmployeeShiftCalendarComponent,
   ],
   imports: [
     HttpClientModule,

@@ -180,17 +180,25 @@ export class ShiftManagementComponent  {
       alert('Invalid date selected!');
       return;
     }
+    // Remove the time part to compare only the date (set to midnight)
+    const strippedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const strippedEndDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
   
-    // Check if an event already exists for the selected date (or time range)
+    // Check if an event already exists for the selected date (ignoring time)
     const existingEvent = this.calendarEvents.find(event => {
       const eventStart = new Date(event.start);
       const eventEnd = new Date(event.end);
   
-      return (startDate < eventEnd && startDate > eventStart);
+      // Remove time part for existing event
+      const strippedEventStart = new Date(eventStart.getFullYear(), eventStart.getMonth(), eventStart.getDate());
+      const strippedEventEnd = new Date(eventEnd.getFullYear(), eventEnd.getMonth(), eventEnd.getDate());
+  
+      // Check if the event dates overlap (ignoring time)
+      return (strippedStartDate <= strippedEventEnd && strippedEndDate >= strippedEventStart);
     });
   
     if (existingEvent) {
-      alert('An event already exists for this date or time!');
+      alert('An event already exists for this date!');
       return; // Prevent event creation if there is a conflict
     }
   

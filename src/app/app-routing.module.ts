@@ -20,6 +20,7 @@ import { PayslipRecordsComponent } from './payslip/payslip-records/payslip-recor
 import { PaySlipComponent } from './payslip/pay-slip/pay-slip.component';
 import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component';
 import { ShiftManagementComponent } from './shift-management/shift-management.component';
+import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employee-shift-calendar.component';
 
 
 
@@ -95,7 +96,7 @@ const routes: Routes = [
 
   {
     path: 'shift-management',
-    component: ShiftManagementComponent
+    component: EmployeeShiftCalendarComponent
 
   },
 

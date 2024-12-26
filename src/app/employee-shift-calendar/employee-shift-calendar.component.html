@@ -1,0 +1,42 @@
+<div class="container">
+    <h2 class="mt-4">Employee Shift Calendar</h2>
+  
+    <!-- Month and Year Selector -->
+    <div class="row mb-3">
+      <div class="col d-flex justify-content-between">
+        <!-- Month Selector -->
+        <select [(ngModel)]="selectedMonth" (change)="onMonthYearChange()" class="form-control w-25">
+          <option *ngFor="let month of months" [value]="month.index">{{ month.name }}</option>
+        </select>
+  
+        <!-- Year Selector -->
+        <select [(ngModel)]="selectedYear" (change)="onMonthYearChange()" class="form-control w-25">
+          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- Employee Shifts Table -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th *ngFor="let date of dateRange">
+            <!-- Show date as MM-DD -->
+            {{ date | date: 'MMM dd' }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+          <td>{{ employee.name }}</td>
+          <td *ngFor="let date of dateRange">
+            <select class="form-control shift-select" [(ngModel)]="employee.shifts[date]" (change)="onShiftChange(employee, date)">
+              <option *ngFor="let shift of shiftTypes" [value]="shift">{{ shift }}</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
