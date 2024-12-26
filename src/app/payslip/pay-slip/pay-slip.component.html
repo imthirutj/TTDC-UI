@@ -37,26 +37,28 @@
             <th class="text-center">{{payobj.employeeName}}</th>
             <td>Total Days</td>
             <th class="text-center">{{payobj.totalDays}}</th>
-            <td>LOP</td>
-            <td class="text-center">{{payobj.lopDays}}</td>            
+            <td>Absent Days</td>
+            <th class="text-center">{{payobj.absentDays}}</th>            
           </tr>          
           <tr>
             <td>Level</td>
             <th class="text-center">4</th>
             <td>Designation</td>
             <th class="text-center">{{payobj.designationName}}</th>
-            <td>Prev Closing Bal</td>
-            <th class="text-center">12</th>
-            <td rowspan="2">Date of Joining</td>
-            <th rowspan="2" class="text-center">{{payobj.doj}}</th>            
+            <td>Present Days</td>
+            <th class="text-center">0</th>
+            <td>LOP</td>
+            <th class="text-center">{{payobj.lopDays}}</th>            
           </tr>
           <tr>
             <td>PF No</td>
-            <th class="text-center">8384938</th>
+            <th class="text-center">{{payobj.pfNumber}}</th>
             <td>ESI No</td>
             <th class="text-center">-</th>
-            <td>CL Closing Bal</td>
-            <th class="text-center">0</th>           
+            <td>OD</td>
+            <th class="text-center">{{payobj.odDays}}</th>      
+            <td >Date of Joining</td>
+            <th  class="text-center">{{payobj.doj}}</th>          
           </tr>
         </tbody>
     </table>
@@ -73,59 +75,30 @@
         <tbody>
           <tr>
             <td>Basic Salary</td>
-            <td class="text-end">{{payobj.basic}}</td>
-            <td class="text-end">{{payobj.basic}}</td>
+            <td class="text-end">{{payobj.basicRate}}</td>
+            <td class="text-end">{{payobj.basicRate}}</td>
           </tr>
           <tr>
-            <td>HRA</td>
-            <td class="text-end">{{payobj.hra}}</td>
-            <td class="text-end">{{payobj.hra}}</td>
+            <td>DA</td>
+            <td class="text-end">{{payobj.da}}</td>
+            <td class="text-end">{{payobj.da}}</td>
           </tr>
           <tr>
-            <td>Travel & Conveyance</td>
-            <td class="text-end">{{payobj.lopDays}}</td>
-            <td class="text-end">{{payobj.lopDays}}</td>
+            <td>Special Wages</td>
+            <td class="text-end">{{payobj.specialWages}}</td>
+            <td class="text-end">{{payobj.specialWages}}</td>
           </tr>
           <tr>
-            <td>Medical Allowances</td>
-            <td class="text-end">{{payobj.medicalAllowance}}</td>
-            <td class="text-end">{{payobj.medicalAllowance}}</td>
-          </tr>
+            <td>EPF Employer Contribution</td>
+            <td class="text-end">{{payobj.epfEmployerContribution}}</td>
+            <td class="text-end">{{payobj.epfEmployerContribution}}</td>
+            </tr>
           <tr>
-            <td>LTA</td>
-            <td class="text-end">{{payobj.lta}}</td>
-            <td class="text-end">{{payobj.lta}}</td>
-          </tr>
-          <tr>
-            <td>Meal Allowances</td>
-            <td class="text-end">0</td>
-            <td class="text-end">0</td>
-          </tr>
-          <tr>
-            <td>Child Edn Allowance</td>
-            <td class="text-end">{{payobj.childEdnAllowance}}</td>
-            <td class="text-end">{{payobj.childEdnAllowance}}</td>
-          </tr>
-          <tr>
-            <td>Academic/Research</td>
-            <td class="text-end">0</td>
-            <td class="text-end">0</td>
-          </tr>
-          <tr>
-            <td>Other Allowances</td>
-            <td class="text-end">0</td>
-            <td class="text-end">0</td>
-          </tr>
-          <tr>
-            <td>Incentive</td>
-            <td class="text-end">0</td>
-            <td class="text-end">0</td>
-          </tr>
-          <tr>
-            <td>Reimbursements</td>
-            <td class="text-end">0</td>
-            <td class="text-end">0</td>
-          </tr>
+            <td>ESI Employer Contribution</td>
+            <td class="text-end">{{payobj.esiEmployerContribution}}</td>
+            <td class="text-end">{{payobj.esiEmployerContribution}}</td>
+        </tr>
+          
           
         </tbody>
         <tfoot>
@@ -148,52 +121,27 @@
         </thead>
         <tbody>
         <tr>
-            <td>PF</td>
-            <td class="text-end">{{payobj.pf}}</td>
-            </tr>
-            <tr>
-            <td>PF - Vol Cont</td>
-            <td class="text-end">0</td>
-            </tr>
-            <tr>
-            <td>ESI Contribution</td>
-            <td class="text-end">0</td>
-        </tr>
+            <td>EPF Employee Contribution</td>
+            <td class="text-end">{{payobj.epfEmployeeContribution}}</td>
+            </tr>          
+            
         <tr>
-            <td>Income Tax</td>
+            <td>ESI Employee Contribution</td>
+            <td class="text-end">{{payobj.esiEmployeeContribution}}</td>
+          </tr>
+          <tr>
+            <td>Service Charge</td>
+            <td class="text-end">{{payobj.serviceCharge}}</td>
+          </tr>
+          <tr>
+            <td>GST</td>
+            <td class="text-end">{{payobj.gst}}</td>
+          </tr>
+          <tr>
+            <td>TDS</td>
             <td class="text-end">0</td>
           </tr>
-          <tr>
-            <td>Professional Tax</td>
-            <td class="text-end">0</td>
-          </tr>
-          <tr>
-            <td>Salary In Advance</td>
-            <td class="text-end">0</td>
-          </tr>
-          <tr>
-            <td>Meal Pass ST Deduction</td>
-            <td class="text-end">0</td>
-          </tr>
-          <tr>
-            <td>Other Deduction</td>
-            <td class="text-end">0</td>
-          </tr>
-          <tr>
-            <td> - </td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td> - </td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td> - </td>
-            <td>-</td>
-          </tr>
-
          
-          
         </tbody>
         <tfoot>
           <tr>
@@ -209,20 +157,20 @@
         <tbody>
             <tr>
             <td style="width:30%;" rowspan="3"></td>
-            <td style="width:15%;">Bank</td>
-            <td style="width:15%;">0</td>
+            <td style="width:15%;">Bank name</td>
+            <td style="width:15%;">{{payobj.bankname}}</td>
             <td style="width:30%;" rowspan="3">
                 <label>Authorized Signature</label>
             </td>
         </tr>
         <tr>
-            <td>Amount</td>
-            <td></td>
-        </tr>
+          <td>Bank Account Number</td>
+          <td>{{payobj.bankaccountnumber}}</td>
+      </tr>
         <tr>
-            <td>Meal Pass</td>
-            <td>0</td>
-        </tr>
+            <td>Amount</td>
+            <td>{{payobj.netSalary}}</td>
+        </tr>       
         </tbody>
       </table>
     </div>

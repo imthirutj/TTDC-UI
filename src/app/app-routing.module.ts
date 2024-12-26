@@ -22,6 +22,8 @@ import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component
 import { ShiftManagementComponent } from './shift-management/shift-management.component';
 import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employee-shift-calendar.component';
 import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-work-details.component';
+import { OdslipComponent } from './odslip/odslip.component';
+
 
 
 
@@ -92,6 +94,10 @@ const routes: Routes = [
   {
     path: 'payslip/:payId',
     component: PaySlipComponent
+  },
+  {
+    path: 'Odslip',
+    component: OdslipComponent
   },
 
 

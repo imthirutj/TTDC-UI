@@ -59,6 +59,10 @@ export class MasterDataService {
     const url = `${this.apiUrl}Master/GetCityList?${queryParams}`;
     return this.http.get(url);
   }
+
+  getcitylist():Observable<any>{
+    return this.http.get(`${this.apiUrl}Master/GetCityList`);
+  }
   
   
 
@@ -75,8 +79,16 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Master/GetCompanyList?${queryParams}`);
   }
 
+  getCompanylist(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/GetCompanyList`);
+  }
+
   getDesignation(): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/GetDesignationsList`);
+  }
+
+  saveEmployee(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Employee/InsertUpdateEmployee`, query);
   }
 
 

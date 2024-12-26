@@ -49,6 +49,7 @@ import { ShiftManagementComponent } from './shift-management/shift-management.co
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employee-shift-calendar.component';
 import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-work-details.component';
+import { OdslipComponent } from './odslip/odslip.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-w
     ShiftManagementComponent,
     EmployeeShiftCalendarComponent,
     EmployeeWorkDetailsComponent,
+    OdslipComponent,
   ],
   imports: [
     HttpClientModule,

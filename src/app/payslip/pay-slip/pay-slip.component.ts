@@ -75,7 +75,7 @@ constructor(private masterDataService: MasterDataService,private route:Activated
             heightLeft -= pageHeight;
           }
     
-          pdf.save('document.pdf');
+          pdf.save('payslip.pdf');
         });
       }
     }
