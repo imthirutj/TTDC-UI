@@ -1,0 +1,165 @@
+<div class="container">
+    <h2>Employee Work Details</h2>
+  
+    <div class="card">
+      <div class="card-body">
+          <!-- State, City, and Company Selection Section -->
+          <div class="row mb-4">
+              <!-- State Dropdown -->
+              <div class="col-md-4">
+                  <label for="state">State</label>
+                  <select id="state" class="form-control" [(ngModel)]="selectedStateId" (change)="onStateChange()">
+                      <option value="" disabled selected>Select State</option>
+                      <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
+                  </select>
+              </div>
+
+              <!-- City Dropdown -->
+              <div class="col-md-4">
+                  <label for="city">City</label>
+                  <select id="city" class="form-control" [(ngModel)]="selectedCityId" (change)="onCityChange()">
+                      <option value="" disabled selected>Select City</option>
+                      <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
+                  </select>
+              </div>
+
+              <!-- Company Dropdown -->
+              <div class="col-md-4">
+                  <label for="company">Company</label>
+                  <select id="company" class="form-control" [(ngModel)]="selectedCompanyId"
+                      (change)="onCompanyChange()">
+                      <option value="" disabled selected>Select Company</option>
+                      <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyFName }}
+                      </option>
+                  </select>
+              </div>
+          </div>
+
+         
+      </div>
+  </div>
+  <br>
+  <div class="card">
+      <div class="card-body">
+          <!-- Month and Year Selector -->
+          <div class="row mb-3">
+              <div class="col d-flex justify-content-between">
+                  <!-- Month Selector -->
+                  <select [(ngModel)]="selectedMonth" (change)="onMonthYearChange()" class="form-control w-25">
+                      <option *ngFor="let month of months" [value]="month.index">{{ month.name }}</option>
+                  </select>
+
+                  <!-- Year Selector -->
+                  <select [(ngModel)]="selectedYear" (change)="onMonthYearChange()" class="form-control w-25">
+                      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                  </select>
+              </div>
+          </div>
+
+      </div>
+  </div>
+  
+  <button class="btn btn-primary" (click)="fetchEmployeeWorkDetails()">Search</button>
+    
+ <!-- Work Details Table -->
+ <div *ngIf="employeeWorkDetails && employeeWorkDetails.length">
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>Employee Name</th>
+              <th>Total Working Days</th>
+              <th>Worked Days</th>
+              <th>Non Worked Days</th>
+              <th>Loss of Pay Days</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let detail of employeeWorkDetails">
+              <td>{{ detail.employeeName }}</td>
+              <td>{{ detail.totalWorkingDays }}</td>
+              <td>{{ detail.workedDays }}</td>
+              <td>{{ detail.nonWorkedDays }}</td>
+              <td>{{ detail.lossOfPayDays }}</td>
+              <td>
+                  <button class="btn btn-primary" (click)="openUpdateModal(detail)">Update</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<app-common-dialog
+    [showCloseIcon]="true"
+    [title]="'Update Work Details'"
+    [showDialog]="isModalOpen"
+    [showSubmitButton]="true"
+    (submitDialog)="updateWorkDetails()"
+    (closeDialog)="closeModal()">
+    <form >
+        <div class="form-group">
+            <label for="totalWorkingDays">Employee</label>
+            <input 
+              type="text" 
+              id="employeeName" 
+              name="employeeName" 
+              [(ngModel)]="selectedWorkDetail.employeeName" 
+              class="form-control" 
+              [disabled]="true"
+            />
+          </div>
+
+      <div class="form-group">
+        <label for="totalWorkingDays">Total Working Days</label>
+        <input 
+          type="number" 
+          id="totalWorkingDays" 
+          name="totalWorkingDays" 
+          [(ngModel)]="selectedWorkDetail.totalWorkingDays" 
+          class="form-control" 
+        />
+      </div>
+      <div class="form-group">
+        <label for="workedDays">Worked Days</label>
+        <input 
+          type="number" 
+          id="workedDays" 
+          name="workedDays" 
+          [(ngModel)]="selectedWorkDetail.workedDays" 
+          class="form-control" 
+        />
+      </div>
+      <div class="form-group">
+        <label for="nonWorkedDays">Non Worked Days</label>
+        <input 
+          type="number" 
+          id="nonWorkedDays" 
+          name="nonWorkedDays" 
+          [(ngModel)]="selectedWorkDetail.nonWorkedDays" 
+          class="form-control" 
+        />
+      </div>
+      <div class="form-group">
+        <label for="lossOfPayDays">Loss of Pay Days</label>
+        <input 
+          type="number" 
+          id="lossOfPayDays" 
+          name="lossOfPayDays" 
+          [(ngModel)]="selectedWorkDetail.lossOfPayDays" 
+          class="form-control" 
+        />
+      </div>
+      <div class="form-group">
+        <label for="additionalDetails">Additional Details</label>
+        <textarea 
+          id="additionalDetails" 
+          name="additionalDetails" 
+          [(ngModel)]="selectedWorkDetail.additionalDetails" 
+          class="form-control">
+        </textarea>
+      </div>
+    </form>
+  </app-common-dialog>
+  
+  </div>
+  

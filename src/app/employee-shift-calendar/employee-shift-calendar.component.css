@@ -7,3 +7,19 @@
 .shift-select {
   width: 100%;
 }
+
+.sticky-header th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa; /* Optional: to give the header a background */
+  z-index: 1; /* Ensures the header is above the table body */
+}
+
+table {
+  width: 100%;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}

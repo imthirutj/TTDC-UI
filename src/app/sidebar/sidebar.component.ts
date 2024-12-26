@@ -125,6 +125,12 @@ export class SidebarComponent {
         icon: 'fa-folder',
         route: '/shift-management',
         allowedUserTypes: ['ALL'] 
+      },
+      {
+        label: 'Employee Report',
+        icon: 'fa-folder',
+        route: '/employee-report',
+        allowedUserTypes: ['ALL'] 
       }
     
     ];

@@ -21,6 +21,7 @@ import { PaySlipComponent } from './payslip/pay-slip/pay-slip.component';
 import { PayslipNotComponent } from './payslip/payslip-not/payslip-not.component';
 import { ShiftManagementComponent } from './shift-management/shift-management.component';
 import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employee-shift-calendar.component';
+import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-work-details.component';
 
 
 
@@ -98,6 +99,11 @@ const routes: Routes = [
     path: 'shift-management',
     component: EmployeeShiftCalendarComponent
 
+  },
+
+  {
+    path:'employee-report',
+    component:EmployeeWorkDetailsComponent
   },
 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

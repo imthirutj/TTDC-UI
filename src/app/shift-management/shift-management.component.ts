@@ -14,7 +14,7 @@ import { CalendarOptions, EventApi, EventClickArg, DateSelectArg } from '@fullca
   templateUrl: './shift-management.component.html',
   styleUrls: ['./shift-management.component.css']
 })
-export class ShiftManagementComponent  {
+export class ShiftManagementComponent {
   @ViewChild('calender') calendarComponent!: FullCalendarComponent;
 
   eventGuid = 0;
@@ -46,9 +46,10 @@ export class ShiftManagementComponent  {
   calendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     headerToolbar: {
-       left: 'prev,next today',
-       center: 'title',
-        right: 'dayGridMonth,listWeek' },
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,listWeek'
+    },
     initialView: 'dayGridMonth',
     initialEvents: this.calendarEvents,
     weekends: true,
@@ -136,17 +137,17 @@ export class ShiftManagementComponent  {
     // Convert selected start and end times to Date objects
     const selectedStart = new Date(selectInfo.startStr);
     const selectedEnd = new Date(selectInfo.endStr);
-  
+
     // Open the shift selection modal and store the selected date
     this.isShiftSelectionOpen = true;
     this.selectedDate = selectedStart.toDateString();  // Display the selected date in a user-friendly format
-    
+
     // Disable adding events automatically here (no event creation)
-  
+
     // Optionally, you could set the default shift in the dropdown if needed
   }
 
-  
+
 
   createEventId() {
     return String(this.eventGuid++);
@@ -161,21 +162,21 @@ export class ShiftManagementComponent  {
   handleEvents(events: EventApi[]) {
     this.cdr.detectChanges();
   }
- 
+
   addEventFromButton() {
     if (!this.selectedShift || !this.selectedDate) {
       alert('Please select both a shift and a date!');
       return;
     }
-  
+
     // Ensure the selectedDate is in the format 'YYYY-MM-DD' (without time zone shifting)
     const selectedDate = new Date(this.selectedDate);
     const formattedDate = `${selectedDate.getFullYear()}-${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}-${selectedDate.getDate().toString().padStart(2, '0')}`;
-  
+
     // Parse the selectedDate and check if it's a valid date
     const startDate = new Date(`${formattedDate}T09:00:00`);
     const endDate = new Date(`${formattedDate}T17:00:00`);
-    
+
     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
       alert('Invalid date selected!');
       return;
@@ -183,29 +184,29 @@ export class ShiftManagementComponent  {
     // Remove the time part to compare only the date (set to midnight)
     const strippedStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
     const strippedEndDate = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
-  
+
     // Check if an event already exists for the selected date (ignoring time)
     const existingEvent = this.calendarEvents.find(event => {
       const eventStart = new Date(event.start);
       const eventEnd = new Date(event.end);
-  
+
       // Remove time part for existing event
       const strippedEventStart = new Date(eventStart.getFullYear(), eventStart.getMonth(), eventStart.getDate());
       const strippedEventEnd = new Date(eventEnd.getFullYear(), eventEnd.getMonth(), eventEnd.getDate());
-  
+
       // Check if the event dates overlap (ignoring time)
       return (strippedStartDate <= strippedEventEnd && strippedEndDate >= strippedEventStart);
     });
-  
+
     if (existingEvent) {
       alert('An event already exists for this date!');
       return; // Prevent event creation if there is a conflict
     }
-  
+
     // Format the start and end time in ISO 8601 format
     const formattedStart = startDate.toISOString();
     const formattedEnd = endDate.toISOString();
-  
+
     const newEvent = {
       id: this.createEventId(),
       title: this.selectedShift,
@@ -213,28 +214,28 @@ export class ShiftManagementComponent  {
       end: formattedEnd,
       allDay: false,
     };
-  
+
     // Add the new event to the calendar's internal event list
     this.calendarEvents.push(newEvent);
-  
+
     if (this.calendarApi) {
       // Add the event to FullCalendar using the calendarApi
       this.calendarApi.addEvent(newEvent);
-  
+
       // After adding, we can call refetchEvents to update the calendar view
       this.calendarApi.refetchEvents(); // This will reload the events and display the new one
     }
-  
+
     this.isShiftSelectionOpen = false;
   }
-  
-  
-  
-    
+
+
+
+
   closeShiftSelection() {
     this.isShiftSelectionOpen = false;  // Close without adding event
   }
 
-  
+
 
 }
