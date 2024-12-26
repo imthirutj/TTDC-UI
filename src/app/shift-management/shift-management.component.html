@@ -70,27 +70,29 @@
       </div>
     </div>
   
-   <!-- FullCalendar Section for Shift Management -->
-<div *ngIf="isCalendarOpen">
-    <full-calendar *ngIf="isCalendarOpen" [options]='calendarOptions'>
-      <ng-template #eventContent let-arg>
-        <b>{{ arg.timeText }}</b>
-        <i>{{ arg.event.title }}</i>
-      </ng-template>
-    </full-calendar>
+
+    <div>
+      <h2>Shift Management</h2>
+      <full-calendar [options]="calendarOptions" #calender></full-calendar>
+    
+      <!-- Shift Selection Modal -->
+  <div *ngIf="isShiftSelectionOpen" class="shift-modal-overlay">
+    <div class="shift-modal">
+      <h3>Select Shift</h3>
+      <select [(ngModel)]="selectedShift">
+        <option value="" disabled>Select a shift</option>
+        <option value="Morning Shift">Morning Shift</option>
+        <option value="Afternoon Shift">Afternoon Shift</option>
+        <option value="Night Shift">Night Shift</option>
+      </select>
+      <button (click)="addEventFromButton()">Add Shift</button>
+      <button (click)="closeShiftSelection()">Cancel</button>
+    </div>
   </div>
   
-  <!-- Dropdown for Shift Selection -->
-  <div *ngIf="isCalendarOpen" class="shift-selection">
-    <label for="shift">Select Shift</label>
-    <select id="shift" [(ngModel)]="selectedShift">
-      <option value="Night Shift">Night Shift</option>
-      <option value="Noon Shift">Noon Shift</option>
-      <option value="Afternoon Shift">Afternoon Shift</option>
-    </select>
-    <button class="btn btn-primary" (click)="addEvent()">Add Event</button>
-  </div>
+    </div>
 
+    
   
   </div>
   

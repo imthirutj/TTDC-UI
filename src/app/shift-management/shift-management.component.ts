@@ -15,8 +15,8 @@ import { CalendarOptions, EventApi, EventClickArg, DateSelectArg } from '@fullca
   styleUrls: ['./shift-management.component.css']
 })
 export class ShiftManagementComponent  {
+  @ViewChild('calender') calendarComponent!: FullCalendarComponent;
 
- 
   eventGuid = 0;
   calendarEvents = [
     { title: 'Morning Shift', start: '2024-12-25T09:00:00', end: '2024-12-25T17:00:00' },
@@ -45,7 +45,10 @@ export class ShiftManagementComponent  {
 
   calendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
-    headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek' },
+    headerToolbar: {
+       left: 'prev,next today',
+       center: 'title',
+        right: 'dayGridMonth,listWeek' },
     initialView: 'dayGridMonth',
     initialEvents: this.calendarEvents,
     weekends: true,
@@ -56,6 +59,13 @@ export class ShiftManagementComponent  {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
+    displayEventTime: false,
+    // eventTimeFormat: { // like '14:30:00'
+    //   hour: '2-digit' as '2-digit' | 'numeric' | undefined,
+    //   minute: '2-digit' as '2-digit' | 'numeric' | undefined,
+    //   second: '2-digit' as '2-digit' | 'numeric' | undefined,
+    //   hour12: false
+    // }
   };
 
   isCalendarOpen = false;
@@ -71,6 +81,11 @@ export class ShiftManagementComponent  {
     this.fetchStates();
   }
 
+
+  ngAfterViewInit() {
+    // The calendar will be available after view initialization
+    this.calendarApi = this.calendarComponent.getApi();
+  }
 
   fetchStates() {
     this.masterDataService.getStates().subscribe((response) => {
@@ -118,21 +133,20 @@ export class ShiftManagementComponent  {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: this.createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      });
-    }
+    // Convert selected start and end times to Date objects
+    const selectedStart = new Date(selectInfo.startStr);
+    const selectedEnd = new Date(selectInfo.endStr);
+  
+    // Open the shift selection modal and store the selected date
+    this.isShiftSelectionOpen = true;
+    this.selectedDate = selectedStart.toDateString();  // Display the selected date in a user-friendly format
+    
+    // Disable adding events automatically here (no event creation)
+  
+    // Optionally, you could set the default shift in the dropdown if needed
   }
+
+  
 
   createEventId() {
     return String(this.eventGuid++);
@@ -147,31 +161,68 @@ export class ShiftManagementComponent  {
   handleEvents(events: EventApi[]) {
     this.cdr.detectChanges();
   }
-  addEvent() {
-    if (!this.selectedShift) {
-      alert('Please select a shift!');
+ 
+  addEventFromButton() {
+    if (!this.selectedShift || !this.selectedDate) {
+      alert('Please select both a shift and a date!');
       return;
     }
-
-    // Create the event with the selected shift and date
-    this.calendarEvents.push({
-      title: this.selectedShift,
-      start: this.selectedDate,
-      end: this.selectedDate
+  
+    // Ensure the selectedDate is in the format 'YYYY-MM-DD' (without time zone shifting)
+    const selectedDate = new Date(this.selectedDate);
+    const formattedDate = `${selectedDate.getFullYear()}-${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}-${selectedDate.getDate().toString().padStart(2, '0')}`;
+  
+    // Parse the selectedDate and check if it's a valid date
+    const startDate = new Date(`${formattedDate}T09:00:00`);
+    const endDate = new Date(`${formattedDate}T17:00:00`);
+    
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      alert('Invalid date selected!');
+      return;
+    }
+  
+    // Check if an event already exists for the selected date (or time range)
+    const existingEvent = this.calendarEvents.find(event => {
+      const eventStart = new Date(event.start);
+      const eventEnd = new Date(event.end);
+  
+      return (startDate < eventEnd && startDate > eventStart);
     });
-
-    // Add event to the calendar and reset state
-    this.calendarApi.addEvent({
+  
+    if (existingEvent) {
+      alert('An event already exists for this date or time!');
+      return; // Prevent event creation if there is a conflict
+    }
+  
+    // Format the start and end time in ISO 8601 format
+    const formattedStart = startDate.toISOString();
+    const formattedEnd = endDate.toISOString();
+  
+    const newEvent = {
       id: this.createEventId(),
       title: this.selectedShift,
-      start: this.selectedDate,
-      end: this.selectedDate,
-      allDay: true
-    });
-
-    this.isShiftSelectionOpen = false;  // Close the shift selection dropdown
+      start: formattedStart,
+      end: formattedEnd,
+      allDay: false,
+    };
+  
+    // Add the new event to the calendar's internal event list
+    this.calendarEvents.push(newEvent);
+  
+    if (this.calendarApi) {
+      // Add the event to FullCalendar using the calendarApi
+      this.calendarApi.addEvent(newEvent);
+  
+      // After adding, we can call refetchEvents to update the calendar view
+      this.calendarApi.refetchEvents(); // This will reload the events and display the new one
+    }
+  
+    this.isShiftSelectionOpen = false;
   }
-
+  
+  
+  
+    
   closeShiftSelection() {
     this.isShiftSelectionOpen = false;  // Close without adding event
   }
