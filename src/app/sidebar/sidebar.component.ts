@@ -131,6 +131,12 @@ export class SidebarComponent {
         icon: 'fa-folder',
         route: '/employee-report',
         allowedUserTypes: ['ALL'] 
+      },
+      {
+        label: 'OD Slip',
+        icon: 'fa-folder',
+        route: '/odslip',
+        allowedUserTypes: ['ALL'] 
       }
     
     ];
