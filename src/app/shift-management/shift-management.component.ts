@@ -14,15 +14,18 @@ import { CalendarOptions, EventApi, EventClickArg, DateSelectArg } from '@fullca
   templateUrl: './shift-management.component.html',
   styleUrls: ['./shift-management.component.css']
 })
-export class ShiftManagementComponent implements AfterViewInit {
+export class ShiftManagementComponent  {
 
-  @ViewChild(FullCalendarComponent, { static: false }) calendarComponent: FullCalendarComponent | undefined;
-
+ 
   eventGuid = 0;
   calendarEvents = [
     { title: 'Morning Shift', start: '2024-12-25T09:00:00', end: '2024-12-25T17:00:00' },
     { title: 'Afternoon Shift', start: '2024-12-26T12:00:00', end: '2024-12-26T20:00:00' }
   ];
+
+  selectedShift: string = '';
+  isShiftSelectionOpen = false;
+  selectedDate: string = '';
 
   calendarApi: any;
   states: any[] = [];
@@ -68,11 +71,6 @@ export class ShiftManagementComponent implements AfterViewInit {
     this.fetchStates();
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.calendarApi = this.calendarComponent?.getApi();
-    }, 0); 
-  }
 
   fetchStates() {
     this.masterDataService.getStates().subscribe((response) => {
@@ -149,4 +147,35 @@ export class ShiftManagementComponent implements AfterViewInit {
   handleEvents(events: EventApi[]) {
     this.cdr.detectChanges();
   }
+  addEvent() {
+    if (!this.selectedShift) {
+      alert('Please select a shift!');
+      return;
+    }
+
+    // Create the event with the selected shift and date
+    this.calendarEvents.push({
+      title: this.selectedShift,
+      start: this.selectedDate,
+      end: this.selectedDate
+    });
+
+    // Add event to the calendar and reset state
+    this.calendarApi.addEvent({
+      id: this.createEventId(),
+      title: this.selectedShift,
+      start: this.selectedDate,
+      end: this.selectedDate,
+      allDay: true
+    });
+
+    this.isShiftSelectionOpen = false;  // Close the shift selection dropdown
+  }
+
+  closeShiftSelection() {
+    this.isShiftSelectionOpen = false;  // Close without adding event
+  }
+
+  
+
 }

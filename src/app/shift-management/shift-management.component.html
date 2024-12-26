@@ -70,14 +70,27 @@
       </div>
     </div>
   
-    <!-- FullCalendar Section for Shift Management -->
-    <div *ngIf="isCalendarOpen">
-      <full-calendar [options]="calendarOptions">
-        <ng-template #eventContent let-arg>
-          <b>{{ arg.timeText }}</b>
-          <i>{{ arg.event.title }}</i>
-        </ng-template>
-      </full-calendar>
-    </div>
+   <!-- FullCalendar Section for Shift Management -->
+<div *ngIf="isCalendarOpen">
+    <full-calendar *ngIf="isCalendarOpen" [options]='calendarOptions'>
+      <ng-template #eventContent let-arg>
+        <b>{{ arg.timeText }}</b>
+        <i>{{ arg.event.title }}</i>
+      </ng-template>
+    </full-calendar>
+  </div>
+  
+  <!-- Dropdown for Shift Selection -->
+  <div *ngIf="isCalendarOpen" class="shift-selection">
+    <label for="shift">Select Shift</label>
+    <select id="shift" [(ngModel)]="selectedShift">
+      <option value="Night Shift">Night Shift</option>
+      <option value="Noon Shift">Noon Shift</option>
+      <option value="Afternoon Shift">Afternoon Shift</option>
+    </select>
+    <button class="btn btn-primary" (click)="addEvent()">Add Event</button>
+  </div>
+
+  
   </div>
   
