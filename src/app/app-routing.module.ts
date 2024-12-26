@@ -96,7 +96,7 @@ const routes: Routes = [
     component: PaySlipComponent
   },
   {
-    path: 'Odslip',
+    path: 'odslip',
     component: OdslipComponent
   },
 
