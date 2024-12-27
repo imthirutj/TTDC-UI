@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { MasterDataService } from '../services/master-data.service';
 import { DataService } from '../data.Service';
 import { EmployeeWorkDetailsService } from './employee-work-details.service';
+import { UserType } from '../common/user-type.enum';
 
 @Component({
   selector: 'app-employee-work-details',
@@ -12,6 +13,10 @@ import { EmployeeWorkDetailsService } from './employee-work-details.service';
 })
 export class EmployeeWorkDetailsComponent implements OnInit {
 
+  UserType = UserType;
+  userAccessLevel: any;
+  user:any;
+    
   states: any[] = [];
   cities: any[] = [];
   companies: any[] = [{ companyId: 1, companyFName: 'Default' }];
@@ -58,7 +63,21 @@ export class EmployeeWorkDetailsComponent implements OnInit {
     private masterDataService: MasterDataService,
     private dataSerivce :DataService,
     private employeeWorkDetailsService  :EmployeeWorkDetailsService
-) { }
+) { 
+  this.dataSerivce.getUser().subscribe((user) => {
+    this.user = user;
+    this.userAccessLevel = user.role;
+    console.log('User Access Level:', this.userAccessLevel);
+
+    if(this.userAccessLevel === UserType.MANAGER){
+      this.selectedCompanyId = this.user.companyId;
+      if(!this.selectedCompanyId){
+        this.dataSerivce.showSnackBar('Company not found');
+      }
+      this.fetchEmployeeWorkDetails();
+    }
+  });
+}
 
 
   ngOnInit(): void {
@@ -90,18 +109,12 @@ export class EmployeeWorkDetailsComponent implements OnInit {
     });
   }
 
-  filterEmployees() {
-    const payload = { cityId: this.selectedCityId, companyId: this.selectedCompanyId };
-    this.masterDataService.getEmployeeList(payload).subscribe((response) => {
-      if (response.success) this.employees = response.data;
-    });
-  }
 
   fetchEmployeeWorkDetails(): void {
     const payload = {
       stateId: this.selectedStateId,
       cityId: this.selectedCityId,
-      companyId: this.selectedCompanyId,
+      compId: this.selectedCompanyId,
       month: this.selectedMonth,
       year: this.selectedYear
     };
