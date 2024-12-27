@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { MasterDataService } from '../services/master-data.service';
 import { DataService } from '../data.Service';
 import { UserType } from '../common/user-type.enum';
+import { myMonths, myYears } from '../utils/helpers/variables';
 
 @Component({
   selector: 'app-vendor',
@@ -28,24 +29,9 @@ export class VendorComponent implements OnInit {
   selectedMonth: number = new Date().getMonth(); // Default to current month
   selectedYear: number = new Date().getFullYear(); // Default to current year
 
-  // List of months for the dropdown
-  months = [
-    { name: 'January', number: 1 },
-    { name: 'February', number: 2 },
-    { name: 'March', number: 3 },
-    { name: 'April', number: 4 },
-    { name: 'May', number: 5 },
-    { name: 'June', number: 6 },
-    { name: 'July', number: 7 },
-    { name: 'August', number: 8 },
-    { name: 'September', number: 9 },
-    { name: 'October', number: 10 },
-    { name: 'November', number: 11 },
-    { name: 'December', number: 12 }
-  ];
-
-  // List of years for the dropdown
-  years = [2024, 2025, 2026]; // Adjust the years as needed
+  months = myMonths;
+   years = myYears;
+ 
 
   companyVendors: any;
   constructor(
