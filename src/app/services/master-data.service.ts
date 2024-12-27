@@ -106,7 +106,7 @@ export class MasterDataService {
   }
 
   generatePay(query:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}payroll/generatePayslip`,query);
+    return this.http.post(`${this.apiUrl}payroll/generatePayslip`+query+``,{});
   }
 
   getShifts(): Observable<any> {

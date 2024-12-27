@@ -55,7 +55,8 @@ export class PayslipNotComponent {
     generate_payslip(obj_clicked:any)
     {
       let objec={EmpId:obj_clicked.employeeId}
-      this.masterDataService.generatePay(objec).subscribe(
+      let st="?EmpId="+obj_clicked.employeeId+""
+      this.masterDataService.generatePay(st).subscribe(
         (response: any) => {
           console.log('API Response:', response);
           if (response.success) {
