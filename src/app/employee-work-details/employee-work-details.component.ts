@@ -15,8 +15,8 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
   UserType = UserType;
   userAccessLevel: any;
-  user:any;
-    
+  user: any;
+
   states: any[] = [];
   cities: any[] = [];
   companies: any[] = [{ companyId: 1, companyFName: 'Default' }];
@@ -29,55 +29,57 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
   isModalOpen: boolean = false;
 
-  employees:any[] = []; // List of employees to select from
+  employees: any[] = []; // List of employees to select from
   employeeWorkDetails: any = null; // To store the fetched work details
 
-   // Selected month and year for the calendar
-   selectedMonth: number = new Date().getMonth(); // Default to current month
-   selectedYear: number = new Date().getFullYear(); // Default to current year
+  // Selected month and year for the calendar
+  selectedMonth: number = new Date().getMonth(); // Default to current month
+  selectedYear: number = new Date().getFullYear(); // Default to current year
 
-   selectedWorkDetail: any = {
+  selectedWorkDetail: any = {
   };
 
-     // List of months for the dropdown
+  // List of months for the dropdown
   months = [
-    { name: 'January', index: 0 },
-    { name: 'February', index: 1 },
-    { name: 'March', index: 2 },
-    { name: 'April', index: 3 },
-    { name: 'May', index: 4 },
-    { name: 'June', index: 5 },
-    { name: 'July', index: 6 },
-    { name: 'August', index: 7 },
-    { name: 'September', index: 8 },
-    { name: 'October', index: 9 },
-    { name: 'November', index: 10 },
-    { name: 'December', index: 11 }
+    { name: 'January', number: 1 },
+    { name: 'February', number: 2 },
+    { name: 'March', number: 3 },
+    { name: 'April', number: 4 },
+    { name: 'May', number: 5 },
+    { name: 'June', number: 6 },
+    { name: 'July', number: 7 },
+    { name: 'August', number: 8 },
+    { name: 'September', number: 9 },
+    { name: 'October', number: 10 },
+    { name: 'November', number: 11 },
+    { name: 'December', number: 12 }
   ];
 
   // List of years for the dropdown
   years = [2024, 2025, 2026]; // Adjust the years as needed
 
-  constructor(private cdr: ChangeDetectorRef,
+  constructor(
 
     private masterDataService: MasterDataService,
-    private dataSerivce :DataService,
-    private employeeWorkDetailsService  :EmployeeWorkDetailsService
-) { 
-  this.dataSerivce.getUser().subscribe((user) => {
-    this.user = user;
-    this.userAccessLevel = user.role;
-    console.log('User Access Level:', this.userAccessLevel);
+    private dataSerivce: DataService,
+    private employeeWorkDetailsService: EmployeeWorkDetailsService
+  ) {
+    this.selectedMonth = new Date().getMonth() + 1;
+    this.selectedYear = new Date().getFullYear();
+    this.dataSerivce.getUser().subscribe((user) => {
+      this.user = user;
+      this.userAccessLevel = user.role;
+      console.log('User Access Level:', this.userAccessLevel);
 
-    if(this.userAccessLevel === UserType.MANAGER){
-      this.selectedCompanyId = this.user.companyId;
-      if(!this.selectedCompanyId){
-        this.dataSerivce.showSnackBar('Company not found');
+      if (this.userAccessLevel === UserType.MANAGER) {
+        this.selectedCompanyId = this.user.companyId;
+        if (!this.selectedCompanyId) {
+          this.dataSerivce.showSnackBar('Company not found');
+        }
+        this.fetchEmployeeWorkDetails();
       }
-      this.fetchEmployeeWorkDetails();
-    }
-  });
-}
+    });
+  }
 
 
   ngOnInit(): void {
@@ -86,7 +88,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
   }
 
-  
+
   //#region  Fetch
 
   fetchStates() {
@@ -140,7 +142,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   //#endregion
 
 
-  
+
   //#region  OnChange
 
   onStateChange() {
@@ -157,10 +159,10 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   onCompanyChange() {
   }
 
-  
+
   // Method to update the selected month and year and regenerate the date range
   onMonthYearChange(): void {
-   
+    this.fetchEmployeeWorkDetails();
   }
 
   // Update shifts on change
@@ -172,7 +174,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   //#endregion
   updateWorkDetails(): void {
     if (!this.selectedMonth || !this.selectedYear) {
-     this.dataSerivce.showSnackBar('Month and year are required');
+      this.dataSerivce.showSnackBar('Month and year are required');
       return;
     }
 

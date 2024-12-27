@@ -29,20 +29,19 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   // List of employees
   employees: any[] = [];
 
-  // List of months for the dropdown
   months = [
-    { name: 'January', index: 0 },
-    { name: 'February', index: 1 },
-    { name: 'March', index: 2 },
-    { name: 'April', index: 3 },
-    { name: 'May', index: 4 },
-    { name: 'June', index: 5 },
-    { name: 'July', index: 6 },
-    { name: 'August', index: 7 },
-    { name: 'September', index: 8 },
-    { name: 'October', index: 9 },
-    { name: 'November', index: 10 },
-    { name: 'December', index: 11 }
+    { name: 'January', number: 1 },
+    { name: 'February', number: 2 },
+    { name: 'March', number: 3 },
+    { name: 'April', number: 4 },
+    { name: 'May', number: 5 },
+    { name: 'June', number: 6 },
+    { name: 'July', number: 7 },
+    { name: 'August', number: 8 },
+    { name: 'September', number: 9 },
+    { name: 'October', number: 10 },
+    { name: 'November', number: 11 },
+    { name: 'December', number: 12 }
   ];
 
   // List of years for the dropdown
@@ -54,8 +53,8 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   shiftMap: any = {};
 
   // Selected month and year for the calendar
-  selectedMonth: number = new Date().getMonth(); // Default to current month
-  selectedYear: number = new Date().getFullYear(); // Default to current year
+  selectedMonth: number; // Default to current month
+  selectedYear: number; // Default to current year
 
   // Generated date range (26th of the selected month to the 25th of the next month)
   dateRange: string[] = [];
@@ -74,13 +73,14 @@ shiftColors:any = {
 };
 
 
-  constructor(private cdr: ChangeDetectorRef,
+  constructor(
     private fb: FormBuilder,
     private masterDataService: MasterDataService,
     private dataSerivce :DataService,
 
     private shiftService: ShiftService) { 
-
+      this.selectedMonth = new Date().getMonth() + 1;
+      this.selectedYear = new Date().getFullYear();
       this.dataSerivce.getUser().subscribe((user) => {
         this.user = user;
         this.userAccessLevel = user.role;
@@ -153,7 +153,7 @@ shiftColors:any = {
     const payload = {
       cityId: this.selectedCityId,
       compId: this.selectedCompanyId,
-      month: Number(this.selectedMonth) + 1,
+      month: Number(this.selectedMonth),
       year: this.selectedYear
     };
     this.shiftService.getEmployeeShifts(payload).subscribe((response) => {
@@ -184,6 +184,8 @@ shiftColors:any = {
   onMonthYearChange(): void {
     this.generateDateRange();  // Recalculate the date range when month or year changes
     this.currentPage = 0;  // Reset the page to the first one
+
+    this.fetchEmployeeShifts();
   }
 
   // Update shifts on change
@@ -232,16 +234,16 @@ shiftColors:any = {
 
   generateDateRange(): void {
     // Ensure that the start date is the 26th of the selected month
-    const startDate = new Date(this.selectedYear, this.selectedMonth, 27);
+    const startDate = new Date(this.selectedYear, (this.selectedMonth-1), 26+1);
 
     // Get the next month using the getNextMonth function
-    const endMonth = this.getNextMonth(this.selectedMonth);
+    const endMonth = this.getNextMonth(this.selectedMonth -1 );
 
     // Get the next year using the getNextYear function
-    const endYear = this.getNextYear(this.selectedYear, this.selectedMonth);
+    const endYear = this.getNextYear(this.selectedYear, this.selectedMonth-1);
 
     // Ensure that the end date is the 25th of the next month
-    const endDate = new Date(endYear, endMonth, 26);
+    const endDate = new Date(endYear, endMonth, 25+1);
 
     // Initialize the dateRange array
     this.dateRange = [];

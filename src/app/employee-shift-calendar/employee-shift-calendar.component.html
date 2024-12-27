@@ -48,7 +48,7 @@
                 <div class="col d-flex justify-content-between">
                     <!-- Month Selector -->
                     <select [(ngModel)]="selectedMonth" (change)="onMonthYearChange()" class="form-control w-25">
-                        <option *ngFor="let month of months" [value]="month.index">{{ month.name }}</option>
+                        <option *ngFor="let month of months" [value]="month.number">{{ month.name }}</option>
                     </select>
 
                     <!-- Year Selector -->
