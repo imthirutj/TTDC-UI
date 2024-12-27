@@ -85,11 +85,15 @@ export class DataService {
     return user?.role || null;
   }
 
+
   // Getter for user ID
   getUserId(): string | null {
     return this.userSubject.value?.userId || null;
   }
 
+  getCompanyId(): string | null {
+    return this.userSubject.value?.companyId || null;
+  }
  
 
 

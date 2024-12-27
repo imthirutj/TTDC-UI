@@ -3,6 +3,7 @@ import { MasterDataService } from '../services/master-data.service';
 import { FormBuilder } from '@angular/forms';
 import { ShiftService } from './shift.service';
 import { DataService } from '../data.Service';
+import { UserType } from '../common/user-type.enum';
 
 @Component({
   selector: 'app-employee-shift-calendar',
@@ -10,6 +11,11 @@ import { DataService } from '../data.Service';
   styleUrls: ['./employee-shift-calendar.component.css']
 })
 export class EmployeeShiftCalendarComponent implements OnInit {
+
+  UserType = UserType;
+  userAccessLevel: any;
+  user: any;
+
   states: any[] = [];
   cities: any[] = [];
   companies: any[] = [{ companyId: 1, companyFName: 'Default' }];
@@ -73,7 +79,22 @@ shiftColors:any = {
     private masterDataService: MasterDataService,
     private dataSerivce :DataService,
 
-    private shiftService: ShiftService) { }
+    private shiftService: ShiftService) { 
+
+      this.dataSerivce.getUser().subscribe((user) => {
+        this.user = user;
+        this.userAccessLevel = user.role;
+        console.log('User Access Level:', this.userAccessLevel);
+
+        if(this.userAccessLevel === UserType.MANAGER){
+          this.selectedCompanyId = this.user.companyId;
+          if(!this.selectedCompanyId){
+            this.dataSerivce.showSnackBar('Company not found');
+          }
+          this.fetchEmployeeShifts();
+        }
+      });
+    }
 
 
   ngOnInit() {
