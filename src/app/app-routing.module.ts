@@ -22,6 +22,7 @@ import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employ
 import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-work-details.component';
 import { OdslipComponent } from './odslip/odslip.component';
 import { ErrorComponent } from './error/error.component';
+import { VendorComponent } from './vendor/vendor.component';
 
 
 
@@ -96,7 +97,15 @@ const routes: Routes = [
 
   {
     path:'employee-report',
-    component:EmployeeWorkDetailsComponent
+    component:EmployeeWorkDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserType.MANAGER] },
+  },
+
+  {
+    path: 'vendor',
+    component: VendorComponent,
+    canActivate: [AuthGuard],
   },
 
   {path:'error', component:ErrorComponent},

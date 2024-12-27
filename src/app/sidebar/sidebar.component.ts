@@ -133,6 +133,13 @@ export class SidebarComponent {
         allowedUserTypes: ['ALL'] 
       },
       {
+        label: 'Vendor',
+        icon: 'fa-folder',
+        route: '/vendor',
+        allowedUserTypes: ['ALL'] 
+      },
+    
+      {
         label: 'OD Slip',
         icon: 'fa-folder',
         route: '/odslip',

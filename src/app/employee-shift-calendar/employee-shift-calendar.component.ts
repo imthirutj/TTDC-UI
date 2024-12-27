@@ -179,7 +179,6 @@ shiftColors:any = {
     this.fetchEmployeeShifts();
   }
 
-  
   // Method to update the selected month and year and regenerate the date range
   onMonthYearChange(): void {
     this.generateDateRange();  // Recalculate the date range when month or year changes
