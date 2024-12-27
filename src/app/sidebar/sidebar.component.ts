@@ -32,23 +32,6 @@ export class SidebarComponent {
 
   ngOnInit(): void {
     this.menuItems = this.getMenuItemsBasedOnUserType(this.userType);
-    // this.dataService.getUserAccessLevel().then((ut) => {
-    //   this.userType = ut; // Default to STATE_ADMIN if userType is empty
-
-    //   // Check if userType is still empty after assignment, and redirect to login if true
-    //   if (!this.userType) {
-    //     console.log('Redirect to Login Page ')
-    //     this.router.navigate(['/login']);
-    //   } else {
-    //     // Filter the menu items based on the userType
-    //     this.menuItems = this.getMenuItemsBasedOnUserType(this.userType);
-    //   }
-    // }).catch((error) => {
-    //   // Handle error if needed, for example logging
-    //   console.error('Error while fetching user access level:', error);
-    //   this.router.navigate(['/login']);
-    // });
-    // this.sidebarToggled.emit(this.isCollapsed);
   }
 
   getMenuItemsBasedOnUserType(userType: any): any[] {
@@ -60,12 +43,6 @@ export class SidebarComponent {
         route: '/dashboard', 
         allowedUserTypes: [ 'ALL'] 
       },
-      // { 
-      //   label: 'Institutional Profile', 
-      //   icon: 'fa-folder', 
-      //   route: `/inst_profile/${this.dataService.getInstitutionId()}`, 
-      //   allowedUserTypes: [ 'ALL'] 
-      // },
       { 
         label: 'Employee List', 
         icon: 'fa-folder', 
