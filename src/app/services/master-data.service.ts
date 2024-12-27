@@ -113,7 +113,13 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Shift/GetShifts`);
   }
   
-  
+  getODComapnyList(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/ODslip_company`+query);
+  }
+
+  getODDetails(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/ODslip_View`+query);
+  }
   
   
 

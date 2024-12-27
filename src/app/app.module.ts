@@ -50,6 +50,7 @@ import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-w
 import { OdslipComponent } from './odslip/odslip.component';
 import { ErrorComponent } from './error/error.component';
 import { VendorComponent } from './vendor/vendor.component';
+import { CompanylistComponent } from './odslip/companylist/companylist.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { VendorComponent } from './vendor/vendor.component';
     OdslipComponent,
     ErrorComponent,
     VendorComponent,
+    CompanylistComponent,
   ],
   imports: [
     HttpClientModule,

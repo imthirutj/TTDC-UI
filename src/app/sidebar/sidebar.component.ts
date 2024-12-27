@@ -119,7 +119,7 @@ export class SidebarComponent {
       {
         label: 'OD Slip',
         icon: 'fa-folder',
-        route: '/odslip',
+        route: '/odslipcompanylist',
         allowedUserTypes: ['ALL'] 
       }
     

@@ -23,7 +23,7 @@ import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-w
 import { OdslipComponent } from './odslip/odslip.component';
 import { ErrorComponent } from './error/error.component';
 import { VendorComponent } from './vendor/vendor.component';
-
+import { CompanylistComponent } from './odslip/companylist/companylist.component';
 
 
 
@@ -86,7 +86,10 @@ const routes: Routes = [
     path: 'odslip',
     component: OdslipComponent
   },
-
+  {
+    path: 'odslipcompanylist',
+    component: CompanylistComponent
+  },
 
   {
     path: 'shift-management',
