@@ -1,8 +1,7 @@
-
 /* Sidebar Styling */
 .sidebar {
     position: fixed;
-    top:110px;
+    top: 110px;
     left: 0;
     height: calc(100vh - 136px);
     width: 250px;
@@ -13,43 +12,49 @@
     z-index: 100; /* Ensure sidebar stays above other content */
 }
 
+.sidebar.collapsed {
+    width: 60px;
+}
+
+.sidebar h3 {
+    padding: 15px;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: #495057;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease;
+}
+
+.sidebar a i {
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.sidebar a:hover {
+    background-color: #0056b3; /* Hover effect color */
+}
 
 
-    .sidebar.collapsed {
-        width: 60px;
-    }
+.sidebar.collapsed a {
+    justify-content: center;
+}
 
-    .sidebar h3 {
-        padding: 15px;
-        font-size: 1.2rem;
-        text-align: center;
-        background-color: #495057;
-    }
+.sidebar.collapsed a span {
+    display: none;
+}
 
-    .sidebar a {
-        color: white;
-        text-decoration: none;
-        padding: 15px;
-        display: flex;
-        align-items: center;
-        transition: background 0.3s ease;
-    }
+/* Highlight the active link */
+.sidebar a.active-link {
+    background-color: #007bff; /* Desired background color */
+    font-weight: bold; /* Optional: Make the font bold */
+    color: white; /* Ensure text color is readable */
+    border-radius: 4px; /* Optional: Add rounded corners */
+}
 
-        .sidebar a i {
-            margin-right: 15px;
-            font-size: 1.2rem;
-        }
-
-        .sidebar a:hover, .sidebar a.active {
-            background-color: #007bff;
-        }
-
-    .sidebar.collapsed a {
-        justify-content: center;
-    }
-
-        .sidebar.collapsed a span {
-            display: none;
-        }
-
-      

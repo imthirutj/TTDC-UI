@@ -1,13 +1,13 @@
 <div class="sidebar" [ngClass]="{'collapsed': isCollapsed}">
   <section>
-    <button style="position: fixed;z-index: 10001;" class="btn btn-light" (click)="toggleSidebar()">
+    <button style="position: fixed; z-index: 10001;" class="btn btn-light" (click)="toggleSidebar()">
       <i class="fa fa-bars"></i>
     </button>
 
-    <section style="margin-top: 38px;
-    position: absolute;"> 
+    <section style="margin-top: 38px; position: absolute;"> 
       <ng-container class="sidebars" *ngFor="let item of menuItems">
-        <a [routerLink]="item.route">
+        <a [routerLink]="item.route" routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa" [ngClass]="item.icon"></i>
           <span>{{ item.label }}</span>
         </a>
