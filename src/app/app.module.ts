@@ -30,7 +30,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
-import { InstitutionProfileComponent } from './institutions/institution-profile/institution-profile.component';
 import { CommonDialogComponent } from './common/common-dialog/common-dialog.component';
 import { UnitsComponent } from './units/units.component';
 import { StateComponent } from './state/state.component';
@@ -50,6 +49,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employee-shift-calendar.component';
 import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-work-details.component';
 import { OdslipComponent } from './odslip/odslip.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +60,6 @@ import { OdslipComponent } from './odslip/odslip.component';
     RegisterComponent,
     DashboardComponent,
     SnackBarComponent,
-    InstitutionProfileComponent,
     CommonDialogComponent,
     UnitsComponent,
     StateComponent,
@@ -78,6 +77,7 @@ import { OdslipComponent } from './odslip/odslip.component';
     EmployeeShiftCalendarComponent,
     EmployeeWorkDetailsComponent,
     OdslipComponent,
+    ErrorComponent,
   ],
   imports: [
     HttpClientModule,

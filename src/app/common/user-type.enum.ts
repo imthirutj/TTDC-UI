@@ -2,10 +2,8 @@
 
 export enum UserType {
     STATE_ADMIN = 'STATE_ADMIN',
-    DMER_ADMIN = 'DMER_ADMIN',
-    INSTITUTION_ADMIN = 'INSTITUTION_ADMIN',
-    IFPU = 'IFPU',
-    FSU = 'FSU',
-    SFU = 'SFU'
+    DISTRICT_ADMIN = 'DISTRICT_ADMIN',
+    MANAGER = 'Manager',
+    EMPLOYEE = 'EMPLOYEE',
   }
   

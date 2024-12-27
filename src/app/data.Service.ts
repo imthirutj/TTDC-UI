@@ -1,6 +1,7 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { environment } from '../environment/environment';
 import { Router } from '@angular/router';
@@ -18,7 +19,7 @@ export class DataService {
   private user: any;
   private apiUrl = environment.API_URL;
 
-
+  private userSubject = new BehaviorSubject<any>(this.getUserFromStorage());
 
   genderTypes = ["Male", "Female", "Other", "Non-binary", "Prefer not to say"];
 
@@ -32,38 +33,23 @@ export class DataService {
     { key: 'SFU', value: 'SFU' },
   ];
 
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {}
 
-  constructor(private http: HttpClient,
-    private router: Router,
-    private userService: UserService,
-    private snackBar: MatSnackBar) {
-    this.initializeUser();
+  private initializeUser(): void {
+    this.user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+    this.userSubject.next(this.user); // Update BehaviorSubject with the initialized user
   }
 
-
-
-  public initializeUser(): void {
-
-    this.user = JSON.parse(
-      localStorage.getItem('user') || sessionStorage.getItem('user') || '{}'
-    );
-    console.log(this.user)
+  private getUserFromStorage(): any {
+    return JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
   }
 
-  private getToken(): string | null {
-    // Implement logic to get the token from local storage or cookies
-    return (
-      localStorage.getItem('authToken') || sessionStorage.getItem('authToken')
-    );
-  }
-
-  public async setAuthTokenAndUser(
-    token: string,
-    user: any,
-    rememberMe: boolean
-  ): Promise<void> {
+  // Set the user data and token, and update the BehaviorSubject
+  public async setAuthTokenAndUser(token: string, user: any, rememberMe: boolean): Promise<void> {
     await this.setUserAndToken(token, user, rememberMe);
+    this.userSubject.next(user); // Update the user data in the BehaviorSubject
   }
+
 
   private async setUserAndToken(
     token: string,
@@ -74,15 +60,44 @@ export class DataService {
     delete user.token;
     localStorage.setItem('authToken', token);
     localStorage.setItem('user', JSON.stringify(user));
-    // if (rememberMe) {
-    //   localStorage.setItem('authToken', token);
-    //   localStorage.setItem('user', JSON.stringify(user));
-    //   // Store token separately
-    // } else {
-    //   sessionStorage.setItem('user', JSON.stringify(user)); // Store user without token
-    //   sessionStorage.setItem('authToken', token); // Store token separately
-    // }
+
     this.initializeUser();
+  }
+
+
+  // Use BehaviorSubject to get the current user
+  getUser() {
+    return this.userSubject.asObservable();
+  }
+
+  getUserObj(){
+    return this.user;
+  }
+  // Check if the user is logged in by observing the BehaviorSubject
+  isLoggedIn(): boolean {
+    const user = this.userSubject.value;
+    return user != null && this.getToken() != null && this.getToken() !== '' && this.getToken() !== 'undefined';
+  }
+
+  // Method to get user access level
+  async getUserAccessLevel(): Promise<UserType | null> {
+    const user = this.userSubject.value;
+    return user?.role || null;
+  }
+
+  // Getter for user ID
+  getUserId(): string | null {
+    return this.userSubject.value?.userId || null;
+  }
+
+ 
+
+
+  private getToken(): string | null {
+    // Implement logic to get the token from local storage or cookies
+    return (
+      localStorage.getItem('authToken') || sessionStorage.getItem('authToken')
+    );
   }
 
   public removeToken(): void {
@@ -95,13 +110,10 @@ export class DataService {
     // Reset user property
     this.user = null;
   }
-
-
-  getUser(): any {
-    return this.user;
+  // Add this method to retrieve medical_college_id
+  getInstitutionId(): string | null {
+    return this.user?.medical_college_id || null;
   }
-
-
 
   logout() {
     // Implement logout logic and remove the token
@@ -111,30 +123,6 @@ export class DataService {
     this.router.navigate(['/login']);
   }
 
-  isLoggedIn(): Observable<any> {
-    // return this.http.get<any>(`${this.apiUrl}auth/validate_token`);
-    return this.http.get<any>(`${this.apiUrl}User/getUserList?UserId=` + this.user.userId + ``);
-  }
-
-
-
-  async getUserAccessLevel(): Promise<UserType | null> {
-    // Ensure user is initialized before accessing
-    await this.initializeUser(); // This ensures the user data is loaded
-
-    // Return the user access level, or null if not available
-    return this.user?.user_type || null;
-  }
-
-
-  getUserId(): string | null {
-    return this.user?.userId || null;
-  }
-
-  // Add this method to retrieve medical_college_id
-  getInstitutionId(): string | null {
-    return this.user?.medical_college_id || null;
-  }
 
   // Helper Func
   // Utility function to build query parameters from a payload object

@@ -6,7 +6,6 @@ import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { UserType } from './common/user-type.enum';
-import { InstitutionProfileComponent } from './institutions/institution-profile/institution-profile.component';
 import { UnitsComponent } from './units/units.component';
 import { StateComponent } from './state/state.component';
 import { ListComponent } from './state/list/list.component';
@@ -23,6 +22,7 @@ import { ShiftManagementComponent } from './shift-management/shift-management.co
 import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employee-shift-calendar.component';
 import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-work-details.component';
 import { OdslipComponent } from './odslip/odslip.component';
+import { ErrorComponent } from './error/error.component';
 
 
 
@@ -34,21 +34,8 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    // canActivate: [AuthGuard],
-    data: { data: { roles: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.INSTITUTION_ADMIN] }, },
-  },
-  {
-    path: 'inst_profile/:institution_id',
-    component: InstitutionProfileComponent,
-    // canActivate: [AuthGuard],
-    data: { data: { roles: [UserType.STATE_ADMIN, UserType.DMER_ADMIN, UserType.INSTITUTION_ADMIN] }, },
-  },
-
-  {
-    path: 'units',
-    component: UnitsComponent,
-    // canActivate: [AuthGuard],
-    data: { data: { roles: ['ALL'] }, },
+     canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] }, 
   },
 
   {
@@ -103,8 +90,9 @@ const routes: Routes = [
 
   {
     path: 'shift-management',
-    component: EmployeeShiftCalendarComponent
-
+    component: EmployeeShiftCalendarComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserType.MANAGER] },
   },
 
   {
@@ -112,6 +100,8 @@ const routes: Routes = [
     component:EmployeeWorkDetailsComponent
   },
 
+  {path:'error', component:ErrorComponent},
+  
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
   { path: '**', redirectTo: '/login' },
