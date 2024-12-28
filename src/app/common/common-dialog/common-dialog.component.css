@@ -16,13 +16,14 @@
   padding: 20px;
   border-radius: 8px;
   position: relative;
-  max-width: 500px;
+  /* max-width: 500px; */
   width: 100%;
+  top:40px;
 }
 
 .dialog-header {
   color:black;
-  display: flex;
+  display: contents;
   justify-content: space-between;
   align-items: center;
   position: relative;
@@ -67,7 +68,7 @@
 
 /* Dialog Body Styles */
 .dialog-body {
-  max-height: 77vh; /* Adjust the max-height to your needs */
+  max-height: 58vh; /* Adjust the max-height to your needs */
   overflow-y: auto;  /* Enable vertical scrolling */
   scrollbar-width: thin;
   scrollbar-color: gray transparent;
@@ -97,6 +98,6 @@
 /* For tablet-sized screens */
 @media (max-width: 1024px) and (min-width: 768px) {
   .dialog-body {
-    max-height: 70vh; /* Adjust max-height for tablet-sized screens */
+    max-height: 60vh; /* Adjust max-height for tablet-sized screens */
   }
 }

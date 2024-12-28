@@ -59,14 +59,14 @@
       </div>
   </div>
   
-  <button class="btn btn-primary" (click)="null">Search</button>
+  <button class="btn btn-primary" (click)="fetchPayRecordsbyComp()">Search</button>
     
   <div class="container mt-4">
     <h3>Vendor Payment Details</h3>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th scope="col">Company Name</th>
+          <th scope="col">Action</th>
           <th scope="col">Total Payable Amount</th>
           <th scope="col">GST</th>
           <th scope="col">Service Charge</th>
@@ -76,7 +76,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let vendor of companyVendors">
-          <td>{{ vendor.companyName }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openVendorModal(vendor)">Update</button>
+          </td>
           <td>{{ vendor.totalPayableAmount | currency }}</td>
           <td>{{ vendor.gst | currency }}</td>
           <td>{{ vendor.serviceCharge | currency }}</td>
@@ -87,6 +89,61 @@
     </table>
   </div>
   
+  <app-common-dialog
+    [showDialog]="isVendorModalOpen"
+    [showCloseIcon]="true"
+    [dialogTitle]="'Update Vendor Details'"
+    (closeDialog)="isVendorModalOpen = false"
+    [showSubmitButton]="true"
+    (submitDialog)="updateVendorModal()"
+    [maxWidth]="'900px'">
+
+    <div class="row">
+      <div class="col-md-6">
+        <label for="totalPayableAmount">Total Payable Amount:</label>
+        <input  [disabled]="true" type="number" class="form-control" id="totalPayableAmount" [(ngModel)]="selectedVendor.totalPayableAmount">
+      </div>
+      <div class="col-md-6">
+        <label for="gst">GST:</label>
+        <input [disabled]="true" type="number" class="form-control" id="gst" [(ngModel)]="selectedVendor.gst">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label for="serviceCharge">Service Charge:</label>
+        <input [disabled]="true" type="number" class="form-control" id="serviceCharge" [(ngModel)]="selectedVendor.serviceCharge">
+      </div>
+      <div class="col-md-6">
+        <label for="tds">TDS:</label>
+        <input [disabled]="true" type="number" class="form-control" id="tds" [(ngModel)]="selectedVendor.tds">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label for="netAmount">Net Amount:</label>
+        <input  [disabled]="true" type="number" class="form-control" id="netAmount" [(ngModel)]="selectedVendor.netAmount">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label for="paymentStatus">Payment Status:</label>
+        <select  class="form-control" id="paymentStatus" [(ngModel)]="selectedVendor.paymentStatus">
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+
+      <!--remarks-->
+      <div class="col-md-6">
+        <label for="remarks">Remarks:</label>
+        <input   type="text" class="form-control" id="remarks" [(ngModel)]="selectedVendor.remarks">
+      </div>
+    </div>
+
+  </app-common-dialog>
 
   </div>
   
