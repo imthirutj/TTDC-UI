@@ -87,8 +87,16 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Master/GetDesignationsList`);
   }
 
+  getEmployees(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Employee/GetEmployees`);
+  }
+
   saveEmployee(query: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Employee/InsertUpdateEmployee`, query);
+  }
+
+  saveodslip(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/InsertUpdateODSLIP`, query);
   }
 
 

@@ -27,16 +27,16 @@
     <div class="col-md-4">
         <p>Employee Name: <strong>{{payobj?.employeeName}}</strong></p>
     </div>
-    <!-- <div class="col-md-4">
-        <p>Designation: <strong>{{payobj?.employeeName}}</strong></p>
-    </div>    -->
+    <div class="col-md-4">
+        <p>Designation: <strong>{{payobj?.departmentFName}}</strong></p>
+    </div>   
   </div>
   <div class="row">   
     <div class="col-md-4">
         <p>Facility: <strong>{{payobj?.visitingComanyName}}</strong></p>
     </div>
     <div class="col-md-4">
-        <p>City: <strong>{{payobj?.city}}</strong></p>
+        <p>City: <strong>{{payobj?.visitingCityName}}</strong></p>
     </div>
     <div class="col-md-4">
         <p>Manager Name: <strong>{{payobj?.managerName}}</strong></p>
@@ -60,7 +60,7 @@
         <p><strong>Purpose of visit</strong></p>
     </div>
     <div class="col-md-12">
-        <p>Mr.{{payobj?.employeeName}} will be visiting Chennai from {{payobj?.from_Date}} to {{payobj?.to_Date}} for the purpose of the
+        <p>Mr.{{payobj?.employeeName}} will be visiting {{payobj?.visitingCityName}} from {{payobj?.from_Date}} to {{payobj?.to_Date}} for the purpose of the
           {{payobj?.purpose}}. Kindly approve this as on-duty.             
         </p>
     </div>
