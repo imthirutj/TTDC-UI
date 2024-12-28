@@ -33,7 +33,7 @@ export class OdslipComponent {
         (response: any) => {
           console.log('Response:', response);
           if (response.success) {
-            this.payobj = response.data;
+            this.payobj = response.data[0];
             console.log('Pay Object:', this.payobj);
           } else {
             console.error(response.message || 'Failed to fetch OD slip details.');
