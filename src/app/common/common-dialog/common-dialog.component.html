@@ -1,6 +1,6 @@
-<div *ngIf="showDialog" class="dialog hidden">
+<div *ngIf="showDialog"  class="dialog hidden">
   <div class="dialog-overlay" (click)="onClose()"></div>
-  <div class="dialog-content">
+  <div class="dialog-content" [style.max-width]="maxWidth" >
     <form>
       <div class="dialog-header">
         <p style="font-size: x-large;" mat-dialog-title>{{ dialogTitle }}</p>

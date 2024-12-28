@@ -20,6 +20,8 @@ export class CommonDialogComponent {
   @Output() submitDialog = new EventEmitter<void>();
   @Output() customButton = new EventEmitter<void>(); // Emit when custom button is clicked
   
+  @Input() maxWidth: string = '600px';
+
   onClose() {
     this.closeDialog.emit();
   }

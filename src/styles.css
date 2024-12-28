@@ -151,3 +151,29 @@ body {
     border-radius: 4px; /* Add rounded corners */
     font-size: 14px; /* Standardize font size */
 }
+
+
+
+
+  thead {
+    position: sticky;
+    top: 20px;
+    z-index: 1;
+  }
+  
+  thead th {
+    background-color: #007bff; /* Match the background color of your header */
+    color: white; /* Ensure the text is visible */
+    text-align: left;
+  }
+  thead tr {
+    background-color: #007bff; /* Match the background color of your header */
+    color: white; /* Ensure the text is visible */
+    text-align: left;
+  }
+  
+  thead tr th{
+    background-color: #007bff !important; /* Match the background color of your header */
+    color: white !important ;/* Ensure the text is visible */
+    text-align: left !important;
+  }

@@ -5,6 +5,7 @@ import { MasterDataService } from '../services/master-data.service';
 import { DataService } from '../data.Service';
 import { UserType } from '../common/user-type.enum';
 import { myMonths, myYears } from '../utils/helpers/variables';
+import { VendorService } from './vendor.service';
 
 @Component({
   selector: 'app-vendor',
@@ -30,14 +31,18 @@ export class VendorComponent implements OnInit {
   selectedYear: number = new Date().getFullYear(); // Default to current year
 
   months = myMonths;
-   years = myYears;
- 
+  years = myYears;
+
 
   companyVendors: any;
+
+  isVendorModalOpen: boolean = false;
+  selectedVendor: any ={};
   constructor(
 
     private masterDataService: MasterDataService,
-    private dataSerivce: DataService
+    private dataSerivce: DataService,
+    private vendorService: VendorService
   ) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
@@ -46,35 +51,13 @@ export class VendorComponent implements OnInit {
       this.userAccessLevel = user.role;
       console.log('User Access Level:', this.userAccessLevel);
 
-      this.companyVendors = [
-        {
-          vendorId: 0,
-          companyId: 14,
-          companyName: "MADURAI 2 - TTDC HOTEL TAMILNADU",
-          totalPayableAmount: 25175,
-          gst: 4531,
-          serviceCharge: 503,
-          tds: 503,
-          netAmount: 29706
-        },
-        {
-          vendorId: 0,
-          companyId: 13,
-          companyName: "MADURAI 1 - TTDC HOTEL TAMILNADU",
-          totalPayableAmount: 50350,
-          gst: 9063,
-          serviceCharge: 1007,
-          tds: 1007,
-          netAmount: 59413
-        }
-      ];
-
     });
   }
 
 
   ngOnInit(): void {
     this.fetchStates();
+    this.fetchPayRecordsbyComp();
   }
 
 
@@ -100,6 +83,18 @@ export class VendorComponent implements OnInit {
     });
   }
 
+  fetchPayRecordsbyComp(){
+    var payload = {
+      month: this.selectedMonth,
+      year: this.selectedYear
+    }
+    this.vendorService.getPayRecordsbyComp(payload).subscribe((response:any) => {
+      if (response.success) {
+        this.companyVendors = response.data;
+      }
+    })
+  }
+
   //#endregion
 
 
@@ -123,7 +118,7 @@ export class VendorComponent implements OnInit {
 
   // Method to update the selected month and year and regenerate the date range
   onMonthYearChange(): void {
-    
+
   }
 
   // Update shifts on change
@@ -134,4 +129,19 @@ export class VendorComponent implements OnInit {
 
   //#endregion
 
+  openVendorModal(vendor: any) {
+    this.isVendorModalOpen = true;
+    this.selectedVendor = vendor;
+  }
+  updateVendorModal() {
+    var payload = {
+      ...this.selectedVendor
+    }
+    this.vendorService.updateVendorPayments(this.selectedVendor).subscribe((response: any) => {
+      if (response.success) {
+        this.dataSerivce.showSnackBar('Vendor updated successfully');
+        this.fetchPayRecordsbyComp();
+      }
+    })
+  }
 }

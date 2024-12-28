@@ -9,7 +9,7 @@ import { DataService } from '../data.Service';
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeWorkDetailsService {
+export class VendorService {
 
 
   private user: any;
@@ -22,21 +22,16 @@ export class EmployeeWorkDetailsService {
      ) {
   
    }
-   getEmployeeWorkDetails(payload: any): Observable<any> {
+   
+   getPayRecordsbyComp(payload: any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(payload);
-    const url = `${this.apiUrl}Employee/GetEmployeeWorkDetails?${queryParams}`;
+    const url = `${this.apiUrl}Payroll/GetPayRecordsbyComp?${queryParams}`;
     return this.http.get(url);
   }
-  
-  updateEmployeeWorkDetails(payload: any): Observable<any> {
-     const url = `${this.apiUrl}Employee/SaveEmployeeWorkDetails`;
+
+  updateVendorPayments(payload: any): Observable<any> {
+    const url = `${this.apiUrl}Payroll/UpdateVendorPayments`;
     return this.http.post(url, payload);
-  }
-  
-  getAttendanceDetails(payload: any): Observable<any> {
-    const queryParams = this.dataService.buildQueryParams(payload);
-    const url = `${this.apiUrl}Attendance/GetBiometricDetails?${queryParams}`;
-    return this.http.get(url);
   }
 
 }

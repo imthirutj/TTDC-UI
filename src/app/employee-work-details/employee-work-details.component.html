@@ -84,6 +84,7 @@
               <td>{{ detail.lossOfPayDays }}</td>
               <td>
                   <button class="btn btn-primary" (click)="openUpdateModal(detail)">Update</button>
+                  <button class="btn btn-danger" (click)="openAttendanceDetail(detail)">View</button>
               </td>
           </tr>
       </tbody>
@@ -161,7 +162,48 @@
         </textarea>
       </div>
     </form>
-  </app-common-dialog>
+</app-common-dialog>
   
+
+<app-common-dialog
+  [showDialog]="isAttendanceModalOpen"
+  [showCloseIcon]="true"
+  [dialogTitle]="'Attendance Details'"
+  (closeDialog)="isAttendanceModalOpen = false"
+  [maxWidth]="'900px'"
+  >
+
+  <table class="table table-bordered table-striped table-hover">
+    <thead class="bg-primary text-white">
+      <tr>
+        <th>Date</th>
+        <th>Time In</th>
+        <th>Time Out</th>
+        <th>Status</th>
+        <th>Duration (mins)</th>
+        <th>Late By (mins)</th>
+        <th>Early By (mins)</th>
+        <th>Over Time (mins)</th>
+        <th>Loss of Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of attendanceDetails" 
+          [class.table-success]="record.status.trim() === 'Present'" 
+          [class.table-danger]="record.status.trim() === 'Absent'">
+        <td>{{ record.attendanceDate }}</td>
+        <td>{{ record.inTime }}</td>
+        <td>{{ record.outTime }}</td>
+        <td>{{ record.status }}</td>
+        <td>{{ record.duration }}</td>
+        <td>{{ record.lateBy }}</td>
+        <td>{{ record.earlyBy }}</td>
+        <td>{{ record.overTime }}</td>
+        <td>{{ record.lossOfHours }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</app-common-dialog>
   </div>
   

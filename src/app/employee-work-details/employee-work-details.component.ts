@@ -29,6 +29,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
 
   isModalOpen: boolean = false;
+  isAttendanceModalOpen: boolean = false;
 
   employees: any[] = []; // List of employees to select from
   employeeWorkDetails: any = null; // To store the fetched work details
@@ -42,6 +43,10 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
   months = myMonths;
   years = myYears;
+
+  attendanceDetails: any[] = [
+    
+  ];
 
   constructor(
 
@@ -157,6 +162,8 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
 
   //#endregion
+
+
   updateWorkDetails(): void {
     if (!this.selectedMonth || !this.selectedYear) {
       this.dataSerivce.showSnackBar('Month and year are required');
@@ -175,6 +182,22 @@ export class EmployeeWorkDetailsComponent implements OnInit {
         this.closeModal();
       }
     });
+  }
+
+  openAttendanceDetail(detail: any): void {
+    this.isAttendanceModalOpen = true;
+    this.attendanceDetails =[];
+    var payload = {
+      month: this.selectedMonth,
+      year: this.selectedYear,
+      empId: detail.employeeId
+    }
+    this.employeeWorkDetailsService.getAttendanceDetails(payload).subscribe((response) => {
+      if (response.success) {
+        this.attendanceDetails = response.data;
+      }
+    })
+
   }
 
 }
