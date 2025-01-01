@@ -7,6 +7,9 @@ import { UserType } from '../common/user-type.enum';
 import { myMonths, myYears } from '../utils/helpers/variables';
 import { VendorService } from '../vendor/vendor.service';
 import { ActivatedRoute } from '@angular/router';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { LoadingService } from '../services/loading.service';
 
 
 @Component({
@@ -23,6 +26,18 @@ export class VendorInvoiceDetailsComponent {
   month: any;
   year: any;
   vendorID: any;
+
+  continuousIndex:number = 0;
+
+    // Define the totals object
+    totals = {
+      totalPresentDays: 0,
+      totalMonthDays:0,
+      totalGrossSalary: 0,
+      totalActualCharge: 0,
+      totalServiceCharge: 0,
+      totalAmountClaimed: 0
+    };
 
   vendorInvoiceDetails = {
     cumulativeInvoice: {
@@ -60,8 +75,8 @@ export class VendorInvoiceDetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private masterDataService: MasterDataService,
-    private dataSerivce: DataService,
-    private vendorService: VendorService
+    private dataService: DataService,
+    private vendorService: VendorService,
   ) {
     this.route.queryParams.subscribe(params => {
       this.month = params['month'];
@@ -73,7 +88,7 @@ export class VendorInvoiceDetailsComponent {
       console.log('Vendor ID:', this.vendorID);
     });
 
-    this.dataSerivce.getUser().subscribe((user) => {
+    this.dataService.getUser().subscribe((user) => {
       this.user = user;
       this.userAccessLevel = user.role;
       console.log('User Access Level:', this.userAccessLevel);
@@ -95,7 +110,40 @@ export class VendorInvoiceDetailsComponent {
     this.vendorService.getVendeorInvoiceDetails(payload).subscribe((response) => {
       console.log('Vendor Invoice Details:', response);
       this.vendorInvoiceDetails = response.data;
+      this.calculateTotals();
     });
+  }
+
+  calculateTotals() {
+    // Reset the totals for every recalculation
+    this.totals.totalPresentDays = 0;
+    this.totals.totalMonthDays = 0;
+    this.totals.totalGrossSalary = 0;
+    this.totals.totalActualCharge = 0;
+    this.totals.totalServiceCharge = 0;
+    this.totals.totalAmountClaimed = 0;
+
+    // Loop through the invoice details and employee invoices to sum the values
+    this.vendorInvoiceDetails.invoiceDetail.forEach(invDetail => {
+      invDetail.employeeInvoices.forEach(empInvoiceDetail => {
+        this.totals.totalPresentDays += empInvoiceDetail.presentDays;
+        this.totals.totalMonthDays += empInvoiceDetail.monthDays;
+        this.totals.totalGrossSalary += empInvoiceDetail.grossSalary;
+        this.totals.totalActualCharge += empInvoiceDetail.actualCharge;
+        this.totals.totalServiceCharge += empInvoiceDetail.serviceCharge;
+        this.totals.totalAmountClaimed += empInvoiceDetail.amountClaimed;
+      });
+    });
+  }
+
+  getAndIncrementIndex(): number {
+    const currentIndex = this.continuousIndex;
+    this.continuousIndex += 1;  // Increment for the next row
+    return currentIndex + 1;    // Return the current index (displayed index will be +1)
+  }
+
+  downloadPDF() {
+    this.dataService.downloadPDF('invoice-component');
   }
 
 }
