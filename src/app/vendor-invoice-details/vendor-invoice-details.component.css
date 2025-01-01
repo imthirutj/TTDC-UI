@@ -1,0 +1,99 @@
+.invoice-component thead th {
+    background-color: #a7afb8 !important; /* Overrides global CSS */
+    color: black !important;
+    text-align: left !important;
+}
+
+.invoice-component thead tr {
+    background-color: #a7afb8 !important; /* Overrides global CSS */
+    color: black !important;
+    text-align: left !important;
+}
+
+.invoice-component thead th {
+    text-align: left !important; /* Ensure alignment */
+}
+
+.invoice-border {
+    border: 1px solid black;
+}
+
+.invoice-header {
+    border-bottom: 1px solid black;
+}
+
+.invoice-section {
+    border-right: 1px solid black;
+}
+
+.box{
+    border-top:  1px solid black;
+}
+
+.table-no-border {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+.table-no-border td {
+    border: none;
+    vertical-align: top;
+    padding: 5px;
+}
+
+.container-1 {
+    text-align: center;
+    border-bottom: 2px solid black;
+    margin-bottom: 20px;
+  }
+  
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .header-row div {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #c5a143;
+    padding: 5px 20px;
+    display: inline-block;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .address {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .line {
+    border-top: 1px solid black;
+    margin: 10px 0;
+  }
+  
+  .invoice-table th, .invoice-table td {
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+}
+.invoice-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.text-right {
+    text-align: right;
+}

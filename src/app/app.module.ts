@@ -51,6 +51,8 @@ import { OdslipComponent } from './odslip/odslip.component';
 import { ErrorComponent } from './error/error.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { CompanylistComponent } from './odslip/companylist/companylist.component';
+import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-invoice-details.component';
+import { MonthNamePipe } from './utils/pipes/month-name.pipe';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,8 @@ import { CompanylistComponent } from './odslip/companylist/companylist.component
     ErrorComponent,
     VendorComponent,
     CompanylistComponent,
+    VendorInvoiceDetailsComponent,
+    MonthNamePipe,
   ],
   imports: [
     HttpClientModule,

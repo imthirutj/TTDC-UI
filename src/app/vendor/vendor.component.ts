@@ -6,6 +6,7 @@ import { DataService } from '../data.Service';
 import { UserType } from '../common/user-type.enum';
 import { myMonths, myYears } from '../utils/helpers/variables';
 import { VendorService } from './vendor.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vendor',
@@ -39,7 +40,7 @@ export class VendorComponent implements OnInit {
   isVendorModalOpen: boolean = false;
   selectedVendor: any ={};
   constructor(
-
+    private router: Router,
     private masterDataService: MasterDataService,
     private dataSerivce: DataService,
     private vendorService: VendorService
@@ -143,5 +144,9 @@ export class VendorComponent implements OnInit {
         this.fetchPayRecordsbyComp();
       }
     })
+  }
+
+  navigateToVendorInvoice(vendor:any){
+    this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: this.selectedMonth, year: this.selectedYear, vendorId: this.selectedVendor.vendorId } });
   }
 }
