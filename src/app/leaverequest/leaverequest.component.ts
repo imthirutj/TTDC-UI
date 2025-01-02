@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MasterDataService } from 'src/app/services/master-data.service';
+import { DataService } from '../data.Service';
 
 @Component({
   selector: 'app-leaverequest',
@@ -10,67 +11,141 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 
 
 export class LeaverequestComponent {
-  leaverequstlist: any[] = [];   
+  leaverequstlist: any[] = [];
   leaverequset: any;
 
-    constructor(private masterDataService: MasterDataService,private route: ActivatedRoute) {}
-    ngOnInit(): void {
-      this.getLeaveRequest(); 
-    
-      this.leaverequset={
-        employeeId: 3846,
-        purpose: '',
-        from_Date: '',
-        to_Date: '',
-        no_Of_Days: '',
-       
-      }
-      
-    }
-    getLeaveRequest(): void {
-      const query = '?emp_id=3846'; // Build the query string
-      this.masterDataService.getLeaveRequest(query).subscribe(
-        (response: any) => {
-          console.log('API Response:', response);
-          if (response.success && Array.isArray(response.data)) {
-            this.leaverequstlist = response.data; 
-            console.log('od company list:', this.leaverequstlist);
-          } else {
-            alert(response.message || 'Failed to fetch od company list.');
-          }
-        },
-        (error) => {
-          console.error('Error fetching OD company list:', error);
-          alert('An error occurred while fetching the OD company list.');
-        }
-      );
+  
+
+  filters: any = {
+    selectedMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: false,
+      key: 'month',
+      includeInSearchParams: false
+    },
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: false,
+      key: 'year',
+      includeInSearchParams: false
+    },
+    cityId: {
+      value: '',
+      show: true,
+      key: 'cityId',
+      includeInSearchParams: true
+    },
+    companyId: {
+      value: '',
+      show: true,
+      key: 'companyId',
+      includeInSearchParams: true
+    },
+    designationId: {
+      value: '',
+      show: true,
+      key: 'designationId',
+      includeInSearchParams: true
+    },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams: true
+    },
+    catId: {
+      value: '',
+      show: true,
+      key: 'catId',
+      includeInSearchParams: true
+    },
+    employeeId: {
+      value: '',
+      show: true,
+      key: 'employeeId',
+      includeInSearchParams: true
+    },
+    vendorId: {
+      value: '',
+      show: true,
+      key: 'vendorId',
+      includeInSearchParams: true
+    },
+  };
+
+  constructor(private masterDataService: MasterDataService, 
+    private route: ActivatedRoute,
+  private dataService: DataService) { }
+  ngOnInit(): void {
+    this.getLeaveRequest();
+
+    this.leaverequset = {
+      employeeId: 3846,
+      purpose: '',
+      from_Date: '',
+      to_Date: '',
+      no_Of_Days: '',
+
     }
 
-   
-    saveleaverequset(leaverequset: any): void {
-      console.log(leaverequset)
-        // if (!this.employeeForm) {
-        //   console.error('Form not initialized.');
-        //   return;
-        // }
-      
-        this.masterDataService.saveLeaveRequest(leaverequset).subscribe(
-          (response: any) => {
-            console.log('API Response:', response);
-            if (response.success) {
-              alert('leave requset updated successfully.');
-              this.getLeaveRequest(); // Refresh the list
-            } else {
-              alert(response.message || 'Failed to update leave requset.');
-            }
-          },
-          (error: any) => {
-            console.error('Error updating leave requset:', error);
-            alert('An error occurred while updating the leave requset.');
-          }
-        );
+  }
+
+
+  
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.getLeaveRequest();
+  }
+
+  search(){
+    this.getLeaveRequest();
+  }
+
+
+  getLeaveRequest(): void {
+    const query = '?emp_id=3846'; // Build the query string
+    this.masterDataService.getLeaveRequest(query).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success && Array.isArray(response.data)) {
+          this.leaverequstlist = response.data;
+          console.log('od company list:', this.leaverequstlist);
+        } else {
+          alert(response.message || 'Failed to fetch od company list.');
+        }
+      },
+      (error) => {
+        console.error('Error fetching OD company list:', error);
+        alert('An error occurred while fetching the OD company list.');
       }
-    
+    );
+  }
+
+
+  saveleaverequset(leaverequset: any): void {
+    console.log(leaverequset)
+    // if (!this.employeeForm) {
+    //   console.error('Form not initialized.');
+    //   return;
+    // }
+
+    this.masterDataService.saveLeaveRequest(leaverequset).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          alert('leave requset updated successfully.');
+          this.getLeaveRequest(); // Refresh the list
+        } else {
+          alert(response.message || 'Failed to update leave requset.');
+        }
+      },
+      (error: any) => {
+        console.error('Error updating leave requset:', error);
+        alert('An error occurred while updating the leave requset.');
+      }
+    );
+  }
+
 }
 
 

@@ -141,7 +141,8 @@ export class MasterDataService {
   }
   
   getODComapnyList(query:any): Observable<any> {
-    return this.http.get(`${this.apiUrl}Master/ODslip_company`+query);
+    const queryParams = this.dataService.buildQueryParams(query);
+    return this.http.get(`${this.apiUrl}Master/ODslip_company?${queryParams}`);
   }
 
   getODDetails(query:any): Observable<any> {
@@ -157,7 +158,8 @@ export class MasterDataService {
   }
 
   getLeaveRequest(query:any): Observable<any> {
-    return this.http.get(`${this.apiUrl}Master/LeaveRequest_View`+query);
+    const queryParams = this.dataService.buildQueryParams(query);
+    return this.http.get(`${this.apiUrl}Master/LeaveRequest_View?${queryParams}`);
   }
   
   approveODSlip(query: any): Observable<any> {
