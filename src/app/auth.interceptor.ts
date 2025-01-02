@@ -6,19 +6,22 @@ import {
   HttpEvent,
   HttpHeaders,
   HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { LoadingService } from './services/loading.service';
 import { HelperService } from './utils/helpers/helper.service';
-import { SnackBarComponent } from './utils/widgets/snack-bar/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DataService } from './data.Service';
+import { SnackBarComponent } from './utils/widgets/snack-bar/snack-bar/snack-bar.component';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private loadingService: LoadingService,
      private helperService: HelperService,
      private snackBar: MatSnackBar,
+     private dataService:DataService
     ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -59,7 +62,7 @@ export class AuthInterceptor implements HttpInterceptor {
       console.warn('No auth token found, making request without Authorization header');
     }
 
-    console.log('Request Headers:', headers.keys(), headers.get('Authorization'));
+  //   console.log('Request Headers:', headers.keys(), headers.get('Authorization'));
 
     // Clone the request with the necessary headers
     const authReq = req.clone({ headers });
@@ -71,6 +74,16 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         this.handleError(error);
         return throwError(error);
+      }),
+      tap((event: HttpEvent<any>) => {
+        // Only process the response body if the response is a successful 200
+        if (event instanceof HttpResponse) {
+          const responseBody = event.body;
+          if (responseBody && responseBody.success === false) {
+            this.dataService.showSnackBar(responseBody.message);
+            console.log('Error message from response:', responseBody.message || 'Unknown error');
+          }
+        }
       })
     );
   }
