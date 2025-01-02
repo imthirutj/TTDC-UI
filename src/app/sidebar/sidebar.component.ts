@@ -15,14 +15,23 @@ export class SidebarComponent {
 
   menuItems: any[] = [];
   
-  userType: UserType | null = null; 
+  UserType= UserType; 
 
+  user: any;
+  userAccessLevel: any;
 
   allMenuItems = [ ];
 
   constructor(private dataService: DataService,
     private router: Router
   ) {
+    this.dataService.asyncGetUser().then((user: any) => {
+      this.user = user;
+      this.userAccessLevel = user.role;
+      console.log('User Access Level:', this.userAccessLevel);
+      this.menuItems = this.getMenuItemsBasedOnUserType(this.userAccessLevel);
+    });
+
      // Automatically collapse on mobile view
      if (window.innerWidth <= 768) {
       this.isCollapsed = true;
@@ -31,10 +40,10 @@ export class SidebarComponent {
   
 
   ngOnInit(): void {
-    this.menuItems = this.getMenuItemsBasedOnUserType(this.userType);
+    
   }
 
-  getMenuItemsBasedOnUserType(userType: any): any[] {
+  getMenuItemsBasedOnUserType(userAccessLevel: any): any[] {
     // Filter the menu items based on the userType
     const allMenuItems = [
       { 
@@ -47,115 +56,115 @@ export class SidebarComponent {
         label: 'Employee List', 
         icon: 'fa-folder', 
         route: `/employee`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       { 
         label: 'Pay Generated', 
         icon: 'fa-folder', 
         route: `/payslip-records`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       { 
         label: 'Pay Not Generated', 
         icon: 'fa-folder', 
         route: `/payslip-records-waiting`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       { 
         label: 'State List', 
         icon: 'fa-folder', 
         route: `/state`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
         label: 'city List', 
         icon: 'fa-folder', 
         route: `/city`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
         label: 'Category List', 
         icon: 'fa-folder', 
         route: `/category`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes:[ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
         label: 'Department', 
         icon: 'fa-folder', 
         route: `/department`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       { 
         label: 'Company List', 
         icon: 'fa-folder', 
         route: `/company`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       { 
         label: 'Designation List', 
         icon: 'fa-folder', 
         route: `/designation`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       { 
         label: 'Degree List', 
         icon: 'fa-folder', 
         route: `/degree`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       { 
         label: 'Designation Qualification', 
         icon: 'fa-folder', 
         route: `/DesignationQualification`, 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       {
         label: 'Shift Management',
         icon: 'fa-folder',
         route: '/shift-management',
-        allowedUserTypes: ['ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       {
         label: 'Employee Report',
         icon: 'fa-folder',
         route: '/employee-report',
-        allowedUserTypes: ['ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       {
         label: 'Vendor',
         icon: 'fa-folder',
         route: '/vendor',
-        allowedUserTypes: ['ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
     
       {
         label: 'OD Slip',
         icon: 'fa-folder',
         route: '/odslipcompanylist',
-        allowedUserTypes: ['ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
       },
       {
         label: 'OD Slip Approval',
         icon: 'fa-folder',
         route: '/odslipapproval',
-        allowedUserTypes: ['ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       {
         label: 'Leave Request',
         icon: 'fa-folder',
         route: '/empleaverequest',
-        allowedUserTypes: ['ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
       },
       {
         label: 'Leave Approval',
         icon: 'fa-folder',
         route: '/Leaveapproval',
-        allowedUserTypes: ['ALL'] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       }
     
     ];
 
-    return allMenuItems.filter(item => item.allowedUserTypes.includes(userType)  || item.allowedUserTypes.includes('ALL' as UserType));
+    return allMenuItems.filter(item => item.allowedUserTypes.includes(userAccessLevel)  || item.allowedUserTypes.includes('ALL' as UserType));
   }
 
 
