@@ -18,11 +18,11 @@ export class LeaverequestComponent {
       this.getLeaveRequest(); 
     
       this.leaverequset={
-        employeeId: 0,
+        employeeId: 3846,
         purpose: '',
         from_Date: '',
         to_Date: '',
-        how_Many_Days: '',
+        no_Of_Days: '',
        
       }
       

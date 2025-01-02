@@ -79,8 +79,8 @@ export class LeaveapprovalupdateComponent {
   approveODSlip(): void {
     if (this.leaveRequest_Id) {
       const payload = {
-        visiting_Manager_Approval: 1,
-        odslipId: this.leaveRequest_Id // Use the initialized odslipId
+        manager_Approval_Status: "Approved",
+        leaveRequest_Id: this.leaveRequest_Id 
       };
 
       this.masterDataService.approveLeaveRequest(payload).subscribe(
@@ -103,8 +103,8 @@ export class LeaveapprovalupdateComponent {
   disapproveODSlip(): void {
     if (this.leaveRequest_Id) {
       const payload = {
-        visiting_Manager_Approval: 0,
-        odslipId: this.leaveRequest_Id
+        manager_Approval_Status: "Not Approved",
+        leaveRequest_Id: this.leaveRequest_Id
       };
 
       this.masterDataService.approveLeaveRequest(payload).subscribe(

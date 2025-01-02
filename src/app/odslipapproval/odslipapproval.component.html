@@ -6,7 +6,7 @@
           <tr>
             <th>#</th>         
             <th>Employee Name</th>
-            <th>Comany Name</th>  
+            <th>Designation</th>  
             <th>Purpose</th>      
             <th>Date</th>      
             <th>Number of Days</th>
@@ -18,7 +18,7 @@
           <tr *ngFor="let odcompany of odcompanylist; let i = index">
               <td>{{ i + 1 }}</td>                   
               <td>{{ odcompany.employeeName }}</td>
-              <td>{{ odcompany.companyName }}</td>
+              <td>{{ odcompany.departmentFName }}</td>
               <td>{{ odcompany.purpose }}</td>
               <td>{{ odcompany.from_Date }} - {{ odcompany.to_Date }}</td>
               <td>{{ odcompany.how_Many_Days }} </td>  

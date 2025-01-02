@@ -27,6 +27,7 @@ export class CompanylistComponent {
         from_Date: '',
         to_Date: '',
         how_Many_Days: '',
+        insert_Manager_id: '2'
        
       }
       

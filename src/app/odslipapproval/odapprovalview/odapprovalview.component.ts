@@ -79,8 +79,8 @@ export class OdapprovalviewComponent {
   approveODSlip(): void {
     if (this.odslipId) {
       const payload = {
-        visiting_Manager_Approval: 1,
-        odslipId: this.odslipId // Use the initialized odslipId
+        visiting_Manager_Approval: "Approved",
+        odslip_Id: this.odslipId // Use the initialized odslipId
       };
 
       this.masterDataService.approveODSlip(payload).subscribe(
@@ -103,8 +103,8 @@ export class OdapprovalviewComponent {
   disapproveODSlip(): void {
     if (this.odslipId) {
       const payload = {
-        visiting_Manager_Approval: 0,
-        odslipId: this.odslipId
+        visiting_Manager_Approval: "Not Approved",
+        odslip_Id: this.odslipId
       };
 
       this.masterDataService.approveODSlip(payload).subscribe(

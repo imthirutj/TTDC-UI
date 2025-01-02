@@ -11,7 +11,8 @@
           <th>Visiting ComanyName</th>  
           <th>Purpose</th>      
           <th>Date</th>      
-          <th>How_Many_Days</th>                
+          <th>How_Many_Days</th>    
+          <th>Approval Status</th>            
           <th>View OD Slip</th>    
         </tr>
       </thead>
@@ -22,7 +23,8 @@
             <td>{{ odcompany.visitingComanyName }}</td>
             <td>{{ odcompany.purpose }}</td>
             <td>{{ odcompany.from_Date }} - {{ odcompany.to_Date }}</td>
-            <td>{{ odcompany.how_Many_Days }} </td>         
+            <td>{{ odcompany.how_Many_Days }} </td>  
+            <td>{{ odcompany.visiting_Manager_Approval ? odcompany.visiting_Manager_Approval : 'Pending' }}</td>           
             <td><a class="btn btn-primary"  data-bs-dismiss="modal"  type="button" [routerLink]="['/odslip']" [queryParams]="{ odslip_id: odcompany.odslip_Id }">
                 View OD Slip
             </a></td>

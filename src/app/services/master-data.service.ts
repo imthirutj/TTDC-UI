@@ -142,7 +142,7 @@ export class MasterDataService {
   }
   
   approveODSlip(query: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}Master/UpdateODSLIP_ApprovalStatus`, query);
+    return this.http.post(`${this.apiUrl}Master/UpdateODSLIP`, query);
   }
 
   approveLeaveRequest(query: any): Observable<any> {
