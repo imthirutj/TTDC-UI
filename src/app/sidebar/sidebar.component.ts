@@ -92,31 +92,31 @@ export class SidebarComponent {
         label: 'Department', 
         icon: 'fa-folder', 
         route: `/department`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR,] 
       },
       { 
         label: 'Company List', 
         icon: 'fa-folder', 
         route: `/company`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, ]  
       },
       { 
         label: 'Designation List', 
         icon: 'fa-folder', 
         route: `/designation`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, ] 
       },
       { 
         label: 'Degree List', 
         icon: 'fa-folder', 
         route: `/degree`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR,]  
       },
       { 
         label: 'Designation Qualification', 
         icon: 'fa-folder', 
         route: `/DesignationQualification`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, ] 
       },
       {
         label: 'Shift Management',
