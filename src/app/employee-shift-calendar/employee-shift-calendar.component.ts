@@ -137,7 +137,6 @@ export class EmployeeShiftCalendarComponent implements OnInit {
         if (!this.selectedCompanyId) {
           this.dataService.showSnackBar('Company not found');
         }
-        this.fetchEmployeeShifts();
       }
     });
   }
@@ -282,14 +281,16 @@ export class EmployeeShiftCalendarComponent implements OnInit {
 
 
   generateDateRange(): void {
+    const year = this.filters.selectedYear.value;
+    const month = this.filters.selectedMonth.value;
     // Ensure that the start date is the 26th of the selected month
-    const startDate = new Date(this.selectedYear, (this.selectedMonth - 1), 26 + 1);
+    const startDate = new Date(year, (month - 1), 26 + 1);
 
     // Get the next month using the getNextMonth function
-    const endMonth = this.getNextMonth(this.selectedMonth - 1);
+    const endMonth = this.getNextMonth(month - 1);
 
     // Get the next year using the getNextYear function
-    const endYear = this.getNextYear(this.selectedYear, this.selectedMonth - 1);
+    const endYear = this.getNextYear(year, month - 1);
 
     // Ensure that the end date is the 25th of the next month
     const endDate = new Date(endYear, endMonth, 25 + 1);
@@ -307,7 +308,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     }
 
     // Debugging: Log the generated date range to ensure correctness
-    console.log(this.dateRange);
+   // console.log(this.dateRange);
   }
 
 
@@ -327,6 +328,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
 
   // Get the current set of dates for the current page
   getCurrentDates(): string[] {
+    this.generateDateRange();  // Recalculate the date range when month or year changes
     const startIndex = this.currentPage * this.daysPerPage;
     const endIndex = startIndex + this.daysPerPage;
 
@@ -360,7 +362,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
       }
     });
 
-    console.log(payloadCopy);
+   // console.log(payloadCopy);
     this.shiftService.updateEmployeeShifts(payloadCopy).subscribe((response) => {
       if (response.success) {
         this.dataService.showSnackBar('Shifts updated successfully');

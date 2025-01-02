@@ -129,7 +129,6 @@ export class EmployeeWorkDetailsComponent implements OnInit {
         if (!this.selectedCompanyId) {
           this.dataService.showSnackBar('Company not found');
         }
-        this.fetchEmployeeWorkDetails();
       }
     });
   }
@@ -251,8 +250,8 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
     const updatedData = {
       ...this.selectedWorkDetail,
-      month: this.selectedMonth,
-      year: this.selectedYear
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value
     };
 
     this.employeeWorkDetailsService.updateEmployeeWorkDetails(updatedData).subscribe((response) => {
