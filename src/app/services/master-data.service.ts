@@ -109,6 +109,13 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Master/Get_Degree`+query);
   }
 
+  save_Designation_Qualification(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/Save_Designation_Qualification`, query);
+  }
+  get_Designation_Qualification(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/Get_Designation_Qualification`+query);
+  }
+
 
   getEmployeeList(query:any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(query);

@@ -103,6 +103,12 @@ export class SidebarComponent {
         route: `/degree`, 
         allowedUserTypes: [ 'ALL'] 
       },
+      { 
+        label: 'Designation Qualification', 
+        icon: 'fa-folder', 
+        route: `/DesignationQualification`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
       {
         label: 'Shift Management',
         icon: 'fa-folder',

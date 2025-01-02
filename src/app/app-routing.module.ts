@@ -32,6 +32,7 @@ import { LeaveapprovalComponent } from './leaveapproval/leaveapproval.component'
 import { LeaveapprovalupdateComponent } from './leaveapproval/leaveapprovalupdate/leaveapprovalupdate.component';
 import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-invoice-details.component';
 import { DegreeComponent } from './degree/degree.component';
+import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
 
 const routes: Routes = [
 
@@ -161,7 +162,15 @@ const routes: Routes = [
   },
   {
     path: 'degree',
-    component: DegreeComponent
+    component: DegreeComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path: 'DesignationQualification',
+    component: DesignationQualificationComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
 
   {
