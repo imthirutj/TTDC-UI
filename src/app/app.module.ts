@@ -62,6 +62,7 @@ import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-i
 import { MonthNamePipe } from './utils/pipes/month-name.pipe';
 import { DegreeComponent } from './degree/degree.component';
 import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
+import { FiltersComponent } from './filters/filters.component';
 
 
 @NgModule({
@@ -102,6 +103,7 @@ import { DesignationQualificationComponent } from './designation-qualification/d
     MonthNamePipe,
     DegreeComponent,
     DesignationQualificationComponent,
+    FiltersComponent
 
   ],
   imports: [
