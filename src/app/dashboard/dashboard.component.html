@@ -8,30 +8,12 @@
   <p style="margin: 0; color: #555;">This is a sample dashboard box.</p>
 </div> -->
 
+<app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"></app-filter>
+
+
 <div class="container mt-4">
     <!-- Filters -->
-    <div class="row mb-4">
-      <div class="col-md-6">
-        <label for="yearSelect" class="form-label">Select Year</label>
-        <select
-          id="yearSelect"
-          class="form-select"
-          [(ngModel)]="selectedYear"
-        >
-          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-        </select>
-      </div>
-      <div class="col-md-6">
-        <label for="monthSelect" class="form-label">Select Month</label>
-        <select
-          id="monthSelect"
-          class="form-select"
-          [(ngModel)]="selectedMonth"
-        >
-          <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-        </select>
-      </div>
-    </div>
+   
   
     <!-- Dashboard Boxes -->
     <div class="row">

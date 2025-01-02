@@ -26,10 +26,10 @@ export class HeaderComponent {
   }
 
   getUserDetails() {
-    this.userData = this.userService.getUserDetails(this.dataService.getUserId()).subscribe(
+    this.userService.getUserDetails(this.dataService.getUserId()).subscribe(
       (response:any)=>{
         if(response.success){
-          
+          this.userData = response.data;
         }
       }
     );

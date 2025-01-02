@@ -87,13 +87,18 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Master/GetDesignationsList`);
   }
 
+  getVendors(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/GetVendorsList`);
+  }
+
   saveEmployee(query: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Employee/InsertUpdateEmployee`, query);
   }
 
 
   getEmployeeList(query:any): Observable<any> {
-    return this.http.get(`${this.apiUrl}Employee/GetEmployees`+query);
+    const queryParams = this.dataService.buildQueryParams(query);
+    return this.http.get(`${this.apiUrl}Employee/GetEmployees?${queryParams}`);
   }
   getpayslipList(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}payroll/getpaysliprecords`+query);

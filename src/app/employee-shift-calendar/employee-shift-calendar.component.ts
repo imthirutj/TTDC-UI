@@ -63,12 +63,12 @@ shiftColors:any = {
   constructor(
     private fb: FormBuilder,
     private masterDataService: MasterDataService,
-    private dataSerivce :DataService,
+    private dataService :DataService,
 
     private shiftService: ShiftService) { 
       this.selectedMonth = new Date().getMonth() + 1;
       this.selectedYear = new Date().getFullYear();
-      this.dataSerivce.getUser().subscribe((user) => {
+      this.dataService.asyncGetUser().then((user:any) => {
         this.user = user;
         this.userAccessLevel = user.role;
         console.log('User Access Level:', this.userAccessLevel);
@@ -76,7 +76,7 @@ shiftColors:any = {
         if(this.userAccessLevel === UserType.MANAGER){
           this.selectedCompanyId = this.user.companyId;
           if(!this.selectedCompanyId){
-            this.dataSerivce.showSnackBar('Company not found');
+            this.dataService.showSnackBar('Company not found');
           }
           this.fetchEmployeeShifts();
         }
@@ -300,10 +300,10 @@ shiftColors:any = {
     console.log(payloadCopy);
     this.shiftService.updateEmployeeShifts(payloadCopy).subscribe((response) => {
       if (response.success) {
-       this.dataSerivce.showSnackBar('Shifts updated successfully');
+       this.dataService.showSnackBar('Shifts updated successfully');
        this.fetchEmployeeShifts();
       } else {
-        this.dataSerivce.showSnackBar('Failed to update shifts');
+        this.dataService.showSnackBar('Failed to update shifts');
       }
     }
     );

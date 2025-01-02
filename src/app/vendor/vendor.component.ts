@@ -42,12 +42,12 @@ export class VendorComponent implements OnInit {
   constructor(
     private router: Router,
     private masterDataService: MasterDataService,
-    private dataSerivce: DataService,
+    private dataService: DataService,
     private vendorService: VendorService
   ) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
-    this.dataSerivce.getUser().subscribe((user) => {
+    this.dataService.asyncGetUser().then((user:any) => {
       this.user = user;
       this.userAccessLevel = user.role;
       console.log('User Access Level:', this.userAccessLevel);
@@ -140,7 +140,7 @@ export class VendorComponent implements OnInit {
     }
     this.vendorService.updateVendorPayments(this.selectedVendor).subscribe((response: any) => {
       if (response.success) {
-        this.dataSerivce.showSnackBar('Vendor updated successfully');
+        this.dataService.showSnackBar('Vendor updated successfully');
         this.fetchPayRecordsbyComp();
       }
     })

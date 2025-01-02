@@ -53,6 +53,7 @@ import { VendorComponent } from './vendor/vendor.component';
 import { CompanylistComponent } from './odslip/companylist/companylist.component';
 import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-invoice-details.component';
 import { MonthNamePipe } from './utils/pipes/month-name.pipe';
+import { FiltersComponent } from './filters/filters.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { MonthNamePipe } from './utils/pipes/month-name.pipe';
     CompanylistComponent,
     VendorInvoiceDetailsComponent,
     MonthNamePipe,
+    FiltersComponent,
   ],
   imports: [
     HttpClientModule,

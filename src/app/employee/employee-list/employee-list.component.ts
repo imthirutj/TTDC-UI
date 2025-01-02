@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MasterDataService } from 'src/app/services/master-data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { visibility } from 'html2canvas/dist/types/css/property-descriptors/visibility';
+import { DataService } from 'src/app/data.Service';
 
 @Component({
   selector: 'app-employee-list',
@@ -19,10 +21,40 @@ export class EmployeeListComponent {
 
   employeeForm!: FormGroup;
 
-  constructor(private masterDataService: MasterDataService, private fb: FormBuilder) {}
+  filters:any = {
+    selectedMonth:Number(new Date().getMonth() ) +1, // Default to current month
+    selectedYear: new Date().getFullYear(), // Default to current year
+    cityId: '', 
+    companyId:'',
+    designationId:'',
+    deptId:'',
+    catId:'',
+    employeeId:'',
+    vendorId:'',
+    visibility:{
+      showMonthDropdown: false, 
+      showYearDropdown: false,
+      showCityDropdown: true, 
+      showCompanyDropdown:true,
+      showDesignationDropdown:true,
+      showDepartmentDropdown:true,
+      showCategoryDropdown:true,
+      showEmployeeDropdown:true,
+      showVendorDropdown:true
+    }
+    
+  };
+
+
+  constructor(private masterDataService: MasterDataService, 
+    private fb: FormBuilder,
+  private dataService: DataService) {
+
+
+  }
 
   ngOnInit(): void {
-    this.getEmployeeList();
+    //this.getEmployeeList();
     this.getDesignationList();
     this.getCompanyList();
     this.getDepartmentList();
@@ -66,15 +98,27 @@ export class EmployeeListComponent {
     
   }
   
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.getEmployeeList();
+  }
+
+  search(){
+    this.getEmployeeList();
+  }
+
   getEmployeeList(): void {
-    this.masterDataService.getEmployeeList('').subscribe(
+    // Clone the filters object and remove the visibility property
+    const { visibility, ...payload } = this.filters;
+    this.masterDataService.getEmployeeList(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {
           this.Employee = response.data; 
           
         } else {
-          alert(response.message || 'Failed to fetch Employee list.');
+          this.Employee = [];
+          this.dataService.showSnackBar(response.message);
         }
       },
       (error) => {

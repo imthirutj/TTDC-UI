@@ -13,5 +13,6 @@ export const myMonths = [
     { name: 'DEC', number: 12 }
 ];
 
-  export const myYears = Array.from({ length: 11 }, (_, i) => new Date().getFullYear() - 5 + i);
+  export const myYears = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i);
+
 

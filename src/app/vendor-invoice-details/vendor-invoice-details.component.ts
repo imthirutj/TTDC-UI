@@ -88,7 +88,7 @@ export class VendorInvoiceDetailsComponent {
       console.log('Vendor ID:', this.vendorID);
     });
 
-    this.dataService.getUser().subscribe((user) => {
+    this.dataService.asyncGetUser().then((user:any) => {
       this.user = user;
       this.userAccessLevel = user.role;
       console.log('User Access Level:', this.userAccessLevel);

@@ -20,7 +20,7 @@
   [showClearButton]="false"
   [showSubmitButton]="isEditMode" 
   [showCloseIcon]="true" 
-  [showCustomButton]="dataService.getUserObj()" 
+  [showCustomButton]="dataService.getUserId() != null && dataService.getUserId() != ''" 
   [customButtonName]="'Logout'" 
   (closeDialog)="showProfileDialog = false" 
   (submitDialog)="onSubmit()" 

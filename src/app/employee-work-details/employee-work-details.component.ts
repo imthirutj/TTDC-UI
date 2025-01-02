@@ -51,12 +51,12 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   constructor(
 
     private masterDataService: MasterDataService,
-    private dataSerivce: DataService,
+    private dataService: DataService,
     private employeeWorkDetailsService: EmployeeWorkDetailsService
   ) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
-    this.dataSerivce.getUser().subscribe((user) => {
+    this.dataService.asyncGetUser().then((user:any) => {
       this.user = user;
       this.userAccessLevel = user.role;
       console.log('User Access Level:', this.userAccessLevel);
@@ -64,7 +64,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
       if (this.userAccessLevel === UserType.MANAGER) {
         this.selectedCompanyId = this.user.companyId;
         if (!this.selectedCompanyId) {
-          this.dataSerivce.showSnackBar('Company not found');
+          this.dataService.showSnackBar('Company not found');
         }
         this.fetchEmployeeWorkDetails();
       }
@@ -166,7 +166,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
   updateWorkDetails(): void {
     if (!this.selectedMonth || !this.selectedYear) {
-      this.dataSerivce.showSnackBar('Month and year are required');
+      this.dataService.showSnackBar('Month and year are required');
       return;
     }
 
