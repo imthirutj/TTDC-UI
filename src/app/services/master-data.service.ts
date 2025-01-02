@@ -102,6 +102,12 @@ export class MasterDataService {
   saveodslip(query: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Master/InsertUpdateODSLIP`, query);
   }
+  savedegree(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/SaveDegree`, query);
+  }
+  getdegree(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/Get_Degree`+query);
+  }
 
 
   getEmployeeList(query:any): Observable<any> {

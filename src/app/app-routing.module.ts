@@ -31,6 +31,7 @@ import { OdapprovalviewComponent } from './odslipapproval/odapprovalview/odappro
 import { LeaveapprovalComponent } from './leaveapproval/leaveapproval.component';
 import { LeaveapprovalupdateComponent } from './leaveapproval/leaveapprovalupdate/leaveapprovalupdate.component';
 import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-invoice-details.component';
+import { DegreeComponent } from './degree/degree.component';
 
 const routes: Routes = [
 
@@ -158,6 +159,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
+  {
+    path: 'degree',
+    component: DegreeComponent
+  },
+
   {
     path: 'vendor-invoice-details',
     component: VendorInvoiceDetailsComponent,

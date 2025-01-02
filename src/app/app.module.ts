@@ -60,7 +60,9 @@ import { LeaveapprovalComponent } from './leaveapproval/leaveapproval.component'
 import { LeaveapprovalupdateComponent } from './leaveapproval/leaveapprovalupdate/leaveapprovalupdate.component';
 import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-invoice-details.component';
 import { MonthNamePipe } from './utils/pipes/month-name.pipe';
-import { FiltersComponent } from './filters/filters.component';
+import { DegreeComponent } from './degree/degree.component';
+import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
+
 
 @NgModule({
   declarations: [
@@ -98,7 +100,9 @@ import { FiltersComponent } from './filters/filters.component';
         LeaveapprovalupdateComponent, 
     VendorInvoiceDetailsComponent,
     MonthNamePipe,
-    FiltersComponent,
+    DegreeComponent,
+    DesignationQualificationComponent,
+
   ],
   imports: [
     HttpClientModule,
