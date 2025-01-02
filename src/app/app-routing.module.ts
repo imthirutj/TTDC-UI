@@ -24,6 +24,13 @@ import { OdslipComponent } from './odslip/odslip.component';
 import { ErrorComponent } from './error/error.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { CompanylistComponent } from './odslip/companylist/companylist.component';
+import { LeaverequestComponent } from './leaverequest/leaverequest.component';
+import { ViewComponent } from './leaverequest/view/view.component';
+import { OdslipapprovalComponent } from './odslipapproval/odslipapproval.component';
+import { OdapprovalviewComponent } from './odslipapproval/odapprovalview/odapprovalview.component';
+import { LeaveapprovalComponent } from './leaveapproval/leaveapproval.component';
+import { LeaveapprovalupdateComponent } from './leaveapproval/leaveapprovalupdate/leaveapprovalupdate.component';
+import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-invoice-details.component';
 
 const routes: Routes = [
 
@@ -87,6 +94,36 @@ const routes: Routes = [
   {
     path: 'odslipcompanylist',
     component: CompanylistComponent
+  },
+  {
+    path: 'odslipapproval',
+    component: OdslipapprovalComponent
+  },
+  {
+    path: 'odslipapprovalview',
+    component: OdapprovalviewComponent
+  },
+
+  {
+    path: 'empleaverequest',
+    component: LeaverequestComponent
+  },
+  {
+    path: 'leaverequestview',
+    component: ViewComponent
+  },
+  {
+    path: 'Leaveapproval',
+    component: LeaveapprovalComponent
+  },
+  {
+    path: 'Leaveapprovalview',
+    component: LeaveapprovalupdateComponent
+  },
+  {
+    path: 'vendor-invoice-details',
+    component: VendorInvoiceDetailsComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'shift-management',
