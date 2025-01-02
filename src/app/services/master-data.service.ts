@@ -91,8 +91,16 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Master/GetVendorsList`);
   }
 
+  getEmployees(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Employee/GetEmployees`);
+  }
+
   saveEmployee(query: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Employee/InsertUpdateEmployee`, query);
+  }
+
+  saveodslip(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/InsertUpdateODSLIP`, query);
   }
 
 
@@ -125,8 +133,26 @@ export class MasterDataService {
   getODDetails(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/ODslip_View`+query);
   }
+
+  LeaveRequest_View(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/LeaveRequest_View`+query);
+  }
   
+  saveLeaveRequest(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/InsertUpdateLeaveRequest`, query);
+  }
+
+  getLeaveRequest(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/LeaveRequest_View`+query);
+  }
   
+  approveODSlip(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/UpdateODSLIP`, query);
+  }
+
+  approveLeaveRequest(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/UpdateLeaveRequest_ApprovalStatus`, query);
+  }
 
 
 }

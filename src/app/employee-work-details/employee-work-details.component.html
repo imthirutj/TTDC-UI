@@ -85,11 +85,79 @@
               <td>
                   <button class="btn btn-primary" (click)="openUpdateModal(detail)">Update</button>
                   <button class="btn btn-danger" (click)="openAttendanceDetail(detail)">View</button>
+                  <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                    Add OD Slip
+                  </button>
               </td>
           </tr>
       </tbody>
   </table>
 </div>
+
+<div
+   class="modal fade"
+   id="addEmployeeModal"
+   tabindex="-1"
+   aria-labelledby="addEmployeeModalLabel"
+   aria-hidden="true"
+ >
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="addEmployeeModalLabel">Add/Edit OD Slip</h5>
+         <button
+           type="button"
+           class="btn-close"
+           data-bs-dismiss="modal"
+           aria-label="Close"
+         ></button>
+       </div>
+       <div class="modal-body">                       
+           <!-- <div class="mb-3">
+            <label for="employeeId" class="form-label">Employee Name</label>
+            <select class="form-select" id="CompanyId" [(ngModel)]="odslip.employeeId" name="employeeId" >
+              <option value="">Select Company</option>
+              <option *ngFor="let employee of Employee" [value]="employee.employeeId">{{ employee.employeeName }}</option>
+            </select>              
+          </div>  -->         
+           
+           <div class="mb-3">
+             <label for="CompanyId" class="form-label">visiting Comany Name</label>
+             <select class="form-select" id="CompanyId" [(ngModel)]="odslip.visiting_Company_Id" name="visiting_Company_Id" >
+               <option value="">Select Company</option>
+               <option *ngFor="let company of Company" [value]="company.companyId">{{ company.companyFName }}</option>
+             </select>              
+           </div>
+           <div class="mb-3">
+            <label for="purpose" class="form-label">Purpose</label>
+            <input type="text" class="form-control" [(ngModel)]="odslip.purpose" id="purpose" name="purpose" placeholder="Enter Purpose" required>
+          </div>
+          <div class="mb-3">
+            <label for="from_Date" class="form-label">From Date</label>
+            <input type="text" class="form-control" [(ngModel)]="odslip.from_Date" id="from_Date" name="from_Date" placeholder="Enter From Date" required>
+          </div>
+          <div class="mb-3">
+            <label for="To_Date" class="form-label">To Date</label>
+            <input type="text" class="form-control" [(ngModel)]="odslip.to_Date" id="To_Date" name="to_Date" placeholder="Enter To Date" required>
+          </div>
+          <div class="mb-3">
+            <label for="How_Many_Days" class="form-label">No of Days</label>
+            <input type="text" class="form-control" [(ngModel)]="odslip.how_Many_Days" id="How_Many_Days" name="how_Many_Days" placeholder="Enter No of Days" required>
+          </div>
+
+          
+          
+         
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       
+         <button type="submit" class="btn btn-primary" (click)="saveodslip(odslip)">Save</button>
+         
+       </div>
+     </div>
+   </div>
+ </div>
 
 <app-common-dialog
     [showCloseIcon]="true"
