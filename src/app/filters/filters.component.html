@@ -1,90 +1,88 @@
 <div class="container">
   <div class="row">
-    <div *ngIf="filters.visibility.showMonthDropdown" class="col-md-4">
-      <div   class="form-group">
+    <div *ngIf="filters.selectedMonth.show" class="col-md-4">
+      <div class="form-group">
         <label for="month">Month</label>
-        <select [(ngModel)]="filters.selectedMonth" (change)="onFilterChange()" class="form-control" id="month">
+        <select [(ngModel)]="filters.selectedMonth.value" (change)="onFilterChange()" class="form-control" id="month">
           <option *ngFor="let month of months" [value]="month.number">{{ month.name }}</option>
         </select>
       </div>
     </div>
 
-    <div *ngIf="filters.visibility.showYearDropdown" class="col-md-4">
-      <div   class="form-group">
+    <div *ngIf="filters.selectedYear.show" class="col-md-4">
+      <div class="form-group">
         <label for="year">Year</label>
-        <select [(ngModel)]="filters.selectedYear" (change)="onFilterChange()" class="form-control" id="year">
+        <select [(ngModel)]="filters.selectedYear.value" (change)="onFilterChange()" class="form-control" id="year">
           <option *ngFor="let year of years" [value]="year">{{ year }}</option>
         </select>
       </div>
     </div>
 
-    <div *ngIf="filters.visibility.showCityDropdown" class="col-md-4">
-      <div   class="form-group">
+    <div *ngIf="filters.cityId.show" class="col-md-4">
+      <div class="form-group">
         <label for="city">City</label>
-        <select [(ngModel)]="filters.cityId" (change)="onCityChange()" class="form-control" id="city">
+        <select [(ngModel)]="filters.cityId.value" (change)="onCityChange()" class="form-control" id="city">
           <option value="">Select City</option>
-          <option *ngFor="let city of cities" [value]="city.cityId">{{city.cityName}}</option>
+          <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
         </select>
       </div>
     </div>
-  
-    <div *ngIf="filters.visibility.showCompanyDropdown" class="col-md-4">
-      <div   class="form-group">
-        <label for="city">Company</label>
-        <select [(ngModel)]="filters.companyId" (change)="onCompanyChange()" class="form-control" id="city">
+
+    <div *ngIf="filters.companyId.show" class="col-md-4">
+      <div class="form-group">
+        <label for="company">Company</label>
+        <select [(ngModel)]="filters.companyId.value" (change)="onCompanyChange()" class="form-control" id="company">
           <option value="">Select Company</option>
-          <option *ngFor="let company of companies" [value]="company.companyId">{{company.companyFName}}</option>
+          <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyFName }}</option>
         </select>
       </div>
     </div>
 
-    <div *ngIf="filters.visibility.showDesignationDropdown" class="col-md-4">
-      <div   class="form-group">
+    <div *ngIf="filters.designationId.show" class="col-md-4">
+      <div class="form-group">
         <label for="designation">Designation</label>
-        <select [(ngModel)]="filters.designationId" (change)="onDesignationChange()" class="form-control" id="designation">
+        <select [(ngModel)]="filters.designationId.value" (change)="onDesignationChange()" class="form-control" id="designation">
           <option value="">Select Designation</option>
-          <option *ngFor="let designation of designations" [value]="designation.designationId">{{designation.designationName}}</option>
+          <option *ngFor="let designation of designations" [value]="designation.designationId">{{ designation.designationName }}</option>
         </select>
       </div>
     </div>
 
-    <div *ngIf="filters.visibility.showDepartmentDropdown" class="col-md-4">
-      <div   class="form-group">
+    <div *ngIf="filters.deptId.show" class="col-md-4">
+      <div class="form-group">
         <label for="department">Department</label>
-        <select [(ngModel)]="filters.deptId" (change)="onDepartmentChange()" class="form-control" id="department">
+        <select [(ngModel)]="filters.deptId.value" (change)="onDepartmentChange()" class="form-control" id="department">
           <option value="">Select Department</option>
-          <option *ngFor="let department of departments" [value]="department.departmentId">{{department.departmentFName}}</option>
+          <option *ngFor="let department of departments" [value]="department.departmentId">{{ department.departmentFName }}</option>
         </select>
       </div>
     </div>
 
-    <div *ngIf="filters.visibility.showCategoryDropdown" class="col-md-4">
-      <div   class="form-group">
+    <div *ngIf="filters.catId.show" class="col-md-4">
+      <div class="form-group">
         <label for="category">Category</label>
-        <select [(ngModel)]="filters.catId" (change)="onCategoryChange()" class="form-control" id="category">
+        <select [(ngModel)]="filters.catId.value" (change)="onCategoryChange()" class="form-control" id="category">
           <option value="">Select Category</option>
-          <option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryFName}}</option>
+          <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryFName }}</option>
         </select>
       </div>
     </div>
 
-    <div *ngIf="filters.visibility.showEmployeeDropdown" class="col-md-4">
-      <div   class="form-group">
+    <div *ngIf="filters.employeeId.show" class="col-md-4">
+      <div class="form-group">
         <label for="employee">Enter Employee ID</label>
-        <input [(ngModel)]="filters.employeeId" (change)="onEmployeeChange()" class="form-control" id="employee" type="text" placeholder="Enter Employee ID">
-      </div>  
-    </div>
-
-    <div *ngIf="filters.visibility.showVendorDropdown" class="col-md-4">
-      <div   class="form-group">
-        <label for="vendor">Select Vendor</label>
-        <select [(ngModel)]="filters.vendorId" (change)="onVendorChange()" class="form-control" id="vendor">
-          <option value="">Select Vendor</option>
-          <option *ngFor="let vendor of vendors" [value]="vendor.vendorId">{{vendor.vendorName}}</option>
-        </select>
+        <input [(ngModel)]="filters.employeeId.value" (change)="onEmployeeChange()" class="form-control" id="employee" type="text" placeholder="Enter Employee ID">
       </div>
     </div>
 
-
+    <div *ngIf="filters.vendorId.show" class="col-md-4">
+      <div class="form-group">
+        <label for="vendor">Select Vendor</label>
+        <select [(ngModel)]="filters.vendorId.value" (change)="onVendorChange()" class="form-control" id="vendor">
+          <option value="">Select Vendor</option>
+          <option *ngFor="let vendor of vendors" [value]="vendor.vendorId">{{ vendor.vendorName }}</option>
+        </select>
+      </div>
+    </div>
   </div>
 </div>

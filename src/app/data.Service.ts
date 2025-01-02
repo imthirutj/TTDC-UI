@@ -118,6 +118,19 @@ export class DataService {
       .join('&');
   }
 
+  getPayloadValue(filters: any): any {
+    const payload: any = {};
+  
+    Object.keys(filters).forEach((key) => {
+      const filter = filters[key];
+      if (filter.includeInSearchParams) {
+        payload[filter.key] = filter.value;
+      }
+    });
+  
+    return payload;
+  }
+  
   showSnackBar(message: string): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: { message },

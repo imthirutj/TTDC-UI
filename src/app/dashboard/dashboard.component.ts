@@ -12,15 +12,22 @@ export class DashboardComponent {
   
 
  
-  filters:any = {
-    selectedMonth:Number(new Date().getMonth() ) +1,
-    selectedYear: new Date().getFullYear(), 
-    visibility:{
-      showMonthDropdown: true, 
-      showYearDropdown: true,
-    }
-    
+ 
+  filters: any = {
+    selectedMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: true,
+      key: 'selectedMonth',
+      includeInSearchParams:true
+    },
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: true,
+      key: 'selectedYear',
+      includeInSearchParams:true
+    },
   };
+  
 
   
   arraybox_list = [

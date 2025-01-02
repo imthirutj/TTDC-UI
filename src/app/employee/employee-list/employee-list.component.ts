@@ -20,30 +20,64 @@ export class EmployeeListComponent {
   employee: any;
 
   employeeForm!: FormGroup;
-
-  filters:any = {
-    selectedMonth:Number(new Date().getMonth() ) +1, // Default to current month
-    selectedYear: new Date().getFullYear(), // Default to current year
-    cityId: '', 
-    companyId:'',
-    designationId:'',
-    deptId:'',
-    catId:'',
-    employeeId:'',
-    vendorId:'',
-    visibility:{
-      showMonthDropdown: false, 
-      showYearDropdown: false,
-      showCityDropdown: true, 
-      showCompanyDropdown:true,
-      showDesignationDropdown:true,
-      showDepartmentDropdown:true,
-      showCategoryDropdown:true,
-      showEmployeeDropdown:true,
-      showVendorDropdown:true
-    }
-    
+  
+  filters: any = {
+    selectedMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: false,
+      key: 'selectedMonth',
+      includeInSearchParams:false
+    },
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: false,
+      key: 'selectedYear',
+      includeInSearchParams:false
+    },
+    cityId: {
+      value: '',
+      show: true,
+      key: 'cityId',
+      includeInSearchParams:true
+    },
+    companyId: {
+      value: '',
+      show: true,
+      key: 'companyId',
+      includeInSearchParams:true
+    },
+    designationId: {
+      value: '',
+      show: true,
+      key: 'designationId',
+      includeInSearchParams:true
+    },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams:true
+    },
+    catId: {
+      value: '',
+      show: true,
+      key: 'catId',
+      includeInSearchParams:true
+    },
+    employeeId: {
+      value: '',
+      show: true,
+      key: 'employeeId',
+      includeInSearchParams:true
+    },
+    vendorId: {
+      value: '',
+      show: true,
+      key: 'vendorId',
+      includeInSearchParams:true
+    },
   };
+  
 
 
   constructor(private masterDataService: MasterDataService, 
@@ -113,8 +147,8 @@ export class EmployeeListComponent {
   }
 
   getEmployeeList(): void {
-    // Clone the filters object and remove the visibility property
-    const { visibility, ...payload } = this.filters;
+    const payload = this.dataService.getPayloadValue(this.filters);
+
     this.masterDataService.getEmployeeList(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
