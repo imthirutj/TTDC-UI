@@ -13,7 +13,14 @@
           <th>Employee Code</th>  
           <th>Gender</th>  
           <th>AadhaarNumber</th>  
-          <th>Qualifications</th>  
+          <th>Educational Qualifications</th>  
+          <th>Experience</th>  
+          <th>DOB</th>  
+          <th>Age</th>  
+          <th>Place of work</th>  
+          <th>Contact Number</th>  
+          <th>Date of joining</th>
+          <th>Passed Out Year</th>  
           <th>Designation Name</th>  
           <th>Company Name</th>      
           <th>Department Name</th>      
@@ -30,7 +37,14 @@
             <td>{{ employee.employeeCode }}</td>           
             <td>{{ employee.gender }}</td>
             <td>{{ employee.aadhaarNumber }}</td>
-            <td>{{ employee.qualifications }}</td>
+            <td>{{ employee.qualifications }}</td>            
+            <td>{{ employee.experience }}</td>
+            <td>{{ employee.dob }}</td>
+            <td>{{ employee.age }}</td>
+            <td>{{ employee.workPlace }}</td>
+            <td>{{ employee.contactNo }}</td>
+            <td>{{ employee.doj }}</td>       
+            <td>{{ employee.passedOutYear }}</td>       
             <td>{{ employee.designationName }}</td>
             <td>{{ employee.companyFName }}</td>
             <td>{{ employee.departmentFName }}</td>
@@ -92,6 +106,34 @@
             <div class="mb-3">
               <label for="Qualifications" class="form-label">Qualifications</label>
               <input type="text" class="form-control" id="Qualifications" [(ngModel)]="employee.Qualifications" name="Qualifications" placeholder="Enter Qualifications">
+            </div>
+            <div class="mb-3">
+              <label for="experience" class="form-label">Experience</label>
+              <input type="text" class="form-control" id="experience" [(ngModel)]="employee.experience" name="experience" placeholder="Enter experience">
+            </div>
+            <div class="mb-3">
+              <label for="dob" class="form-label">Date Of Birth</label>
+              <input type="text" class="form-control" id="dob" [(ngModel)]="employee.dob" name="dob" placeholder="Enter Date Of Birth">
+            </div>
+            <div class="mb-3">
+              <label for="age" class="form-label">Age</label>
+              <input type="text" class="form-control" id="age" [(ngModel)]="employee.age" name="age" placeholder="Enter Age">
+            </div>
+            <div class="mb-3">
+              <label for="workPlace" class="form-label">Place Of work</label>
+              <input type="text" class="form-control" id="workPlace" [(ngModel)]="employee.workPlace" name="workPlace" placeholder="Enter Place Of work">
+            </div>
+            <div class="mb-3">
+              <label for="contactNo" class="form-label">Contact Number</label>
+              <input type="text" class="form-control" id="contactNo" [(ngModel)]="employee.contactNo" name="contactNo" placeholder="Enter Contact Number">
+            </div>
+            <div class="mb-3">
+              <label for="passedOutYear" class="form-label">Passed Out Year</label>
+              <input type="text" class="form-control" id="passedOutYear" [(ngModel)]="employee.passedOutYear" name="passedOutYear" placeholder="Enter passed Out Year">
+            </div>
+            <div class="mb-3">
+              <label for="doj" class="form-label">Date OF Joining</label>
+              <input type="text" class="form-control" id="doj" [(ngModel)]="employee.doj" name="doj" placeholder="Enter Date OF Joining">
             </div>
             <div class="mb-3">
               <label for="DesignationId" class="form-label">Designation Name</label>

@@ -70,14 +70,14 @@
   </div>
   <hr>
   <div class="row">   
-    <div class="col-md-8">
-        <p><strong>Approve Authority</strong></p>
-        <br>
+    <div class="col-md-6">
+        <p><strong>Approve Authority</strong></p>        
+        <button class="btn btn-success" (click)="approveODSlip()">Approve</button>
+          <button class="btn btn-danger" (click)="disapproveODSlip()">Disapprove</button>
         <p>Mr.{{payobj?.managerName}}</p>
     </div>
-    <div class="col-md-4" style="float: left;">
-        <p><strong>Authority signature</strong></p>
-        <br>
+    <div class="col-md-6" style="float: left;">
+        <p><strong>Authority signature</strong></p>        
         <p>Mr.{{payobj?.visitcomp_Manager}}</p>
     </div>  
   </div>

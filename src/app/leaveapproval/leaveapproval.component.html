@@ -1,0 +1,35 @@
+
+  <div class="Department-list-container">
+      <h3>Leave Request List</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>         
+            <th>Employee Name</th>
+            <th>Number Of Days</th>  
+            <th>Purpose</th>      
+            <th>Date</th>      
+            <th>Approval Status</th>                
+            <th>View Leave Request</th>    
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let leaverequst of leaverequstlist; let i = index">
+              <td>{{ i + 1 }}</td>                       
+              <td>{{ leaverequst.employeeName }}</td>
+              <td>{{ leaverequst.no_Of_Days }}</td>
+              <td>{{ leaverequst.purpose }}</td>
+              <td>{{ leaverequst.from_Date }} - {{ leaverequst.to_Date }}</td>
+              <td>{{ leaverequst.manager_Approval_Status }} </td>         
+              <td><a class="btn btn-primary"  data-bs-dismiss="modal"  type="button" [routerLink]="['/Leaveapprovalview']" [queryParams]="{ leaveRequest_Id: leaverequst.leaveRequest_Id }">
+                  View leave requst
+              </a></td>
+            </tr>          
+        </tbody>
+      </table>
+    </div>
+  
+    
+    
+    
+    

@@ -17,6 +17,11 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   UserType = UserType;
   userAccessLevel: any;
   user: any;
+  
+  odslip: any;
+  Employee: any[] = [];
+  Company: any[] = []; 
+  
 
   states: any[] = [];
   cities: any[] = [];
@@ -75,7 +80,20 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.fetchStates();
 
+    this.getCompanyList();
+      this.getEmployeeList();
+    
 
+    this.odslip={
+      employeeId: 0,
+      manager_Id: '3',
+      visiting_Company_Id: '',
+      purpose: '',
+      from_Date: '',
+      to_Date: '',
+      how_Many_Days: '',
+     
+    }
   }
 
 
@@ -199,5 +217,48 @@ export class EmployeeWorkDetailsComponent implements OnInit {
     })
 
   }
+
+  saveodslip(odslip: any): void {
+    console.log(odslip)
+      // if (!this.employeeForm) {
+      //   console.error('Form not initialized.');
+      //   return;
+      // }
+    
+      this.masterDataService.saveodslip(odslip).subscribe(
+        (response: any) => {
+          console.log('API Response:', response);
+          if (response.success) {
+            alert('odslip updated successfully.');            
+          } else {
+            alert(response.message || 'Failed to update odslip.');
+          }
+        },
+        (error: any) => {
+          console.error('Error updating odslip:', error);
+          alert('An error occurred while updating the odslip.');
+        }
+      );
+    }
+
+    getCompanyList(): void {
+      this.masterDataService.getCompanylist().subscribe((response: any) => {
+        if (response?.success && Array.isArray(response.data)) {
+          this.Company = response.data;
+        } else {
+          alert(response?.message || 'Failed to fetch Company list.');
+        }
+      });
+    }
+
+    getEmployeeList(): void {
+      this.masterDataService.getEmployees().subscribe((response: any) => {
+        if (response?.success && Array.isArray(response.data)) {
+          this.Employee = response.data;
+        } else {
+          alert(response?.message || 'Failed to fetch Employee list.');
+        }
+      });
+    }
 
 }

@@ -121,6 +121,24 @@ export class SidebarComponent {
         icon: 'fa-folder',
         route: '/odslipcompanylist',
         allowedUserTypes: ['ALL'] 
+      },
+      {
+        label: 'OD Slip Approval',
+        icon: 'fa-folder',
+        route: '/odslipapproval',
+        allowedUserTypes: ['ALL'] 
+      },
+      {
+        label: 'Leave Request',
+        icon: 'fa-folder',
+        route: '/empleaverequest',
+        allowedUserTypes: ['ALL'] 
+      },
+      {
+        label: 'Leave Approval',
+        icon: 'fa-folder',
+        route: '/Leaveapproval',
+        allowedUserTypes: ['ALL'] 
       }
     
     ];

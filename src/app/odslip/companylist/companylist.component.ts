@@ -32,7 +32,7 @@ export class CompanylistComponent {
       
     }
     getODCompany(): void {
-      const query = '?comp_id=20'; // Build the query string
+      const query = '?comp_id=33'; // Build the query string
       this.masterDataService.getODComapnyList(query).subscribe(
         (response: any) => {
           console.log('API Response:', response);

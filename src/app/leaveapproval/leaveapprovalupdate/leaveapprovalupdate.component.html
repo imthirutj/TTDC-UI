@@ -3,7 +3,7 @@
 <div id="pdfContent" class="card p-4">
 <div  >
   <div class="payslip-header">
-    <h3 style="text-align: center;">On-Duty SLIP</h3>    
+    <h3 style="text-align: center;">Leave Request Letter</h3>    
   </div>
   <br>
 
@@ -33,19 +33,20 @@
   </div>
   <div class="row">   
     <div class="col-md-4">
-        <p>Facility: <strong>{{payobj?.visitingComanyName}}</strong></p>
+        <p>Facility: <strong>{{payobj?.companyFName}}</strong></p>
     </div>
+    <!-- <div class="col-md-4">
+        <p>City: <strong>{{payobj?.cityName}}</strong></p>
+    </div> -->
     <div class="col-md-4">
-        <p>City: <strong>{{payobj?.visitingCityName}}</strong></p>
-    </div>
+        <p>purpose: <strong>{{payobj?.purpose}}</strong></p>
+    </div> 
     <div class="col-md-4">
-        <p>Manager Name: <strong>{{payobj?.managerName}}</strong></p>
-    </div>   
+      <p>Number of Days: <strong>{{payobj?.no_Of_Days}}</strong></p>
+  </div>  
   </div>
   <div class="row">   
-    <div class="col-md-4">
-        <p>Purpose: <strong>{{payobj?.purpose}}</strong></p>
-    </div>
+    
     <div class="col-md-4">
         <p>From : <strong>{{payobj?.from_Date}}</strong></p>
     </div>
@@ -57,12 +58,12 @@
   <hr>
   <div class="row">   
     <div class="col-md-12">
-        <p><strong>Purpose of visit</strong></p>
+        <p><strong>Purpose of Leave</strong></p>
     </div>
-    <div class="col-md-12">
-        <p>Mr.{{payobj?.employeeName}} will be visiting {{payobj?.visitingCityName}} from {{payobj?.from_Date}} to {{payobj?.to_Date}} for the purpose of the
-          {{payobj?.purpose}}. Kindly approve this as on-duty.             
-        </p>
+    <div class="col-md-12">      
+        <p>            
+            I am request leave for {{payobj?.no_Of_Days}}, from {{payobj?.from_Date}} to {{payobj?.to_Date}} for the purpose of {{payobj?.purpose}} 
+          </p>
     </div>
     <div class="col-md-12">
         <p>Thank you</p>
@@ -71,14 +72,14 @@
   <hr>
   <div class="row">   
     <div class="col-md-8">
-        <p><strong>Approve Authority</strong></p>
-        <br>
-        <p>Mr.{{payobj?.managerName}}</p>
+        <p><strong>Approve Authority</strong></p>        
+        <p>Mr.{{payobj?.employeeName}}</p>
     </div>
     <div class="col-md-4" style="float: left;">
         <p><strong>Authority signature</strong></p>
-        <br>
-        <p>Mr.{{payobj?.visitcomp_Manager}}</p>
+        <button class="btn btn-success" (click)="approveODSlip()">Approve</button>
+          <button class="btn btn-danger" (click)="disapproveODSlip()">Disapprove</button>
+        <p>Mr.{{payobj?.manager}}</p>
     </div>  
   </div>
 

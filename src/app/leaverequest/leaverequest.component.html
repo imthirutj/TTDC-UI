@@ -1,0 +1,86 @@
+<button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+    Add Leave Request
+  </button>
+  <div class="Department-list-container">
+      <h3>Leave Request List</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>         
+            <th>Employee Name</th>
+            <th>Number Of Days</th>  
+            <th>Purpose</th>      
+            <th>Date</th>      
+            <th>Approval Status</th>                
+            <th>View Leave Request</th>    
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let leaverequst of leaverequstlist; let i = index">
+              <td>{{ i + 1 }}</td>                       
+              <td>{{ leaverequst.employeeName }}</td>
+              <td>{{ leaverequst.no_Of_Days }}</td>
+              <td>{{ leaverequst.purpose }}</td>
+              <td>{{ leaverequst.from_Date }} - {{ leaverequst.to_Date }}</td>
+              <td>{{ leaverequst.manager_Approval_Status }} </td>         
+              <td><a class="btn btn-primary"  data-bs-dismiss="modal"  type="button" [routerLink]="['/leaverequestview']" [queryParams]="{ leaveRequest_Id: leaverequst.leaveRequest_Id }">
+                  View leave requst
+              </a></td>
+            </tr>          
+        </tbody>
+      </table>
+    </div>
+  
+     <!-- Add Employee Modal -->
+     <div
+     class="modal fade"
+     id="addEmployeeModal"
+     tabindex="-1"
+     aria-labelledby="addEmployeeModalLabel"
+     aria-hidden="true"
+   >
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="addEmployeeModalLabel">Add/Edit Leave Requset</h5>
+           <button
+             type="button"
+             class="btn-close"
+             data-bs-dismiss="modal"
+             aria-label="Close"
+           ></button>
+         </div>
+         <div class="modal-body">                                           
+             <div class="mb-3">
+              <label for="purpose" class="form-label">Purpose</label>
+              <input type="text" class="form-control" [(ngModel)]="leaverequset.purpose" id="purpose" name="purpose" placeholder="Enter Purpose" required>
+            </div>
+            <div class="mb-3">
+              <label for="from_Date" class="form-label">From Date</label>
+              <input type="text" class="form-control" [(ngModel)]="leaverequset.from_Date" id="from_Date" name="from_Date" placeholder="Enter From Date" required>
+            </div>
+            <div class="mb-3">
+              <label for="To_Date" class="form-label">To Date</label>
+              <input type="text" class="form-control" [(ngModel)]="leaverequset.to_Date" id="To_Date" name="to_Date" placeholder="Enter To Date" required>
+            </div>
+            <div class="mb-3">
+              <label for="How_Many_Days" class="form-label">No of Days</label>
+              <input type="text" class="form-control" [(ngModel)]="leaverequset.how_Many_Days" id="How_Many_Days" name="how_Many_Days" placeholder="Enter No of Days" required>
+            </div>
+  
+            
+            
+           
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         
+           <button type="submit" class="btn btn-primary" (click)="saveleaverequset(leaverequset)">Save</button>
+           
+         </div>
+       </div>
+     </div>
+   </div>
+    
+    
+    

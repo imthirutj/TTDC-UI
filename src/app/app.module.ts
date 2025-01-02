@@ -51,6 +51,13 @@ import { OdslipComponent } from './odslip/odslip.component';
 import { ErrorComponent } from './error/error.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { CompanylistComponent } from './odslip/companylist/companylist.component';
+import { LeaverequestComponent } from './leaverequest/leaverequest.component';
+import { ViewComponent } from './leaverequest/view/view.component';
+import { OdslipapprovalComponent } from './odslipapproval/odslipapproval.component';
+import { OdapprovalviewComponent } from './odslipapproval/odapprovalview/odapprovalview.component';
+import { LeaveapprovalComponent } from './leaveapproval/leaveapproval.component';
+import { LeaveapprovalupdateComponent } from './leaveapproval/leaveapprovalupdate/leaveapprovalupdate.component';
+
 
 @NgModule({
   declarations: [
@@ -80,6 +87,8 @@ import { CompanylistComponent } from './odslip/companylist/companylist.component
     ErrorComponent,
     VendorComponent,
     CompanylistComponent,
+    LeaverequestComponent,    
+    ViewComponent, OdslipapprovalComponent, OdapprovalviewComponent, LeaveapprovalComponent, LeaveapprovalupdateComponent, 
   ],
   imports: [
     HttpClientModule,

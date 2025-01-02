@@ -128,8 +128,26 @@ export class MasterDataService {
   getODDetails(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/ODslip_View`+query);
   }
+
+  LeaveRequest_View(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/LeaveRequest_View`+query);
+  }
   
+  saveLeaveRequest(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/InsertUpdateLeaveRequest`, query);
+  }
+
+  getLeaveRequest(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/LeaveRequest_View`+query);
+  }
   
+  approveODSlip(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/UpdateODSLIP_ApprovalStatus`, query);
+  }
+
+  approveLeaveRequest(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/UpdateLeaveRequest_ApprovalStatus`, query);
+  }
 
 
 }
