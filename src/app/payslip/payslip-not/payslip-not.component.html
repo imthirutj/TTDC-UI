@@ -1,5 +1,14 @@
 <div class="Department-list-container">
     <h3>Payslip Generated Employees</h3>
+
+    <div class="card">
+      <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+       (triggerParentFunction)="getEmployeeList()">
+      </app-filter>
+      <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    </div>
+
+    
     <table class="table table-bordered">
       <thead>
         <tr>

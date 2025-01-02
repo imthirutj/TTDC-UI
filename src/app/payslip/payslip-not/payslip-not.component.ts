@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from 'src/app/data.Service';
 import { MasterDataService } from 'src/app/services/master-data.service';
 
 @Component({
@@ -8,69 +9,140 @@ import { MasterDataService } from 'src/app/services/master-data.service';
   styleUrls: ['./payslip-not.component.css']
 })
 export class PayslipNotComponent {
-  payId:any
-  Department: any[] = []; 
-  payslips:any[]=[]
-  employee:any
-    constructor(private masterDataService: MasterDataService,private route: ActivatedRoute,private router: Router) {}
-    ngOnInit(): void {
-      this.getDepartmentList(); 
-      
-    }
-    getDepartmentList(): void {
-      this.masterDataService.getpayslipList('?EffPeriod=Nov-2024').subscribe(
-        (response: any) => {
-          console.log('API Response:', response);
-          if (response.success && Array.isArray(response.data.pendingRecords)) {
-            this.Department = response.data.pendingRecords; 
-            
-          } else {
-            alert(response.message || 'Failed to fetch Department list.');
-          }
-        },
-        (error) => {
-          console.error('Error fetching Department list:', error);
-          alert('An error occurred while fetching the Department list.');
+  payId: any
+  Department: any[] = [];
+  payslips: any[] = []
+  employee: any;
+
+  filters: any = {
+    selectedMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: true,
+      key: 'month',
+      includeInSearchParams:true
+    },
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: true,
+      key: 'year',
+      includeInSearchParams:true
+    },
+    cityId: {
+      value: '',
+      show: true,
+      key: 'cityId',
+      includeInSearchParams:true
+    },
+    companyId: {
+      value: '',
+      show: true,
+      key: 'companyId',
+      includeInSearchParams:true
+    },
+    designationId: {
+      value: '',
+      show: true,
+      key: 'designationId',
+      includeInSearchParams:true
+    },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams:true
+    },
+    catId: {
+      value: '',
+      show: true,
+      key: 'catId',
+      includeInSearchParams:true
+    },
+    employeeId: {
+      value: '',
+      show: true,
+      key: 'employeeId',
+      includeInSearchParams:true
+    },
+    vendorId: {
+      value: '',
+      show: true,
+      key: 'vendorId',
+      includeInSearchParams:true
+    },
+  };
+
+  constructor(private masterDataService: MasterDataService, 
+    private route: ActivatedRoute, private router: Router,
+    private dataService : DataService
+  ) { }
+  ngOnInit(): void {
+    //this.getEmployeeList();
+
+  }
+
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.getEmployeeList();
+  }
+
+  search(){
+    this.getEmployeeList();
+  }
+
+  
+  getEmployeeList(): void {
+    const payload = this.dataService.getPayloadValue(this.filters);
+    this.masterDataService.getpayslipList(payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success && Array.isArray(response.data.pendingRecords)) {
+          this.Department = response.data.pendingRecords;
+
+        } else {
+          alert(response.message || 'Failed to fetch Department list.');
         }
-      );
-    }
-    show_list_slip(obj_clicked:any)
-    {
-      this.employee=obj_clicked
-      this.masterDataService.payslips('?EffPeriod=Nov-2024&EmpId='+obj_clicked.employeeId+'').subscribe(
-        (response: any) => {
-          console.log('API Response:', response);
-          if (response.success && Array.isArray(response.data.pendingRecords)) {
-            this.payslips = response.data.pendingRecords;            
-          } else {
-            alert(response.message || 'Failed to fetch Department list.');
-          }
-        },
-        (error) => {
-          console.error('Error fetching Department list:', error);
-          alert('An error occurred while fetching the Department list.');
+      },
+      (error) => {
+        console.error('Error fetching Department list:', error);
+        alert('An error occurred while fetching the Department list.');
+      }
+    );
+  }
+  show_list_slip(obj_clicked: any) {
+    this.employee = obj_clicked
+    this.masterDataService.payslips('?EffPeriod=Nov-2024&EmpId=' + obj_clicked.employeeId + '').subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success && Array.isArray(response.data.pendingRecords)) {
+          this.payslips = response.data.pendingRecords;
+        } else {
+          alert(response.message || 'Failed to fetch Department list.');
         }
-      );
-    }
-    generate_payslip(obj_clicked:any)
-    {
-      let objec={EmpId:obj_clicked.employeeId}
-      let st="?EmpId="+obj_clicked.employeeId+""
-      this.masterDataService.generatePay(st).subscribe(
-        (response: any) => {
-          console.log('API Response:', response);
-          if (response.success) {
-            alert(response.message);    
-            this.router.navigate(['/payslip-records']);     
-          } else {
-            alert(response.message );
-          }
-        },
-        (error) => {
-          console.error('Error fetching Department list:', error);
-          alert('An error occurred while fetching the Department list.');
+      },
+      (error) => {
+        console.error('Error fetching Department list:', error);
+        alert('An error occurred while fetching the Department list.');
+      }
+    );
+  }
+  generate_payslip(obj_clicked: any) {
+    let objec = { EmpId: obj_clicked.employeeId }
+    let st = "?EmpId=" + obj_clicked.employeeId + ""
+    this.masterDataService.generatePay(st).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          alert(response.message);
+          this.router.navigate(['/payslip-records']);
+        } else {
+          alert(response.message);
         }
-      );
-    }
+      },
+      (error) => {
+        console.error('Error fetching Department list:', error);
+        alert('An error occurred while fetching the Department list.');
+      }
+    );
+  }
 }
 

@@ -109,7 +109,8 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Employee/GetEmployees?${queryParams}`);
   }
   getpayslipList(query:any): Observable<any> {
-    return this.http.get(`${this.apiUrl}payroll/getpaysliprecords`+query);
+    const queryParams = this.dataService.buildQueryParams(query);
+    return this.http.get(`${this.apiUrl}payroll/getpaysliprecords?${queryParams}`);
   }
   payslips(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}payroll/getpayslipbyEmpId`+query);

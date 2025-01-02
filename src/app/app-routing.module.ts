@@ -46,84 +46,123 @@ const routes: Routes = [
   {
     path: 'savestate',
     component: StateComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'state',
-    component: ListComponent
+    component: ListComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'city',
-    component: CityComponent
+    component: CityComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'category',
-    component: CategoryComponent
+    component: CategoryComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'department',
-    component: DepartmentComponent
+    component: DepartmentComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'company',
-    component: CompanyComponent
+    component: CompanyComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'designation',
-    component: DesignationComponent
+    component: DesignationComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'employee',
-    component: EmployeeListComponent
+    component: EmployeeListComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'payslip-records',
-    component: PayslipRecordsComponent
+    component: PayslipRecordsComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'payslip-records-waiting',
-    component: PayslipNotComponent
+    component: PayslipNotComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'payslip/:payId',
-    component: PaySlipComponent
+    component: PaySlipComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'odslip',
-    component: OdslipComponent
+    component: OdslipComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'odslipcompanylist',
-    component: CompanylistComponent
+    component: CompanylistComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'odslipapproval',
-    component: OdslipapprovalComponent
+    component: OdslipapprovalComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'odslipapprovalview',
-    component: OdapprovalviewComponent
+    component: OdapprovalviewComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
 
   {
     path: 'empleaverequest',
-    component: LeaverequestComponent
+    component: LeaverequestComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'leaverequestview',
-    component: ViewComponent
+    component: ViewComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'Leaveapproval',
-    component: LeaveapprovalComponent
+    component: LeaveapprovalComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'Leaveapprovalview',
-    component: LeaveapprovalupdateComponent
+    component: LeaveapprovalupdateComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'vendor-invoice-details',
     component: VendorInvoiceDetailsComponent,
     canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {
     path: 'shift-management',
@@ -137,12 +176,14 @@ const routes: Routes = [
     component:EmployeeWorkDetailsComponent,
     canActivate: [AuthGuard],
     data: { roles: [UserType.MANAGER] },
+    
   },
 
   {
     path: 'vendor',
     component: VendorComponent,
     canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
   },
   {path:'error', component:ErrorComponent},
   

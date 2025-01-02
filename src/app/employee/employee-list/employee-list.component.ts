@@ -25,13 +25,13 @@ export class EmployeeListComponent {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
       show: false,
-      key: 'selectedMonth',
+      key: 'month',
       includeInSearchParams:false
     },
     selectedYear: {
       value: new Date().getFullYear(), // Default to current year
       show: false,
-      key: 'selectedYear',
+      key: 'year',
       includeInSearchParams:false
     },
     cityId: {
