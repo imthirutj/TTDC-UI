@@ -97,6 +97,12 @@ export class SidebarComponent {
         route: `/designation`, 
         allowedUserTypes: [ 'ALL'] 
       },
+      { 
+        label: 'Degree List', 
+        icon: 'fa-folder', 
+        route: `/degree`, 
+        allowedUserTypes: [ 'ALL'] 
+      },
       {
         label: 'Shift Management',
         icon: 'fa-folder',
