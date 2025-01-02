@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, SimpleChanges } from '@angular/core';
 import { myMonths, myYears } from '../utils/helpers/variables';
 import { MasterDataService } from '../services/master-data.service'; // Make sure to import your service
 import { DataService } from '../data.Service';
@@ -11,17 +11,7 @@ import { UserType } from '../common/user-type.enum';
 })
 export class FiltersComponent implements OnInit {
 
-  @Input() filters: any = {
-    selectedMonth: { value: Number(new Date().getMonth()) + 1, show: false, key: 'selectedMonth' },
-    selectedYear: { value: new Date().getFullYear(), show: false, key: 'selectedYear' },
-    cityId: { value: '', show: true, key: 'cityId' },
-    companyId: { value: '', show: true, key: 'companyId' },
-    designationId: { value: '', show: true, key: 'designationId' },
-    deptId: { value: '', show: true, key: 'deptId' },
-    catId: { value: '', show: true, key: 'catId' },
-    employeeId: { value: '', show: true, key: 'employeeId' },
-    vendorId: { value: '', show: true, key: 'vendorId' }
-  };
+  @Input() filters: any = {};
 
   @Output() filterChanged = new EventEmitter<{ month: number, year: number, cityId: string }>();
   @Output() triggerParentFunction = new EventEmitter<void>();
@@ -55,7 +45,28 @@ export class FiltersComponent implements OnInit {
   }
   //#endregion
 
+ 
+
   ngOnInit(): void {
+    if (this.filters) {
+      this.filters.selectedMonth = this.filters.selectedMonth || { value: Number(new Date().getMonth()) + 1, show: false, key: 'selectedMonth', includeInSearchParams: true };
+      this.filters.selectedYear = this.filters.selectedYear || { value: new Date().getFullYear(), show: false, key: 'selectedYear', includeInSearchParams: true };
+      this.filters.cityId = this.filters.cityId || { value: '', show: false, key: 'cityId' };
+      this.filters.companyId = this.filters.companyId || { value: '', show: false, key: 'companyId' };
+      this.filters.designationId = this.filters.designationId || { value: '', show: false, key: 'designationId' };
+      this.filters.deptId = this.filters.deptId || { value: '', show: false, key: 'deptId' };
+      this.filters.catId = this.filters.catId || { value: '', show: false, key: 'catId' };
+      this.filters.employeeId = this.filters.employeeId || { value: '', show: false, key: 'employeeId' };
+      this.filters.vendorId = this.filters.vendorId || { value: '', show: false, key: 'vendorId' };
+    }
+
+    // Ensure all filters have a `show` property set to true if missing
+    Object.keys(this.filters).forEach((key) => {
+      if (this.filters[key] && this.filters[key].show === undefined) {
+        this.filters[key].show = false; 
+      }
+    });
+
     this.fetchCities();
     this.fetchDepartments();
     this.fetchDesignations();
