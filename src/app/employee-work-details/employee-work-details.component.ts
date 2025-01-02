@@ -53,6 +53,64 @@ export class EmployeeWorkDetailsComponent implements OnInit {
     
   ];
 
+  
+  filters: any = {
+    selectedMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: true,
+      key: 'month',
+      includeInSearchParams: true
+    },
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: true,
+      key: 'year',
+      includeInSearchParams: true
+    },
+    cityId: {
+      value: '',
+      show: true,
+      key: 'cityId',
+      includeInSearchParams: true
+    },
+    companyId: {
+      value: '',
+      show: true,
+      key: 'companyId',
+      includeInSearchParams: true
+    },
+    designationId: {
+      value: '',
+      show: true,
+      key: 'designationId',
+      includeInSearchParams: true
+    },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams: true
+    },
+    catId: {
+      value: '',
+      show: true,
+      key: 'catId',
+      includeInSearchParams: true
+    },
+    employeeId: {
+      value: '',
+      show: true,
+      key: 'employeeId',
+      includeInSearchParams: true
+    },
+    vendorId: {
+      value: '',
+      show: true,
+      key: 'vendorId',
+      includeInSearchParams: true
+    },
+  };
+
   constructor(
 
     private masterDataService: MasterDataService,
@@ -98,6 +156,15 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   }
 
 
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.fetchEmployeeWorkDetails();
+  }
+
+  search(){
+    this.fetchEmployeeWorkDetails();
+  }
+
   //#region  Fetch
 
   fetchStates() {
@@ -122,14 +189,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
 
   fetchEmployeeWorkDetails(): void {
-    const payload = {
-      stateId: this.selectedStateId,
-      cityId: this.selectedCityId,
-      compId: this.selectedCompanyId,
-      month: this.selectedMonth,
-      year: this.selectedYear
-    };
-
+    const payload = this.dataService.getPayloadValue(this.filters);
     this.employeeWorkDetailsService.getEmployeeWorkDetails(payload).subscribe((response) => {
       if (response.success) {
         this.employeeWorkDetails = response.data;

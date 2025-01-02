@@ -30,7 +30,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   // List of employees
   employees: any[] = [];
 
- months = myMonths;
+  months = myMonths;
   years = myYears;
 
 
@@ -49,45 +49,113 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   daysPerPage: number = 7;  // Show 7 days per page
 
   // In your component
-shiftColors:any = {
-  "Weekly Off": "#F5A623", // Example color
-  "Fixed Shift": "#50E3C2",
-  "NoShift": "#D0021B",
-  "Holiday": "#4A90E2",
-  "General": "#B8E986",
-  "Sample Calendar": "#9013FE",
-  "Night Shift": "#F8E71C"
-};
+  shiftColors: any = {
+    "Weekly Off": "#F5A623", // Example color
+    "Fixed Shift": "#50E3C2",
+    "NoShift": "#D0021B",
+    "Holiday": "#4A90E2",
+    "General": "#B8E986",
+    "Sample Calendar": "#9013FE",
+    "Night Shift": "#F8E71C"
+  };
+
+
+  filters: any = {
+    selectedMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: true,
+      key: 'month',
+      includeInSearchParams: true
+    },
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: true,
+      key: 'year',
+      includeInSearchParams: true
+    },
+    cityId: {
+      value: '',
+      show: true,
+      key: 'cityId',
+      includeInSearchParams: true
+    },
+    companyId: {
+      value: '',
+      show: true,
+      key: 'companyId',
+      includeInSearchParams: true
+    },
+    designationId: {
+      value: '',
+      show: true,
+      key: 'designationId',
+      includeInSearchParams: true
+    },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams: true
+    },
+    catId: {
+      value: '',
+      show: true,
+      key: 'catId',
+      includeInSearchParams: true
+    },
+    employeeId: {
+      value: '',
+      show: true,
+      key: 'employeeId',
+      includeInSearchParams: true
+    },
+    vendorId: {
+      value: '',
+      show: true,
+      key: 'vendorId',
+      includeInSearchParams: true
+    },
+  };
+
 
 
   constructor(
     private fb: FormBuilder,
     private masterDataService: MasterDataService,
-    private dataService :DataService,
+    private dataService: DataService,
 
-    private shiftService: ShiftService) { 
-      this.selectedMonth = new Date().getMonth() + 1;
-      this.selectedYear = new Date().getFullYear();
-      this.dataService.asyncGetUser().then((user:any) => {
-        this.user = user;
-        this.userAccessLevel = user.role;
-        console.log('User Access Level:', this.userAccessLevel);
+    private shiftService: ShiftService) {
+    this.selectedMonth = new Date().getMonth() + 1;
+    this.selectedYear = new Date().getFullYear();
+    this.dataService.asyncGetUser().then((user: any) => {
+      this.user = user;
+      this.userAccessLevel = user.role;
+      console.log('User Access Level:', this.userAccessLevel);
 
-        if(this.userAccessLevel === UserType.MANAGER){
-          this.selectedCompanyId = this.user.companyId;
-          if(!this.selectedCompanyId){
-            this.dataService.showSnackBar('Company not found');
-          }
-          this.fetchEmployeeShifts();
+      if (this.userAccessLevel === UserType.MANAGER) {
+        this.selectedCompanyId = this.user.companyId;
+        if (!this.selectedCompanyId) {
+          this.dataService.showSnackBar('Company not found');
         }
-      });
-    }
+        this.fetchEmployeeShifts();
+      }
+    });
+  }
 
 
   ngOnInit() {
     this.fetchStates();
     this.fetchShifts();
     this.generateDateRange();
+  }
+
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.fetchEmployeeShifts();
+  }
+
+  search(){
+    this.fetchEmployeeShifts();
   }
 
   getShiftColor(shift: string): string {
@@ -137,12 +205,7 @@ shiftColors:any = {
   }
 
   fetchEmployeeShifts() {
-    const payload = {
-      cityId: this.selectedCityId,
-      compId: this.selectedCompanyId,
-      month: Number(this.selectedMonth),
-      year: this.selectedYear
-    };
+    const payload = this.dataService.getPayloadValue(this.filters);
     this.shiftService.getEmployeeShifts(payload).subscribe((response) => {
       if (response.success) this.employees = response.data;
     });
@@ -220,16 +283,16 @@ shiftColors:any = {
 
   generateDateRange(): void {
     // Ensure that the start date is the 26th of the selected month
-    const startDate = new Date(this.selectedYear, (this.selectedMonth-1), 26+1);
+    const startDate = new Date(this.selectedYear, (this.selectedMonth - 1), 26 + 1);
 
     // Get the next month using the getNextMonth function
-    const endMonth = this.getNextMonth(this.selectedMonth -1 );
+    const endMonth = this.getNextMonth(this.selectedMonth - 1);
 
     // Get the next year using the getNextYear function
-    const endYear = this.getNextYear(this.selectedYear, this.selectedMonth-1);
+    const endYear = this.getNextYear(this.selectedYear, this.selectedMonth - 1);
 
     // Ensure that the end date is the 25th of the next month
-    const endDate = new Date(endYear, endMonth, 25+1);
+    const endDate = new Date(endYear, endMonth, 25 + 1);
 
     // Initialize the dateRange array
     this.dateRange = [];
@@ -300,8 +363,8 @@ shiftColors:any = {
     console.log(payloadCopy);
     this.shiftService.updateEmployeeShifts(payloadCopy).subscribe((response) => {
       if (response.success) {
-       this.dataService.showSnackBar('Shifts updated successfully');
-       this.fetchEmployeeShifts();
+        this.dataService.showSnackBar('Shifts updated successfully');
+        this.fetchEmployeeShifts();
       } else {
         this.dataService.showSnackBar('Failed to update shifts');
       }

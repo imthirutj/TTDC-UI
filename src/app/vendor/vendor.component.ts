@@ -39,6 +39,34 @@ export class VendorComponent implements OnInit {
 
   isVendorModalOpen: boolean = false;
   selectedVendor: any ={};
+
+  
+  filters: any = {
+    selectedMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: true,
+      key: 'month',
+      includeInSearchParams: true
+    },
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: true,
+      key: 'year',
+      includeInSearchParams: true
+    },
+    companyId: {
+      value: '',
+      show: false,
+      key: 'companyId',
+      includeInSearchParams: false
+    },
+    vendorId: {
+      value: '',
+      show: true,
+      key: 'vendorId',
+      includeInSearchParams: true
+    },
+  };
   constructor(
     private router: Router,
     private masterDataService: MasterDataService,
@@ -53,6 +81,15 @@ export class VendorComponent implements OnInit {
       console.log('User Access Level:', this.userAccessLevel);
 
     });
+  }
+
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.fetchPayRecordsbyComp();
+  }
+
+  search(){
+    this.fetchPayRecordsbyComp();
   }
 
 
@@ -85,10 +122,7 @@ export class VendorComponent implements OnInit {
   }
 
   fetchPayRecordsbyComp(){
-    var payload = {
-      month: this.selectedMonth,
-      year: this.selectedYear
-    }
+    const payload = this.dataService.getPayloadValue(this.filters);
     this.vendorService.getPayRecordsbyComp(payload).subscribe((response:any) => {
       if (response.success) {
         this.companyVendors = response.data;

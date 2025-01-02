@@ -2,65 +2,12 @@
     <h2>Employee Work Details</h2>
   
     <div class="card">
-      <div class="card-body">
-          <!-- State, City, and Company Selection Section -->
-          <div class="row mb-4">
-              <!-- State Dropdown -->
-              <div  class="col-md-4">
-                  <label for="state">State</label>
-                  <select id="state" class="form-control" [(ngModel)]="selectedStateId" (change)="onStateChange()">
-                      <option value="" disabled selected>Select State</option>
-                      <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
-                  </select>
-              </div>
-
-              <!-- City Dropdown -->
-              <div class="col-md-4">
-                  <label for="city">City</label>
-                  <select id="city" class="form-control" [(ngModel)]="selectedCityId" (change)="onCityChange()">
-                      <option value="" disabled selected>Select City</option>
-                      <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
-                  </select>
-              </div>
-
-              <!-- Company Dropdown -->
-              <div  class="col-md-8">
-                  <label for="company">Company</label>
-                 <select  id="company" class="form-control" [(ngModel)]="selectedCompanyId"
-                      (change)="onCompanyChange()">
-                      <option value="" disabled selected>Select Company</option>
-                      <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyFName }}
-                      </option>
-                  </select>
-              </div>
-          </div>
-
-         
-      </div>
+      <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+          (triggerParentFunction)="fetchPayRecordsbyComp()">
+      </app-filter>
+      <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
-  <br>
-  <div class="card">
-      <div class="card-body">
-          <!-- Month and Year Selector -->
-          <div class="row mb-3">
-              <div class="col d-flex justify-content-between">
-                  <!-- Month Selector -->
-                  <select [(ngModel)]="selectedMonth" (change)="onMonthYearChange()" class="form-control w-25">
-                      <option *ngFor="let month of months" [value]="month.number">{{ month.name }}</option>
-                  </select>
 
-                  <!-- Year Selector -->
-                  <select [(ngModel)]="selectedYear" (change)="onMonthYearChange()" class="form-control w-25">
-                      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-                  </select>
-              </div>
-          </div>
-
-      </div>
-  </div>
-  
-  <button class="btn btn-primary" (click)="fetchPayRecordsbyComp()">Search</button>
-    
   <div class="container mt-4">
     <h3>Vendor Payment Details</h3>
     <table class="table table-striped table-bordered">

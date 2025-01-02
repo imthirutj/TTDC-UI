@@ -1,96 +1,45 @@
 <div class="container">
     <h2 class="mt-4">Employee Shift Calendar</h2>
 
+
     <div class="card">
-        <div class="card-body">
-            <!-- State, City, and Company Selection Section -->
-            <div class="row mb-4">
-                <!-- State Dropdown -->
-                <div *ngIf="false" class="col-md-4">
-                    <label for="state">State</label>
-                    <select id="state" class="form-control" [(ngModel)]="selectedStateId" (change)="onStateChange()">
-                        <option value="" disabled selected>Select State</option>
-                        <option *ngFor="let state of states" [value]="state.stateId">{{ state.stateName }}</option>
-                    </select>
-                </div>
-
-                <!-- City Dropdown -->
-                <div *ngIf="false"  class="col-md-4">
-                    <label for="city">City</label>
-                    <select id="city" class="form-control" [(ngModel)]="selectedCityId" (change)="onCityChange()">
-                        <option value="" disabled selected>Select City</option>
-                        <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
-                    </select>
-                </div>
-
-                <!-- Company Dropdown -->
-                <div  class="col-md-8">
-                    <label for="company">Company</label>
-
-                    <input type="text" class="form-control" [(ngModel)]="user.companyName" disabled>
-                    <select *ngIf="false" id="company" class="form-control" [(ngModel)]="selectedCompanyId"
-                        (change)="onCompanyChange()">
-                        <option value="" disabled selected>Select Company</option>
-                        <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyFName }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <button class="btn btn-primary" (click)="fetchEmployeeShifts()">Search</button>
-        </div>
+        <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+            (triggerParentFunction)="fetchEmployeeShifts()">
+        </app-filter>
+        <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
     </div>
+
     <br>
-    <div class="card">
-        <div class="card-body">
-            <!-- Month and Year Selector -->
-            <div class="row mb-3">
-                <div class="col d-flex justify-content-between">
-                    <!-- Month Selector -->
-                    <select [(ngModel)]="selectedMonth" (change)="onMonthYearChange()" class="form-control w-25">
-                        <option *ngFor="let month of months" [value]="month.number">{{ month.name }}</option>
-                    </select>
 
-                    <!-- Year Selector -->
-                    <select [(ngModel)]="selectedYear" (change)="onMonthYearChange()" class="form-control w-25">
-                        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-                    </select>
-                </div>
-            </div>
 
-        </div>
+    <!-- Employee Shifts Table -->
+    <div style="overflow-y: auto; max-height: 500px;">
+        <table class="table table-bordered">
+            <thead class="sticky-header">
+                <tr>
+                    <th>Employee</th>
+                    <th *ngFor="let date of getCurrentDates()">
+                        <!-- Show date as MM-DD -->
+                        {{ date | date: 'MMM dd' }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employees">
+                    <td>{{ employee.name }}</td>
+                    <td *ngFor="let date of getCurrentDates()"
+                        [ngStyle]="{ 'background-color': getShiftColor(employee.shifts[date]) }">
+                        <select class="form-control shift-select" [(ngModel)]="employee.shifts[date]"
+                            (change)="onShiftChange(employee, date)">
+                            <option *ngFor="let shift of shiftTypes" [value]="shift">
+                                {{ shift }}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    
-<!-- Employee Shifts Table -->
-<div style="overflow-y: auto; max-height: 500px;">
-    <table class="table table-bordered">
-        <thead class="sticky-header">
-            <tr>
-                <th>Employee</th>
-                <th *ngFor="let date of getCurrentDates()">
-                    <!-- Show date as MM-DD -->
-                    {{ date | date: 'MMM dd' }}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let employee of employees">
-                <td>{{ employee.name }}</td>
-                <td *ngFor="let date of getCurrentDates()"
-                [ngStyle]="{ 'background-color': getShiftColor(employee.shifts[date]) }">
-                    <select class="form-control shift-select" 
-                            [(ngModel)]="employee.shifts[date]"
-                            (change)="onShiftChange(employee, date)"
-                            >
-                        <option *ngFor="let shift of shiftTypes" [value]="shift">
-                            {{ shift }}
-                        </option>
-                    </select>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 
 
 
