@@ -78,12 +78,13 @@
         <tr *ngFor="let vendor of companyVendors">
           <td>
             <button class="btn btn-primary" (click)="openVendorModal(vendor)">Update</button>
+            <button class="btn btn-primary" (click)="navigateToVendorInvoice(vendor)">View Invoice</button>
           </td>
-          <td>{{ vendor.totalPayableAmount | currency }}</td>
-          <td>{{ vendor.gst | currency }}</td>
-          <td>{{ vendor.serviceCharge | currency }}</td>
-          <td>{{ vendor.tds | currency }}</td>
-          <td>{{ vendor.netAmount | currency }}</td>
+          <td>{{ vendor.totalPayableAmount | currency:'INR' }}</td>
+          <td>{{ vendor.gst | currency:'INR' }}</td>
+          <td>{{ vendor.serviceCharge | currency:'INR' }}</td>
+          <td>{{ vendor.tds | currency:'INR' }}</td>
+          <td>{{ vendor.netAmount | currency:'INR' }}</td>
         </tr>
       </tbody>
     </table>

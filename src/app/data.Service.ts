@@ -9,6 +9,9 @@ import { UserService } from './users/user.service';
 import { UserType } from './common/user-type.enum';
 import { SnackBarComponent } from './utils/widgets/snack-bar/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoadingService } from './services/loading.service';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +36,11 @@ export class DataService {
     { key: 'SFU', value: 'SFU' },
   ];
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(private http: HttpClient, 
+    private router: Router, 
+    private snackBar: MatSnackBar,
+    private loadingService: LoadingService,   
+  ) {}
 
   private initializeUser(): void {
     this.user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
@@ -154,6 +161,44 @@ export class DataService {
             data: { message: message },  
             duration: 5000
           });
+  }
+
+  downloadPDF(elementId: string) {
+    const element = document.getElementById(elementId);
+
+    if (element) {
+      // Set loading state to true
+      this.loadingService.setLoadingState(true, 'Generating PDF...');
+
+      html2canvas(element).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;    
+        let position = 0;
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        // Save the generated PDF
+        pdf.save('vendor-invoice.pdf');
+
+        // Clear loading state once the PDF is saved
+        this.loadingService.clearLoadingState();
+      }).catch((error) => {
+        // In case of an error, clear the loading state and show an error message
+        this.loadingService.setErrorState(error, 'Error generating PDF');
+      });
+    }
   }
 
 }

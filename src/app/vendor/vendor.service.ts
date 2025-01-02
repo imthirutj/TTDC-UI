@@ -34,4 +34,10 @@ export class VendorService {
     return this.http.post(url, payload);
   }
 
+  getVendeorInvoiceDetails(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Invoice/GenerateInvoice?${queryParams}`;
+    return this.http.post(url,{});
+  }
+
 }
