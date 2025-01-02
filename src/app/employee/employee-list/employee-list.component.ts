@@ -250,7 +250,30 @@ export class EmployeeListComponent {
       }
     );
   }
+educationCertificateImage(event: any): void {
+  const files = event.target.files;
+  const formData = new FormData();
+  for (const file of files) {
+    formData.append('certificates', file, file.name);
+  }
 
+  this.masterDataService.uploadMultipleCertificates(formData).subscribe(
+    (response: any) => {
+      console.log('API Response:', response);
+      if (response.success) {
+        alert('Certificates uploaded successfully.');
+      } else {
+        alert(response.message || 'Failed to upload certificates.');
+      }
+    },
+    (error: any) => {
+      console.error('Error uploading certificates:', error);
+      alert('An error occurred while uploading the certificates.');
+    }
+  );
+}
+
+ 
   
   
 }

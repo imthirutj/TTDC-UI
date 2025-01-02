@@ -108,6 +108,9 @@ export class MasterDataService {
   getdegree(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/Get_Degree`+query);
   }
+  uploadMultipleCertificates(query: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/UploadEmpCertificates`, query);
+  }
 
   save_Designation_Qualification(query: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Master/Save_Designation_Qualification`, query);
