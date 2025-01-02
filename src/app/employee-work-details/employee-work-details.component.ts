@@ -243,7 +243,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
 
   updateWorkDetails(): void {
-    if (!this.selectedMonth || !this.selectedYear) {
+    if (!this.filters.selectedMonth.value || !this.filters.selectedYear.value) {
       this.dataService.showSnackBar('Month and year are required');
       return;
     }
@@ -263,11 +263,13 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   }
 
   openAttendanceDetail(detail: any): void {
+    const month = this.filters.selectedMonth.value;
+    const year = this.filters.selectedYear.value;
     this.isAttendanceModalOpen = true;
     this.attendanceDetails =[];
     var payload = {
-      month: this.selectedMonth,
-      year: this.selectedYear,
+      month: month,
+      year: year,
       empId: detail.employeeId
     }
     this.employeeWorkDetailsService.getAttendanceDetails(payload).subscribe((response) => {

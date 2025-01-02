@@ -27,9 +27,6 @@ export class VendorComponent implements OnInit {
   selectedCityId: any = '';
   selectedCompanyId: any = '';
 
-  // Selected month and year for the calendar
-  selectedMonth: number = new Date().getMonth(); // Default to current month
-  selectedYear: number = new Date().getFullYear(); // Default to current year
 
   months = myMonths;
   years = myYears;
@@ -73,8 +70,6 @@ export class VendorComponent implements OnInit {
     private dataService: DataService,
     private vendorService: VendorService
   ) {
-    this.selectedMonth = new Date().getMonth() + 1;
-    this.selectedYear = new Date().getFullYear();
     this.dataService.asyncGetUser().then((user:any) => {
       this.user = user;
       this.userAccessLevel = user.role;
@@ -181,6 +176,9 @@ export class VendorComponent implements OnInit {
   }
 
   navigateToVendorInvoice(vendor:any){
-    this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: this.selectedMonth, year: this.selectedYear, vendorId: this.selectedVendor.vendorId } });
+    const month = this.filters.selectedMonth.value;
+    const year = this.filters.selectedYear.value;
+    const vendorId = this.filters.vendorId.value;
+    this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId } });
   }
 }

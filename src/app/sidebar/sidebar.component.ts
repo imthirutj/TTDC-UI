@@ -134,7 +134,7 @@ export class SidebarComponent {
         label: 'Vendor',
         icon: 'fa-folder',
         route: '/vendor',
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
     
       {
