@@ -154,10 +154,10 @@
           <th>Time In</th>
           <th>Time Out</th>
           <th>Status</th>
-          <th>Duration (mins)</th>
-          <th>Late By (mins)</th>
-          <th>Early By (mins)</th>
-          <th>Over Time (mins)</th>
+          <th>Duration</th>
+          <th>Late By </th>
+          <th>Early By</th>
+          <th>Over Time</th>
           <th>Loss of Hours</th>
         </tr>
       </thead>
@@ -168,11 +168,11 @@
           <td>{{ record.inTime }}</td>
           <td>{{ record.outTime }}</td>
           <td>{{ record.status }}</td>
-          <td>{{ record.duration }}</td>
-          <td>{{ record.lateBy }}</td>
-          <td>{{ record.earlyBy }}</td>
-          <td>{{ record.overTime }}</td>
-          <td>{{ record.lossOfHours }}</td>
+          <td>{{ record.duration | minutesToHours  }}</td>
+          <td>{{ record.lateBy  | minutesToHours}}</td>
+          <td>{{ record.earlyBy  | minutesToHours}}</td>
+          <td>{{ record.overTime  | minutesToHours}}</td>
+          <td>{{ record.lossOfHours  | minutesToHours }}</td>
         </tr>
       </tbody>
     </table>

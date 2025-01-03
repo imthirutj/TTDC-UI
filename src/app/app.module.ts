@@ -63,6 +63,7 @@ import { MonthNamePipe } from './utils/pipes/month-name.pipe';
 import { DegreeComponent } from './degree/degree.component';
 import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
 import { FiltersComponent } from './filters/filters.component';
+import { MinutesToHoursPipe } from './utils/pipes/minutes-to-hours.pipe';
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import { FiltersComponent } from './filters/filters.component';
     MonthNamePipe,
     DegreeComponent,
     DesignationQualificationComponent,
-    FiltersComponent
+    FiltersComponent,
+    MinutesToHoursPipe
 
   ],
   imports: [
