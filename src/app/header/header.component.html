@@ -9,6 +9,9 @@
 
   <!-- Profile icon and logout modal trigger -->
   <div class="profile-container d-flex align-items-center" style="margin-left: auto;">
+    <div *ngIf="userData">
+      <p style="color: white; margin-right: 10px; display: inline;">{{ userData.userName }}</p>
+    </div>
     <i (click)="toggleProfileDialog()" class="fa fa-user-circle profile-icon" data-toggle="modal"
       data-target="#profileModal" style="cursor: pointer; font-size: 40px;"></i>
   </div>
@@ -42,41 +45,22 @@
             <!-- Editable Name -->
             <div class="list-group-item">
               <strong>Name:</strong>
-              <span *ngIf="!isEditMode">{{ userData.name }}</span>
-              <input *ngIf="isEditMode" [(ngModel)]="userData.name" class="form-control" />
+              <span *ngIf="!isEditMode">{{ userData.userName }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="userData.userName" class="form-control" />
             </div>
 
             <!-- Editable User Type -->
             <div class="list-group-item">
               <strong>User Type:</strong>
-              <span *ngIf="!isEditMode">{{ userData.user_type }}</span>
-              <input *ngIf="isEditMode" [(ngModel)]="userData.user_type" class="form-control" />
+              <span *ngIf="!isEditMode">{{ userData.role }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="userData.role" class="form-control" />
             </div>
 
-            <!-- Editable Email -->
-            <div class="list-group-item">
-              <strong>Email:</strong>
-              <span *ngIf="!isEditMode">{{ userData.email }}</span>
-              <input *ngIf="isEditMode" [(ngModel)]="userData.email" class="form-control" />
-            </div>
-
-            <!-- Editable Gender -->
-            <div class="list-group-item">
-              <strong>Gender:</strong>
-              <span *ngIf="!isEditMode">{{ userData.gender }}</span>
-              <input *ngIf="isEditMode" [(ngModel)]="userData.gender" class="form-control" />
-            </div>
-
-            <!-- Editable Mobile Number -->
-            <div class="list-group-item">
-              <strong>Phone:</strong>
-              <span *ngIf="!isEditMode">{{ userData.mobile_no }}</span>
-              <input *ngIf="isEditMode" [(ngModel)]="userData.mobile_no" class="form-control" />
-            </div>
+        
           </div>
 
           <!-- Edit button to toggle edit mode -->
-          <button style="margin-top: 11px;" *ngIf="!isEditMode" class="btn btn-primary" (click)="isEditMode = true">Edit</button>
+          <button style="margin-top: 11px;" *ngIf="false" class="btn btn-primary" (click)="isEditMode = true">Edit</button>
         </div>
       </div>
     </div>
