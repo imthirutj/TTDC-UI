@@ -5,8 +5,19 @@
       <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
        (triggerParentFunction)="getEmployeeList()">
       </app-filter>
-      <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+      <div class="row">
+      <div  class="col-md-4">
+        <div class="form-group">
+          <button style="float:left" class="btn btn-primary" (click)="search()">Search</button>
+        </div>      
     </div>
+    <div  class="col-md-4">
+        <div class="form-group">
+          <button style="float: left;" class="btn btn-success" (click)="submit_vendor_wise()">Generate Payslip All</button>
+        </div>
+      
+    </div>
+  </div>
 
     
     <table class="table table-bordered">
