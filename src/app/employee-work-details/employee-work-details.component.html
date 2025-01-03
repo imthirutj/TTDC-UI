@@ -115,6 +115,11 @@
           [(ngModel)]="selectedWorkDetail.totalWorkingDays" class="form-control" />
       </div>
       <div class="form-group">
+        <label for="biometricWorkedDays">Biometric Worked Days</label>
+        <input type="number" id="biometricWorkedDays" name="biometricWorkedDays"
+          [(ngModel)]="selectedWorkDetail.biometricWorkedDays" class="form-control" disabled="true"/>
+      </div>
+      <div class="form-group">
         <label for="workedDays">Worked Days</label>
         <input type="number" id="workedDays" name="workedDays" [(ngModel)]="selectedWorkDetail.workedDays"
           class="form-control" />

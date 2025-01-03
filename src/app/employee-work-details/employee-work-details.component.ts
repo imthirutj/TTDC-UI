@@ -17,11 +17,11 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   UserType = UserType;
   userAccessLevel: any;
   user: any;
-  
+
   odslip: any;
   Employee: any[] = [];
-  Company: any[] = []; 
-  
+  Company: any[] = [];
+
 
   states: any[] = [];
   cities: any[] = [];
@@ -50,10 +50,10 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   years = myYears;
 
   attendanceDetails: any[] = [
-    
+
   ];
 
-  
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -119,7 +119,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   ) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
-    this.dataService.asyncGetUser().then((user:any) => {
+    this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
       this.userAccessLevel = user.role;
       console.log('User Access Level:', this.userAccessLevel);
@@ -138,10 +138,10 @@ export class EmployeeWorkDetailsComponent implements OnInit {
     this.fetchStates();
 
     this.getCompanyList();
-      this.getEmployeeList();
-    
+    this.getEmployeeList();
 
-    this.odslip={
+
+    this.odslip = {
       employeeId: 0,
       manager_Id: '3',
       visiting_Company_Id: '',
@@ -150,7 +150,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
       to_Date: '',
       how_Many_Days: '',
       insert_Manager_id: '2'
-     
+
     }
   }
 
@@ -160,7 +160,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
     this.fetchEmployeeWorkDetails();
   }
 
-  search(){
+  search() {
     this.fetchEmployeeWorkDetails();
   }
 
@@ -198,6 +198,31 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   openUpdateModal(detail: any): void {
     this.selectedWorkDetail = detail;
     this.isModalOpen = true;
+
+    const month = this.filters.selectedMonth.value;
+    const year = this.filters.selectedYear.value;
+    var payload = {
+      month: month,
+      year: year,
+      empId: detail.employeeId
+    }
+    this.employeeWorkDetailsService.getAttendanceDetails(payload).subscribe((response) => {
+      if (response.success) {
+        const attendanceDetails = response.data;
+        // Calculate biometric_worked_days by summing up 'present'
+        const biometricWorkedDays = attendanceDetails.reduce((total: any, record: any) => {
+          return total + (record.present || 0);
+        }, 0);
+        // Add the key to the detail object
+        detail.biometricWorkedDays = biometricWorkedDays;
+
+        // Optionally log or handle the updated detail
+        console.log("Updated Work Detail:", detail);
+
+      }
+    })
+
+
   }
 
   closeModal(): void {
@@ -266,7 +291,7 @@ export class EmployeeWorkDetailsComponent implements OnInit {
     const month = this.filters.selectedMonth.value;
     const year = this.filters.selectedYear.value;
     this.isAttendanceModalOpen = true;
-    this.attendanceDetails =[];
+    this.attendanceDetails = [];
     var payload = {
       month: month,
       year: year,
@@ -282,45 +307,45 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
   saveodslip(odslip: any): void {
     console.log(odslip)
-      // if (!this.employeeForm) {
-      //   console.error('Form not initialized.');
-      //   return;
-      // }
-    
-      this.masterDataService.saveodslip(odslip).subscribe(
-        (response: any) => {
-          console.log('API Response:', response);
-          if (response.success) {
-            alert('odslip updated successfully.');            
-          } else {
-            alert(response.message || 'Failed to update odslip.');
-          }
-        },
-        (error: any) => {
-          console.error('Error updating odslip:', error);
-          alert('An error occurred while updating the odslip.');
-        }
-      );
-    }
+    // if (!this.employeeForm) {
+    //   console.error('Form not initialized.');
+    //   return;
+    // }
 
-    getCompanyList(): void {
-      this.masterDataService.getCompanylist().subscribe((response: any) => {
-        if (response?.success && Array.isArray(response.data)) {
-          this.Company = response.data;
+    this.masterDataService.saveodslip(odslip).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          alert('odslip updated successfully.');
         } else {
-          alert(response?.message || 'Failed to fetch Company list.');
+          alert(response.message || 'Failed to update odslip.');
         }
-      });
-    }
+      },
+      (error: any) => {
+        console.error('Error updating odslip:', error);
+        alert('An error occurred while updating the odslip.');
+      }
+    );
+  }
 
-    getEmployeeList(): void {
-      this.masterDataService.getEmployees().subscribe((response: any) => {
-        if (response?.success && Array.isArray(response.data)) {
-          this.Employee = response.data;
-        } else {
-          alert(response?.message || 'Failed to fetch Employee list.');
-        }
-      });
-    }
+  getCompanyList(): void {
+    this.masterDataService.getCompanylist().subscribe((response: any) => {
+      if (response?.success && Array.isArray(response.data)) {
+        this.Company = response.data;
+      } else {
+        alert(response?.message || 'Failed to fetch Company list.');
+      }
+    });
+  }
+
+  getEmployeeList(): void {
+    this.masterDataService.getEmployees().subscribe((response: any) => {
+      if (response?.success && Array.isArray(response.data)) {
+        this.Employee = response.data;
+      } else {
+        alert(response?.message || 'Failed to fetch Employee list.');
+      }
+    });
+  }
 
 }
