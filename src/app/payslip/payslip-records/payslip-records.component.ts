@@ -36,7 +36,7 @@ export class PayslipRecordsComponent {
     companyId: {
       value: '',
       show: true,
-      key: 'companyId',
+      key: 'compId',
       includeInSearchParams:true
     },
     designationId: {
