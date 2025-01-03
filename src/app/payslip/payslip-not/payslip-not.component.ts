@@ -96,12 +96,12 @@ export class PayslipNotComponent {
     for(let i=0;i<this.Department.length;i++)
     {
       this.loop_id=i;
-    let st = '?EmpId=' + this.Department[i].employeeId + '&Month='+this.filters.selectedMonth.Value+'&Year='+this.filters.selectedYear.Value+''
+    let st = '?EmpId=' + this.Department[i].employeeId + '&Month='+this.filters.selectedMonth.value+'&Year='+this.filters.selectedYear.value+''
     this.masterDataService.generatePay(st).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
-          alert(response.message+' for employee "'+this.Department[this.loop_id].employeeName+'"');
+          // alert(response.message+' for employee "'+this.Department[this.loop_id].employeeName+'"');
           if(this.loop_id==this.Department.length){
             this.router.navigate(['/payslip-records']);
           }
@@ -111,7 +111,7 @@ export class PayslipNotComponent {
       },
       (error) => {
         console.error('Error fetching Department list:', error);
-        alert('An error occurred while fetching the Department list.');
+        //alert('Error fetching Department list:'+ error);
       }
     );
     }
@@ -139,7 +139,7 @@ export class PayslipNotComponent {
   }
   show_list_slip(obj_clicked: any) {
     this.employee = obj_clicked
-    this.masterDataService.payslips('?Month='+this.filters.selectedMonth.Value+'&Year='+this.filters.selectedYear.Value+'&EmpId=' + obj_clicked.employeeId + '').subscribe(
+    this.masterDataService.payslips('?Month='+this.filters.selectedMonth.value+'&Year='+this.filters.selectedYear.value+'&EmpId=' + obj_clicked.employeeId + '').subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data.pendingRecords)) {
