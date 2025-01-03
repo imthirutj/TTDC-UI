@@ -82,7 +82,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     companyId: {
       value: '',
       show: true,
-      key: 'companyId',
+      key: 'compId',
       includeInSearchParams: true
     },
     designationId: {

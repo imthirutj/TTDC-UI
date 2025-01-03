@@ -37,7 +37,7 @@ export class OdslipapprovalComponent {
     companyId: {
       value: '',
       show: true,
-      key: 'companyId',
+      key: 'compId',
       includeInSearchParams: true
     },
     designationId: {

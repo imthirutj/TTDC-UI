@@ -54,7 +54,7 @@ export class VendorComponent implements OnInit {
     companyId: {
       value: '',
       show: false,
-      key: 'companyId',
+      key: 'compId',
       includeInSearchParams: false
     },
     vendorId: {
