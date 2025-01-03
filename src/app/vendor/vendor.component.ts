@@ -178,7 +178,7 @@ export class VendorComponent implements OnInit {
   navigateToVendorInvoice(vendor:any){
     const month = this.filters.selectedMonth.value;
     const year = this.filters.selectedYear.value;
-    const vendorId = this.filters.vendorId.value;
+    const vendorId = vendor.vendorId;
     this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId } });
   }
 }
