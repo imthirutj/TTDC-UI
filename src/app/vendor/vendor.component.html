@@ -19,7 +19,12 @@
           <th scope="col">GST</th>
           <th scope="col">Service Charge</th>
           <th scope="col">TDS</th>
+
+          <th scope="col">EPF</th>
+          <th scope="col">ESI</th>
+
           <th scope="col">Net Amount</th>
+
         </tr>
       </thead>
       <tbody>
@@ -33,6 +38,10 @@
           <td>{{ vendor.gst | currency:'INR' }}</td>
           <td>{{ vendor.serviceCharge | currency:'INR' }}</td>
           <td>{{ vendor.tds | currency:'INR' }}</td>
+
+          <td>{{ vendor.epf | currency:'INR' }}</td>
+          <td>{{ vendor.esi | currency:'INR' }}</td>
+          
           <td>{{ vendor.netAmount | currency:'INR' }}</td>
         </tr>
       </tbody>

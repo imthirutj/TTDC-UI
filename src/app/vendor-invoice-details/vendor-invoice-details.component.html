@@ -153,7 +153,7 @@
                   <!-- Loop through invoiceDetail to show designation and employee details -->
                   <ng-container *ngFor="let invDetail of vendorInvoiceDetails.invoiceDetail; let designationIndex = index">
                     <!-- Designation Row -->
-                    <tr>
+                    <tr *ngIf=" invDetail.employeeInvoices.length >0">
                       <td colspan="12" class="designation-row"><strong>{{invDetail.designationName}}</strong></td>
                     </tr>
               
@@ -168,8 +168,8 @@
                         <td>{{empInvoiceDetail.presentDays}}</td>
                         <td>{{empInvoiceDetail.monthDays}}</td>
                         <td>{{empInvoiceDetail.grossSalary}}</td>
-                        <td>1950</td>
-                        <td>3000</td>
+                        <td>{{empInvoiceDetail.epf}}</td>
+                        <td>{{empInvoiceDetail.esi}}</td>
                         <td>{{empInvoiceDetail.actualCharge}}</td>
                         <td>{{empInvoiceDetail.serviceCharge}}</td>
                         <td>{{empInvoiceDetail.amountClaimed}}</td>

@@ -18,6 +18,9 @@
           <th>Worked Days</th>
           <th>Non Worked Days</th>
           <th>Loss of Pay Days</th>
+
+          <th>Present Days</th>
+          <th>Absent Days</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -28,6 +31,8 @@
           <td>{{ detail.workedDays }}</td>
           <td>{{ detail.nonWorkedDays }}</td>
           <td>{{ detail.lossOfPayDays }}</td>
+          <td>{{ detail.totalWorkingDays? 22: '' }}</td>
+          <td>{{ detail.totalWorkingDays? 0: '' }}</td>
           <td>
             <button class="btn btn-primary" (click)="openUpdateModal(detail)">Update</button>
             <button class="btn btn-danger" (click)="openAttendanceDetail(detail)">View</button>
