@@ -34,7 +34,8 @@
           <th>Designation Name</th>  
           <th>Educational Qualifications</th>   
           <th>Required Qualifications</th>               
-          <th>Category Name</th>  
+          <th>Category Name</th> 
+          <th>Education Certificate Image</th>  
               
         </tr>
       </thead>
@@ -61,7 +62,9 @@
             <td>{{ employee.qualifications }}</td>    
             <td>{{ employee.requiredQualifications }} </td>
             <td>{{ employee.categoryFName }} </td>
-            
+            <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"  (click)="show_Edu_Certificate(employee)">
+              View education certificate
+          </button></td>
           </tr>          
       </tbody>
     </table>
@@ -182,12 +185,7 @@
             <div class="mb-3">
               <label for="Qualifications" class="form-label">Qualifications</label>
               <input type="text" class="form-control" id="Qualifications" [(ngModel)]="employee.Qualifications" name="Qualifications" placeholder="Enter Qualifications">
-            </div>
-
-
-        
-
-        
+            </div>             
 
         <div class="mb-3">
           <label for="CategoryId" class="form-label">Category Name</label>
@@ -197,11 +195,11 @@
             </option>
           </select>
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="ProfileImage" class="form-label">Upload Education Certificate</label>
           <input type="file" class="form-control" id="certificateImage" (change)="educationCertificateImage($event)">
         </div>
-        
+         -->
 
         <!-- </form> -->
       </div>
@@ -210,6 +208,62 @@
         <!-- <button type="submit" class="btn btn-primary bg-red" [disabled]="!employeeForm || employeeForm.invalid">Register</button> -->
         <button type="submit" class="btn btn-primary" (click)="saveEmployee(employee)">Save</button>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+   
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Education Certificate</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="certificateImage" class="form-label">Upload Education Certificate</label>
+            <input 
+            type="file" 
+            class="form-control" 
+            id="certificateImage" 
+            (change)="educationCertificateImage($event, obj_clicked)">
+          
+          </div>
+          <button type="submit" class="btn btn-primary" (click)="educationCertificateImage($event, obj_clicked)">Save</button>
+          
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Image</th>                 
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let department of educertificateimage; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ department.certificateImage  }}</td>
+                    
+                  </tr>          
+              </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>            
+        </div>
       </div>
     </div>
   </div>

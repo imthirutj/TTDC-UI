@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../users/user.service';
@@ -108,9 +108,31 @@ export class MasterDataService {
   getdegree(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/Get_Degree`+query);
   }
-  uploadMultipleCertificates(query: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}Master/UploadEmpCertificates`, query);
+  // uploadMultipleCertificates(query: any): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}Employee/UploadEmpCertificates`, query);
+  // }
+
+  // uploadMultipleCertificates(formData: FormData): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}Employee/UploadEmpCertificates`, formData, {
+  //     reportProgress: true,
+  //     observe: 'events',
+  //   });
+  // }
+
+  uploadMultipleCertificates(formData: FormData, empId: string): Observable<any> {
+    const url = `${this.apiUrl}Employee/UploadEmpCertificates?EmpId=${empId}`;
+    let reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/form-data',
+    });
+  
+    return this.http.post(url, formData, {
+      headers: reqHeader,
+      reportProgress: true,
+      observe: 'events',
+    });
   }
+  
+  
 
   save_Designation_Qualification(query: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Master/Save_Designation_Qualification`, query);
@@ -123,6 +145,9 @@ export class MasterDataService {
   getEmployeeList(query:any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(query);
     return this.http.get(`${this.apiUrl}Employee/GetEmployees?${queryParams}`);
+  }
+  vieweducertificate(query:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}Employee/GetUploadedCertificates`+query);
   }
   getpayslipList(query:any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(query);

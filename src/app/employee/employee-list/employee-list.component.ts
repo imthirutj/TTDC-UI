@@ -3,6 +3,7 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { visibility } from 'html2canvas/dist/types/css/property-descriptors/visibility';
 import { DataService } from 'src/app/data.Service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-employee-list',
@@ -17,6 +18,7 @@ export class EmployeeListComponent {
   Category: any[] = [];
   States: any[] = [];
   City: any[] = [];
+  educertificateimage: any[] = []
   employee: any;
 
   employeeForm!: FormGroup;
@@ -77,6 +79,7 @@ export class EmployeeListComponent {
       includeInSearchParams:true
     },
   };
+obj_clicked: any;
   
 
 
@@ -94,7 +97,7 @@ export class EmployeeListComponent {
     this.getDepartmentList();
     this.getCategoryList();
     this.getStateList();
-    this.getcityList();
+    this.getcityList();   
    
 
     this.employeeForm = this.fb.group({
@@ -250,28 +253,56 @@ export class EmployeeListComponent {
       }
     );
   }
-educationCertificateImage(event: any): void {
-  const files = event.target.files;
-  const formData = new FormData();
-  for (const file of files) {
-    formData.append('certificates', file, file.name);
+  educationCertificateImage(event: any, obj_clicked: any): void {
+    const files = event.target.files;
+    console.log(this.employee.employeeId,"employeeId");
+    if (files.length === 0) {
+      alert('Please select a file to upload.');
+      return;
+    }
+  
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('certificateImage', files[i], files[i].name);
+    }
+    
+    this.masterDataService.uploadMultipleCertificates(formData, this.employee.employeeId).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          alert('Certificates uploaded successfully.');
+        } else {
+          alert(response.message || 'Failed to upload certificates.');
+        }
+      },
+      (error: any) => {
+        console.error('Error uploading certificates:', error);
+        alert('An error occurred while uploading the certificates.');
+      }
+    );
   }
+  
+  
+  
 
-  this.masterDataService.uploadMultipleCertificates(formData).subscribe(
+show_Edu_Certificate(obj_clicked: any) {
+  this.employee = obj_clicked;
+  this.masterDataService.vieweducertificate('?EmpId=' + obj_clicked.employeeId).subscribe(
     (response: any) => {
       console.log('API Response:', response);
-      if (response.success) {
-        alert('Certificates uploaded successfully.');
+      if (response?.success && Array.isArray(response.data)) {
+        this.educertificateimage = response.data;
       } else {
-        alert(response.message || 'Failed to upload certificates.');
+        alert(response?.message || 'Failed to fetch Department list.');
       }
     },
     (error: any) => {
-      console.error('Error uploading certificates:', error);
-      alert('An error occurred while uploading the certificates.');
+      console.error('Error fetching Department list:', error);
+      alert('An error occurred while fetching the Department list.');
     }
   );
 }
+
 
  
   
