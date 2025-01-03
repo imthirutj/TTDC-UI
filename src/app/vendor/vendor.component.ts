@@ -181,4 +181,14 @@ export class VendorComponent implements OnInit {
     const vendorId = vendor.vendorId;
     this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId } });
   }
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      console.log('Selected file:', file);
+      // Handle file upload logic here
+    }
+  }
+  
 }

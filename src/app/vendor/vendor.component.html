@@ -102,6 +102,19 @@
       </div>
     </div>
 
+      <!-- File Upload -->
+  <div class="row">
+    <div class="col-md-6">
+      <label for="fileUpload">Employee Payments File:</label>
+      <input 
+        type="file" 
+        class="form-control" 
+        id="fileUpload" 
+        (change)="onFileChange($event)" 
+        accept=".xlsx">
+    </div>
+  </div>
+
   </app-common-dialog>
 
   </div>
