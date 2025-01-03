@@ -18,12 +18,12 @@
     <!-- Dashboard Boxes -->
     <div class="row">
       <div class="col-md-4 mb-4"  *ngFor="let box of arraybox_list" >
-        <div
+        <div [style.background-color]="box.color"
           class="card shadow-sm"
-          style="height: 100px; display: flex; justify-content: center; align-items: center; 
-                 text-align: center; background-color: #f8f9fa; border-radius: 8px; background-color: #fff;"
+          style="color:white;height: 100px; display: flex; justify-content: center; align-items: center; 
+                 text-align: center; background-color: #f8f9fa; border-radius: 8px; "
         >
-          <div class="card-body">
+          <div   class="card-body">
             <h5 class="card-title">{{box.count}}</h5>
             <p class="card-text">{{box.label}}</p>
             <!-- <p class="card-text">

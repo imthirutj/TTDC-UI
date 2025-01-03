@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { myMonths, myYears } from '../utils/helpers/variables';
+import { color } from 'html2canvas/dist/types/css/types/color';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,13 +32,13 @@ export class DashboardComponent {
 
   
   arraybox_list = [
-    { label: 'Total Company', count: 2 },
-    { label: 'Total City', count: 7 },
-    { label: 'Total Employee', count: 855 },
-    { label: 'Department Count', count: 17 },
-    { label: 'Category Count', count: 1 },
-    { label: 'Pay Generated', count: 3 },
-    { label: 'Pay Not Generated', count: 852 }
+    { label: 'Total Company', count: 2, color: 'blue' },
+    { label: 'Total City', count: 7, color: 'green' },
+    { label: 'Total Employee', count: 855,  color: 'red' },
+    { label: 'Department Count', count: 17, color: 'violet' },
+    { label: 'Category Count', count: 1,  color: 'purple' },
+    { label: 'Pay Generated', count: 3, color: 'orange' },
+    { label: 'Pay Not Generated', count: 852,  color: 'gray' },
   ];
 
   // Event handler for filter change
