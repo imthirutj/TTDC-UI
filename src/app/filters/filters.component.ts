@@ -72,7 +72,7 @@ export class FiltersComponent implements OnInit {
     this.fetchDepartments();
     this.fetchDesignations();
     this.fetchCategories();
-    this.fetchVendors();
+
   }
 
   activate() {
@@ -84,6 +84,8 @@ export class FiltersComponent implements OnInit {
       this.filters.cityId.show = false;
       this.filters.companyId.show = false;
       this.filters.companyId.value = this.user.companyId;
+
+      this.fetchVendors();
     }
 
     if (this.userAccessLevel == UserType.EMPLOYEE) {
@@ -111,6 +113,7 @@ export class FiltersComponent implements OnInit {
   }
 
   onCompanyChange() {
+    this.fetchVendors();
     this.onFilterChange();
   }
 
@@ -123,6 +126,7 @@ export class FiltersComponent implements OnInit {
   }
 
   onDepartmentChange() {
+    this.fetchVendors();
     this.onFilterChange();
   }
 

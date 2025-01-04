@@ -128,12 +128,8 @@ export class PayslipNotComponent {
           this.Department = response.data.pendingRecords;
 
         } else {
-          alert(response.message || 'Failed to fetch Department list.');
+          alert(response.message || 'Failed to fetch  list.');
         }
-      },
-      (error) => {
-        console.error('Error fetching Department list:', error);
-        alert('An error occurred while fetching the Department list.');
       }
     );
   }

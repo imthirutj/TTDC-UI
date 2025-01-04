@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { MasterDataService } from 'src/app/services/master-data.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { visibility } from 'html2canvas/dist/types/css/property-descriptors/visibility';
 import { DataService } from 'src/app/data.Service';
-import { HttpHeaders } from '@angular/common/http';
+import { Employee } from 'src/app/utils/interface/Employee';
+import { Vendor } from 'src/app/utils/interface/vendor';
+import { Category, City, Company, Department, Designation } from 'src/app/utils/interface/masters';
+import { UserType } from 'src/app/common/user-type.enum';
 
 @Component({
   selector: 'app-employee-list',
@@ -11,141 +12,189 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent {
-  Employee: any[] = [];
-  Designation: any[] = []; 
-  Company: any[] = []; 
-  Department: any[] = [];
-  Category: any[] = [];
-  States: any[] = [];
-  City: any[] = [];
-  educertificateimage: any[] = []
-  employee: any;
 
-  employeeForm!: FormGroup;
-  
+    UserType = UserType;
+  user: any;
+  userAccessLevel: any;
+
+  Employees: any[] = [];
+
+
+   dropdowns = {
+      cities: [] as City[],
+      companies: [] as Company[],
+      departments: [] as Department[],
+      vendors:[] as Vendor[],
+      designation: [] as Designation[],
+      category: [] as Category[],
+    };
+
+  educertificateimage: any[] = [];
+
+  modal = {
+    show: false,
+    isEdit: false,
+    title: '',
+    employee: new Employee(),  // Use the Employee class here
+  };
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
       show: false,
       key: 'month',
-      includeInSearchParams:false
+      includeInSearchParams: false
     },
     selectedYear: {
       value: new Date().getFullYear(), // Default to current year
       show: false,
       key: 'year',
-      includeInSearchParams:false
+      includeInSearchParams: false
     },
     cityId: {
       value: '',
       show: true,
       key: 'cityId',
-      includeInSearchParams:true
+      includeInSearchParams: true
     },
     companyId: {
       value: '',
       show: true,
       key: 'compId',
-      includeInSearchParams:true
+      includeInSearchParams: true
     },
     designationId: {
       value: '',
       show: true,
       key: 'designationId',
-      includeInSearchParams:true
+      includeInSearchParams: true
     },
     deptId: {
       value: '',
       show: true,
       key: 'deptId',
-      includeInSearchParams:true
+      includeInSearchParams: true
     },
     catId: {
       value: '',
       show: true,
       key: 'catId',
-      includeInSearchParams:true
+      includeInSearchParams: true
     },
     employeeId: {
       value: '',
       show: true,
       key: 'employeeId',
-      includeInSearchParams:true
+      includeInSearchParams: true
     },
     vendorId: {
       value: '',
       show: true,
       key: 'vendorId',
-      includeInSearchParams:true
+      includeInSearchParams: true
     },
   };
-obj_clicked: any;
-  
 
-
-  constructor(private masterDataService: MasterDataService, 
-    private fb: FormBuilder,
-  private dataService: DataService) {
-
-
+  constructor(
+    private masterDataService: MasterDataService,
+    private dataService: DataService
+  ) {
+    this.dataService.asyncGetUser().then((user: any) => {
+      this.user = user;
+      this.userAccessLevel = user.role;
+      console.log('User Access Level:', this.userAccessLevel);
+    });
   }
 
   ngOnInit(): void {
-    //this.getEmployeeList();
-    this.getDesignationList();
-    this.getCompanyList();
-    this.getDepartmentList();
-    this.getCategoryList();
-    this.getStateList();
-    this.getcityList();   
-   
-
-    this.employeeForm = this.fb.group({
-      employeeName: ['', Validators.required],
-      EmployeeCode: ['', Validators.required],
-      NumericCode: ['', Validators.required],
-      StringCode: ['', Validators.required],
-      Gender: [''],
-      designationId: [''],
-      companyId: [''],
-      departmentId: [''],
-      categoryId: [''],
-      stateId: [''],
-      cityId: ['']
-    });
-
-    this.employee={
-      employeeId: 0,
-      employeeName: '',
-      employeeCode: '',
-      NumericCode: '',
-      StringCode: '',
-      Gender: '',
-      aadhaarNumber: '',
-      dob: '',
-      age: '',
-      workPlace: '',
-      contactNo: '',
-      doj: '',
-      passedOutYear: '',      
-      designationId: '',
-      companyId: '',
-      departmentId: '',
-      categoryId: '',
-      stateId: '',
-      cityId: '' ,
-      LoginName:'qwerty',
-      LoginPassword:'12345'
-    }
-    
+ 
   }
+
   
+  ngAfterViewInit() {
+    this.fetchCities();
+    this.fetchDepartments();
+    this.fetchDesignations();
+    this.fetchCategory();
+  }
+
+  setValues(){
+    if (this.userAccessLevel == UserType.VENDOR) {
+      this.modal.employee.vendorId = this.user.vendorId;
+    }
+    if (this.userAccessLevel == UserType.MANAGER) {
+      this.modal.employee.companyId = this.user.companyId;
+    }
+  }
+
+  //#region Dropdowns
+  onCityChange() {
+    this.modal.employee.companyId = '';
+    this.fetchCompanies(this.modal.employee.cityId);
+  }
+  onCompanyChange(){
+    this.modal.employee.vendorId = '';
+    this.fetchVendors(this.modal.employee.companyId, this.modal.employee.departmentId);
+  }
+
+  onDepartmentChange(){
+    this.fetchVendors(this.modal.employee.companyId, this.modal.employee.departmentId);
+  }
+
+  //#endregion
+
+  //#region Fetch
+  fetchCities() {
+    const payload = this.dataService.getPayloadValue(this.filters);
+    this.masterDataService.getCity(payload).subscribe((response) => {
+      if (response.success) this.dropdowns.cities = response.data;
+    });
+  }
+
+  fetchCompanies(cityId: any) {
+    const payload = { 
+      cityId: cityId,
+    };
+    this.masterDataService.getCompany(payload).subscribe((response) => {
+      if (response.success) this.dropdowns.companies = response.data;
+    });
+  }
+
+  fetchDepartments() {
+    this.masterDataService.getDepartment().subscribe((response) => {
+      if (response.success) this.dropdowns.departments = response.data;
+    });
+  }
+
+  fetchVendors(companyId: any, departmentId: any) {
+    const payload = { 
+      companyId: companyId,
+      departmentId: departmentId
+    };
+    this.masterDataService.getVendors(payload).subscribe((response) => {
+      if (response.success) this.dropdowns.vendors = response.data;
+    });
+  }
+
+  fetchDesignations(){
+    this.masterDataService.getDesignation().subscribe((response) => {
+      if (response.success) this.dropdowns.designation = response.data;
+    });
+  }
+
+  fetchCategory(){
+    this.masterDataService.getCategory().subscribe((response) => {
+      if (response.success) this.dropdowns.category = response.data;
+    });
+  }
+  //#endregion
+
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
     this.getEmployeeList();
   }
 
-  search(){
+  search() {
     this.getEmployeeList();
   }
 
@@ -156,88 +205,34 @@ obj_clicked: any;
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {
-          this.Employee = response.data; 
-          
+          this.Employees = response.data;
         } else {
-          this.Employee = [];
+          this.Employees = [];
           this.dataService.showSnackBar(response.message);
         }
-      },
-      (error) => {
-        console.error('Error fetching Employee list:', error);
-        alert('An error occurred while fetching the Employee list.');
       }
     );
   }
-  getDesignationList(): void {
-    this.masterDataService.getDesignation().subscribe((response: any) => {
-      if (response?.success && Array.isArray(response.data)) {
-        this.Designation = response.data;
-      } else {
-        alert(response?.message || 'Failed to fetch Designation list.');
-      }
-    });
-  }
 
-  getCompanyList(): void {
-    this.masterDataService.getCompanylist().subscribe((response: any) => {
-      if (response?.success && Array.isArray(response.data)) {
-        this.Company = response.data;
-      } else {
-        alert(response?.message || 'Failed to fetch Company list.');
-      }
-    });
-  }
 
-  getDepartmentList(): void {
-    this.masterDataService.getDepartment().subscribe((response: any) => {
-      if (response?.success && Array.isArray(response.data)) {
-        this.Department = response.data;
-      } else {
-        alert(response?.message || 'Failed to fetch Department list.');
+  openModal(isEdit: boolean, employee?: Employee): void {
+    this.modal.show = true;
+    this.modal.isEdit = isEdit;
+    this.modal.title = isEdit ? 'Edit Employee' : 'Add Employee';
+    if(isEdit) {
+      if(employee){
+        this.modal.employee = { ...employee, loginName: 'qwerty', loginPassword: '12345'};
       }
-    });
-  }
-
-  getCategoryList(): void {
-    this.masterDataService.getCategory().subscribe((response: any) => {
-      if (response?.success && Array.isArray(response.data)) {
-        this.Category = response.data;
-      } else {
-        alert(response?.message || 'Failed to fetch Category list.');
-      }
-    });
-  }
-
-  getStateList(): void {
-    this.masterDataService.getStates().subscribe((response: any) => {
-      if (response?.success && Array.isArray(response.data)) {
-        this.States = response.data;
-      } else {
-        alert(response?.message || 'Failed to fetch States list.');
-      }
-    });
-  }
-
-  getcityList(): void {
-    this.masterDataService.getcitylist().subscribe((response: any) => {
-      if (response?.success && Array.isArray(response.data)) {
-        this.City = response.data;
-      } else {
-        alert(response?.message || 'Failed to fetch City list.');
-      }
-    });
-  }
-  
-  
-  saveEmployee(employee: any): void {
-  console.log(employee)
-    if (!this.employeeForm) {
-      console.error('Form not initialized.');
-      return;
     }
-  
-    this.masterDataService.saveEmployee(employee).subscribe(
+    else{
+      this.modal.employee = new Employee();
+      this.setValues();
+    }
+  }
+
+  saveEmployee(): void {
+    console.log(this.modal.employee);
+    this.masterDataService.saveEmployee(this.modal.employee).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
@@ -246,27 +241,30 @@ obj_clicked: any;
         } else {
           alert(response.message || 'Failed to update Employee.');
         }
-      },
-      (error: any) => {
-        console.error('Error updating Employee:', error);
-        alert('An error occurred while updating the Employee.');
       }
     );
   }
-  educationCertificateImage(event: any, obj_clicked: any): void {
+
+  closeModal(){
+    this.modal.show = false;
+    this.modal.isEdit = false;
+    this.modal.title = '';
+    this.modal.employee = new Employee();
+  }
+  educationCertificateImage(event: any): void {
     const files = event.target.files;
-    console.log(this.employee.employeeId,"employeeId");
+    console.log(this.modal.employee.employeeId, "employeeId");
     if (files.length === 0) {
       alert('Please select a file to upload.');
       return;
     }
-  
+
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append('certificateImage', files[i], files[i].name);
     }
-    
-    this.masterDataService.uploadMultipleCertificates(formData, this.employee.employeeId).subscribe(
+
+    this.masterDataService.uploadMultipleCertificates(formData, this.modal.employee.employeeId.toString()).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
@@ -274,39 +272,21 @@ obj_clicked: any;
         } else {
           alert(response.message || 'Failed to upload certificates.');
         }
-      },
-      (error: any) => {
-        console.error('Error uploading certificates:', error);
-        alert('An error occurred while uploading the certificates.');
       }
     );
   }
-  
-  
-  
 
-show_Edu_Certificate(obj_clicked: any) {
-  this.employee = obj_clicked;
-  this.masterDataService.vieweducertificate('?EmpId=' + obj_clicked.employeeId).subscribe(
-    (response: any) => {
-      console.log('API Response:', response);
-      if (response?.success && Array.isArray(response.data)) {
-        this.educertificateimage = response.data;
-      } else {
-        alert(response?.message || 'Failed to fetch Department list.');
+  show_Edu_Certificate(obj_clicked: any) {
+    this.modal.employee = obj_clicked;
+    this.masterDataService.vieweducertificate('?EmpId=' + obj_clicked.employeeId).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response?.success && Array.isArray(response.data)) {
+          this.educertificateimage = response.data;
+        } else {
+          alert(response?.message || 'Failed to fetch Department list.');
+        }
       }
-    },
-    (error: any) => {
-      console.error('Error fetching Department list:', error);
-      alert('An error occurred while fetching the Department list.');
-    }
-  );
+    );
+  }
 }
-
-
- 
-  
-  
-}
-  
-

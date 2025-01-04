@@ -25,3 +25,15 @@ export interface Company {
     stateName: string;
   }
   
+
+  export interface Designation {
+    designationId: number;
+    designationName: string;
+  }
+  
+  export interface Category {
+    categoryId: number;
+    categoryFName: string;
+    categorySName: string;
+  }
+  

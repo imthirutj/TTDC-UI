@@ -1,268 +1,249 @@
 <div class="card">
-  <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-   (triggerParentFunction)="getEmployeeList()">
+  <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="getEmployeeList()">
   </app-filter>
   <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 </div>
 
-<button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+<button class="btn btn-success mb-3" type="button" (click)="openModal(false)">
   Add Employee
 </button>
 
 <div class="Employee-list-container">
-    <h3>Employee List</h3>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Employee ID</th>
-          <th>Employee Name</th>
-          <th>Employee Code</th>  
-          <th>Gender</th>  
-          <th>AadhaarNumber</th>           
-          <th>Experience</th>  
-          <th>DOB</th>  
-          <th>Age</th>  
-          <th>Place of work</th>  
-          <th>Contact Number</th>  
-          <th>Date of joining</th>
-          <th>Passed Out Year</th>  
-          <th>State</th>     
-          <th>City</th>  
-          <th>Company Name</th>      
-          <th>Department Name</th>  
-          <th>Designation Name</th>  
-          <th>Educational Qualifications</th>   
-          <th>Required Qualifications</th>               
-          <th>Category Name</th> 
-          <th>Education Certificate Image</th>  
-              
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let employee of Employee; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ employee.employeeId  }}</td>
-            <td>{{ employee.employeeName }}</td>
-            <td>{{ employee.employeeCode }}</td>           
-            <td>{{ employee.gender }}</td>
-            <td>{{ employee.aadhaarNumber }}</td>                    
-            <td>{{ employee.experience }}</td>
-            <td>{{ employee.dob }}</td>
-            <td>{{ employee.age }}</td>
-            <td>{{ employee.workPlace }}</td>
-            <td>{{ employee.contactNo }}</td>
-            <td>{{ employee.passedOutYear }}</td> 
-            <td>{{ employee.doj }}</td>  
-            <td>{{ employee.stateName }} </td>
-            <td>{{ employee.cityName }} </td>   
-            <td>{{ employee.companyFName }}</td>  
-            <td>{{ employee.departmentFName }}</td>                 
-            <td>{{ employee.designationName }}</td>          
-            <td>{{ employee.qualifications }}</td>    
-            <td>{{ employee.requiredQualifications }} </td>
-            <td>{{ employee.categoryFName }} </td>
-            <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"  (click)="show_Edu_Certificate(employee)">
-              View education certificate
+  <h3>Employee List</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Employee Code</th>
+        <th>Gender</th>
+        <th>AadhaarNumber</th>
+        <th>Experience</th>
+        <th>DOB</th>
+        <th>Age</th>
+        <th>Place of work</th>
+        <th>Contact Number</th>
+        <th>Date of joining</th>
+        <th>Passed Out Year</th>
+        <th>State</th>
+        <th>City</th>
+        <th>Company Name</th>
+        <th>Department Name</th>
+        <th>Designation Name</th>
+        <th>Educational Qualifications</th>
+        <th>Required Qualifications</th>
+        <th>Category Name</th>
+        <th>Education Certificate Image</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of Employees; let i = index">
+        <td>{{ i + 1 }}
+          <button class="btn btn-primary" type="button" (click)="openModal(true, employee)">
+            Edit
+          </button>
+        </td>
+        <td>{{ employee.employeeId }}</td>
+        <td>{{ employee.employeeName }}</td>
+        <td>{{ employee.employeeCode }}</td>
+        <td>{{ employee.gender }}</td>
+        <td>{{ employee.aadhaarNumber }}</td>
+        <td>{{ employee.experience }}</td>
+        <td>{{ employee.dob }}</td>
+        <td>{{ employee.age }}</td>
+        <td>{{ employee.workPlace }}</td>
+        <td>{{ employee.contactNo }}</td>
+        <td>{{ employee.passedOutYear }}</td>
+        <td>{{ employee.doj }}</td>
+        <td>{{ employee.stateName }} </td>
+        <td>{{ employee.cityName }} </td>
+        <td>{{ employee.companyFName }}</td>
+        <td>{{ employee.departmentFName }}</td>
+        <td>{{ employee.designationName }}</td>
+        <td>{{ employee.qualifications }}</td>
+        <td>{{ employee.requiredQualifications }} </td>
+        <td>{{ employee.categoryFName }} </td>
+        <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            (click)="show_Edu_Certificate(employee)">
+            View education certificate
           </button></td>
-          </tr>          
-      </tbody>
-    </table>
-  </div>
-  
-  <!-- Add Employee Modal -->
-  <div
-    class="modal fade"
-    id="addEmployeeModal"
-    tabindex="-1"
-    aria-labelledby="addEmployeeModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addEmployeeModalLabel">Add/Edit Employee</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <!-- <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()"> -->
-            <!-- <form (ngSubmit)="saveEmployee(employee)" > -->
-         
-            <div class="mb-3">
-              <label for="employeeName" class="form-label">Employee Name</label>
-              <input type="text" class="form-control" [(ngModel)]="employee.employeeName" id="employeeName" name="employeeName" placeholder="Enter Employee Name" required>
-            </div>
-            <div class="mb-3">
-              <label for="EmployeeCode" class="form-label">Employee Code</label>
-              <input type="text" class="form-control" id="EmployeeCode" [(ngModel)]="employee.EmployeeCode" name="EmployeeCode"  placeholder="Enter Employee Code" required>
-            </div>
-            <div class="mb-3">
-              <label for="NumericCode" class="form-label">Numeric Code</label>
-              <input type="number" class="form-control" id="NumericCode" [(ngModel)]="employee.NumericCode" name="NumericCode"  placeholder="Enter Numeric Code" required>
-            </div>
-            <div class="mb-3">
-              <label for="StringCode" class="form-label">String Code</label>
-              <input type="text" class="form-control" id="StringCode"  [(ngModel)]="employee.StringCode" name="StringCode"  placeholder="Enter String Code" required>
-            </div>
-            <div class="mb-3">
-              <label for="Gender" class="form-label">Gender</label>
-              <input type="text" class="form-control" id="Gender" [(ngModel)]="employee.Gender" name="Gender" placeholder="Enter Gender">
-            </div>
-            <div class="mb-3">
-              <label for="AadhaarNumber" class="form-label">Aadhar Number</label>
-              <input type="text" class="form-control" id="AadhaarNumber" [(ngModel)]="employee.AadhaarNumber" name="AadhaarNumber" placeholder="Enter AadhaarNumber">
-            </div>
-            
-            <div class="mb-3">
-              <label for="experience" class="form-label">Experience</label>
-              <input type="text" class="form-control" id="experience" [(ngModel)]="employee.experience" name="experience" placeholder="Enter experience">
-            </div>
-            <div class="mb-3">
-              <label for="dob" class="form-label">Date Of Birth</label>
-              <input type="text" class="form-control" id="dob" [(ngModel)]="employee.dob" name="dob" placeholder="Enter Date Of Birth">
-            </div>
-            <div class="mb-3">
-              <label for="age" class="form-label">Age</label>
-              <input type="text" class="form-control" id="age" [(ngModel)]="employee.age" name="age" placeholder="Enter Age">
-            </div>
-            <div class="mb-3">
-              <label for="workPlace" class="form-label">Place Of work</label>
-              <input type="text" class="form-control" id="workPlace" [(ngModel)]="employee.workPlace" name="workPlace" placeholder="Enter Place Of work">
-            </div>
-            <div class="mb-3">
-              <label for="contactNo" class="form-label">Contact Number</label>
-              <input type="text" class="form-control" id="contactNo" [(ngModel)]="employee.contactNo" name="contactNo" placeholder="Enter Contact Number">
-            </div>
-            <div class="mb-3">
-              <label for="passedOutYear" class="form-label">Passed Out Year</label>
-              <input type="text" class="form-control" id="passedOutYear" [(ngModel)]="employee.passedOutYear" name="passedOutYear" placeholder="Enter passed Out Year">
-            </div>
-            <div class="mb-3">
-              <label for="doj" class="form-label">Date OF Joining</label>
-              <input type="text" class="form-control" id="doj" [(ngModel)]="employee.doj" name="doj" placeholder="Enter Date OF Joining">
-            </div>
-            <div class="mb-3">
-              <label for="States" class="form-label">State Name</label>
-              <select class="form-select" id="States" [(ngModel)]="employee.stateId" name="stateId">
-                <option value="">Select States</option>
-                <option *ngFor="let states of States" [value]="states.stateId">{{ states.stateName }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="City" class="form-label">City Name</label>
-              <select class="form-select" id="City" [(ngModel)]="employee.cityId" name="cityId">
-                <option value="">Select City</option>
-                <option *ngFor="let city of City" [value]="city.cityId">{{ city.cityName }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="CompanyId" class="form-label">Company Name</label>
-              <select class="form-select" id="CompanyId" [(ngModel)]="employee.companyId" name="companyId">
-                <option value="">Select Company</option>
-                <option *ngFor="let company of Company" [value]="company.companyId">{{ company.companyFName }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="DepartmentId" class="form-label">Department Name</label>
-              <select class="form-select" id="DesignationId" [(ngModel)]="employee.departmentId" name="departmentId">
-                <option value="">Select Department</option>
-                <option *ngFor="let department of Department" [value]="department.departmentId">{{
-                  department.departmentFName }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="DesignationId" class="form-label">Designation Name</label>
-              <select class="form-select" id="DesignationId" [(ngModel)]="employee.designationId" name="designationId">
-                <option value="">Select Designation</option>
-                <option *ngFor="let designation of Designation" [value]="designation.designationId">{{ designation.designationName }}</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="Qualifications" class="form-label">Qualifications</label>
-              <input type="text" class="form-control" id="Qualifications" [(ngModel)]="employee.Qualifications" name="Qualifications" placeholder="Enter Qualifications">
-            </div>             
-
-        <div class="mb-3">
-          <label for="CategoryId" class="form-label">Category Name</label>
-          <select class="form-select" id="CategoryId" [(ngModel)]="employee.categoryId" name="categoryId">
-            <option value="">Select Category</option>
-            <option *ngFor="let category of Category" [value]="category.categoryId">{{ category.categoryFName }}
-            </option>
-          </select>
-        </div>
-        <!-- <div class="mb-3">
-          <label for="ProfileImage" class="form-label">Upload Education Certificate</label>
-          <input type="file" class="form-control" id="certificateImage" (change)="educationCertificateImage($event)">
-        </div>
-         -->
-
-        <!-- </form> -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <!-- <button type="submit" class="btn btn-primary bg-red" [disabled]="!employeeForm || employeeForm.invalid">Register</button> -->
-        <button type="submit" class="btn btn-primary" (click)="saveEmployee(employee)">Save</button>
-
-      </div>
-    </div>
-  </div>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
+
+
+<app-common-dialog 
+  [showDialog]="modal.show"
+  [dialogTitle]="modal.title"
+  [showCloseIcon]="true"
+  [showSubmitButton]="true"
+  (submitDialog)="saveEmployee()"
+  (closeDialog)="closeModal()">
+  <div class="mb-3">
+    <label for="employeeName" class="form-label">Employee Name</label>
+    <input type="text" class="form-control" [(ngModel)]="modal.employee.employeeName" id="employeeName" name="employeeName"
+      placeholder="Enter Employee Name" required>
+  </div>
+  <div class="mb-3">
+    <label for="EmployeeCode" class="form-label">Employee Code</label>
+    <input type="text" class="form-control" id="EmployeeCode" [(ngModel)]="modal.employee.employeeCode" name="EmployeeCode"
+      placeholder="Enter Employee Code" required>
+  </div>
+  <div class="mb-3">
+    <label for="NumericCode" class="form-label">Numeric Code</label>
+    <input type="number" class="form-control" id="NumericCode" [(ngModel)]="modal.employee.numericCode" name="NumericCode"
+      placeholder="Enter Numeric Code" required>
+  </div>
+  <div class="mb-3">
+    <label for="StringCode" class="form-label">String Code</label>
+    <input type="text" class="form-control" id="StringCode" [(ngModel)]="modal.employee.stringCode" name="StringCode"
+      placeholder="Enter String Code" required>
+  </div>
+  <div class="mb-3">
+    <label for="Gender" class="form-label">Gender</label>
+    <select class="form-select" id="Gender" [(ngModel)]="modal.employee.gender" name="Gender" required>
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="AadhaarNumber" class="form-label">Aadhar Number</label>
+    <input type="text" class="form-control" id="AadhaarNumber" [(ngModel)]="modal.employee.aadhaarNumber" name="AadhaarNumber"
+      placeholder="Enter AadhaarNumber">
+  </div>
+
+  <div class="mb-3">
+    <label for="experience" class="form-label">Experience</label>
+    <input type="text" class="form-control" id="experience" [(ngModel)]="modal.employee.experience" name="experience"
+      placeholder="Enter experience">
+  </div>
+  <div class="mb-3">
+    <label for="dob" class="form-label">Date Of Birth</label>
+    <input type="date" class="form-control" id="dob" [(ngModel)]="modal.employee.dob" name="dob"
+      placeholder="Enter Date Of Birth">
+  </div>
+  <div class="mb-3">
+    <label for="age" class="form-label">Age</label>
+    <input type="text" class="form-control" id="age" [(ngModel)]="modal.employee.age" name="age" placeholder="Enter Age">
+  </div>
+  <div class="mb-3">
+    <label for="workPlace" class="form-label">Place Of work</label>
+    <input type="text" class="form-control" id="workPlace" [(ngModel)]="modal.employee.workPlace" name="workPlace"
+      placeholder="Enter Place Of work">
+  </div>
+  <div class="mb-3">
+    <label for="contactNo" class="form-label">Contact Number</label>
+    <input type="text" class="form-control" id="contactNo" [(ngModel)]="modal.employee.contactNo" name="contactNo"
+      placeholder="Enter Contact Number">
+  </div>
+  <div class="mb-3">
+    <label for="passedOutYear" class="form-label">Passed Out Year</label>
+    <input type="number" class="form-control" id="passedOutYear" [(ngModel)]="modal.employee.passedOutYear" name="passedOutYear"
+      placeholder="Enter passed Out Year">
+  </div>
+  <div class="mb-3">
+    <label for="doj" class="form-label">Date OF Joining</label>
+    <input type="date" class="form-control" id="doj" [(ngModel)]="modal.employee.doj" name="doj"
+      placeholder="Enter Date OF Joining">
+  </div>
+ 
+  <div class="mb-3">
+    <label for="City" class="form-label">City Name</label>
+    <select (change)="onCityChange()" class="form-select" id="City" [(ngModel)]="modal.employee.cityId" name="cityId">
+      <option value="">Select City</option>
+      <option *ngFor="let city of dropdowns.cities" [value]="city.cityId">{{ city.cityName }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="CompanyId" class="form-label">Company Name</label>
+    <select (change)="onCompanyChange()" class="form-select" id="CompanyId" [(ngModel)]="modal.employee.companyId" name="companyId">
+      <option value="">Select Company</option>
+      <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="DepartmentId" class="form-label">Department Name</label>
+    <select (change)="onDepartmentChange()" class="form-select" id="DesignationId" [(ngModel)]="modal.employee.departmentId" name="departmentId">
+      <option value="">Select Department</option>
+      <option *ngFor="let department of dropdowns.departments" [value]="department.departmentId">{{
+        department.departmentFName }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="vendorId" class="form-label">Vendor</label>
+    <select class="form-select" id="vendorId" [(ngModel)]="modal.employee.vendorId" name="vendorId">
+      <option value="">Select Vendor</option>
+      <option *ngFor="let vendor of dropdowns.vendors" [value]="vendor.vendorId">{{ vendor.vendorName }}</option>
+    </select>
+
+  </div>
+  <div class="mb-3">
+    <label for="DesignationId" class="form-label">Designation Name</label>
+    <select class="form-select" id="DesignationId" [(ngModel)]="modal.employee.designationId" name="designationId">
+      <option value="">Select Designation</option>
+      <option *ngFor="let designation of dropdowns.designation" [value]="designation.designationId">{{ designation.designationName
+        }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="Qualifications" class="form-label">Qualifications</label>
+    <input type="text" class="form-control" id="Qualifications" [(ngModel)]="modal.employee.qualifications"
+      name="Qualifications" placeholder="Enter Qualifications">
+  </div>
+
+  <div class="mb-3">
+    <label for="CategoryId" class="form-label">Category Name</label>
+    <select class="form-select" id="CategoryId" [(ngModel)]="modal.employee.categoryId" name="categoryId">
+      <option value="">Select Category</option>
+      <option *ngFor="let category of dropdowns.category" [value]="category.categoryId">{{ category.categoryFName }}
+      </option>
+    </select>
+  </div>
+</app-common-dialog>
+
+
 <div class="container mt-4">
-   
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Education Certificate</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
             <label for="certificateImage" class="form-label">Upload Education Certificate</label>
-            <input 
-            type="file" 
-            class="form-control" 
-            id="certificateImage" 
-            (change)="educationCertificateImage($event, obj_clicked)">
-          
+            <input type="file" class="form-control" id="certificateImage"
+              (change)="educationCertificateImage($event)">
+
           </div>
-          <button type="submit" class="btn btn-primary" (click)="educationCertificateImage($event, obj_clicked)">Save</button>
-          
+          <button type="submit" class="btn btn-primary"
+            (click)="educationCertificateImage($event)">Save</button>
+
           <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Image</th>                 
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let department of educertificateimage; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ department.certificateImage  }}</td>
-                    
-                  </tr>          
-              </tbody>
-            </table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let department of educertificateimage; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ department.certificateImage }}</td>
+
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>            
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
