@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MasterDataService } from 'src/app/services/master-data.service';
+import { DataService } from '../data.Service';
 
 @Component({
   selector: 'app-company',
@@ -10,26 +11,40 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 export class CompanyComponent implements OnInit {
   Company: any[] = []; 
 
-  constructor(private masterDataService: MasterDataService) {}
+  filters: any = {
+    cityId: {
+      value: '',
+      show: true,
+      key: 'cityId',
+      includeInSearchParams: true
+    },
+  };
+  constructor(private masterDataService: MasterDataService,
+    private dataservice: DataService
+  ) {}
 
   ngOnInit(): void {
     this.getCompanyList(); 
   }
 
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.getCompanyList();
+  }
+
+  search() {
+    this.getCompanyList();
+  }
+
   getCompanyList(): void {
-    this.masterDataService.getCompany({}).subscribe(
+    const payload = this.dataservice.getPayloadValue(this.filters);
+    this.masterDataService.getCompany(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {
           this.Company = response.data; 
           console.log('Company list:', this.Company);
-        } else {
-          alert(response.message || 'Failed to fetch Company list.');
-        }
-      },
-      (error) => {
-        console.error('Error fetching Company list:', error);
-        alert('An error occurred while fetching the Company list.');
+        } 
       }
     );
   }

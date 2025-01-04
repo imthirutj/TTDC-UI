@@ -1,4 +1,12 @@
 <div class="company-list-container">
+
+  <div class="card">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" 
+    (triggerParentFunction)="getCompanyList()">
+    </app-filter>
+    <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  </div>
+  
     <h3>Company List</h3>
     <table class="table table-bordered">
       <thead>
