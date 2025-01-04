@@ -193,6 +193,9 @@ export class EmployeeWorkDetailsComponent implements OnInit {
       if (response.success) {
         this.employeeWorkDetails = response.data;
       }
+      else{
+        this.employeeWorkDetails = [];
+      }
     });
   }
   openUpdateModal(detail: any): void {
