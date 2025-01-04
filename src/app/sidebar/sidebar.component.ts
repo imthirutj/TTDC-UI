@@ -131,9 +131,9 @@ export class SidebarComponent {
         allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       {
-        label: 'Vendor',
+        label: 'Vendor Payment Details',
         icon: 'fa-folder',
-        route: '/vendor',
+        route: '/vendor-payment-details',
         allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
     

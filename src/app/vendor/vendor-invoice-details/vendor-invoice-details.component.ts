@@ -1,15 +1,15 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-import { MasterDataService } from '../services/master-data.service';
-import { DataService } from '../data.Service';
-import { UserType } from '../common/user-type.enum';
-import { myMonths, myYears } from '../utils/helpers/variables';
-import { VendorService } from '../vendor/vendor.service';
+import { MasterDataService } from '../../services/master-data.service';
+import { DataService } from '../../data.Service';
+import { UserType } from '../../common/user-type.enum';
+import { myMonths, myYears } from '../../utils/helpers/variables';
+import { VendorService } from '../vendor.service';
 import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { LoadingService } from '../services/loading.service';
+import { LoadingService } from '../../services/loading.service';
 
 
 @Component({

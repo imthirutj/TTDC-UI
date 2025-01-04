@@ -1,19 +1,19 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-import { MasterDataService } from '../services/master-data.service';
-import { DataService } from '../data.Service';
-import { UserType } from '../common/user-type.enum';
-import { myMonths, myYears } from '../utils/helpers/variables';
-import { VendorService } from './vendor.service';
+import { MasterDataService } from '../../services/master-data.service';
+import { DataService } from '../../data.Service';
+import { UserType } from '../../common/user-type.enum';
+import { myMonths, myYears } from '../../utils/helpers/variables';
+import { VendorService } from '../vendor.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-vendor',
-  templateUrl: './vendor.component.html',
-  styleUrls: ['./vendor.component.css']
+  selector: 'app-vendor-payment-details',
+  templateUrl: './vendor-payment-details.component.html',
+  styleUrls: ['./vendor-payment-details.component.css']
 })
-export class VendorComponent implements OnInit {
+export class VendorPaymentDetailsComponent implements OnInit {
 
   UserType = UserType;
   userAccessLevel: any;

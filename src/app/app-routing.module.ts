@@ -22,7 +22,7 @@ import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employ
 import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-work-details.component';
 import { OdslipComponent } from './odslip/odslip.component';
 import { ErrorComponent } from './error/error.component';
-import { VendorComponent } from './vendor/vendor.component';
+import { VendorPaymentDetailsComponent } from './vendor/vendor-payment-details/vendor-payment-details.component';
 import { CompanylistComponent } from './odslip/companylist/companylist.component';
 import { LeaverequestComponent } from './leaverequest/leaverequest.component';
 import { ViewComponent } from './leaverequest/view/view.component';
@@ -30,7 +30,7 @@ import { OdslipapprovalComponent } from './odslipapproval/odslipapproval.compone
 import { OdapprovalviewComponent } from './odslipapproval/odapprovalview/odapprovalview.component';
 import { LeaveapprovalComponent } from './leaveapproval/leaveapproval.component';
 import { LeaveapprovalupdateComponent } from './leaveapproval/leaveapprovalupdate/leaveapprovalupdate.component';
-import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-invoice-details.component';
+import { VendorInvoiceDetailsComponent } from './vendor/vendor-invoice-details/vendor-invoice-details.component';
 import { DegreeComponent } from './degree/degree.component';
 import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
 
@@ -68,6 +68,12 @@ const routes: Routes = [
     component: CategoryComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
+  },
+  {
+    path: 'vendor-management',
+    component: VendorPaymentDetailsComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: UserType.STATE_ADMIN },
   },
   {
     path: 'department',
@@ -195,8 +201,8 @@ const routes: Routes = [
   },
 
   {
-    path: 'vendor',
-    component: VendorComponent,
+    path: 'vendor-payment-details',
+    component: VendorPaymentDetailsComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },

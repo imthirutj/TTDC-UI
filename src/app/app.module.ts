@@ -49,7 +49,7 @@ import { EmployeeShiftCalendarComponent } from './employee-shift-calendar/employ
 import { EmployeeWorkDetailsComponent } from './employee-work-details/employee-work-details.component';
 import { OdslipComponent } from './odslip/odslip.component';
 import { ErrorComponent } from './error/error.component';
-import { VendorComponent } from './vendor/vendor.component';
+import { VendorPaymentDetailsComponent } from './vendor/vendor-payment-details/vendor-payment-details.component';
 import { CompanylistComponent } from './odslip/companylist/companylist.component';
 
 import { LeaverequestComponent } from './leaverequest/leaverequest.component';
@@ -58,12 +58,13 @@ import { OdslipapprovalComponent } from './odslipapproval/odslipapproval.compone
 import { OdapprovalviewComponent } from './odslipapproval/odapprovalview/odapprovalview.component';
 import { LeaveapprovalComponent } from './leaveapproval/leaveapproval.component';
 import { LeaveapprovalupdateComponent } from './leaveapproval/leaveapprovalupdate/leaveapprovalupdate.component';
-import { VendorInvoiceDetailsComponent } from './vendor-invoice-details/vendor-invoice-details.component';
+import { VendorInvoiceDetailsComponent } from './vendor/vendor-invoice-details/vendor-invoice-details.component';
 import { MonthNamePipe } from './utils/pipes/month-name.pipe';
 import { DegreeComponent } from './degree/degree.component';
 import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
 import { FiltersComponent } from './filters/filters.component';
 import { MinutesToHoursPipe } from './utils/pipes/minutes-to-hours.pipe';
+import { VendorManagementComponent } from './vendor/vendor-management/vendor-management.component';
 
 
 @NgModule({
@@ -92,7 +93,7 @@ import { MinutesToHoursPipe } from './utils/pipes/minutes-to-hours.pipe';
     EmployeeWorkDetailsComponent,
     OdslipComponent,
     ErrorComponent,
-    VendorComponent,
+    VendorPaymentDetailsComponent,
     CompanylistComponent,
     LeaverequestComponent,    
     ViewComponent,
@@ -105,7 +106,8 @@ import { MinutesToHoursPipe } from './utils/pipes/minutes-to-hours.pipe';
     DegreeComponent,
     DesignationQualificationComponent,
     FiltersComponent,
-    MinutesToHoursPipe
+    MinutesToHoursPipe,
+    VendorManagementComponent
 
   ],
   imports: [
