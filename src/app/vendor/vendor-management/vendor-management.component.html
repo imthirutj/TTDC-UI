@@ -1,48 +1,102 @@
 <div class="container">
-    <div class="card">
-        <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-         (triggerParentFunction)="getVendors()">
-        </app-filter>
-        <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  <div class="card">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="getVendors()">
+    </app-filter>
+    <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  </div>
+
+  <button class="btn btn-success mb-3" type="button" (click)="openVendorModal(false, null)">Add Vendor</button>
+  <div class="table-container">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Vendor Name</th>
+          <th>City</th>
+          <th>Company Name</th>
+          <th>Department</th>
+          <th>Address</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+          <th>GSTIN</th>
+          <th>PAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vendor of vendors; let i = index">
+          <td>{{ i + 1 }}
+            <button class="btn btn-primary" (click)="openVendorModal(true, vendor)">
+              Edit
+            </button>
+          </td>
+          <td>{{ vendor.vendorName }}</td>
+          <td>{{ vendor.cityName }}</td>
+          <td>{{ vendor.companyFName }}</td>
+          <td>{{ vendor.departmentFName }}</td>
+          <td>{{ vendor.address }}</td>
+          <td>{{ vendor.contactNo }}</td>
+          <td>{{ vendor.emailId }}</td>
+          <td>{{ vendor.gstin }}</td>
+          <td>{{ vendor.panNo }}</td>
+         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <app-common-dialog [dialogTitle]="modal.title" [showDialog]="modal.show" [showSubmitButton]="true"
+    [showCloseIcon]="true" (submitDialog)="updateVendorModal()" (closeDialog)="closeModal()">
+
+    <div>
+      <div class="form-group">
+        <label for="vendorName">Vendor Name</label>
+        <input type="text" class="form-control" id="vendorName" [(ngModel)]="modal.vendor.vendorName">
       </div>
-      
-      <div class="table-container">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Vendor Name</th>
-              <th>City</th>
-              <th>Company Name</th>
-              <th>Department</th>
-              <th>Address</th>
-              <th>Phone Number</th>
-              <th>Email</th>
-              <th>GSTIN</th>
-              <th>PAN</th>
-              <th>View Vendor</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let vendor of vendors; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ vendor.vendorName }}</td>
-              <td>{{ vendor.cityName }}</td>
-              <td>{{ vendor.companyFName }}</td>
-              <td>{{ vendor.departmentFName }}</td>
-              <td>{{ vendor.address }}</td>
-              <td>{{ vendor.contactNo }}</td>
-              <td>{{ vendor.emailId }}</td>
-              <td>{{ vendor.gstin }}</td>
-              <td>{{ vendor.panNo }}</td>
-              <td>
-                <button class="btn btn-primary" (click)="openVendorModal(vendor)">
-                  View
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="form-group">
+        <label for="city">City</label>
+        <select (change)="onCityChange()" class="form-control" id="city" [(ngModel)]="modal.vendor.cityId">
+          <option value="">Select City</option>
+          <option *ngFor="let city of dropdowns.cities" [value]="city.cityId">{{ city.cityName }}</option>
+        </select>
       </div>
-      
+      <div class="form-group">
+        <label for="company">Company</label>
+        <select class="form-control" id="company" [(ngModel)]="modal.vendor.companyId">
+          <option value="">Select Company</option>
+          <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="department">Department</label>
+        <select class="form-control" id="department" [(ngModel)]="modal.vendor.departmentId">
+          <option value="">Select Department</option>
+          <option *ngFor="let department of dropdowns.departments" [value]="department.departmentId">{{
+            department.departmentFName }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" id="address" [(ngModel)]="modal.vendor.address">
+      </div>
+      <div class="form-group">
+        <label for="contactNo">Contact No.</label>
+        <input type="text" [maxlength]="10" class="form-control" id="contactNo" [(ngModel)]="modal.vendor.contactNo">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="modal.vendor.emailId">
+      </div>
+      <div class="form-group">
+        <label for="gstin">GSTIN</label>
+        <input type="text" class="form-control" id="gstin" [(ngModel)]="modal.vendor.gstin">
+      </div>
+      <div class="form-group">
+        <label for="pan">PAN</label>
+        <input type="text" class="form-control" id="pan" [(ngModel)]="modal.vendor.panNo">
+      </div>
+
+    </div>
+  </app-common-dialog>
 </div>

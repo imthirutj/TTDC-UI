@@ -40,4 +40,13 @@ export class VendorService {
     return this.http.post(url,{});
   }
 
+  updateVendor(payload: any): Observable<any> {
+    const url = `${this.apiUrl}Master/InsertUpdateVendor`;
+    return this.http.post(url, payload);
+  }
+
+  addVendor(payload: any): Observable<any> {
+    const url = `${this.apiUrl}Master/InsertUpdateVendor`;
+    return this.http.post(url, payload);
+  }
 }
