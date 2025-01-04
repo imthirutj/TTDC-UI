@@ -1,9 +1,9 @@
 /* Sidebar Styling */
 .sidebar {
     position: fixed;
-    top: 110px;
+    top: 109px;
     left: 0;
-    height: calc(100vh - 136px);
+    height:calc(100vh - 109px);
     width: 250px;
     background-color: #343a40;
     color: white;
