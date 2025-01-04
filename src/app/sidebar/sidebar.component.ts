@@ -48,121 +48,126 @@ export class SidebarComponent {
     const allMenuItems = [
       { 
         label: 'Dashboard', 
-        icon: 'fa-tachometer', 
+        icon: 'fa-solid fa-tachometer-alt', 
         route: '/dashboard', 
-        allowedUserTypes: [ 'ALL'] 
+        allowedUserTypes: ['ALL'] 
       },
       { 
         label: 'Employee List', 
-        icon: 'fa-folder', 
-        route: `/employee`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        icon: 'fa-solid fa-users', 
+        route: '/employee', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       { 
         label: 'Pay Generated', 
-        icon: 'fa-folder', 
-        route: `/payslip-records`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        icon: 'fa-solid fa-file-invoice-dollar', 
+        route: '/payslip-records', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       { 
         label: 'Pay Not Generated', 
-        icon: 'fa-folder', 
-        route: `/payslip-records-waiting`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+        icon: 'fa-solid fa-file-excel', 
+        route: '/payslip-records-waiting', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       { 
         label: 'State List', 
-        icon: 'fa-folder', 
-        route: `/state`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        icon: 'fa-solid fa-map-marked-alt', 
+        route: '/state', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
-        label: 'city List', 
-        icon: 'fa-folder', 
-        route: `/city`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        label: 'City List', 
+        icon: 'fa-solid fa-city', 
+        route: '/city', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
         label: 'Category List', 
-        icon: 'fa-folder', 
-        route: `/category`, 
-        allowedUserTypes:[ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        icon: 'fa-solid fa-th-list', 
+        route: '/category', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+      },
+      {
+        label: 'Vendor Management',
+        icon: 'fa-solid fa-store',
+        route: '/vendor-management',
+        allowedUserTypes: [UserType.STATE_ADMIN]
       },
       { 
         label: 'Department', 
-        icon: 'fa-folder', 
-        route: `/department`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR,] 
+        icon: 'fa-solid fa-sitemap', 
+        route: '/department', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
         label: 'Company List', 
-        icon: 'fa-folder', 
-        route: `/company`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, ]  
+        icon: 'fa-solid fa-building', 
+        route: '/company', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
       },
       { 
         label: 'Designation List', 
-        icon: 'fa-folder', 
-        route: `/designation`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, ] 
+        icon: 'fa-solid fa-id-badge', 
+        route: '/designation', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
         label: 'Degree List', 
-        icon: 'fa-folder', 
-        route: `/degree`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR,]  
+        icon: 'fa-solid fa-graduation-cap', 
+        route: '/degree', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
       },
       { 
         label: 'Designation Qualification', 
-        icon: 'fa-folder', 
-        route: `/DesignationQualification`, 
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, ] 
+        icon: 'fa-solid fa-tasks', 
+        route: '/DesignationQualification', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       {
         label: 'Shift Management',
-        icon: 'fa-folder',
+        icon: 'fa-solid fa-clock',
         route: '/shift-management',
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       {
         label: 'Employee Report',
-        icon: 'fa-folder',
+        icon: 'fa-solid fa-chart-line',
         route: '/employee-report',
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       {
         label: 'Vendor Payment Details',
-        icon: 'fa-folder',
+        icon: 'fa-solid fa-receipt',
         route: '/vendor-payment-details',
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
-    
       {
         label: 'OD Slip',
-        icon: 'fa-folder',
+        icon: 'fa-solid fa-file-alt',
         route: '/odslipcompanylist',
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
       },
       {
         label: 'OD Slip Approval',
-        icon: 'fa-folder',
+        icon: 'fa-solid fa-check-circle',
         route: '/odslipapproval',
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       {
         label: 'Leave Request',
-        icon: 'fa-folder',
+        icon: 'fa-solid fa-envelope-open-text',
         route: '/empleaverequest',
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
       },
       {
         label: 'Leave Approval',
-        icon: 'fa-folder',
+        icon: 'fa-solid fa-thumbs-up',
         route: '/Leaveapproval',
-        allowedUserTypes: [ UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       }
-    
     ];
+    
 
     return allMenuItems.filter(item => item.allowedUserTypes.includes(userAccessLevel)  || item.allowedUserTypes.includes('ALL' as UserType));
   }

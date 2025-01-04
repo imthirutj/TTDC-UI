@@ -33,6 +33,7 @@ import { LeaveapprovalupdateComponent } from './leaveapproval/leaveapprovalupdat
 import { VendorInvoiceDetailsComponent } from './vendor/vendor-invoice-details/vendor-invoice-details.component';
 import { DegreeComponent } from './degree/degree.component';
 import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
+import { VendorManagementComponent } from './vendor/vendor-management/vendor-management.component';
 
 const routes: Routes = [
 
@@ -71,7 +72,7 @@ const routes: Routes = [
   },
   {
     path: 'vendor-management',
-    component: VendorPaymentDetailsComponent,
+    component: VendorManagementComponent,
     canActivate: [AuthGuard],
     data: {  roles: UserType.STATE_ADMIN },
   },
