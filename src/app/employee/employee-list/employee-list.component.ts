@@ -222,6 +222,13 @@ export class EmployeeListComponent {
     if(isEdit) {
       if(employee){
         this.modal.employee = { ...employee, loginName: 'qwerty', loginPassword: '12345'};
+
+        if(this.modal.employee.cityId){
+          this.fetchCompanies(this.modal.employee.cityId);
+        }
+        if(this.modal.employee.companyId){
+          this.fetchVendors(this.modal.employee.companyId, this.modal.employee.departmentId);
+        }
       }
     }
     else{

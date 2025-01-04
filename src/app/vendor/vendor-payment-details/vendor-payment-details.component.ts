@@ -51,11 +51,24 @@ export class VendorPaymentDetailsComponent implements OnInit {
       key: 'year',
       includeInSearchParams: true
     },
+
+     cityId: {
+      value: '',
+      show: true,
+      key: 'cityId',
+      includeInSearchParams: true
+    },
     companyId: {
       value: '',
-      show: false,
+      show: true,
       key: 'compId',
-      includeInSearchParams: false
+      includeInSearchParams: true
+    },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams: true
     },
     vendorId: {
       value: '',
