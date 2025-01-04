@@ -243,7 +243,8 @@ export class EmployeeListComponent {
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
-          alert('Employee updated successfully.');
+          this.dataService.showSnackBar('Employee updated successfully.');
+          this.modal.show = false;
           this.getEmployeeList(); // Refresh the list
         } else {
           alert(response.message || 'Failed to update Employee.');
