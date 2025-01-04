@@ -177,3 +177,9 @@ body {
     color: white !important ;/* Ensure the text is visible */
     text-align: left !important;
   }
+
+  .table-responsive {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* For smoother scrolling on mobile devices */
+  }
+  

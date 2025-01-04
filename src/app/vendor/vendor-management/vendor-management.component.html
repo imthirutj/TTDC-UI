@@ -1,1 +1,48 @@
-<p>vendor-management works!</p>
+<div class="container">
+    <div class="card">
+        <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+         (triggerParentFunction)="getVendors()">
+        </app-filter>
+        <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+      </div>
+      
+      <div class="table-container">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Vendor Name</th>
+              <th>City</th>
+              <th>Company Name</th>
+              <th>Department</th>
+              <th>Address</th>
+              <th>Phone Number</th>
+              <th>Email</th>
+              <th>GSTIN</th>
+              <th>PAN</th>
+              <th>View Vendor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vendor of vendors; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ vendor.vendorName }}</td>
+              <td>{{ vendor.cityName }}</td>
+              <td>{{ vendor.companyFName }}</td>
+              <td>{{ vendor.departmentFName }}</td>
+              <td>{{ vendor.address }}</td>
+              <td>{{ vendor.contactNo }}</td>
+              <td>{{ vendor.emailId }}</td>
+              <td>{{ vendor.gstin }}</td>
+              <td>{{ vendor.panNo }}</td>
+              <td>
+                <button class="btn btn-primary" (click)="openVendorModal(vendor)">
+                  View
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+</div>

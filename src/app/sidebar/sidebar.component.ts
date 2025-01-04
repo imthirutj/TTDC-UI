@@ -128,7 +128,7 @@ export class SidebarComponent {
         label: 'Shift Management',
         icon: 'fa-solid fa-clock',
         route: '/shift-management',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+        allowedUserTypes: [ UserType.MANAGER]  
       },
       {
         label: 'Employee Report',

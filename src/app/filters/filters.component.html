@@ -28,6 +28,8 @@
       </div>
     </div>
 
+
+
     <div *ngIf="filters.companyId.show" class="col-md-4">
       <div class="form-group">
         <label for="company">Company</label>
@@ -38,40 +40,14 @@
       </div>
     </div>
 
-    <div *ngIf="filters.designationId.show" class="col-md-4">
-      <div class="form-group">
-        <label for="designation">Designation</label>
-        <select [(ngModel)]="filters.designationId.value" (change)="onDesignationChange()" class="form-control" id="designation">
-          <option value="">Select Designation</option>
-          <option *ngFor="let designation of designations" [value]="designation.designationId">{{ designation.designationName }}</option>
-        </select>
-      </div>
-    </div>
-
     <div *ngIf="filters.deptId.show" class="col-md-4">
       <div class="form-group">
         <label for="department">Department</label>
         <select [(ngModel)]="filters.deptId.value" (change)="onDepartmentChange()" class="form-control" id="department">
           <option value="">Select Department</option>
-          <option *ngFor="let department of departments" [value]="department.departmentId">{{ department.departmentFName }}</option>
+          <option *ngFor="let department of departments" [value]="department.departmentId">{{ department.departmentFName
+            }}</option>
         </select>
-      </div>
-    </div>
-
-    <div *ngIf="filters.catId.show" class="col-md-4">
-      <div class="form-group">
-        <label for="category">Category</label>
-        <select [(ngModel)]="filters.catId.value" (change)="onCategoryChange()" class="form-control" id="category">
-          <option value="">Select Category</option>
-          <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryFName }}</option>
-        </select>
-      </div>
-    </div>
-
-    <div *ngIf="filters.employeeId.show" class="col-md-4">
-      <div class="form-group">
-        <label for="employee">Enter Employee ID</label>
-        <input [(ngModel)]="filters.employeeId.value" (change)="onEmployeeChange()" class="form-control" id="employee" type="text" placeholder="Enter Employee ID">
       </div>
     </div>
 
@@ -84,5 +60,48 @@
         </select>
       </div>
     </div>
+
+    <div *ngIf="filters.vendorName.show" class="col-md-4">
+      <div class="form-group">
+        <label for="vendorName"> Vendor Name</label>
+        <input [(ngModel)]="filters.vendorName.value" (change)="onVendorNameChange()" class="form-control"
+          id="vendorName" type="text" placeholder="Enter Vendor Name">
+      </div>
+    </div>
+
+    <div *ngIf="filters.designationId.show" class="col-md-4">
+      <div class="form-group">
+        <label for="designation">Designation</label>
+        <select [(ngModel)]="filters.designationId.value" (change)="onDesignationChange()" class="form-control"
+          id="designation">
+          <option value="">Select Designation</option>
+          <option *ngFor="let designation of designations" [value]="designation.designationId">{{
+            designation.designationName }}</option>
+        </select>
+      </div>
+    </div>
+
+
+
+    <div *ngIf="filters.catId.show" class="col-md-4">
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select [(ngModel)]="filters.catId.value" (change)="onCategoryChange()" class="form-control" id="category">
+          <option value="">Select Category</option>
+          <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryFName }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="filters.employeeId.show" class="col-md-4">
+      <div class="form-group">
+        <label for="employee">Enter Employee ID</label>
+        <input [(ngModel)]="filters.employeeId.value" (change)="onEmployeeChange()" class="form-control" id="employee"
+          type="text" placeholder="Enter Employee ID">
+      </div>
+    </div>
+
+
   </div>
 </div>

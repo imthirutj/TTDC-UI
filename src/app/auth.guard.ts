@@ -41,10 +41,11 @@ export class AuthGuard implements CanActivate {
           if (requiredRoles.includes('ALL') || requiredRoles.includes(userAccessLevel!)) {
             return true; // Allow access
           } else {
+            const message = `You are not authorized to access this page. Only  ${requiredRoles.join(', ')} can access this page.`;
             this.router.navigate(['/error'], {
               queryParams: {
                 errorCode: '403',
-                message: 'You are not authorized to access this page.',
+                message: message,
               },
             });
             return false; // Deny access

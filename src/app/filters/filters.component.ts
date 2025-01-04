@@ -58,6 +58,7 @@ export class FiltersComponent implements OnInit {
       this.filters.catId = this.filters.catId || { value: '', show: false, key: 'catId' };
       this.filters.employeeId = this.filters.employeeId || { value: '', show: false, key: 'employeeId' };
       this.filters.vendorId = this.filters.vendorId || { value: '', show: false, key: 'vendorId' };
+      this.filters.vendorName = this.filters.vendorName || { value: '', show: false, key: 'vendorName' };
     }
 
     // Ensure all filters have a `show` property set to true if missing
@@ -110,6 +111,10 @@ export class FiltersComponent implements OnInit {
   }
 
   onCompanyChange() {
+    this.onFilterChange();
+  }
+
+  onVendorNameChange(){
     this.onFilterChange();
   }
 
@@ -170,7 +175,12 @@ export class FiltersComponent implements OnInit {
   }
 
   fetchVendors() {
-    this.masterDataService.getVendors().subscribe((response) => {
+    const payload = {
+      cityId: this.filters.cityId.value,
+      compId: this.filters.companyId.value,
+      deptId: this.filters.deptId.value
+    }
+    this.masterDataService.getVendors(payload).subscribe((response) => {
       if (response.success) this.vendors = response.data;
     });
   }
