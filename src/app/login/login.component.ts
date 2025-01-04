@@ -13,9 +13,17 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  loginForm!: FormGroup; // Define the form group
+  loginForm!: FormGroup; 
+  otpForm!: FormGroup;
   users: any = {};
   userTypes: any ={};
+
+  visibleForm: 'MOBILE' | 'OTP' = 'MOBILE';
+
+    // Timer variables
+    remainingTime: number = 300; // 5 minutes in seconds
+    timer: any;
+    isTimeOver: boolean = false;
 
   constructor(private fb: FormBuilder,
     private masterDataService: MasterDataService,
@@ -30,11 +38,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // Initialize the form group with controls and validators
     this.loginForm = this.fb.group({
-      // userType:['', Validators.required],
-      LoginName: ['', Validators.required], // Add validation
-      LoginPassword: ['', Validators.required],
-      // rememberMe: [false]
+      rememberMe: [false],
+      MobileNo: ['', Validators.required],
     });
+    this.otpForm = this.fb.group({
+      OTP: ['', Validators.required],
+    });
+
     let user = JSON.parse(
       localStorage.getItem('user') || '{}'
     );
@@ -44,43 +54,110 @@ export class LoginComponent implements OnInit {
   }
   
 
+  ngOnDestroy(): void {
+    // Clear the timer when the component is destroyed to prevent memory leaks
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
+
+  startTimer(): void {
+    this.timer = setInterval(() => {
+      if (this.remainingTime > 0) {
+        this.remainingTime--;
+      } else {
+        this.isTimeOver = true;
+        clearInterval(this.timer);
+      }
+    }, 1000);
+  }
+
+  getFormattedTime(): string {
+    const minutes = Math.floor(this.remainingTime / 60);
+    const seconds = this.remainingTime % 60;
+    return `${this.pad(minutes)}:${this.pad(seconds)}`;
+  }
+
+    // Helper function to pad single digits with a leading zero
+  pad(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
+  goBack(): void {
+    this.visibleForm = 'MOBILE';  // Show mobile number form again
+    this.remainingTime = 300;  // Reset timer
+    this.isTimeOver = false;  // Reset timeout state
+    if (this.timer) {
+      clearInterval(this.timer); // Stop the current timer
+    }
+  }
 
 
   navigateToRegister(): void {
     this.router.navigate(['/register']); 
   }
 
-
-  login(): void {
-    if (this.loginForm.valid) {
-      var payload = this.loginForm.value;
-console.log(payload)
-      this.loginService.validate(payload).subscribe(
+  generateOTP(): void {
+    if (this.loginForm.get('MobileNo')?.valid) {
+      var payload = {
+        mobileNo: this.loginForm.get('MobileNo')?.value
+      };
+      console.log(payload);
+      this.loginService.generateOTP(payload).subscribe(
         (response: any) => {
           console.log(response);
           if(response.success){
-            const rememberMe = this.loginForm.get('rememberMe')?.value;
-
-            this.dataService.setAuthTokenAndUser(response.token,response.data, rememberMe);
-            this.router.navigate(['/dashboard']);
+            this.dataService.showSnackBar(response.message);
+            this.visibleForm = 'OTP';
+            this.startTimer();
           }
           else {
-            this.snackBar.openFromComponent(SnackBarComponent, {
-              data: { message: response.message },  // Pass dynamic message
-              duration: 5000
-            });
+            this.dataService.showSnackBar(response.message);
           }
+        });
+      }
+    else{
+      this.dataService.showSnackBar('Please enter valid mobile number');
+    }
+  }
 
-        },
-        (error) => {
-          console.error('Invalid Credentials', error);
+  login(): void {
+    if (!this.otpForm.valid ) {
+      this.dataService.showSnackBar('Please enter valid OTP');
+    }
+    if (!this.loginForm.valid) {
+      this.dataService.showSnackBar('Please again enter the mobile number');
+    }
+    var payload = {
+      mobileNo: this.loginForm.get('MobileNo')?.value,
+      otp: this.otpForm.get('OTP')?.value,
+    }
+    console.log(payload)
+    this.loginService.validate(payload).subscribe(
+      (response: any) => {
+        console.log(response);
+        if(response.success){
+          const rememberMe = this.loginForm.get('rememberMe')?.value;
+
+          this.dataService.setAuthTokenAndUser(response.token,response.data, rememberMe);
+          this.router.navigate(['/dashboard']);
+        }
+        else {
           this.snackBar.openFromComponent(SnackBarComponent, {
-            data: { message: 'Invalid Credentials' },  // Pass dynamic message
+            data: { message: response.message },  // Pass dynamic message
             duration: 5000
           });
         }
-      );
-    }
+
+      },
+      (error) => {
+        console.error('Invalid Credentials', error);
+        this.snackBar.openFromComponent(SnackBarComponent, {
+          data: { message: 'Invalid Credentials' },  // Pass dynamic message
+          duration: 5000
+        });
+      }
+    );
   }
 
 
