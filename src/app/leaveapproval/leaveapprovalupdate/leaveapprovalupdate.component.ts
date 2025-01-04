@@ -14,6 +14,7 @@ import html2canvas from 'html2canvas';
 export class LeaveapprovalupdateComponent {
   leaveRequest_Id: any;
   payobj: any = {};
+  approval: any;
 
   constructor(
     private masterDataService: MasterDataService,
@@ -26,6 +27,13 @@ export class LeaveapprovalupdateComponent {
       console.log('leaveRequest ID:', this.leaveRequest_Id);
     });
     this.loadEmployeeData();
+
+    this.approval = {
+      // employeeId: 3846,
+      Nos_Days_Approved_by_Manager: '',
+      Manager_Approval_Remarks: ''
+
+    }
   }
 
   loadEmployeeData(): void {
@@ -76,7 +84,7 @@ export class LeaveapprovalupdateComponent {
     }
   }
 
-  approveODSlip(): void {
+  fullyApproved(): void {
     if (this.leaveRequest_Id) {
       const payload = {
         manager_Approval_Status: "Approved",
@@ -86,21 +94,50 @@ export class LeaveapprovalupdateComponent {
       this.masterDataService.approveLeaveRequest(payload).subscribe(
         (response) => {
           if (response.success) {
-            console.log('OD slip approved successfully.');
+            console.log('Leave Request approved successfully.');
+            location.reload();
           } else {
-            console.error(response.message || 'Failed to approve OD slip.');
+            console.error(response.message || 'Failed to approve Leave Request.');
           }
         },
         (error) => {
-          console.error('Error approving OD slip:', error);
+          console.error('Error approving Leave Request:', error);
         }
       );
     } else {
-      console.error('OD Slip ID is not available for approval.');
+      console.error('Leave Request ID is not available for approval.');
     }
   }
 
-  disapproveODSlip(): void {
+  partiallyApproved(): void {
+    if (this.leaveRequest_Id) {
+      const payload = {
+        manager_Approval_Status: "Partially Complete",
+        leaveRequest_Id: this.leaveRequest_Id,
+        nos_Days_Approved_by_Manager: this.approval.Nos_Days_Approved_by_Manager,
+        manager_Approval_Remarks: this.approval.Manager_Approval_Remarks
+      };
+  
+      this.masterDataService.approveLeaveRequest(payload).subscribe(
+        (response) => {
+          if (response.success) {
+            console.log('Leave Request approved successfully.');
+            location.reload();
+          } else {
+            console.error(response.message || 'Failed to approve Leave Request.');
+          }
+        },
+        (error) => {
+          console.error('Error approving Leave Request:', error);
+        }
+      );
+    } else {
+      console.error('Leave Request ID is not available for approval.');
+    }
+  }
+  
+
+  disapprove(): void {
     if (this.leaveRequest_Id) {
       const payload = {
         manager_Approval_Status: "Not Approved",
@@ -110,17 +147,18 @@ export class LeaveapprovalupdateComponent {
       this.masterDataService.approveLeaveRequest(payload).subscribe(
         (response) => {
           if (response.success) {
-            console.log('OD slip disapproved successfully.');
+            console.log('Leave Request disapproved successfully.');
+            location.reload();
           } else {
-            console.error(response.message || 'Failed to disapprove OD slip.');
+            console.error(response.message || 'Failed to disapprove Leave Request.');
           }
         },
         (error) => {
-          console.error('Error disapproving OD slip:', error);
+          console.error('Error disapproving Leave Request:', error);
         }
       );
     } else {
-      console.error('OD Slip ID is not available for disapproval.');
+      console.error('Leave Request ID is not available for disapproval.');
     }
   }
 
