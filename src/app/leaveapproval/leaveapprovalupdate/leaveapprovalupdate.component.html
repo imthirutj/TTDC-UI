@@ -71,19 +71,76 @@
   </div>
   <hr>
   <div class="row">   
-    <div class="col-md-8">
-        <p><strong>Approve Authority</strong></p>        
+    <div class="col-md-7">
+        <p><strong>Employee Name</strong></p>        
         <p>Mr.{{payobj?.employeeName}}</p>
     </div>
-    <div class="col-md-4" style="float: left;">
-        <p><strong>Authority signature</strong></p>
-        <button class="btn btn-success" (click)="approveODSlip()">Approve</button>
-          <button class="btn btn-danger" (click)="disapproveODSlip()">Disapprove</button>
-        <p>Mr.{{payobj?.manager}}</p>
+    <div class="col-md-5" >
+        <p style="text-align: center;"><strong>Approval Authority</strong></p>
+        <p style="text-align: center;">Status : {{ payobj.manager_Approval_Status ? payobj.manager_Approval_Status : 'Pending' }}</p>
+        <div style="text-align: center;"><button class="btn btn-success" (click)="fullyApproved()">Fully Approved</button>         
+          <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#partiallyApproved">
+            Partially Approved
+          </button>
+          <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#Disapprove">
+            Not Approved
+          </button>          
+        <p style="text-align: center;">Mr.{{payobj?.manager}}</p>
     </div>  
-  </div>
+  </div>  
+</div>
+</div>
 
-  
-  
+<div class="modal fade" id="partiallyApproved" tabindex="-1" aria-labelledby="partiallyApprovedLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="partiallyApprovedLabel">Partially Approved</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body"> 
+      <div class="mb-3">
+        <label for="Remarks" class="form-label">Status</label>
+        <input type="text" class="form-control" disabled id="Remarks" placeholder="Partially Approved">
+      </div>                                          
+        <div class="mb-3">
+         <label for="Nos_Days" class="form-label">Number of Days Approved</label>
+         <input type="text" class="form-control" [(ngModel)]="approval.Nos_Days_Approved_by_Manager" id="Nos_Days" name="Nos_Days_Approved_by_Manager" placeholder="Number of Days" required>
+       </div>
+       <div class="mb-3">
+         <label for="Remarks" class="form-label">Remarks</label>
+         <input type="text" class="form-control" [(ngModel)]="approval.Manager_Approval_Remarks" id="Remarks" name="Manager_Approval_Remarks" placeholder="Remarks">
+       </div>                   
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>    
+      <button type="submit" class="btn btn-primary" (click)="partiallyApproved()">Save</button>      
+    </div>
+  </div>
 </div>
 </div>
+
+<div class="modal fade" id="Disapprove" tabindex="-1" aria-labelledby="DisapproveLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="DisapproveLabel">Not Approved</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"> 
+        <div class="mb-3">
+          <label for="Remarks" class="form-label">Status</label>
+          <input type="text" class="form-control" disabled id="Remarks" placeholder="Not Approved">
+        </div>                                                    
+         <div class="mb-3">
+           <label for="Remarks" class="form-label">Remarks</label>
+           <input type="text" class="form-control" [(ngModel)]="approval.Manager_Approval_Remarks" id="Remarks" name="Manager_Approval_Remarks" placeholder="Remarks">
+         </div>                   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>    
+        <button type="submit" class="btn btn-primary" (click)="disapprove()">Save</button>      
+      </div>
+    </div>
+  </div>
+  </div>

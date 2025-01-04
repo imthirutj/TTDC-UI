@@ -72,13 +72,12 @@
   <hr>
   <div class="row">   
     <div class="col-md-8">
-        <p><strong>Approve Authority</strong></p>
-        <br>
+        <p><strong>Employee Name</strong></p>        
         <p>Mr.{{payobj?.employeeName}}</p>
     </div>
     <div class="col-md-4" style="float: left;">
-        <p><strong>Authority signature</strong></p>
-        <br>
+        <p><strong>Approval Authority</strong></p>
+        <p style="text-align: center;">Status : {{ payobj.manager_Approval_Status ? payobj.manager_Approval_Status : 'Pending' }}</p>
         <p>Mr.{{payobj?.manager}}</p>
     </div>  
   </div>
