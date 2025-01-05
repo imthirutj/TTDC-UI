@@ -36,6 +36,8 @@ export class VendorInvoiceDetailsComponent {
       totalPresentDays: 0,
       totalMonthDays:0,
       totalGrossSalary: 0,
+      totalEPF: 0,
+      totalESI: 0,
       totalActualCharge: 0,
       totalServiceCharge: 0,
       totalAmountClaimed: 0
@@ -147,6 +149,8 @@ export class VendorInvoiceDetailsComponent {
     this.totals.totalPresentDays = 0;
     this.totals.totalMonthDays = 0;
     this.totals.totalGrossSalary = 0;
+    this.totals.totalEPF = 0;
+    this.totals.totalESI = 0;
     this.totals.totalActualCharge = 0;
     this.totals.totalServiceCharge = 0;
     this.totals.totalAmountClaimed = 0;
@@ -157,6 +161,8 @@ export class VendorInvoiceDetailsComponent {
         this.totals.totalPresentDays += empInvoiceDetail.presentDays;
         this.totals.totalMonthDays += empInvoiceDetail.monthDays;
         this.totals.totalGrossSalary += empInvoiceDetail.grossSalary;
+        this.totals.totalEPF += empInvoiceDetail.epf;
+        this.totals.totalESI += empInvoiceDetail.esi;
         this.totals.totalActualCharge += empInvoiceDetail.actualCharge;
         this.totals.totalServiceCharge += empInvoiceDetail.serviceCharge;
         this.totals.totalAmountClaimed += empInvoiceDetail.amountClaimed;
