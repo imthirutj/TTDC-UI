@@ -177,6 +177,16 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   openVendorModal(vendor: any) {
     this.isVendorModalOpen = true;
+    const payload ={
+      vendorId: vendor.vendorId,
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value
+    }
+    this.vendorService.getVendorPayStatus(payload).subscribe((response: any) => {
+      if (response.success) {
+        this.selectedVendor = response.data;
+      }
+    })
     this.selectedVendor = vendor;
   }
   updateVendorModal() {

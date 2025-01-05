@@ -1,11 +1,11 @@
 <div class="container">
-    <h2>Employee Work Details</h2>
-  
-    <div class="card">
-      <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-          (triggerParentFunction)="fetchPayRecordsbyComp()">
-      </app-filter>
-      <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  <h2>Employee Work Details</h2>
+
+  <div class="card">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+      (triggerParentFunction)="fetchPayRecordsbyComp()">
+    </app-filter>
+    <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
 
   <div class="container mt-4">
@@ -31,8 +31,10 @@
         <tr *ngFor="let vendor of companyVendors">
           <td>
             <button class="btn btn-primary" (click)="openVendorModal(vendor)">Update Payment</button>
-            <button *ngIf="!vendor.invoiceGenerated && userAccessLevel==UserType.VENDOR" class="btn btn-primary" (click)="navigateVendorInvoice(vendor, 'GENERATE')">Generate Invoice</button>
-            <button *ngIf="vendor.invoiceGenerated" class="btn btn-primary" (click)="navigateVendorInvoice(vendor, 'VIEW')">View Invoice</button>
+            <button *ngIf="!vendor.invoiceGenerated && userAccessLevel==UserType.VENDOR" class="btn btn-primary"
+              (click)="navigateVendorInvoice(vendor, 'GENERATE')">Generate Invoice</button>
+            <button *ngIf="vendor.invoiceGenerated" class="btn btn-primary"
+              (click)="navigateVendorInvoice(vendor, 'VIEW')">View Invoice</button>
           </td>
           <td>{{ vendor.vendorName }}</td>
           <td>{{ vendor.totalPayableAmount | currency:'INR' }}</td>
@@ -42,26 +44,22 @@
 
           <td>{{ vendor.epf | currency:'INR' }}</td>
           <td>{{ vendor.esi | currency:'INR' }}</td>
-          
+
           <td>{{ vendor.netAmount | currency:'INR' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
-  
-  <app-common-dialog
-    [showDialog]="isVendorModalOpen"
-    [showCloseIcon]="true"
-    [dialogTitle]="'Update Vendor Details'"
-    (closeDialog)="isVendorModalOpen = false"
-    [showSubmitButton]="true"
-    (submitDialog)="updateVendorModal()"
+
+  <app-common-dialog [showDialog]="isVendorModalOpen" [showCloseIcon]="true" [dialogTitle]="'Update Vendor Details'"
+    (closeDialog)="isVendorModalOpen = false" [showSubmitButton]="true" (submitDialog)="updateVendorModal()"
     [maxWidth]="'900px'">
 
     <div class="row">
       <div class="col-md-6">
         <label for="totalPayableAmount">Total Payable Salary:</label>
-        <input  [disabled]="true" type="number" class="form-control" id="totalPayableAmount" [(ngModel)]="selectedVendor.totalPayableAmount">
+        <input [disabled]="true" type="number" class="form-control" id="totalPayableAmount"
+          [(ngModel)]="selectedVendor.totalPayableAmount">
       </div>
       <div class="col-md-6">
         <label for="gst">GST:</label>
@@ -72,7 +70,8 @@
     <div class="row">
       <div class="col-md-6">
         <label for="serviceCharge">Service Charge:</label>
-        <input [disabled]="true" type="number" class="form-control" id="serviceCharge" [(ngModel)]="selectedVendor.serviceCharge">
+        <input [disabled]="true" type="number" class="form-control" id="serviceCharge"
+          [(ngModel)]="selectedVendor.serviceCharge">
       </div>
       <div class="col-md-6">
         <label for="tds">TDS:</label>
@@ -83,40 +82,56 @@
     <div class="row">
       <div class="col-md-6">
         <label for="netAmount">Net Amount:</label>
-        <input  [disabled]="true" type="number" class="form-control" id="netAmount" [(ngModel)]="selectedVendor.netAmount">
+        <input [disabled]="true" type="number" class="form-control" id="netAmount"
+          [(ngModel)]="selectedVendor.netAmount">
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6">
         <label for="paymentStatus">Payment Status:</label>
-        <select  class="form-control" id="paymentStatus" [(ngModel)]="selectedVendor.paymentStatus">
-          <option value="Paid">Paid</option>
-          <option value="Pending">Pending</option>
+        <select class="form-control" id="paymentStatus" [(ngModel)]="selectedVendor.paymentStatus">
+          <option value="PAID">Paid</option>
         </select>
       </div>
 
       <!--remarks-->
       <div class="col-md-6">
         <label for="remarks">Remarks:</label>
-        <input   type="text" class="form-control" id="remarks" [(ngModel)]="selectedVendor.remarks">
+        <input type="text" class="form-control" id="remarks" [(ngModel)]="selectedVendor.remarks">
       </div>
     </div>
 
-      <!-- File Upload -->
-  <div class="row">
-    <div class="col-md-6">
-      <label for="fileUpload">Employee Payments File:</label>
-      <input 
-        type="file" 
-        class="form-control" 
-        id="fileUpload" 
-        (change)="onFileChange($event)" 
-        accept=".xlsx">
+    <div *ngIf="selectedVendor.paymentStatus === 'PAID'" class="row">
+      <h4>Cheque Details</h4>
+      <div class="col-md-6">
+        <label>Cheque Number:</label>
+        <input type="text" class="form-control" id="chequeNumber" [(ngModel)]="selectedVendor.chequeNumber">
+      </div>
+
+      <div class="col-md-6">
+        <label>Cheque Date:</label>
+        <input type="date" class="form-control" id="chequeDate" [(ngModel)]="selectedVendor.chequeDate">
+      </div>
+
+      <div class="col-md-6">
+        <label>Cheque Amount:</label>
+        <input type="text" class="form-control" id="chequeAmount" [(ngModel)]="selectedVendor.chequeAmount">
+      </div>
+
+      <div class="col-md-6">
+        <label>Bank Name:</label>
+        <input type="text" class="form-control" id="bankName" [(ngModel)]="selectedVendor.bankName">
+      </div>
     </div>
-  </div>
+    <!-- File Upload -->
+    <div class="row">
+      <div class="col-md-12">
+        <label for="fileUpload">Employee Payments File uploaded by Vendor:</label>
+        <input type="file" class="form-control" id="fileUpload" (change)="onFileChange($event)" accept=".xlsx">
+      </div>
+    </div>
 
   </app-common-dialog>
 
-  </div>
-  
+</div>

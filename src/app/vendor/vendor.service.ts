@@ -55,4 +55,10 @@ export class VendorService {
     const url = `${this.apiUrl}Master/InsertUpdateVendor`;
     return this.http.post(url, payload);
   }
+
+  getVendorPayStatus(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Payroll/GetVendorPayStatus?${queryParams}`;
+    return this.http.get(url);
+  }
 }
