@@ -35,9 +35,14 @@ export class VendorPaymentDetailsComponent implements OnInit {
   companyVendors: any;
 
   isVendorModalOpen: boolean = false;
-  selectedVendor: any ={};
+  isEmployeePaymentModelOpen: boolean = false;
 
-  
+  selectedVendor: any = {};
+
+  vendorPayment: any = {};
+  employeePayment: any = {};
+  selectedFile: any;
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -52,7 +57,7 @@ export class VendorPaymentDetailsComponent implements OnInit {
       includeInSearchParams: true
     },
 
-     cityId: {
+    cityId: {
       value: '',
       show: true,
       key: 'cityId',
@@ -83,7 +88,7 @@ export class VendorPaymentDetailsComponent implements OnInit {
     private dataService: DataService,
     private vendorService: VendorService
   ) {
-    this.dataService.asyncGetUser().then((user:any) => {
+    this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
       this.userAccessLevel = user.role;
       console.log('User Access Level:', this.userAccessLevel);
@@ -96,7 +101,7 @@ export class VendorPaymentDetailsComponent implements OnInit {
     this.fetchPayRecordsbyComp();
   }
 
-  search(){
+  search() {
     this.fetchPayRecordsbyComp();
   }
 
@@ -129,13 +134,13 @@ export class VendorPaymentDetailsComponent implements OnInit {
     });
   }
 
-  fetchPayRecordsbyComp(){
+  fetchPayRecordsbyComp() {
     const payload = this.dataService.getPayloadValue(this.filters);
-    this.vendorService.getPayRecordsbyComp(payload).subscribe((response:any) => {
+    this.vendorService.getPayRecordsbyComp(payload).subscribe((response: any) => {
       if (response.success) {
         this.companyVendors = response.data;
       }
-      else{
+      else {
         this.companyVendors = [];
       }
     })
@@ -175,9 +180,18 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   //#endregion
 
-  openVendorModal(vendor: any) {
+  openVendorModal(type: 'VIEW' | 'UPDATE', vendor: any) {
     this.isVendorModalOpen = true;
-    const payload ={
+
+    if (type === 'VIEW') {
+      this.vendorPayment.title = 'View Vendor Payment Details';
+      this.vendorPayment.submit_disabled = true;
+    }
+    if (type === 'UPDATE') {
+      this.vendorPayment.title = 'Update Vendor Payment Details';
+      this.vendorPayment.submit_disabled = false;
+    }
+    const payload = {
       vendorId: vendor.vendorId,
       month: this.filters.selectedMonth.value,
       year: this.filters.selectedYear.value
@@ -189,6 +203,31 @@ export class VendorPaymentDetailsComponent implements OnInit {
     })
     this.selectedVendor = vendor;
   }
+
+  openEmployeePaymentModal(type: 'VIEW' | 'UPDATE', vendor: any) {
+    this.isEmployeePaymentModelOpen = true;
+    if (type === 'VIEW') {
+      this.employeePayment.title = 'View Employee Payment Details';
+      this.employeePayment.submit_disabled = true;
+    }
+    if (type === 'UPDATE') {
+      this.employeePayment.title = 'Update Employee Payment Details';
+      this.employeePayment.submit_disabled = true;
+    }
+    const payload = {
+      vendorId: vendor.vendorId,
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value
+    }
+    this.vendorService.getVendorPayStatus(payload).subscribe((response: any) => {
+      if (response.success) {
+        this.selectedVendor = response.data;
+      }
+    })
+    this.selectedVendor = vendor;
+
+  }
+
   updateVendorModal() {
     var payload = {
       ...this.selectedVendor
@@ -201,21 +240,50 @@ export class VendorPaymentDetailsComponent implements OnInit {
     })
   }
 
-  navigateVendorInvoice(vendor:any, type: 'VIEW' | 'GENERATE'){
+  updateEmployeePayment() {
+    const payload = {
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value,
+      vendorId: this.selectedVendor.vendorId
+    }
+    if (this.selectedFile) {
+      this.vendorService.updateEmployeePayment(this.selectedFile, payload)
+        .subscribe(
+          response => {
+            // Handle the response, e.g., show a success message
+            this.dataService.showSnackBar('File uploaded successfully');
+          },
+          error => {
+            // Handle the error, e.g., show an error message
+            this.dataService.showSnackBar('Error uploading file');
+          }
+        );
+    }
+
+  }
+
+
+  downloadEmployeePaymentForm() {
+    const payload = {
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value,
+      vendorId: this.selectedVendor.vendorId
+    }
+    this.vendorService.downloadEmployeePaymentForm(payload);
+  }
+
+  navigateVendorInvoice(vendor: any, type: 'VIEW' | 'GENERATE') {
     const month = this.filters.selectedMonth.value;
     const year = this.filters.selectedYear.value;
     const vendorId = vendor.vendorId;
-    this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId, type:type } });
+    this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId, type: type } });
   }
 
 
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      console.log('Selected file:', file);
-      // Handle file upload logic here
-    }
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
   }
-  
+
+
+
 }

@@ -30,7 +30,12 @@
       <tbody>
         <tr *ngFor="let vendor of companyVendors">
           <td>
-            <button class="btn btn-primary" (click)="openVendorModal(vendor)">Update Payment</button>
+            <button *ngIf="userAccessLevel==UserType.STATE_ADMIN" class="btn btn-primary" (click)="openVendorModal( 'UPDATE', vendor)">Update Payment</button>
+            <button *ngIf="userAccessLevel==UserType.VENDOR" class="btn btn-primary" (click)="openVendorModal( 'VIEW', vendor)">View Payment</button>
+            
+            <button *ngIf="userAccessLevel==UserType.STATE_ADMIN" class="btn btn-primary" (click)="openEmployeePaymentModal( 'UPDATE', vendor)">Update Employee Payment</button>
+            <button *ngIf="userAccessLevel==UserType.VENDOR" class="btn btn-primary" (click)="openEmployeePaymentModal( 'VIEW', vendor)">View Employee Payment</button>
+            
             <button *ngIf="!vendor.invoiceGenerated && userAccessLevel==UserType.VENDOR" class="btn btn-primary"
               (click)="navigateVendorInvoice(vendor, 'GENERATE')">Generate Invoice</button>
             <button *ngIf="vendor.invoiceGenerated" class="btn btn-primary"
@@ -51,7 +56,7 @@
     </table>
   </div>
 
-  <app-common-dialog [showDialog]="isVendorModalOpen" [showCloseIcon]="true" [dialogTitle]="'Update Vendor Details'"
+  <app-common-dialog [showDialog]="isVendorModalOpen" [showCloseIcon]="true" [dialogTitle]="vendorPayment.title"
     (closeDialog)="isVendorModalOpen = false" [showSubmitButton]="true" (submitDialog)="updateVendorModal()"
     [maxWidth]="'900px'">
 
@@ -90,7 +95,7 @@
     <div class="row">
       <div class="col-md-6">
         <label for="paymentStatus">Payment Status:</label>
-        <select class="form-control" id="paymentStatus" [(ngModel)]="selectedVendor.paymentStatus">
+        <select [disabled]="vendorPayment.submit_disabled" class="form-control" id="paymentStatus" [(ngModel)]="selectedVendor.paymentStatus">
           <option value="PAID">Paid</option>
         </select>
       </div>
@@ -98,40 +103,58 @@
       <!--remarks-->
       <div class="col-md-6">
         <label for="remarks">Remarks:</label>
-        <input type="text" class="form-control" id="remarks" [(ngModel)]="selectedVendor.remarks">
+        <input [disabled]="vendorPayment.submit_disabled" type="text" class="form-control" id="remarks" [(ngModel)]="selectedVendor.remarks">
       </div>
     </div>
 
+    <br>
     <div *ngIf="selectedVendor.paymentStatus === 'PAID'" class="row">
       <h4>Cheque Details</h4>
       <div class="col-md-6">
         <label>Cheque Number:</label>
-        <input type="text" class="form-control" id="chequeNumber" [(ngModel)]="selectedVendor.chequeNumber">
+        <input [disabled]="vendorPayment.submit_disabled" type="text" class="form-control" id="chequeNumber" [(ngModel)]="selectedVendor.chequeNumber">
       </div>
 
       <div class="col-md-6">
         <label>Cheque Date:</label>
-        <input type="date" class="form-control" id="chequeDate" [(ngModel)]="selectedVendor.chequeDate">
+        <input [disabled]="vendorPayment.submit_disabled" type="date" class="form-control" id="chequeDate" [(ngModel)]="selectedVendor.chequeDate">
       </div>
 
       <div class="col-md-6">
         <label>Cheque Amount:</label>
-        <input type="text" class="form-control" id="chequeAmount" [(ngModel)]="selectedVendor.chequeAmount">
+        <input [disabled]="vendorPayment.submit_disabled" type="text" class="form-control" id="chequeAmount" [(ngModel)]="selectedVendor.chequeAmount">
       </div>
 
       <div class="col-md-6">
         <label>Bank Name:</label>
-        <input type="text" class="form-control" id="bankName" [(ngModel)]="selectedVendor.bankName">
+        <input [disabled]="vendorPayment.submit_disabled" type="text" class="form-control" id="bankName" [(ngModel)]="selectedVendor.bankName">
       </div>
     </div>
-    <!-- File Upload -->
-    <div class="row">
-      <div class="col-md-12">
-        <label for="fileUpload">Employee Payments File uploaded by Vendor:</label>
-        <input type="file" class="form-control" id="fileUpload" (change)="onFileChange($event)" accept=".xlsx">
-      </div>
-    </div>
+    <br>
 
   </app-common-dialog>
+
+
+  <app-common-dialog [showDialog]="isEmployeePaymentModelOpen" [showCloseIcon]="true" [dialogTitle]="employeePayment.title"
+  (closeDialog)="isEmployeePaymentModelOpen = false" [showSubmitButton]="true" (submitDialog)="updateEmployeePayment()"
+  [maxWidth]="'900px'">
+  <!-- File Upload -->
+  <div class="row">
+    <h4>Employee Payments By Vendor</h4>
+    <div class="col-md-12">
+      <p *ngIf="selectedVendor.employeePaid==0"> Not Paid To Employee Yet.</p>
+      <p *ngIf="selectedVendor.employeePaid==1">Paid To Employee Yet.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <button [style.width]="'220px'" class="btn btn-primary" (click)="downloadEmployeePaymentForm()">Download Employee Payment Form</button>
+    <div *ngIf="userAccessLevel == UserType.VENDOR" class="col-md-12">
+      <label for="fileUpload">Employee Payments File uploaded by Vendor:</label>
+      <input type="file" class="form-control" id="fileUpload" (change)="onFileSelected($event)" accept=".xlsx">
+    </div>
+  </div>
+
+</app-common-dialog>
 
 </div>

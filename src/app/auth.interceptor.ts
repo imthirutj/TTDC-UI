@@ -35,6 +35,11 @@ export class AuthInterceptor implements HttpInterceptor {
       'Content-Type': 'application/json',
     });
 
+    if (req.body instanceof FormData) {
+      // Skip setting Content-Type for FormData as the browser sets it automatically
+      headers = headers.delete('Content-Type');
+    }
+
     if (skipAuth) {
       console.log('Bypassing auth for URL:', req.url);
 

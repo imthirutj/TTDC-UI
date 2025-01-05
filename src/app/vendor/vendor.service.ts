@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -61,4 +61,25 @@ export class VendorService {
     const url = `${this.apiUrl}Payroll/GetVendorPayStatus?${queryParams}`;
     return this.http.get(url);
   }
+
+  downloadEmployeePaymentForm(payload: any) {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Payroll/GetAllEmployeeVendorPaySlip?${queryParams}`;
+    window.open(url, '_blank');  // Opens the URL in a new tab
+  }
+
+  updateEmployeePayment(file: File, payload: any): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);  // Append the file to the form data
+    formData.append('vendorId', payload.vendorId.toString());
+    formData.append('month', payload.month.toString());
+    formData.append('year', payload.year.toString());
+ 
+  
+    const url = `${this.apiUrl}Payroll/UploadEmployeeVendorPaySlip`;  // Corrected the URL
+    return this.http.post(url, formData, {
+      headers: new HttpHeaders()
+    });
+  }
+  
 }
