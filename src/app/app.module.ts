@@ -65,6 +65,7 @@ import { DesignationQualificationComponent } from './designation-qualification/d
 import { FiltersComponent } from './filters/filters.component';
 import { MinutesToHoursPipe } from './utils/pipes/minutes-to-hours.pipe';
 import { VendorManagementComponent } from './vendor/vendor-management/vendor-management.component';
+import { ServerPaginationComponent } from './utils/widgets/server-pagination/server-pagination.component';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { VendorManagementComponent } from './vendor/vendor-management/vendor-man
     DesignationQualificationComponent,
     FiltersComponent,
     MinutesToHoursPipe,
-    VendorManagementComponent
+    VendorManagementComponent,
+    ServerPaginationComponent
 
   ],
   imports: [

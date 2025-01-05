@@ -19,8 +19,8 @@
           <th>Non Worked Days</th>
           <th>Loss of Pay Days</th>
 
-          <th>Present Days</th>
-          <th>Absent Days</th>
+          <th>Present Days(Biometric)</th>
+          <th>Absent Days(Biometric)</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -31,8 +31,8 @@
           <td>{{ detail.workedDays }}</td>
           <td>{{ detail.nonWorkedDays }}</td>
           <td>{{ detail.lossOfPayDays }}</td>
-          <td>{{ detail.totalWorkingDays? 22: '' }}</td>
-          <td>{{ detail.totalWorkingDays? 0: '' }}</td>
+          <td>{{ detail.bioMetricPresentDays }}</td>
+          <td>{{ detail.bioMetricAbsentDays}}</td>
           <td>
             <button class="btn btn-primary" (click)="openUpdateModal(detail)">Update</button>
             <button class="btn btn-danger" (click)="openAttendanceDetail(detail)">View</button>
@@ -42,7 +42,11 @@
           </td>
         </tr>
       </tbody>
+      <app-server-pagination  [pageAttributes]="pageAttributes" 
+          (triggerParentFunction)="fetchEmployeeWorkDetails()">
+      </app-server-pagination>
     </table>
+
   </div>
 
   <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
@@ -181,6 +185,7 @@
         </tr>
       </tbody>
     </table>
+
 
   </app-common-dialog>
 </div>

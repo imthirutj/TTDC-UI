@@ -1,0 +1,30 @@
+<div class="d-flex align-items-center justify-content-between">
+  <!-- Previous Page Button -->
+  <div class="me-auto">
+    <button (click)="onPrevPage()" [disabled]="pageAttributes.currentPage === 1"
+      class="btn btn-outline-secondary d-flex align-items-center justify-content-center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      Previous
+    </button>
+  </div>
+
+  <!-- Pagination Info -->
+  <div class="mx-auto">
+    <span class="text-secondary">
+      Page {{ pageAttributes.currentPage }} of {{ pageAttributes.totalPages }}
+    </span>
+  </div>
+
+  <!-- Next Page Button -->
+  <div class="ms-auto">
+    <button (click)="onNextPage()" [disabled]="pageAttributes.currentPage === pageAttributes.totalPages"
+      class="btn btn-primary d-flex align-items-center justify-content-center">
+      Next
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-2">
+        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+</div>

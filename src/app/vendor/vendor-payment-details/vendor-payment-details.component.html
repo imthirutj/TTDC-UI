@@ -30,7 +30,7 @@
       <tbody>
         <tr *ngFor="let vendor of companyVendors">
           <td>
-            <button class="btn btn-primary" (click)="openVendorModal(vendor)">Update</button>
+            <button class="btn btn-primary" (click)="openVendorModal(vendor)">Update Payment</button>
             <button *ngIf="!vendor.invoiceGenerated && userAccessLevel==UserType.VENDOR" class="btn btn-primary" (click)="navigateVendorInvoice(vendor, 'GENERATE')">Generate Invoice</button>
             <button *ngIf="vendor.invoiceGenerated" class="btn btn-primary" (click)="navigateVendorInvoice(vendor, 'VIEW')">View Invoice</button>
           </td>

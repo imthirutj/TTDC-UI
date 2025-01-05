@@ -54,6 +54,11 @@ export class EmployeeWorkDetailsComponent implements OnInit {
   ];
 
 
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1
+  }
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -189,11 +194,16 @@ export class EmployeeWorkDetailsComponent implements OnInit {
 
   fetchEmployeeWorkDetails(): void {
     const payload = this.dataService.getPayloadValue(this.filters);
-    this.employeeWorkDetailsService.getEmployeeWorkDetails(payload).subscribe((response) => {
+    const fpayload ={
+      pageNumber: this.pageAttributes.currentPage,
+      ...payload
+    }
+    this.employeeWorkDetailsService.getEmployeeWorkDetails(fpayload).subscribe((response) => {
       if (response.success) {
         this.employeeWorkDetails = response.data;
+        this.pageAttributes.totalPages = response.totalPages;
       }
-      else{
+      else {
         this.employeeWorkDetails = [];
       }
     });
