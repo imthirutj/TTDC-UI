@@ -6,7 +6,7 @@ import { DataService } from '../../data.Service';
 import { UserType } from '../../common/user-type.enum';
 import { myMonths, myYears } from '../../utils/helpers/variables';
 import { VendorService } from '../vendor.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { LoadingService } from '../../services/loading.service';
@@ -22,6 +22,8 @@ export class VendorInvoiceDetailsComponent {
   UserType = UserType;
   userAccessLevel: any;
   user: any;
+
+  type: 'VIEW' | 'GENERATE' = 'VIEW';
 
   month: any;
   year: any;
@@ -39,6 +41,7 @@ export class VendorInvoiceDetailsComponent {
       totalAmountClaimed: 0
     };
 
+  vendorDetails: any;
   vendorInvoiceDetails = {
     cumulativeInvoice: {
       invoiceRecords: [] as Array<{
@@ -77,11 +80,18 @@ export class VendorInvoiceDetailsComponent {
     private masterDataService: MasterDataService,
     private dataService: DataService,
     private vendorService: VendorService,
+    private router: Router,
   ) {
     this.route.queryParams.subscribe(params => {
       this.month = params['month'];
       this.year = params['year'];
       this.vendorID = params['vendorId'];
+      this.type = params['type'];
+
+      if(!this.type){
+        this.dataService.showSnackBar('Invalid URL');
+        return;
+      }
 
       console.log('Month:', this.month);
       console.log('Year:', this.year);
@@ -107,11 +117,29 @@ export class VendorInvoiceDetailsComponent {
       year: this.year,
       vendorId: this.vendorID
     }
-    this.vendorService.getVendeorInvoiceDetails(payload).subscribe((response) => {
-      console.log('Vendor Invoice Details:', response);
-      this.vendorInvoiceDetails = response.data;
-      this.calculateTotals();
-    });
+    if(this.type== 'GENERATE'){
+      this.vendorService.generateVendeorInvoiceDetails(payload).subscribe((response) => {
+        console.log('Vendor Invoice Details:', response);
+        this.vendorInvoiceDetails = response.data;
+        this.calculateTotals();
+
+        this.router.navigateByUrl('/blank', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: payload.month, year: payload.year, vendorId: payload.vendorId, type:'VIEW' } });
+        });
+      });
+    }
+    else{
+      this.vendorService.viewVendorInvoiceDetails(payload).subscribe((response) => {
+        console.log('Vendor Invoice Details:', response);
+        this.vendorInvoiceDetails = response.data.invoice;
+        this.vendorDetails = {
+          vendorName: response.data.vendorName,
+          vendorId: response.data.vendorId
+        }
+        this.calculateTotals();
+      });
+    }
+    
   }
 
   calculateTotals() {

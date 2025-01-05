@@ -31,7 +31,8 @@
         <tr *ngFor="let vendor of companyVendors">
           <td>
             <button class="btn btn-primary" (click)="openVendorModal(vendor)">Update</button>
-            <button class="btn btn-primary" (click)="navigateToVendorInvoice(vendor)">View Invoice</button>
+            <button *ngIf="!vendor.invoiceGenerated" class="btn btn-primary" (click)="navigateVendorInvoice(vendor, 'GENERATE')">Generate Invoice</button>
+            <button *ngIf="vendor.invoiceGenerated" class="btn btn-primary" (click)="navigateVendorInvoice(vendor, 'VIEW')">View Invoice</button>
           </td>
           <td>{{ vendor.vendorName }}</td>
           <td>{{ vendor.totalPayableAmount | currency:'INR' }}</td>

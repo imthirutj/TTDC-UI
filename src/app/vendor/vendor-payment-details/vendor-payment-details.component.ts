@@ -135,6 +135,9 @@ export class VendorPaymentDetailsComponent implements OnInit {
       if (response.success) {
         this.companyVendors = response.data;
       }
+      else{
+        this.companyVendors = [];
+      }
     })
   }
 
@@ -188,12 +191,13 @@ export class VendorPaymentDetailsComponent implements OnInit {
     })
   }
 
-  navigateToVendorInvoice(vendor:any){
+  navigateVendorInvoice(vendor:any, type: 'VIEW' | 'GENERATE'){
     const month = this.filters.selectedMonth.value;
     const year = this.filters.selectedYear.value;
     const vendorId = vendor.vendorId;
-    this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId } });
+    this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId, type:type } });
   }
+
 
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
