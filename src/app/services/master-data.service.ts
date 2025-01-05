@@ -161,8 +161,9 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Payroll/ViewPayslip`+query);
   }
 
-  generatePay(query:any): Observable<any> {
-    return this.http.post(`${this.apiUrl}payroll/generatePayslip`+query+``,{});
+  generatePay(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.post(`${this.apiUrl}payroll/generatePayslip?${queryParams}`,{});
   }
 
   getShifts(): Observable<any> {
