@@ -1,0 +1,16 @@
+.invoice-label {
+
+    color: white;
+    border-radius: 5px; /* Apply border-radius to the label */
+  }
+  
+  .invoice-generated {
+    background-color: green;
+    border-radius: 5px; /* Optional: Reinforce border-radius on generated invoices */
+  }
+  
+  .invoice-not-generated {
+    background-color: rgb(201, 135, 14);
+    border-radius: 5px; /* Optional: Reinforce border-radius on non-generated invoices */
+  }
+  

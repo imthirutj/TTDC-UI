@@ -55,6 +55,13 @@
                 (click)="navigateVendorInvoice(vendor, 'VIEW')">
                 View Invoice
               </button>
+              <p [ngClass]="{
+                'invoice-generated': vendor.invoiceGenerated,
+                'invoice-not-generated': !vendor.invoiceGenerated
+            }" class="invoice-label">
+              {{ vendor.invoiceGenerated ? 'Invoice Generated' : 'Invoice Not Generated' }}
+          </p>
+            
             </div>
           </td>
           <td>{{ vendor.vendorName }}</td>
