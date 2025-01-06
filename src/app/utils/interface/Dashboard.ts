@@ -2,16 +2,16 @@ export class DashboardData {
     employee: {
       payGeneratedAmount: number;
       workingDays: number;
-      dayWiseStatus: string[];
+      dayWiseStatus: string;
     };
     manager: {
       totalEmployees: number;
-      designationWiseCount: number;
+      totalDesignationWiseCount: any;
       employeePresentStatus: number;
     };
     vendor: {
       totalCompany: number;
-      totalDesignationWiseCount: number;
+      totalDesignationWiseCount: any;
       paymentGeneratedCount: number;
       paymentNotGeneratedCount: number;
       paymentProcessedForSelectedMonth: number;
@@ -19,7 +19,7 @@ export class DashboardData {
     state: {
       totalVendor: number;
       totalCompany: number;
-      totalDesignationWiseCount: number;
+      totalDesignationWiseCount: any;
       paymentGeneratedCount: number;
       paymentNotGeneratedCount: number;
       paymentProcessedForSelectedMonth: number;
@@ -29,11 +29,11 @@ export class DashboardData {
       this.employee = {
         payGeneratedAmount: 0,
         workingDays: 0,
-        dayWiseStatus: []
+        dayWiseStatus: ''
       };
       this.manager = {
         totalEmployees: 0,
-        designationWiseCount: 0,
+        totalDesignationWiseCount: 0,
         employeePresentStatus: 0
       };
       this.vendor = {

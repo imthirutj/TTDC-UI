@@ -49,7 +49,7 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.filters) {
-      
+      this.filters.role = this.filters.role || { value: '', show: false, key: 'role' };
       this.filters.selectedMonth = this.filters.selectedMonth || { value: Number(new Date().getMonth()) + 1, show: false, key: 'selectedMonth', includeInSearchParams: true };
       this.filters.selectedYear = this.filters.selectedYear || { value: new Date().getFullYear(), show: false, key: 'selectedYear', includeInSearchParams: true };
       this.filters.cityId = this.filters.cityId || { value: '', show: false, key: 'cityId' };
@@ -81,6 +81,10 @@ export class FiltersComponent implements OnInit {
     if (this.userAccessLevel == UserType.VENDOR) {
       this.filters.vendorId.value = this.user.vendorId;
       this.filters.vendorId.show = false;
+
+      this.filters.cityId.show = false;
+      this.filters.companyId.show = false;
+      this.filters.deptId.show = false;
     }
     if (this.userAccessLevel == UserType.MANAGER) {
       this.filters.cityId.show = false;
@@ -92,15 +96,19 @@ export class FiltersComponent implements OnInit {
 
     if (this.userAccessLevel == UserType.EMPLOYEE) {
       this.filters.cityId.show = false;
+      
       this.filters.companyId.show = false;
       this.filters.companyId.value = this.user.companyId;
 
       this.filters.designationId.show = false;
       this.filters.deptId.show = false;
       this.filters.catId.show = false;
-      this.filters.employeeId.show = false;
 
+      this.filters.employeeId.show = false;
       this.filters.employeeId.value = this.user.employeeId;
+
+      this.filters.vendorId.value = this.user.vendorId;
+      this.filters.vendorId.show = false;
     }
   }
 

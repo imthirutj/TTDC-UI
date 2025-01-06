@@ -30,7 +30,7 @@
       <div style="background-color: #8c7536; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Day Wise Status</h3>
-          <h2 class="card-text">{{dashboardData.employee.dayWiseStatus}}</h2>
+          <h2  [ngStyle]="{'color': dashboardData.employee.dayWiseStatus == 'Present' ? 'green' : '#631313'}" class="card-text">{{dashboardData.employee.dayWiseStatus}}</h2>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
       <div style="background-color: #bf4eae; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Designation Wise Count</h3>
-          <h2 class="card-text">{{dashboardData.manager.designationWiseCount}}</h2>
+          <h2 class="card-text">{{dashboardData.manager.totalDesignationWiseCount.length}}</h2>
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@
       <div style="background-color: #c56d44; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Employee Present Status</h3>
-          <h2 class="card-text">{{dashboardData.manager.employeePresentStatus}}</h2>
+          <h2  class="card-text">{{dashboardData.manager.employeePresentStatus}}</h2>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
       <div style="background-color: #0e6ca2; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Designation</h3>
-          <h2 class="card-text">{{dashboardData.vendor.totalDesignationWiseCount}}</h2>
+          <h2 class="card-text">{{dashboardData.vendor.totalDesignationWiseCount.length}}</h2>
         </div>
       </div>
     </div>
@@ -134,7 +134,7 @@
       <div style="background-color: #0e6ca2; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Designation</h3>
-          <h2 class="card-text">{{dashboardData.state.totalDesignationWiseCount}}</h2>
+          <h2 class="card-text">{{dashboardData.state.totalDesignationWiseCount.length}}</h2>
         </div>
       </div>
     </div>

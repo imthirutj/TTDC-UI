@@ -49,6 +49,10 @@ export class VendorManagementComponent {
     isEdit: false,
     title: '',
     vendor: new Vendor(),
+    companyList: [],
+    departmentList: [],
+    comp: { id: 0, name: '' },
+    dept: { id: 0, name: '' },
   };
 
   dropdowns = {
@@ -56,8 +60,8 @@ export class VendorManagementComponent {
     departments: [] as Department[],
     cities: [] as City[]
   };
-  
-  
+
+
 
   constructor(private masterDataService: MasterDataService,
     private vendorService: VendorService,
@@ -75,11 +79,62 @@ export class VendorManagementComponent {
 
   //#region Dropdowns
   onCityChange() {
-    this.modal.vendor.companyId = '';
+    //this.modal.vendor.companyId = '';
     this.fetchCompanies(this.modal.vendor.cityId);
   }
-  onCompanyChange(){
+  onCompanyChange() {
 
+  }
+
+  onDepartmentChange() {
+
+  }
+
+  addCompanyDepartment() {
+    if (!this.modal.comp.id || !this.modal.dept.id) {
+      this.dataService.showSnackBar('Please select company and department');
+      return;
+    }
+
+    // Check if the companyId and departmentId already exist in the companyDepartmentList
+    const existingEntry = this.modal.vendor.companyDepartmentList.find(
+      item => item.companyId == this.modal.comp.id && item.departmentId == this.modal.dept.id
+    );
+
+    if (existingEntry) {
+      // If a match is found, show an error message
+      this.dataService.showSnackBar('This company and department combination already exists');
+      return;
+    }
+
+    // If no match is found, create the new data object
+    const data = {
+      companyId: this.modal.comp.id,
+      companyName: this.getCompanyNameById(this.modal.comp.id),
+      departmentId: this.modal.dept.id,
+      departmentName: this.getDeptNameById(this.modal.dept.id)
+    };
+
+    // Add the new data to the companyDepartmentList
+    this.modal.vendor.companyDepartmentList.push(data);
+  }
+
+  deleteCompanyDepartment(companyId: number, departmentId: number) {
+    // Filter out the company-department combination from the list
+    this.modal.vendor.companyDepartmentList = this.modal.vendor.companyDepartmentList.filter(
+      item => !(item.companyId === companyId && item.departmentId === departmentId)
+    );
+  }
+
+  getCompanyNameById(companyId: any): string {
+    const company = this.dropdowns.companies.find(c => c.companyId == companyId);
+    return company ? company.companyFName : '';
+  }
+
+
+  getDeptNameById(deptId: any): string {
+    const dept = this.dropdowns.departments.find(d => d.departmentId == deptId);
+    return dept ? dept.departmentFName : '';
   }
 
   //#endregion
@@ -93,7 +148,7 @@ export class VendorManagementComponent {
   }
 
   fetchCompanies(cityId: any) {
-    const payload = { 
+    const payload = {
       cityId: cityId,
     };
     this.masterDataService.getCompany(payload).subscribe((response) => {
@@ -137,8 +192,6 @@ export class VendorManagementComponent {
     }
     else {
       this.modal.vendor.cityId = this.filters.cityId.value;
-      this.modal.vendor.companyId = this.filters.companyId.value;
-      this.modal.vendor.departmentId = this.filters.deptId.value;
     }
     this.modal.title = isEdit ? 'Edit Vendor' : 'Add Vendor';
   }
@@ -146,11 +199,13 @@ export class VendorManagementComponent {
   closeModal() {
     this.modal.show = false;
     this.modal.vendor = new Vendor();
+    this.getVendors();
   }
   updateVendorModal() {
     if (this.modal.isEdit) {
       this.vendorService.updateVendor(this.modal.vendor).subscribe((response) => {
         if (response.success) {
+          this.dataService.showSnackBar('Vendor updated successfully');
           this.getVendors();
         }
       });

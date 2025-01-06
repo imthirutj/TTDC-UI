@@ -8,10 +8,7 @@ export class Vendor {
     panNo: string;
     cityId: string;
     cityName: string;
-    companyId: string;
-    companyFName: string;
-    departmentId: string;
-    departmentFName: string;
+    companyDepartmentList: { companyId: number; companyName: string; departmentId: number; departmentName: string }[];
 
     constructor(vendor: any = {}) {
         this.vendorId = vendor.vendorId || 0;
@@ -23,9 +20,6 @@ export class Vendor {
         this.panNo = vendor.panNo || '';
         this.cityId = vendor.cityId || '';
         this.cityName = vendor.cityName || '';
-        this.companyId = vendor.companyId || '';
-        this.companyFName = vendor.companyFName || '';
-        this.departmentId = vendor.departmentId || '';
-        this.departmentFName = vendor.departmentFName || '';
+        this.companyDepartmentList = vendor.companyDepartmentList || [];
     }
 }

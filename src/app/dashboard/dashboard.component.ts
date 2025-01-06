@@ -87,7 +87,7 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
-    this.getDashboardCount();
+   
   }
 
   getDashboardCount() {
