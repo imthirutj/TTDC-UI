@@ -30,11 +30,11 @@
       <tbody>
         <tr *ngFor="let vendor of companyVendors">
           <td>
-            <button *ngIf="userAccessLevel==UserType.STATE_ADMIN" class="btn btn-primary" (click)="openVendorModal( 'UPDATE', vendor)">Update Payment</button>
-            <button *ngIf="userAccessLevel==UserType.VENDOR" class="btn btn-primary" (click)="openVendorModal( 'VIEW', vendor)">View Payment</button>
+            <button *ngIf="userAccessLevel==UserType.STATE_ADMIN && vendor.invoiceGenerated" class="btn btn-primary" (click)="openVendorModal( 'UPDATE', vendor)">Update Payment</button>
+            <button *ngIf="userAccessLevel==UserType.VENDOR && vendor.invoiceGenerated" class="btn btn-primary" (click)="openVendorModal( 'VIEW', vendor)">View Payment</button>
             
-            <button *ngIf="userAccessLevel==UserType.STATE_ADMIN" class="btn btn-primary" (click)="openEmployeePaymentModal( 'UPDATE', vendor)">Update Employee Payment</button>
-            <button *ngIf="userAccessLevel==UserType.VENDOR" class="btn btn-primary" (click)="openEmployeePaymentModal( 'VIEW', vendor)">View Employee Payment</button>
+            <button *ngIf="userAccessLevel==UserType.STATE_ADMIN && vendor.invoiceGenerated" class="btn btn-primary" (click)="openEmployeePaymentModal( 'UPDATE', vendor)">Update Employee Payment</button>
+            <button *ngIf="userAccessLevel==UserType.VENDOR && vendor.invoiceGenerated" class="btn btn-primary" (click)="openEmployeePaymentModal( 'VIEW', vendor)">View Employee Payment</button>
             
             <button *ngIf="!vendor.invoiceGenerated && userAccessLevel==UserType.VENDOR" class="btn btn-primary"
               (click)="navigateVendorInvoice(vendor, 'GENERATE')">Generate Invoice</button>
