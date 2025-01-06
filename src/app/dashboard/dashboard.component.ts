@@ -28,15 +28,15 @@ export class DashboardComponent {
     role: { value: '', show: true, key: 'role', includeInSearchParams: true },
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
-      show: false,
+      show: true,
       key: 'month',
-      includeInSearchParams: false
+      includeInSearchParams: true
     },
     selectedYear: {
       value: new Date().getFullYear(), // Default to current year
-      show: false,
+      show: true,
       key: 'year',
-      includeInSearchParams: false
+      includeInSearchParams: true
     },
     cityId: {
       value: '',
