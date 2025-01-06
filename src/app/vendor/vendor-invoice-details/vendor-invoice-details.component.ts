@@ -55,6 +55,8 @@ export class VendorInvoiceDetailsComponent {
       subTotalEmpcount: 0,
       cgst: 0,
       sgst: 0,
+      gst: 0,
+      tds: 0,
       totalAmount: 0,
       rupeesInWords: ''
     },
