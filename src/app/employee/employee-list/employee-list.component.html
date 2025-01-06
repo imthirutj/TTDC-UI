@@ -24,6 +24,7 @@
         <th>Age</th>
         <th>Place of work</th>
         <th>Contact Number</th>
+        <th>Employment Type</th>
         <th>Date of joining</th>
         <th>Passed Out Year</th>
         <th>State</th>
@@ -56,6 +57,7 @@
         <td>{{ employee.age }}</td>
         <td>{{ employee.workPlace }}</td>
         <td>{{ employee.contactNo }}</td>
+        <td>{{ employee.employementType }}</td>
         <td>{{ employee.passedOutYear }}</td>
         <td>{{ employee.doj }}</td>
         <td>{{ employee.stateName }} </td>
@@ -142,6 +144,15 @@
     <label for="contactNo" class="form-label">Contact Number</label>
     <input type="text" class="form-control" id="contactNo" [(ngModel)]="modal.employee.contactNo" name="contactNo"
       placeholder="Enter Contact Number">
+  </div>
+  <div class="mb-3">
+    <label for="employementType" class="form-label">Employement Type</label>
+    <select class="form-select" id="employementType" [(ngModel)]="modal.employee.employementType" name="employementType" required>
+      <option value="">Select Type</option>
+      <option value="Permanent ">Permanent</option>
+      <option value="Contract">Contract</option>
+      <option value="Outsourced">Outsourced </option>
+    </select>
   </div>
   <div class="mb-3">
     <label for="passedOutYear" class="form-label">Passed Out Year</label>
