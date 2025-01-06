@@ -1,0 +1,11 @@
+{
+    "success": true,
+    "data": {
+        "totalVendor": 2,
+        "totalCompany": 33,
+        "totalDesignationWiseCount": 9,
+        "paymentGeneratedCount": 0,
+        "paymentNotGeneratedCount": 0,
+        "paymentProcessedForSelectedMonth": 290000
+    }
+}

@@ -49,6 +49,7 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.filters) {
+      
       this.filters.selectedMonth = this.filters.selectedMonth || { value: Number(new Date().getMonth()) + 1, show: false, key: 'selectedMonth', includeInSearchParams: true };
       this.filters.selectedYear = this.filters.selectedYear || { value: new Date().getFullYear(), show: false, key: 'selectedYear', includeInSearchParams: true };
       this.filters.cityId = this.filters.cityId || { value: '', show: false, key: 'cityId' };
@@ -61,7 +62,7 @@ export class FiltersComponent implements OnInit {
       this.filters.vendorName = this.filters.vendorName || { value: '', show: false, key: 'vendorName' };
     }
 
-    // Ensure all filters have a `show` property set to true if missing
+    // Ensure all filters have a `show` property set to false if missing
     Object.keys(this.filters).forEach((key) => {
       if (this.filters[key] && this.filters[key].show === undefined) {
         this.filters[key].show = false; 
@@ -76,6 +77,7 @@ export class FiltersComponent implements OnInit {
   }
 
   activate() {
+    this.filters.role.value = this.userAccessLevel;
     if (this.userAccessLevel == UserType.VENDOR) {
       this.filters.vendorId.value = this.user.vendorId;
       this.filters.vendorId.show = false;

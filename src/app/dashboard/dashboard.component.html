@@ -1,38 +1,166 @@
-<!-- <div
-  style="display: flex; flex-direction: column; align-items: center; justify-content: center; 
-         width: 300px; height: 200px; border: 1px solid #ccc; border-radius: 8px; 
-         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background-color: #fff; 
-         padding: 16px; margin: 16px; text-align: center;"
->
-  <h3 style="margin: 0 0 8px; color: #333;">Dashboard Box</h3>
-  <p style="margin: 0; color: #555;">This is a sample dashboard box.</p>
-</div> -->
 
-<app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"></app-filter>
-
+<div class="card">
+  <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+      (triggerParentFunction)="getDashboardCount()">
+  </app-filter>
+  <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+</div>
 
 <div class="container mt-4">
-    <!-- Filters -->
-   
-  
-    <!-- Dashboard Boxes -->
-    <div class="row">
-      <div class="col-md-4 mb-4"  *ngFor="let box of arraybox_list" >
-        <div [style.background-color]="box.color"
-          class="card shadow-sm"
-          style="color:white;height: 100px; display: flex; justify-content: center; align-items: center; 
-                 text-align: center; background-color: #f8f9fa; border-radius: 8px; "
-        >
-          <div   class="card-body">
-            <h2 class="card-title">{{box.count}}</h2>
-            <p class="card-text">{{box.label}}</p>
-            <!-- <p class="card-text">
-              Selected Year: {{ selectedYear }}<br>
-              Selected Month: {{ selectedMonth }}
-            </p> -->
-          </div>
+  <!-- Employee Section -->
+
+  <div *ngIf="userAccessLevel == UserType.EMPLOYEE" class="row">
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #4270a1; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Pay Generated Amount</h3>
+          <h2 class="card-text">{{dashboardData.employee.payGeneratedAmount}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #9067be; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Working Days</h3>
+          <h2 class="card-text">{{dashboardData.employee.workingDays}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #8c7536; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Day Wise Status</h3>
+          <h2 class="card-text">{{dashboardData.employee.dayWiseStatus}}</h2>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Manager Section -->
+
+  <div *ngIf="userAccessLevel == UserType.MANAGER" class="row">
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #5489d3; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Employees</h3>
+          <h2 class="card-text">{{dashboardData.manager.totalEmployees}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #bf4eae; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Designation Wise Count</h3>
+          <h2 class="card-text">{{dashboardData.manager.designationWiseCount}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #c56d44; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Employee Present Status</h3>
+          <h2 class="card-text">{{dashboardData.manager.employeePresentStatus}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vendor Section -->
+
+  <div *ngIf="userAccessLevel == UserType.VENDOR" class="row">
   
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #73d41e; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Company</h3>
+          <h2 class="card-text">{{dashboardData.vendor.totalCompany}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #0e6ca2; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Designation</h3>
+          <h2 class="card-text">{{dashboardData.vendor.totalDesignationWiseCount}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #db890e; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Payment Generated</h3>
+          <h2 class="card-text">{{dashboardData.vendor.paymentGeneratedCount}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Payment Not Generated</h3>
+          <h2 class="card-text">{{dashboardData.vendor.paymentNotGeneratedCount }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #cc293a; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Payment Processed </h3>
+          <h2 class="card-text">{{dashboardData.vendor.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- State Section -->
+
+  <div *ngIf="userAccessLevel == UserType.STATE_ADMIN" class="row">
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #0da276; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Vendor</h3>
+          <h3 class="card-text">{{dashboardData.state.totalVendor}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #73d41e; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Company</h3>
+          <h2 class="card-text">{{dashboardData.state.totalCompany}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #0e6ca2; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Designation</h3>
+          <h2 class="card-text">{{dashboardData.state.totalDesignationWiseCount}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #db890e; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Payment Generated</h3>
+          <h2 class="card-text">{{dashboardData.state.paymentGeneratedCount }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Payment Not Generated</h3>
+          <h2 class="card-text">{{dashboardData.state.paymentNotGeneratedCount }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #cc293a; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Payment Processed </h3>
+          <h2 class="card-text">{{dashboardData.state.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
