@@ -41,10 +41,10 @@
                 (click)="openVendorModal('VIEW', vendor)">
                 View Payment
               </button>
-              <button *ngIf="userAccessLevel == UserType.STATE_ADMIN && vendor.invoiceGenerated" class="btn btn-primary"
+              <!-- <button *ngIf="userAccessLevel == UserType.STATE_ADMIN && vendor.invoiceGenerated" class="btn btn-primary"
                 (click)="openEmployeePaymentModal('VIEW', vendor)">
                 VIEW Employee Payment
-              </button>
+              </button> -->
               <button *ngIf="userAccessLevel == UserType.VENDOR && vendor.invoiceGenerated" class="btn btn-primary"
                 (click)="openEmployeePaymentModal('UPDATE', vendor)">
                 Update Employee Payment
