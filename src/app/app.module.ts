@@ -66,6 +66,7 @@ import { FiltersComponent } from './filters/filters.component';
 import { MinutesToHoursPipe } from './utils/pipes/minutes-to-hours.pipe';
 import { VendorManagementComponent } from './vendor/vendor-management/vendor-management.component';
 import { ServerPaginationComponent } from './utils/widgets/server-pagination/server-pagination.component';
+import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-payments/vendor-to-employee-payments.component';
 
 
 @NgModule({
@@ -109,7 +110,8 @@ import { ServerPaginationComponent } from './utils/widgets/server-pagination/ser
     FiltersComponent,
     MinutesToHoursPipe,
     VendorManagementComponent,
-    ServerPaginationComponent
+    ServerPaginationComponent,
+    VendorToEmployeePaymentsComponent
 
   ],
   imports: [

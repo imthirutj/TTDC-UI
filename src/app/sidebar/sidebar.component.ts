@@ -62,13 +62,13 @@ export class SidebarComponent {
         label: 'Pay Generated', 
         icon: 'fa-solid fa-file-invoice-dollar', 
         route: '/payslip-records', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
         label: 'Pay Not Generated', 
         icon: 'fa-solid fa-file-excel', 
         route: '/payslip-records-waiting', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
       },
       { 
         label: 'State List', 
@@ -140,7 +140,13 @@ export class SidebarComponent {
         label: 'Vendor Payment Details',
         icon: 'fa-solid fa-receipt',
         route: '/vendor-payment-details',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+      },
+      {
+        label: 'Vendor To Employee Payment',
+        icon: 'fa-solid fa-receipt',
+        route: '/vendor-employee-payment-details',
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       {
         label: 'OD Slip',

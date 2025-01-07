@@ -34,6 +34,7 @@ import { VendorInvoiceDetailsComponent } from './vendor/vendor-invoice-details/v
 import { DegreeComponent } from './degree/degree.component';
 import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
 import { VendorManagementComponent } from './vendor/vendor-management/vendor-management.component';
+import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-payments/vendor-to-employee-payments.component';
 
 const routes: Routes = [
 
@@ -204,6 +205,12 @@ const routes: Routes = [
   {
     path: 'vendor-payment-details',
     component: VendorPaymentDetailsComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'vendor-employee-payment-details',
+    component:VendorToEmployeePaymentsComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },

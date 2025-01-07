@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Employee Work Details</h2>
+  
+    <div class="card">
+      <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+        (triggerParentFunction)="fetchVendorEmployeePaymentDetails()">
+      </app-filter>
+      <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    </div>
+  
+    <div class="container mt-4">
+      <h3>Vendor Payment Details</h3>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Employee Name</th>
+            <th scope="col">Employee Code</th>
+            <th scope="col">Total Earnings</th>
+            <th scope="col">Total Deductions</th>
+            <th scope="col">Gross Salary</th>
+            <th scope="col">Net Salary</th>
+            <th scope="col">Paid To Employee</th>
+            <th scope="col">Difference</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vep of vendorEmployeePayments; let i = index">
+            <td>
+              {{i+1}}
+            </td>
+            <td>{{ vep.employeeName }}</td>
+            <td>{{ vep.employeeCode }}</td>
+            <td>{{ vep.totalEarnings }}</td>
+            <td>{{ vep.totalDeductions }}</td>
+            <td>{{ vep.grossSalary }}</td>
+            <td>{{ vep.netSalary }}</td>
+            <td>{{ vep.paidToEmployee }}</td>
+            <td>{{ vep.netSalary - vep.paidToEmployee }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  </div>

@@ -198,10 +198,18 @@ export class VendorPaymentDetailsComponent implements OnInit {
     }
     this.vendorService.getVendorPayStatus(payload).subscribe((response: any) => {
       if (response.success) {
-        this.selectedVendor = response.data;
+        if(response.data){
+          this.selectedVendor = response.data;
+        }
+        else{
+          this.selectedVendor = vendor;
+        }
+      }
+      else{
+        this.selectedVendor = vendor;
       }
     })
-    this.selectedVendor = vendor;
+    
   }
 
   openEmployeePaymentModal(type: 'VIEW' | 'UPDATE', vendor: any) {
@@ -221,10 +229,17 @@ export class VendorPaymentDetailsComponent implements OnInit {
     }
     this.vendorService.getVendorPayStatus(payload).subscribe((response: any) => {
       if (response.success) {
-        this.selectedVendor = response.data;
+        if(response.data){
+          this.selectedVendor = response.data;
+        }
+        else{
+          this.selectedVendor = vendor;
+        }
+      }
+      else{
+        this.selectedVendor = vendor;
       }
     })
-    this.selectedVendor = vendor;
 
   }
 
@@ -249,13 +264,13 @@ export class VendorPaymentDetailsComponent implements OnInit {
     if (this.selectedFile) {
       this.vendorService.updateEmployeePayment(this.selectedFile, payload)
         .subscribe(
-          response => {
-            // Handle the response, e.g., show a success message
-            this.dataService.showSnackBar('File uploaded successfully');
+          (response:any) => {
+            this.dataService.showSnackBar(response);
+            
           },
           error => {
             // Handle the error, e.g., show an error message
-            this.dataService.showSnackBar('Error uploading file');
+            this.dataService.showSnackBar(error.error.text);
           }
         );
     }

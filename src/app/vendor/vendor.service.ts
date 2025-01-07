@@ -82,4 +82,10 @@ export class VendorService {
     });
   }
   
+
+  getVendorEmployeePaymentDetails(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}VendorPayment/GetVendorEmployeePayment?${queryParams}`;
+    return this.http.get(url);
+  }
 }
