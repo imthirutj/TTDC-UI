@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { LoadingService } from '../../services/loading.service';
+import { em } from '@fullcalendar/core/internal-common';
 
 
 @Component({
@@ -138,7 +139,12 @@ export class VendorInvoiceDetailsComponent {
         this.vendorInvoiceDetails = response.data.invoice;
         this.vendorDetails = {
           vendorName: response.data.vendorName,
-          vendorId: response.data.vendorId
+          vendorId: response.data.vendorId,
+          gstin : response.data.gstin,
+          panNo: response.data.panNo,
+          emailId: response.data.emailId,
+          address: response.data.address,
+          contactNo: response.data.contactNo
         }
         this.calculateTotals();
       });

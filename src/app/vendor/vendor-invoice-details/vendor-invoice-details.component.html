@@ -7,8 +7,8 @@
         <div class="container-1">
             <div class="header-row">
                 <div>
-                    <p>GSTIN: 33ATJPS8940F1ZD</p>
-                    <p>PAN: ATJPS8940F</p>
+                    <p>GSTIN: {{this.vendorDetails.gstin}}</p>
+                    <p>PAN: {{this.vendorDetails.panNo}}</p>
                 </div>
                 <div>
                     <p>PHONE NO: 7502222227</p>
@@ -17,14 +17,14 @@
                 </div>
             </div>
             <div class="main-section">
-                <span class="logo">LIPI INTERIOR</span>
+                <span class="logo">{{this.vendorDetails.vendorDetails}}</span>
                 <p class="subtitle">Sales & Service</p>
                 <p class="subtitle">
                     UPS, BATTERY, A/C, INTERIOR, ALL ELECTRICAL & DATA CABLE NETWORK
                 </p>
                 <div class="line"></div>
                 <p class="address">
-                    28, KANNAKKAR STREET, SALEM – 636 001 TAMILNADU, INDIA.
+                   {{this.vendorDetails.address}}
                 </p>
             </div>
 
@@ -41,8 +41,8 @@
                             <strong>{{month | monthName}} Month Promo Bill</strong>
                         </div>
                         <div class="col-md-6 text-end">
-                            <strong>Date:</strong> 02/01/2025<br>
-                            <strong>Invoice No:</strong> TTDC20240000
+                            <strong>Date:</strong>{{this.vendorDetails.updatedate}}<br>
+                            <strong>Invoice No:</strong> {{this.vendorDetails.vendorInvoiceId}}
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                 <strong>Rupees in Words:</strong> {{vendorInvoiceDetails.cumulativeInvoice.rupeesInWords}}
             </div>
             <div class="mt-3">
-                <strong>For Lip Interior</strong>
+                <strong>For {{this.vendorDetails.vendorName}}</strong>
                 <br>
                 R.Selvakumar
             </div>
