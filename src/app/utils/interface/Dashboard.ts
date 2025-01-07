@@ -12,6 +12,7 @@ export class DashboardData {
     vendor: {
       totalCompany: number;
       totalDesignationWiseCount: any;
+      totalEmployee:number;
       paymentGeneratedCount: number;
       paymentNotGeneratedCount: number;
       paymentProcessedForSelectedMonth: number;
@@ -39,6 +40,7 @@ export class DashboardData {
       this.vendor = {
         totalCompany: 0,
         totalDesignationWiseCount: 0,
+        totalEmployee:0,
         paymentGeneratedCount: 0,
         paymentNotGeneratedCount: 0,
         paymentProcessedForSelectedMonth: 0

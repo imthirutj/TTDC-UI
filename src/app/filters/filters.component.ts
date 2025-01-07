@@ -58,6 +58,8 @@ export class FiltersComponent implements OnInit {
       this.filters.deptId = this.filters.deptId || { value: '', show: false, key: 'deptId' };
       this.filters.catId = this.filters.catId || { value: '', show: false, key: 'catId' };
       this.filters.employeeId = this.filters.employeeId || { value: '', show: false, key: 'employeeId' };
+      this.filters.employeeName = this.filters.employeeName || { value: '', show: false, key: 'employeeName' };
+      this.filters.employeeCode = this.filters.employeeCode || { value: '', show: false, key: 'employeeCode' };
       this.filters.vendorId = this.filters.vendorId || { value: '', show: false, key: 'vendorId' };
       this.filters.vendorName = this.filters.vendorName || { value: '', show: false, key: 'vendorName' };
     }

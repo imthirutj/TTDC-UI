@@ -102,6 +102,21 @@
       </div>
     </div>
 
+    <div *ngIf="filters.employeeName.show" class="col-md-4">
+      <div class="form-group">
+        <label for="employee">Enter Employee Name</label>
+        <input [(ngModel)]="filters.employeeName.value" (change)="onEmployeeChange()" class="form-control" id="employee"
+          type="text" placeholder="Enter Employee Name">
+      </div>
+    </div>
+
+    <div *ngIf="filters.employeeCode.show" class="col-md-4">
+      <div class="form-group">
+        <label for="employee">Enter Employee Code</label>
+        <input [(ngModel)]="filters.employeeCode.value" (change)="onEmployeeChange()" class="form-control" id="employee"
+          type="text" placeholder="Enter Employee Code">
+      </div>
+    </div>
 
   </div>
 </div>
