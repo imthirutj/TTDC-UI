@@ -1,6 +1,8 @@
 
 <div class="Department-list-container">
-    <h3>Payslip Generated Employees</h3>
+    <h3>Payslip Generated Employees:
+      {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
+    </h3>
 
     <div class="card">
       <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
