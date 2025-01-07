@@ -44,7 +44,7 @@ export class VendorInvoiceDetailsComponent {
       totalAmountClaimed: 0
     };
 
-  vendorDetails: any;
+  vendorDetails: any={};
   vendorInvoiceDetails = {
     cumulativeInvoice: {
       invoiceRecords: [] as Array<{
@@ -144,7 +144,9 @@ export class VendorInvoiceDetailsComponent {
           panNo: response.data.panNo,
           emailId: response.data.emailId,
           address: response.data.address,
-          contactNo: response.data.contactNo
+          contactNo: response.data.contactNo,
+          updateDate: response.data.updateDate,
+          vendorInvoiceID: response.data.vendorInvoiceID
         }
         this.calculateTotals();
       });
