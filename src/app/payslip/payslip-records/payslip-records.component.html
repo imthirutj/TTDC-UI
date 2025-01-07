@@ -68,7 +68,8 @@
                     <th>#</th>
                     <th>Pay Record Id</th>
                     <th>Generated Date</th>
-                    <th>Effective Period</th>  
+                    <th>Month</th>
+                    <th>Year</th>
                     <th>Total Earinings</th>      
                     <th>Total Deductions</th>      
                     <th>Gross Salary</th>      
@@ -81,7 +82,8 @@
                       <td>{{ i + 1 }}</td>
                       <td>{{ department.payslipRecordId  }}</td>
                       <td>{{ department.payslipDate }}</td>
-                      <td>{{ department.effectivePeriod }}</td>
+                      <td>{{department.month}}</td>
+                      <td>{{department.year}}</td>
                       <td>{{ department.totalEarnings }}</td>
                       <td>{{ department.totalDeductions }}</td>
                       <td>{{ department.grossSalary }} </td>
