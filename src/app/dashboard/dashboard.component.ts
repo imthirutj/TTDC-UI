@@ -24,6 +24,8 @@ export class DashboardComponent {
   dashboardData: DashboardData = new DashboardData();
 
 
+  paymentGeneratedList: any[] = [];
+
   filters: any = {
     role: { value: '', show: true, key: 'role', includeInSearchParams: true },
     selectedMonth: {
@@ -90,6 +92,17 @@ export class DashboardComponent {
    
   }
 
+    // Event handler for filter change
+    onFilterChanged(event: any) {
+      console.log('Filters updated in parent component:', this.filters);
+      this.getDashboardCount();
+      this.getPaymentGeneratedList();
+    }
+    search(){
+      this.getDashboardCount();
+      this.getPaymentGeneratedList();
+    }
+
   getDashboardCount() {
     const payload = this.dataService.getPayloadValue(this.filters);
 
@@ -113,13 +126,15 @@ export class DashboardComponent {
   }
 
 
+  getPaymentGeneratedList(){
+    const payload = this.dataService.getPayloadValue(this.filters);
+    this.dashboardService.getPaymentGeneratedList(payload).subscribe((response: any) => {
+      if (response.success) {
+        this.paymentGeneratedList = response.data;
+      }
+    })
+  }
 
-  // Event handler for filter change
-  onFilterChanged(event: any) {
-    console.log('Filters updated in parent component:', this.filters);
-    this.getDashboardCount();
-  }
-  search(){
-    this.getDashboardCount();
-  }
+
+
 }

@@ -1,7 +1,7 @@
 
 <div class="card">
   <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-      (triggerParentFunction)="getDashboardCount()">
+      (triggerParentFunction)="search()">
   </app-filter>
   <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 </div>
@@ -68,11 +68,15 @@
   <!-- Vendor Section -->
 
   <div *ngIf="userAccessLevel == UserType.VENDOR" class="row">
-  
+    
     <div class="col-md-4 mb-4">
-      <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
+      <div style="background-color: #00a9c8;" class="card shadow-sm dashboard-bg">
         <div class="card-body">
-          <h3 class="card-title">Total Company</h3>
+          
+          <h3 class="card-title">
+          
+            Total Company
+          </h3>
           <h2 class="card-text">{{dashboardData.vendor.totalCompany}}</h2>
         </div>
       </div>
@@ -171,4 +175,32 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="container mt-4">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Payment Generated Count</th>
+        <th>Payment Not Generated Count</th>
+        <th>Payment Processed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of paymentGeneratedList; let i =index">
+        <td>{{i+1}}</td>
+        <td>{{ payment.month | monthName }}</td>
+        <td>{{ payment.year }}</td>
+        <td>{{ payment.paymentGeneratedCount }}</td>
+        <td>{{ payment.paymentNotGeneratedCount }}</td>
+        <td>{{ payment.paymentProcessed | currency:'INR' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  
 </div>

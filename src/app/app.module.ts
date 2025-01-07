@@ -69,6 +69,8 @@ import { ServerPaginationComponent } from './utils/widgets/server-pagination/ser
 import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-payments/vendor-to-employee-payments.component';
 
 
+import { NgChartsModule  } from 'ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -133,7 +135,8 @@ import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-p
     MatSelectModule,
     NgSelectModule,
     SelectDropDownModule,
-    FullCalendarModule 
+    FullCalendarModule ,
+    NgChartsModule 
     
   ],
   providers: [
