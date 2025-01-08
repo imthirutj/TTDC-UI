@@ -10,9 +10,17 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 })
 export class PayslipNotComponent {
   payId: any
-  Department: any[] = [];
+  allEmployees: any[] = [];
+  Employees: any[] = [];
   payslips: any[] = []
   employee: any;
+
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1,
+    itemsPerPage: 10,
+  }
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -116,20 +124,29 @@ export class PayslipNotComponent {
 
 
   getEmployeeList(): void {
+    this.pageAttributes.currentPage = 1;
     const payload = this.dataService.getPayloadValue(this.filters);
     console.log(this.filters)
     this.masterDataService.getpayslipList(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data.pendingRecords)) {
-          this.Department = response.data.pendingRecords;
-
+          this.allEmployees = response.data.pendingRecords;
+          this.pageAttributes.totalPages = Math.ceil(this.allEmployees.length / this.pageAttributes.itemsPerPage);
+          this.paginate();
         } else {
           alert(response.message || 'Failed to fetch  list.');
         }
       }
     );
   }
+
+  paginate(): void {
+    const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
+    const endIndex = startIndex + this.pageAttributes.itemsPerPage;
+    this.Employees = this.allEmployees.slice(startIndex, endIndex);
+  }
+
   show_list_slip(obj_clicked: any) {
     this.employee = obj_clicked
     this.masterDataService.payslips('?Month=' + this.filters.selectedMonth.value + '&Year=' + this.filters.selectedYear.value + '&EmpId=' + obj_clicked.employeeId + '').subscribe(

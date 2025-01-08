@@ -9,12 +9,12 @@
 <div class="container mt-4">
   <!-- Employee Section -->
 
-  <div *ngIf="userAccessLevel == UserType.EMPLOYEE" class="row">
+  <div *ngIf="false && userAccessLevel == UserType.EMPLOYEE" class="row">
     <div class="col-md-4 mb-4">
       <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Pay Generated Amount</h3>
-          <h2 class="card-text">{{dashboardData.employee.payGeneratedAmount}}</h2>
+          <h2 class="card-text"></h2>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
       <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Working Days</h3>
-          <h2 class="card-text">{{dashboardData.employee.workingDays}}</h2>
+          <h2 class="card-text"></h2>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
       <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Day Wise Status</h3>
-          <h2  [ngStyle]="{'color': dashboardData.employee.dayWiseStatus == 'Present' ? 'green' : '#631313'}" class="card-text">{{dashboardData.employee.dayWiseStatus}}</h2>
+         
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
       <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Employees</h3>
-          <h2 class="card-text">{{dashboardData.manager.totalEmployees}}</h2>
+          <h2 class="card-text">{{dashboardData.totalEmployees}}</h2>
         </div>
       </div>
     </div>
@@ -51,18 +51,11 @@
       <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Designation Wise Count</h3>
-          <h2 class="card-text">{{dashboardData.manager.totalDesignationWiseCount.length}}</h2>
+          <h2 class="card-text">{{dashboardData.totalDesignationCount}}</h2>
         </div>
       </div>
     </div>
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Employee Present Status</h3>
-          <h2  class="card-text">{{dashboardData.manager.employeePresentStatus}}</h2>
-        </div>
-      </div>
-    </div>
+  =
   </div>
 
   <!-- Vendor Section -->
@@ -77,7 +70,7 @@
           
             Total Company
           </h3>
-          <h2 class="card-text">{{dashboardData.vendor.totalCompany}}</h2>
+          <h2 class="card-text">{{dashboardData.totalCompany}}</h2>
         </div>
       </div>
     </div>
@@ -85,7 +78,7 @@
       <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Designation</h3>
-          <h2 class="card-text">{{dashboardData.vendor.totalDesignationWiseCount.length}}</h2>
+          <h2 class="card-text">{{dashboardData.totalDesignationCount}}</h2>
         </div>
       </div>
     </div>
@@ -93,7 +86,7 @@
       <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Employee</h3>
-          <h2 class="card-text">{{dashboardData.vendor.totalEmployees}}</h2>
+          <h2 class="card-text">{{dashboardData.totalEmployees}}</h2>
         </div>
       </div>
     </div>
@@ -101,7 +94,7 @@
       <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Payment Generated</h3>
-          <h2 class="card-text">{{dashboardData.vendor.paymentGeneratedCount}}</h2>
+          <h2 class="card-text">{{dashboardData.paymentGeneratedCount}}</h2>
         </div>
       </div>
     </div>
@@ -109,7 +102,7 @@
       <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Payment Not Generated</h3>
-          <h2 class="card-text">{{dashboardData.vendor.paymentNotGeneratedCount }}</h2>
+          <h2 class="card-text">{{dashboardData.paymentNotGeneratedCount }}</h2>
         </div>
       </div>
     </div>
@@ -117,7 +110,7 @@
       <div style="background-color: #cc293a; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Payment Processed </h3>
-          <h2 class="card-text">{{dashboardData.vendor.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
+          <h2 class="card-text">{{dashboardData.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
         </div>
       </div>
     </div>
@@ -130,7 +123,7 @@
       <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Vendor</h3>
-          <h3 class="card-text">{{dashboardData.state.totalVendor}}</h3>
+          <h3 class="card-text">{{dashboardData.totalVendor}}</h3>
         </div>
       </div>
     </div>
@@ -138,7 +131,7 @@
       <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Company</h3>
-          <h2 class="card-text">{{dashboardData.state.totalCompany}}</h2>
+          <h2 class="card-text">{{dashboardData.totalCompany}}</h2>
         </div>
       </div>
     </div>
@@ -146,7 +139,7 @@
       <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Designation</h3>
-          <h2 class="card-text">{{dashboardData.state.totalDesignationWiseCount.length}}</h2>
+          <h2 class="card-text">{{dashboardData.totalDesignationCount}}</h2>
         </div>
       </div>
     </div>
@@ -154,7 +147,7 @@
       <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Payment Generated</h3>
-          <h2 class="card-text">{{dashboardData.state.paymentGeneratedCount }}</h2>
+          <h2 class="card-text">{{dashboardData.paymentGeneratedCount }}</h2>
         </div>
       </div>
     </div>
@@ -162,7 +155,7 @@
       <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Payment Not Generated</h3>
-          <h2 class="card-text">{{dashboardData.state.paymentNotGeneratedCount }}</h2>
+          <h2 class="card-text">{{dashboardData.paymentNotGeneratedCount }}</h2>
         </div>
       </div>
     </div>
@@ -170,7 +163,7 @@
       <div style="background-color: #cc293a; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Payment Processed </h3>
-          <h2 class="card-text">{{dashboardData.state.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
+          <h2 class="card-text">{{dashboardData.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
         </div>
       </div>
     </div>

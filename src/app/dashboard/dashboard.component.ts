@@ -118,18 +118,7 @@ export class DashboardComponent {
 
     this.dashboardService.getDashboardData(payload).subscribe((response: any) => {
       if (response.success) {
-        if (this.userAccessLevel == UserType.STATE_ADMIN) {
-          this.dashboardData.state = response.data;
-        }
-        else if (this.userAccessLevel == UserType.MANAGER) {
-          this.dashboardData.manager = response.data;
-        }
-        else if (this.userAccessLevel == UserType.VENDOR) {
-          this.dashboardData.vendor = response.data;
-        }
-        else if (this.userAccessLevel == UserType.EMPLOYEE) {
-          this.dashboardData.employee = response.data;
-        }
+       this.dashboardData = response.data;
       }
     })
   }

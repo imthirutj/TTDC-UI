@@ -25,7 +25,7 @@ export class DashboardService {
   getDashboardData(payload: any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(payload);
    // return this.http.get(`assets/mock/dashboard.json?${queryParams}`);
-    return this.http.get(`${this.apiUrl}Dashboard/GetDashboardCount?${queryParams}`);
+    return this.http.get(`${this.apiUrl}Dashboard/GetNewDashboardCount?${queryParams}`);
   }
 
   getPaymentGeneratedList(payload:any): Observable<any> {

@@ -1,58 +1,19 @@
 export class DashboardData {
-    employee: {
-      payGeneratedAmount: number;
-      workingDays: number;
-      dayWiseStatus: string;
-    };
-    manager: {
-      totalEmployees: number;
-      totalDesignationWiseCount: any;
-      employeePresentStatus: number;
-    };
-    vendor: {
-      totalCompany: number;
-      totalDesignationWiseCount: any;
-      totalEmployees:number;
-      paymentGeneratedCount: number;
-      paymentNotGeneratedCount: number;
-      paymentProcessedForSelectedMonth: number;
-    };
-    state: {
-      totalVendor: number;
-      totalCompany: number;
-      totalDesignationWiseCount: any;
-      paymentGeneratedCount: number;
-      paymentNotGeneratedCount: number;
-      paymentProcessedForSelectedMonth: number;
-    };
-  
-    constructor() {
-      this.employee = {
-        payGeneratedAmount: 0,
-        workingDays: 0,
-        dayWiseStatus: ''
-      };
-      this.manager = {
-        totalEmployees: 0,
-        totalDesignationWiseCount: 0,
-        employeePresentStatus: 0
-      };
-      this.vendor = {
-        totalCompany: 0,
-        totalDesignationWiseCount: 0,
-        totalEmployees:0,
-        paymentGeneratedCount: 0,
-        paymentNotGeneratedCount: 0,
-        paymentProcessedForSelectedMonth: 0
-      };
-      this.state = {
-        totalVendor: 0,
-        totalCompany: 0,
-        totalDesignationWiseCount: 0,
-        paymentGeneratedCount: 0,
-        paymentNotGeneratedCount: 0,
-        paymentProcessedForSelectedMonth: 0
-      };
-    }
+  totalVendor: number;
+  totalCompany: number;
+  totalDesignationCount: number;
+  totalEmployees: number;
+  paymentGeneratedCount: number;
+  paymentNotGeneratedCount: number;
+  paymentProcessedForSelectedMonth: number;
+
+  constructor(data?: Partial<DashboardData>) {
+    this.totalVendor = data?.totalVendor ?? 0;
+    this.totalCompany = data?.totalCompany ?? 0;
+    this.totalDesignationCount = data?.totalDesignationCount ?? 0;
+    this.totalEmployees = data?.totalEmployees ?? 0;
+    this.paymentGeneratedCount = data?.paymentGeneratedCount ?? 0;
+    this.paymentNotGeneratedCount = data?.paymentNotGeneratedCount ?? 0;
+    this.paymentProcessedForSelectedMonth = data?.paymentProcessedForSelectedMonth ?? 0;
   }
-  
+}
