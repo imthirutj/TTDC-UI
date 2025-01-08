@@ -18,8 +18,10 @@
           <th scope="col">Action</th>
           <th scope="col">Name</th>
           <th scope="col">Total Payable Salary</th>
-          <th scope="col">GST</th>
           <th scope="col">Service Charge</th>
+          <th scope="col">Total Salary With Service Charges</th>
+          <th scope="col">GST</th>
+    
           <th scope="col">TDS</th>
 
           <th scope="col">EPF</th>
@@ -68,8 +70,10 @@
           </td>
           <td>{{ vendor.vendorName }}</td>
           <td>{{ vendor.totalPayableAmount | currency:'INR' }}</td>
-          <td>{{ vendor.gst | currency:'INR' }}</td>
           <td>{{ vendor.serviceCharge | currency:'INR' }}</td>
+          <td>{{ vendor.totalSalWithCharges}}</td>
+          <td>{{ vendor.gst | currency:'INR' }}</td>
+         
           <td>{{ vendor.tds | currency:'INR' }}</td>
 
           <td>{{ vendor.epf | currency:'INR' }}</td>
