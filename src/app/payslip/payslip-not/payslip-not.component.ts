@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserType } from 'src/app/common/user-type.enum';
 import { DataService } from 'src/app/data.Service';
 import { MasterDataService } from 'src/app/services/master-data.service';
 
@@ -9,6 +10,10 @@ import { MasterDataService } from 'src/app/services/master-data.service';
   styleUrls: ['./payslip-not.component.css']
 })
 export class PayslipNotComponent {
+  UserType = UserType;
+  userAccessLevel: any;
+  user: any;
+
   payId: any
   allEmployees: any[] = [];
   Employees: any[] = [];
@@ -70,13 +75,13 @@ export class PayslipNotComponent {
       key: 'employeeId',
       includeInSearchParams: false
     },
-    employeeName:{
+    employeeName: {
       value: '',
       show: true,
       key: 'employeeName',
       includeInSearchParams: true
     },
-    employeeCode:{
+    employeeCode: {
       value: '',
       show: true,
       key: 'employeeCode',
@@ -93,7 +98,14 @@ export class PayslipNotComponent {
   constructor(private masterDataService: MasterDataService,
     private route: ActivatedRoute, private router: Router,
     private dataService: DataService
-  ) { }
+  ) {
+    this.dataService.asyncGetUser().then((user: any) => {
+      this.user = user;
+      this.userAccessLevel = user.role;
+      console.log('User Access Level:', this.userAccessLevel);
+    });
+
+  }
   ngOnInit(): void {
     //this.getEmployeeList();
 
@@ -115,8 +127,7 @@ export class PayslipNotComponent {
     this.masterDataService.generatePayAll(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
-        if (response.success )
-        {
+        if (response.success) {
           this.dataService.showSnackBar(response.message);
         }
       });
@@ -166,7 +177,7 @@ export class PayslipNotComponent {
   }
   generate_payslip(obj_clicked: any) {
     let objec = { EmpId: obj_clicked.employeeId, employeeName: obj_clicked.employeeName }
-    const payload ={
+    const payload = {
       EmpId: obj_clicked.employeeId,
       Month: this.filters.selectedMonth.value,
       Year: this.filters.selectedYear.value
