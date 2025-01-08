@@ -134,7 +134,6 @@ export class DashboardComponent {
     })
   }
 
-
   getPaymentGeneratedList() {
     const payload = this.dataService.getPayloadValue(this.filters);
     this.dashboardService.getPaymentGeneratedList(payload).subscribe((response: any) => {
