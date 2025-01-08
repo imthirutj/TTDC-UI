@@ -184,6 +184,7 @@
         <th>#</th>
         <th>Month</th>
         <th>Year</th>
+        <th>Total Employee</th>
         <th>Payment Generated Count</th>
         <th>Payment Not Generated Count</th>
         <th>Payment Processed</th>
@@ -194,9 +195,10 @@
         <td>{{i+1}}</td>
         <td>{{ payment.month | monthName }}</td>
         <td>{{ payment.year }}</td>
+        <td>{{ payment.totalEmployee }}</td>
         <td>{{ payment.paymentGeneratedCount }}</td>
         <td>{{ payment.paymentNotGeneratedCount }}</td>
-        <td>{{ payment.paymentProcessed | currency:'INR' }}</td>
+        <td>{{ payment.totalAmount | currency:'INR' }}</td>
       </tr>
     </tbody>
   </table>
