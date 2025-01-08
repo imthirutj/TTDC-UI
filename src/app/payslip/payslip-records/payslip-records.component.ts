@@ -59,9 +59,21 @@ export class PayslipRecordsComponent {
     },
     employeeId: {
       value: '',
-      show: true,
+      show: false,
       key: 'employeeId',
-      includeInSearchParams:true
+      includeInSearchParams: false
+    },
+    employeeName:{
+      value: '',
+      show: true,
+      key: 'employeeName',
+      includeInSearchParams: true
+    },
+    employeeCode:{
+      value: '',
+      show: true,
+      key: 'employeeCode',
+      includeInSearchParams: true
     },
     vendorId: {
       value: '',
