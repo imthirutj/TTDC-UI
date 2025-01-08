@@ -202,7 +202,37 @@
       </tr>
     </tbody>
   </table>
-
-
   
+  
+</div>
+
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <div *ngIf="paymentGeneratedList.length > 0; else noData">
+        <app-chart
+          [chartData]="chartData"
+          [chartType]="chartType"
+          [chartOptions]="chartOptions"
+          chartId="paymentGeneratedChart">
+        </app-chart>
+      </div>
+      
+      <ng-template #noData>
+        <p>No payment generated data available.</p>
+      </ng-template>
+    </div>
+
+    <div class="col-md-6">
+      <div *ngIf="paymentGeneratedList.length > 0; else noData">
+        <app-chart [chartData]="chartDataForPaymentAmount" [chartOptions]="chartOptionsForPaymentAmount" [chartType]="'line'" [chartId]="'paymentAmountChart'"></app-chart>
+      </div>
+      
+      <ng-template #noData>
+        <p>No payment generated data available.</p>
+      </ng-template>
+    </div>
+    
+  </div>
 </div>

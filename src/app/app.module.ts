@@ -70,6 +70,7 @@ import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-p
 
 
 import { NgChartsModule  } from 'ng2-charts';
+import { ChartComponent } from './utils/widgets/chart/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +114,8 @@ import { NgChartsModule  } from 'ng2-charts';
     MinutesToHoursPipe,
     VendorManagementComponent,
     ServerPaginationComponent,
-    VendorToEmployeePaymentsComponent
+    VendorToEmployeePaymentsComponent,
+    ChartComponent
 
   ],
   imports: [
