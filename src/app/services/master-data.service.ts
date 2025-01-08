@@ -166,6 +166,11 @@ export class MasterDataService {
     return this.http.post(`${this.apiUrl}payroll/generatePayslip?${queryParams}`,{});
   }
 
+  generatePayAll(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.post(`${this.apiUrl}payroll/GenerateAllPayslip?${queryParams}`,{});
+  }
+
   getShifts(): Observable<any> {
     return this.http.get(`${this.apiUrl}Shift/GetShifts`);
   }

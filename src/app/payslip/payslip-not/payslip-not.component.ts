@@ -102,32 +102,16 @@ export class PayslipNotComponent {
   loop_id: number = 0
   submit_vendor_wise() {
 
-    this.loop_id = 0
-    for (let i = 0; i < this.Department.length; i++) {
-      this.loop_id = i;
-      const payload ={
-        EmpId: this.Department[i].employeeId,
-        Month: this.filters.selectedMonth.value,
-        Year: this.filters.selectedYear.value
-      }
-     this.masterDataService.generatePay(payload).subscribe(
-        (response: any) => {
-          console.log('API Response:', response);
-          if (response.success) {
-            // alert(response.message+' for employee "'+this.Department[this.loop_id].employeeName+'"');
-            if (this.loop_id == this.Department.length) {
-              this.router.navigate(['/payslip-records']);
-            }
-          } else {
-            alert(response.message + ' for employee ' + this.Department[this.loop_id].employeeName);
-          }
-        },
-        (error) => {
-          console.error('Error fetching Department list:', error);
-          //alert('Error fetching Department list:'+ error);
+    const payload = this.dataService.getPayloadValue(this.filters);
+
+    this.masterDataService.generatePayAll(payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success )
+        {
+          this.dataService.showSnackBar(response.message);
         }
-      );
-    }
+      });
   }
 
 
