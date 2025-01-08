@@ -40,7 +40,7 @@ export class DashboardData {
       this.vendor = {
         totalCompany: 0,
         totalDesignationWiseCount: 0,
-        totalEmployee:0,
+        totalEmployees:0,
         paymentGeneratedCount: 0,
         paymentNotGeneratedCount: 0,
         paymentProcessedForSelectedMonth: 0
