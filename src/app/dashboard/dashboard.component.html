@@ -215,6 +215,7 @@
           [chartData]="chartData"
           [chartType]="chartType"
           [chartOptions]="chartOptions"
+          [chartTitle]="'Payment Generation Graph'"
           chartId="paymentGeneratedChart">
         </app-chart>
       </div>
@@ -226,7 +227,12 @@
 
     <div class="col-md-6">
       <div *ngIf="paymentGeneratedList.length > 0; else noData">
-        <app-chart [chartData]="chartDataForPaymentAmount" [chartOptions]="chartOptionsForPaymentAmount" [chartType]="'line'" [chartId]="'paymentAmountChart'"></app-chart>
+        <app-chart [chartData]="chartDataForPaymentAmount" 
+                    [chartOptions]="chartOptionsForPaymentAmount" 
+                    [chartType]="'line'" 
+                    [chartTitle]="'Payment Processed Graph'"
+                    [chartId]="'paymentAmountChart'">
+        </app-chart>
       </div>
       
       <ng-template #noData>

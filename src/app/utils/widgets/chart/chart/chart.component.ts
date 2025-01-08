@@ -14,6 +14,7 @@ export class ChartComponent implements AfterViewInit {
   @Input() chartType: ChartType = 'bar';  // Chart type (e.g., 'bar', 'line', 'pie') - Default to 'bar'
   @Input() chartOptions: any;  // Options for customization
   @Input() chartId: string = '';    // Dynamic ID for the canvas element - Default empty string
+  @Input() chartTitle: string = ''; 
   
   chart: any;
 
