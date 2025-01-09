@@ -75,6 +75,7 @@
                     <th>Month</th>
                     <th>Year</th>
                     <th>Present Days</th>
+                    <th>Absent Days</th>
                     <th>Total Earinings</th>      
                     <th>Total Deductions</th>      
                     <th>Gross Salary</th>      
@@ -87,9 +88,10 @@
                       <td>{{ i + 1 }}</td>
                       <td>{{ department.payslipRecordId  }}</td>
                       <td>{{ department.payslipDate }}</td>
-                      <td>{{department.month}}</td>
+                      <td>{{department.month | monthName}}</td>
                       <td>{{department.year}}</td>
                       <td>{{ department.presentDays }}</td>
+                      <td>{{ department.absentDays }}</td>
                       <td>{{ department.totalEarnings }}</td>
                       <td>{{ department.totalDeductions }}</td>
                       <td>{{ department.grossSalary }} </td>

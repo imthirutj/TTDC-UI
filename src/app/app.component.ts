@@ -30,6 +30,9 @@ export class AppComponent {
   }
 
   isCurrentPage(path: string): boolean {
-    return this.router.url === path;
+    const currentUrl = this.router.url.split('?')[0]; // Strip query parameters from current URL
+    const targetUrl = path.split('?')[0]; // Strip query parameters from target path
+
+    return currentUrl === targetUrl;
   }
 }

@@ -172,4 +172,22 @@ export class DataService {
         });
     }
   }
+
+
+  // Parse URL into path and query parameters
+  parseUrl(returnUrl: string): { path: string; queryParams: { [key: string]: string } } {
+    const url = new URL(returnUrl, window.location.origin); // Handle both absolute and relative URLs
+    const path = url.pathname;  // Extract path (e.g., '/payslip/91')
+    const queryParams = new URLSearchParams(url.search);  // Extract query parameters
+
+    // Declare queryParamsObj as an object with string keys and string values
+    const queryParamsObj: { [key: string]: string } = {};
+
+    queryParams.forEach((value, key) => {
+      queryParamsObj[key] = value;
+    });
+
+    return { path, queryParams: queryParamsObj };
+  }
+  
 }

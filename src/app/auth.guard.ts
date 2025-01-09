@@ -60,7 +60,7 @@ export class AuthGuard implements CanActivate {
       );
     } else {
       this.dataService.logout();
-      this.router.navigate(['/login']); // Redirect to login if not authenticated
+      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
       return of(false); // Block access to the route
     }
   }

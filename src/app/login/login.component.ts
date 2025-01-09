@@ -6,36 +6,43 @@ import { DataService } from '../data.Service';
 
 import { SnackBarComponent } from '../utils/widgets/snack-bar/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  loginForm!: FormGroup; 
+  loginForm!: FormGroup;
   otpForm!: FormGroup;
   users: any = {};
-  userTypes: any ={};
+  userTypes: any = {};
 
   visibleForm: 'MOBILE' | 'OTP' = 'MOBILE';
 
-    // Timer variables
-    remainingTime: number = 300; // 5 minutes in seconds
-    timer: any;
-    isTimeOver: boolean = false;
+  // Timer variables
+  remainingTime: number = 300; // 5 minutes in seconds
+  timer: any;
+  isTimeOver: boolean = false;
+
+  returnUrl: string = '/';
 
   constructor(private fb: FormBuilder,
     private masterDataService: MasterDataService,
     private loginService: LoginService,
     private dataService: DataService,
     private snackBar: MatSnackBar,
-    private router: Router,) {
+    private router: Router,
+    private route: ActivatedRoute) {
 
-      this.userTypes = dataService.userTypes;
-     }
+    this.userTypes = dataService.userTypes;
+  }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.returnUrl = params['returnUrl'] || '/';
+    });
+
     // Initialize the form group with controls and validators
     this.loginForm = this.fb.group({
       rememberMe: [false],
@@ -52,7 +59,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }
   }
-  
+
 
   ngOnDestroy(): void {
     // Clear the timer when the component is destroyed to prevent memory leaks
@@ -78,7 +85,7 @@ export class LoginComponent implements OnInit {
     return `${this.pad(minutes)}:${this.pad(seconds)}`;
   }
 
-    // Helper function to pad single digits with a leading zero
+  // Helper function to pad single digits with a leading zero
   pad(value: number): string {
     return value < 10 ? `0${value}` : `${value}`;
   }
@@ -94,7 +101,7 @@ export class LoginComponent implements OnInit {
 
 
   navigateToRegister(): void {
-    this.router.navigate(['/register']); 
+    this.router.navigate(['/register']);
   }
 
   generateOTP(): void {
@@ -106,7 +113,7 @@ export class LoginComponent implements OnInit {
       this.loginService.generateOTP(payload).subscribe(
         (response: any) => {
           console.log(response);
-          if(response.success){
+          if (response.success) {
             this.dataService.showSnackBar(response.message);
             this.visibleForm = 'OTP';
             this.startTimer();
@@ -115,14 +122,14 @@ export class LoginComponent implements OnInit {
             this.dataService.showSnackBar(response.message);
           }
         });
-      }
-    else{
+    }
+    else {
       this.dataService.showSnackBar('Please enter valid mobile number');
     }
   }
 
   login(): void {
-    if (!this.otpForm.valid ) {
+    if (!this.otpForm.valid) {
       this.dataService.showSnackBar('Please enter valid OTP');
     }
     if (!this.loginForm.valid) {
@@ -136,11 +143,32 @@ export class LoginComponent implements OnInit {
     this.loginService.validate(payload).subscribe(
       (response: any) => {
         console.log(response);
-        if(response.success){
+        if (response.success) {
           const rememberMe = this.loginForm.get('rememberMe')?.value;
 
-          this.dataService.setAuthTokenAndUser(response.token,response.data, rememberMe);
-          this.router.navigate(['/dashboard']);
+          this.dataService.setAuthTokenAndUser(response.token, response.data, rememberMe);
+
+          // Check if returnUrl is set to '/' and update to '/dashboard' if so
+          if (this.returnUrl === '/' ) {
+            this.returnUrl = '/dashboard'; // Default fallback
+          }else{
+            if(this.returnUrl.includes('/payslip/')){ 
+              
+            }
+            else{
+              this.returnUrl = '/dashboard';
+            }
+          }
+
+          // Parse the returnUrl to get path and query parameters
+          const { path, queryParams } = this.dataService.parseUrl(this.returnUrl);
+
+          // Default to dashboard if no returnUrl
+          if (path === '/') {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate([path], { queryParams });
+          }
         }
         else {
           this.snackBar.openFromComponent(SnackBarComponent, {
