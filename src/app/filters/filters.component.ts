@@ -62,6 +62,9 @@ export class FiltersComponent implements OnInit {
       this.filters.employeeCode = this.filters.employeeCode || { value: '', show: false, key: 'employeeCode' };
       this.filters.vendorId = this.filters.vendorId || { value: '', show: false, key: 'vendorId' };
       this.filters.vendorName = this.filters.vendorName || { value: '', show: false, key: 'vendorName' };
+
+      this.filters.managerId = this.filters.managerId || { value: '', show: false, key: 'managerId' };
+      this.filters.managerName = this.filters.managerName || { value: '', show: false, key: 'managerName' };
     }
 
     // Ensure all filters have a `show` property set to false if missing
@@ -108,6 +111,13 @@ export class FiltersComponent implements OnInit {
 
       this.filters.employeeId.show = false;
       this.filters.employeeId.value = this.user.employeeId;
+
+      this.filters.managerId.show = false;
+      this.filters.managerId.value = this.user.managerId;
+
+      this.filters.managerName.show = false;
+      this.filters.managerName.value = this.user.managerName; 
+
 
       this.filters.vendorId.value = this.user.vendorId;
       this.filters.vendorId.show = false;

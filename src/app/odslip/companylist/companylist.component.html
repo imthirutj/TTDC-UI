@@ -61,17 +61,7 @@
          ></button>
        </div>
        <div class="modal-body">                       
-           <div class="mb-3">
-            <label for="employeeId" class="form-label">Employee Name</label>
-            <select class="form-select" id="CompanyId" [(ngModel)]="odslip.employeeId" name="employeeId" >
-              <option value="">Select Company</option>
-              <option *ngFor="let employee of Employee" [value]="employee.employeeId">{{ employee.employeeName }}</option>
-            </select>              
-          </div> 
-          <!-- <div class="mb-3">
-            <label for="Manager_Id" class="form-label">Manager_Id</label>
-            <input type="text" class="form-control" [(ngModel)]="odslip.Manager_Id" id="Manager_Id" name="Manager_Id" placeholder="Enter Manager_Id" required>
-          </div>          -->
+           
            
            <div class="mb-3">
              <label for="CompanyId" class="form-label">visiting Comany Name</label>
@@ -86,15 +76,15 @@
           </div>
           <div class="mb-3">
             <label for="from_Date" class="form-label">From Date</label>
-            <input type="text" class="form-control" [(ngModel)]="odslip.from_Date" id="from_Date" name="from_Date" placeholder="Enter From Date" required>
+            <input type="date" class="form-control" [(ngModel)]="odslip.from_Date" id="from_Date" name="from_Date" placeholder="Enter From Date" required>
           </div>
           <div class="mb-3">
             <label for="To_Date" class="form-label">To Date</label>
-            <input type="text" class="form-control" [(ngModel)]="odslip.to_Date" id="To_Date" name="to_Date" placeholder="Enter To Date" required>
+            <input type="date" class="form-control" [(ngModel)]="odslip.to_Date" id="To_Date" name="to_Date" placeholder="Enter To Date" required>
           </div>
           <div class="mb-3">
             <label for="How_Many_Days" class="form-label">No of Days</label>
-            <input type="text" class="form-control" [(ngModel)]="odslip.how_Many_Days" id="How_Many_Days" name="how_Many_Days" placeholder="Enter No of Days" required>
+            <input type="number" class="form-control" [(ngModel)]="odslip.how_Many_Days" id="How_Many_Days" name="how_Many_Days" placeholder="Enter No of Days" required>
           </div>
 
           

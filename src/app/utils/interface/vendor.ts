@@ -6,6 +6,10 @@ export class Vendor {
     address: string;
     gstin: string;
     panNo: string;
+    bankName: string;
+    bankBranch: string;
+    bankAccountNo: string;
+    bankIfsc: string;
     cityId: string;
     cityName: string;
     companyDepartmentList: { companyId: number; companyName: string; departmentId: number; departmentName: string }[];
@@ -18,6 +22,10 @@ export class Vendor {
         this.address = vendor.address || '';
         this.gstin = vendor.gstin || '';
         this.panNo = vendor.panNo || '';
+        this.bankName = vendor.bankName || '';
+        this.bankBranch = vendor.bankBranch || '';
+        this.bankAccountNo = vendor.bankAccountNo || '';
+        this.bankIfsc = vendor.bankIfsc || '';
         this.cityId = vendor.cityId || '';
         this.cityName = vendor.cityName || '';
         this.companyDepartmentList = vendor.companyDepartmentList || [];

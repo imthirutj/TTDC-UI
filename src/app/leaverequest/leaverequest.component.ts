@@ -77,10 +77,8 @@ export class LeaverequestComponent {
     private route: ActivatedRoute,
   private dataService: DataService) { }
   ngOnInit(): void {
-    this.getLeaveRequest();
-
+  
     this.leaverequset = {
-      employeeId: 3846,
       purpose: '',
       from_Date: '',
       to_Date: '',
@@ -103,8 +101,9 @@ export class LeaverequestComponent {
 
 
   getLeaveRequest(): void {
-    const query = '?emp_id=3846'; // Build the query string
-    this.masterDataService.getLeaveRequest(query).subscribe(
+    
+    const payload = this.dataService.getPayloadValue(this.filters);
+    this.masterDataService.getLeaveRequest(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {
@@ -124,12 +123,11 @@ export class LeaverequestComponent {
 
   saveleaverequset(leaverequset: any): void {
     console.log(leaverequset)
-    // if (!this.employeeForm) {
-    //   console.error('Form not initialized.');
-    //   return;
-    // }
-
-    this.masterDataService.saveLeaveRequest(leaverequset).subscribe(
+    const payload = {
+      ...leaverequset,
+      employeeId:this.filters.employeeId.value
+    }
+    this.masterDataService.saveLeaveRequest(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {

@@ -50,7 +50,7 @@ export class SidebarComponent {
         label: 'Dashboard', 
         icon: 'fa-solid fa-tachometer-alt', 
         route: '/dashboard', 
-        allowedUserTypes: ['ALL'] 
+         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER, UserType.EMPLOYEE] 
       },
       { 
         label: 'Employee List', 

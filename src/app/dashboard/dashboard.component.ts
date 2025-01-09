@@ -65,6 +65,12 @@ export class DashboardComponent {
       key: 'deptId',
       includeInSearchParams: true
     },
+    employeeId:{
+      value: '',
+      show: true,
+      key: 'EmployeeId',
+      includeInSearchParams: true
+    },
     vendorId: {
       value: '',
       show: true,

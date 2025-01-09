@@ -64,6 +64,18 @@ export class CompanylistComponent {
       key: 'employeeId',
       includeInSearchParams: true
     },
+    managerId:{
+      value: '',
+      show: true,
+      key: 'managerId',
+      includeInSearchParams: true
+    },
+    managerName:{
+      value: '',
+      show: true,
+      key: 'managerName',
+      includeInSearchParams: true
+    },
     vendorId: {
       value: '',
       show: false,
@@ -76,24 +88,27 @@ export class CompanylistComponent {
     private route: ActivatedRoute,
   private dataService : DataService) { }
   ngOnInit(): void {
-    this.getODCompany();
+    
     this.getCompanyList();
     this.getEmployeeList();
 
     this.odslip = {
-      employeeId: 0,
-      manager_Id: '3',
+      employeeId: this.filters.employeeId.value,
+      manager_Id: this.filters.managerId.value,
       visiting_Company_Id: '',
       purpose: '',
       from_Date: '',
       to_Date: '',
       how_Many_Days: '',
-      insert_Manager_id: '2'
+      insert_Manager_id: this.filters.managerId.value
 
     }
-
+    console.log('OD Slip', this.odslip);
   }
 
+  ngAfterViewInit() {
+  
+  }
 
   
 
@@ -147,13 +162,15 @@ export class CompanylistComponent {
   }
 
   saveodslip(odslip: any): void {
-    console.log(odslip)
-    // if (!this.employeeForm) {
-    //   console.error('Form not initialized.');
-    //   return;
-    // }
-
-    this.masterDataService.saveodslip(odslip).subscribe(
+    const payload = this.dataService.getPayloadValue(this.filters);
+    const fpayload ={
+      ...payload,
+      ...this.odslip,
+      employeeId: this.filters.employeeId.value,
+      manager_Id: this.filters.managerId.value,
+      insert_Manager_id: this.filters.managerId.value
+    }
+    this.masterDataService.saveodslip(fpayload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {

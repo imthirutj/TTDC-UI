@@ -78,7 +78,7 @@
     <div class="col-md-5" >
         <p style="text-align: center;"><strong>Approval Authority</strong></p>
         <p style="text-align: center;">Status : {{ payobj.manager_Approval_Status ? payobj.manager_Approval_Status : 'Pending' }}</p>
-        <div style="text-align: center;"><button class="btn btn-success" (click)="fullyApproved()">Fully Approved</button>         
+        <div *ngIf="payobj.manager_Approval_Status != 'Approved'" style="text-align: center;"><button class="btn btn-success" (click)="fullyApproved()">Fully Approved</button>         
           <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#partiallyApproved">
             Partially Approved
           </button>
