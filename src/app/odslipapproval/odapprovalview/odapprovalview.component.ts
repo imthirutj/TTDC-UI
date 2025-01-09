@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MasterDataService } from 'src/app/services/master-data.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { DataService } from 'src/app/data.Service';
 
 @Component({
   selector: 'app-odapprovalview',
@@ -17,7 +18,8 @@ export class OdapprovalviewComponent {
 
   constructor(
     private masterDataService: MasterDataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataService : DataService
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +88,8 @@ export class OdapprovalviewComponent {
       this.masterDataService.approveODSlip(payload).subscribe(
         (response) => {
           if (response.success) {
-            console.log('OD slip approved successfully.');
+            this.dataService.showSnackBar('OD slip approved successfully.');
+            location.reload();
           } else {
             console.error(response.message || 'Failed to approve OD slip.');
           }
@@ -111,6 +114,7 @@ export class OdapprovalviewComponent {
         (response) => {
           if (response.success) {
             console.log('OD slip disapproved successfully.');
+            location.reload();
           } else {
             console.error(response.message || 'Failed to disapprove OD slip.');
           }
