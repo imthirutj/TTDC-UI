@@ -144,6 +144,15 @@ export class LeaverequestComponent {
     );
   }
 
+  
+  updateDays(): void {
+    if (this.leaverequset.from_Date && this.leaverequset.to_Date) {
+      this.leaverequset.No_Of_Days = this.dataService.calculateDays(this.leaverequset.from_Date, this.leaverequset.to_Date);
+    } else {
+      this.leaverequset.No_Of_Days = ''; // Clear if invalid
+    }
+  }
+
 }
 
 

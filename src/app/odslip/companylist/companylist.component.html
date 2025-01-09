@@ -76,11 +76,15 @@
           </div>
           <div class="mb-3">
             <label for="from_Date" class="form-label">From Date</label>
-            <input type="date" class="form-control" [(ngModel)]="odslip.from_Date" id="from_Date" name="from_Date" placeholder="Enter From Date" required>
+            <input type="date" class="form-control"
+            (change)="updateDays()"
+             [(ngModel)]="odslip.from_Date" id="from_Date" name="from_Date" placeholder="Enter From Date" required>
           </div>
           <div class="mb-3">
             <label for="To_Date" class="form-label">To Date</label>
-            <input type="date" class="form-control" [(ngModel)]="odslip.to_Date" id="To_Date" name="to_Date" placeholder="Enter To Date" required>
+            <input type="date" class="form-control" 
+            (change)="updateDays()"
+            [(ngModel)]="odslip.to_Date" id="To_Date" name="to_Date" placeholder="Enter To Date" required>
           </div>
           <div class="mb-3">
             <label for="How_Many_Days" class="form-label">No of Days</label>

@@ -187,5 +187,14 @@ export class CompanylistComponent {
     );
   }
 
+  updateDays(): void {
+    if (this.odslip.from_Date && this.odslip.to_Date) {
+      this.odslip.how_Many_Days = this.dataService.calculateDays(this.odslip.from_Date, this.odslip.to_Date);
+    } else {
+      this.odslip.how_Many_Days = ''; // Clear if invalid
+    }
+  }
+  
+
 }
 

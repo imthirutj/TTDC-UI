@@ -189,5 +189,18 @@ export class DataService {
 
     return { path, queryParams: queryParamsObj };
   }
+
+  calculateDays(fromDate: string, toDate: string): number | string {
+    const startDate = new Date(fromDate);
+    const endDate = new Date(toDate);
+  
+    if (fromDate && toDate && endDate >= startDate) {
+      const timeDiff = endDate.getTime() - startDate.getTime();
+      return Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // Including both dates
+    } else {
+      return ''; // Return empty if invalid
+    }
+  }
+  
   
 }
