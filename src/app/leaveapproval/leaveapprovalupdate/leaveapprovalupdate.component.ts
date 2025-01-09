@@ -85,10 +85,20 @@ export class LeaveapprovalupdateComponent {
   }
 
   fullyApproved(): void {
-    if (this.leaveRequest_Id) {
+    if (this.leaveRequest_Id && this.payobj) {
+      // Parse the from_Date and to_Date from the payobj
+      const fromDate = new Date(this.payobj.from_Date);
+      const toDate = new Date(this.payobj.to_Date);
+  
+      // Calculate the number of days between fromDate and toDate
+      const timeDiff = toDate.getTime() - fromDate.getTime();
+      const numOfDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // Adding 1 to include both start and end date
+  
+      // Prepare the payload for the approval
       const payload = {
         manager_Approval_Status: "Approved",
-        leaveRequest_Id: this.leaveRequest_Id 
+        nos_Days_Approved_by_Manager: numOfDays,
+        leaveRequest_Id: this.leaveRequest_Id
       };
 
       this.masterDataService.approveLeaveRequest(payload).subscribe(
