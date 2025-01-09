@@ -164,7 +164,7 @@ export class SidebarComponent {
         label: 'Leave Request',
         icon: 'fa-solid fa-envelope-open-text',
         route: '/empleaverequest',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
+        allowedUserTypes: [UserType.EMPLOYEE] 
       },
       {
         label: 'Leave Approval',
