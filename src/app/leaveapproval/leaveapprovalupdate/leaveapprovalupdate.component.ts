@@ -12,16 +12,20 @@ import { DataService } from 'src/app/data.Service';
 })
 
 
+
 export class LeaveapprovalupdateComponent {
   leaveRequest_Id: any;
   payobj: any = {};
   approval: any;
 
+
+
+  availableDates: string[] = [];
   constructor(
     private masterDataService: MasterDataService,
     private route: ActivatedRoute,
-     private dataService : DataService
-  ) {}
+    private dataService: DataService
+  ) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -46,6 +50,12 @@ export class LeaveapprovalupdateComponent {
           console.log('Response:', response);
           if (response.success) {
             this.payobj = response.data[0];
+            // Convert 'from_Date' and 'to_Date' to 'yyyy-MM-dd' format
+            const fromDate = this.dataService.convertDateFormat(this.payobj.from_Date);
+            const toDate = this.dataService.convertDateFormat(this.payobj.to_Date);
+
+            // Call generateAvailableDates with the new date format
+            this.generateAvailableDates(fromDate, toDate);
             console.log('Pay Object:', this.payobj);
           } else {
             console.error(response.message || 'Failed to fetch Leave Request details.');
@@ -56,7 +66,7 @@ export class LeaveapprovalupdateComponent {
         }
       );
   }
-  
+
 
   downloadPDF(): void {
     const element = document.getElementById('pdfContent');
@@ -91,11 +101,11 @@ export class LeaveapprovalupdateComponent {
       // Parse the from_Date and to_Date from the payobj
       const fromDate = new Date(this.payobj.from_Date);
       const toDate = new Date(this.payobj.to_Date);
-  
+
       // Calculate the number of days between fromDate and toDate
       const timeDiff = toDate.getTime() - fromDate.getTime();
       const numOfDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // Adding 1 to include both start and end date
-  
+
       // Prepare the payload for the approval
       const payload = {
         manager_Approval_Status: "Approved",
@@ -106,7 +116,7 @@ export class LeaveapprovalupdateComponent {
       this.masterDataService.approveLeaveRequest(payload).subscribe(
         (response) => {
           if (response.success) {
-           this.dataService.showSnackBar('Leave Request approved successfully.');
+            this.dataService.showSnackBar('Leave Request approved successfully.');
             location.reload();
           } else {
             console.error(response.message || 'Failed to approve Leave Request.');
@@ -127,9 +137,10 @@ export class LeaveapprovalupdateComponent {
         manager_Approval_Status: "Partially Complete",
         leaveRequest_Id: this.leaveRequest_Id,
         nos_Days_Approved_by_Manager: this.approval.Nos_Days_Approved_by_Manager,
-        manager_Approval_Remarks: this.approval.Manager_Approval_Remarks
+        manager_Approval_Remarks: this.approval.Manager_Approval_Remarks,
+        approved_Dates: this.approval.Approved_Dates
       };
-  
+
       this.masterDataService.approveLeaveRequest(payload).subscribe(
         (response) => {
           if (response.success) {
@@ -147,7 +158,7 @@ export class LeaveapprovalupdateComponent {
       console.error('Leave Request ID is not available for approval.');
     }
   }
-  
+
 
   disapprove(): void {
     if (this.leaveRequest_Id) {
@@ -172,6 +183,24 @@ export class LeaveapprovalupdateComponent {
     } else {
       console.error('Leave Request ID is not available for disapproval.');
     }
+  }
+
+
+  // Function to generate the list of dates between the From and To dates
+  generateAvailableDates(fromDate: string, toDate: string) {
+    const start = new Date(fromDate);
+    const end = new Date(toDate);
+    this.availableDates = [];
+
+    while (start <= end) {
+      this.availableDates.push(start.toISOString().split('T')[0]);  // Format as YYYY-MM-DD
+      start.setDate(start.getDate() + 1);  // Increment by one day
+    }
+  }
+
+   // This function is triggered whenever the user selects or deselects dates from the dropdown
+   updateApprovedDays(): void {
+    this.approval.Nos_Days_Approved_by_Manager = this.approval.Approved_Dates.length.toString();
   }
 
 }

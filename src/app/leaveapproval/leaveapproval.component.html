@@ -20,6 +20,7 @@
         <th>Date</th>
         <th>Approval Status</th>
         <th>Approval Remarks</th>
+        <th>Approved Days</th>
         <th>View Leave Request</th>
       </tr>
     </thead>
@@ -32,6 +33,16 @@
         <td>{{ leaverequst.from_Date }} - {{ leaverequst.to_Date }}</td>
         <td>{{ leaverequst.manager_Approval_Status ? leaverequst.manager_Approval_Status : 'Pending' }}</td>
         <td>{{ leaverequst.manager_Approval_Remarks }}</td>
+        
+        <td>
+          <span *ngIf="leaverequst.manager_Approval_Status == 'Partially Complete'">
+            {{  leaverequst.approved_Dates.join(', ') }}
+          </span>
+          <span *ngIf="leaverequst.manager_Approval_Status == 'Approved'">
+            {{ leaverequst.from_Date }} - {{ leaverequst.to_Date }}
+          </span>
+          
+        </td>
         <td><a class="btn btn-primary" data-bs-dismiss="modal" type="button" [routerLink]="['/Leaveapprovalview']"
             [queryParams]="{ leaveRequest_Id: leaverequst.leaveRequest_Id }">
             View leave requst

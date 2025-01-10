@@ -234,5 +234,16 @@ export class DataService {
     XLSX.writeFile(wb, `${fileName}.xlsx`);
   }
 
+  // Function to convert 'dd/MM/yyyy' to 'yyyy-MM-dd'
+convertDateFormat(dateString: string): string {
+  const parts = dateString.split('/'); // Split the date into parts [day, month, year]
+  const day = parts[0];
+  const month = parts[1];
+  const year = parts[2];
+
+  // Return the date in 'yyyy-MM-dd' format
+  return `${year}-${month}-${day}`;
+}
+
 
 }

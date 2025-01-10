@@ -110,7 +110,19 @@
        <div class="mb-3">
          <label for="Remarks" class="form-label">Remarks</label>
          <input type="text" class="form-control" [(ngModel)]="approval.Manager_Approval_Remarks" id="Remarks" name="Manager_Approval_Remarks" placeholder="Remarks">
-       </div>                   
+       </div> 
+       
+       
+       <div class="mb-3">
+        <label for="ApprovedDates" class="form-label">Approved Dates</label>
+        <select id="ApprovedDates" name="Approved_Dates" class="form-control" 
+        multiple [(ngModel)]="approval.Approved_Dates"
+        (ngModelChange)="updateApprovedDays()">
+          <!-- Dynamically generate the dates between From Date and To Date -->
+          <option *ngFor="let date of availableDates" [value]="date">{{ date }}</option>
+        </select>
+      </div>
+      
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>    
