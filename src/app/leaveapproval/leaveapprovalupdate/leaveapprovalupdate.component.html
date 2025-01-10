@@ -1,158 +1,169 @@
-
 <button class="btn btn-primary mb-3" (click)="downloadPDF()">Download Leave Request</button>
 <div id="pdfContent" class="card p-4">
-<div  >
-  <div class="payslip-header">
-    <h3 style="text-align: center;">Leave Request Letter</h3>    
-  </div>
-  <br>
+  <div>
+    <div class="payslip-header">
+      <h3 style="text-align: center;">Leave Request Letter</h3>
+    </div>
+    <br>
 
-  <!-- Company and Employee Details -->
-  <div class="row">
-    <div class="col-md-6">
+    <!-- Company and Employee Details -->
+    <div class="row">
+      <div class="col-md-6">
         <img src="/assets/images/logo/logo_3.png" alt="Logo" />
+      </div>
+      <div class="col-md-6">
+        <h5>Tamilnadu Tourism Developement Corporation</h5>
+        <p>No.2,Wallajah Road (Near D1 Police Station),</p>
+        <p>Chennai-600 002.</p>
+      </div>
     </div>
-    <div class="col-md-6">
-      <h5>Tamilnadu Tourism Developement Corporation</h5>           
-      <p>No.2,Wallajah Road (Near D1 Police Station),</p>
-      <p>Chennai-600 002.</p>      
-    </div>
-  </div>
-  <hr>
+    <hr>
 
-  <div class="row">   
-    <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-4">
         <p>Employee ID: <strong>{{payobj?.employeeId}}</strong></p>
-    </div>
-    <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
         <p>Employee Name: <strong>{{payobj?.employeeName}}</strong></p>
-    </div>
-    <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
         <p>Designation: <strong>{{payobj?.departmentFName}}</strong></p>
-    </div>   
-  </div>
-  <div class="row">   
-    <div class="col-md-4">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
         <p>Facility: <strong>{{payobj?.companyFName}}</strong></p>
-    </div>
-    <!-- <div class="col-md-4">
-        <p>City: <strong>{{payobj?.cityName}}</strong></p>
-    </div> -->
-    <div class="col-md-4">
+      </div>
+      
+      <div class="col-md-4">
         <p>purpose: <strong>{{payobj?.purpose}}</strong></p>
-    </div> 
-    <div class="col-md-4">
-      <p>Number of Days: <strong>{{payobj?.no_Of_Days}}</strong></p>
-  </div>  
-  </div>
-  <div class="row">   
-    
-    <div class="col-md-4">
-        <p>From : <strong>{{payobj?.from_Date}}</strong></p>
+      </div>
+      <div class="col-md-4">
+        <p>Number of Days: <strong>{{payobj?.no_Of_Days}}</strong></p>
+      </div>
     </div>
-    <div class="col-md-4">
-        <p>To : <strong>{{payobj?.to_Date}}</strong></p>
-    </div>   
-  </div>
+    <div class="row">
 
-  <hr>
-  <div class="row">   
-    <div class="col-md-12">
+      <div class="col-md-4">
+        <p>From : <strong>{{payobj?.from_Date}}</strong></p>
+      </div>
+      <div class="col-md-4">
+        <p>To : <strong>{{payobj?.to_Date}}</strong></p>
+      </div>
+      <div class="col-md-4">
+        <span *ngIf="payobj?.manager_Approval_Status == 'Partially Complete'">
+          <p>Approved Days: <strong>{{payobj?.approved_Dates.join(', ')}}</strong></p>
+        </span>
+        <span *ngIf="payobj?.manager_Approval_Status == 'Approved'">
+          <p>{{payobj?.from_Date}}-{{payobj?.to_Date}}</p>
+        </span>
+    </div>
+    </div>
+
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
         <p><strong>Purpose of Leave</strong></p>
-    </div>
-    <div class="col-md-12">      
-        <p>            
-            I am request leave for {{payobj?.no_Of_Days}}, from {{payobj?.from_Date}} to {{payobj?.to_Date}} for the purpose of {{payobj?.purpose}} 
-          </p>
-    </div>
-    <div class="col-md-12">
+      </div>
+      <div class="col-md-12">
+        <p>
+          I am request leave for {{payobj?.no_Of_Days}}, from {{payobj?.from_Date}} to {{payobj?.to_Date}} for the
+          purpose of {{payobj?.purpose}}
+        </p>
+      </div>
+      <div class="col-md-12">
         <p>Thank you</p>
-    </div>      
-  </div>
-  <hr>
-  <div class="row">   
-    <div class="col-md-7">
-        <p><strong>Employee Name</strong></p>        
-        <p>Mr.{{payobj?.employeeName}}</p>
+      </div>
     </div>
-    <div class="col-md-5" >
+    <hr>
+    <div class="row">
+      <div class="col-md-7">
+        <p><strong>Employee Name</strong></p>
+        <p>Mr.{{payobj?.employeeName}}</p>
+      </div>
+      <div class="col-md-5">
         <p style="text-align: center;"><strong>Approval Authority</strong></p>
-        <p style="text-align: center;">Status : {{ payobj.manager_Approval_Status ? payobj.manager_Approval_Status : 'Pending' }}</p>
-        <div *ngIf="payobj.manager_Approval_Status == ''" style="text-align: center;"><button class="btn btn-success" (click)="fullyApproved()">Fully Approved</button>         
+        <p style="text-align: center;">Status : {{ payobj.manager_Approval_Status ? payobj.manager_Approval_Status :
+          'Pending' }}</p>
+        <div *ngIf="payobj.manager_Approval_Status == ''" style="text-align: center;"><button class="btn btn-success"
+            (click)="fullyApproved()">Fully Approved</button>
           <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#partiallyApproved">
             Partially Approved
           </button>
           <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#Disapprove">
             Not Approved
-          </button>          
-        <p style="text-align: center;">Mr.{{payobj?.manager}}</p>
-    </div>  
-  </div>  
-</div>
-</div>
-
-<div class="modal fade" id="partiallyApproved" tabindex="-1" aria-labelledby="partiallyApprovedLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="partiallyApprovedLabel">Partially Approved</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body"> 
-      <div class="mb-3">
-        <label for="Remarks" class="form-label">Status</label>
-        <input type="text" class="form-control" disabled id="Remarks" placeholder="Partially Approved">
-      </div>                                          
-        <div class="mb-3">
-         <label for="Nos_Days" class="form-label">Number of Days Approved</label>
-         <input type="text" class="form-control" [(ngModel)]="approval.Nos_Days_Approved_by_Manager" id="Nos_Days" name="Nos_Days_Approved_by_Manager" placeholder="Number of Days" required>
-       </div>
-       <div class="mb-3">
-         <label for="Remarks" class="form-label">Remarks</label>
-         <input type="text" class="form-control" [(ngModel)]="approval.Manager_Approval_Remarks" id="Remarks" name="Manager_Approval_Remarks" placeholder="Remarks">
-       </div> 
-       
-       
-       <div class="mb-3">
-        <label for="ApprovedDates" class="form-label">Approved Dates</label>
-        <select id="ApprovedDates" name="Approved_Dates" class="form-control" 
-        multiple [(ngModel)]="approval.Approved_Dates"
-        (ngModelChange)="updateApprovedDays()">
-          <!-- Dynamically generate the dates between From Date and To Date -->
-          <option *ngFor="let date of availableDates" [value]="date">{{ date }}</option>
-        </select>
-      </div>
-      
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>    
-      <button type="submit" class="btn btn-primary" (click)="partiallyApproved()">Save</button>      
-    </div>
-  </div>
-</div>
-</div>
-
-<div class="modal fade" id="Disapprove" tabindex="-1" aria-labelledby="DisapproveLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="DisapproveLabel">Not Approved</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body"> 
-        <div class="mb-3">
-          <label for="Remarks" class="form-label">Status</label>
-          <input type="text" class="form-control" disabled id="Remarks" placeholder="Not Approved">
-        </div>                                                    
-         <div class="mb-3">
-           <label for="Remarks" class="form-label">Remarks</label>
-           <input type="text" class="form-control" [(ngModel)]="approval.manager_Approval_Remarks" id="Remarks" name="Manager_Approval_Remarks" placeholder="Remarks">
-         </div>                   
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>    
-        <button type="submit" class="btn btn-primary" (click)="disapprove()">Save</button>      
+          </button>
+          <p style="text-align: center;">Mr.{{payobj?.manager}}</p>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="partiallyApproved" tabindex="-1" aria-labelledby="partiallyApprovedLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="partiallyApprovedLabel">Partially Approved</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="Remarks" class="form-label">Status</label>
+            <input type="text" class="form-control" disabled id="Remarks" placeholder="Partially Approved">
+          </div>
+          <div class="mb-3">
+            <label for="Nos_Days" class="form-label">Number of Days Approved</label>
+            <input type="text" class="form-control" [(ngModel)]="approval.Nos_Days_Approved_by_Manager" id="Nos_Days"
+              name="Nos_Days_Approved_by_Manager" placeholder="Number of Days" required>
+          </div>
+          <div class="mb-3">
+            <label for="Remarks" class="form-label">Remarks</label>
+            <input type="text" class="form-control" [(ngModel)]="approval.Manager_Approval_Remarks" id="Remarks"
+              name="Manager_Approval_Remarks" placeholder="Remarks">
+          </div>
+
+
+          <div class="mb-3">
+            <label for="ApprovedDates" class="form-label">Approved Dates</label>
+            <select id="ApprovedDates" name="Approved_Dates" class="form-control" multiple
+              [(ngModel)]="approval.Approved_Dates" (ngModelChange)="updateApprovedDays()">
+              <!-- Dynamically generate the dates between From Date and To Date -->
+              <option *ngFor="let date of availableDates" [value]="date">{{ date }}</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" (click)="partiallyApproved()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="Disapprove" tabindex="-1" aria-labelledby="DisapproveLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="DisapproveLabel">Not Approved</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="Remarks" class="form-label">Status</label>
+            <input type="text" class="form-control" disabled id="Remarks" placeholder="Not Approved">
+          </div>
+          <div class="mb-3">
+            <label for="Remarks" class="form-label">Remarks</label>
+            <input type="text" class="form-control" [(ngModel)]="approval.manager_Approval_Remarks" id="Remarks"
+              name="Manager_Approval_Remarks" placeholder="Remarks">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" (click)="disapprove()">Save</button>
+        </div>
+      </div>
+    </div>
   </div>
