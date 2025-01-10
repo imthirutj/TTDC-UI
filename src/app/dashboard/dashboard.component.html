@@ -178,8 +178,11 @@
   </div>
 </div>
 
+<button (click)="dataService.downloadPDF('paymentTable')" class="btn btn-primary">Download as PDF</button>
+<button (click)="dataService.downloadExcelTable('paymentTable', 'payment-report')" class="btn btn-success">Download as Excel</button>
+
 <div class="container mt-4">
-  <table class="table table-striped">
+  <table  id="paymentTable" class="table table-striped">
     <thead>
       <tr>
         <th>#</th>

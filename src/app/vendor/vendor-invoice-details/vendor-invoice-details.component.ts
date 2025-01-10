@@ -59,6 +59,8 @@ export class VendorInvoiceDetailsComponent {
       gst: 0,
       tds: 0,
       totalAmount: 0,
+      totalSalWithCharges: 0,
+      serviceCharge: 0,
       rupeesInWords: ''
     },
     invoiceDetail: [] as Array<{

@@ -71,6 +71,7 @@ import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-p
 
 import { NgChartsModule  } from 'ng2-charts';
 import { ChartComponent } from './utils/widgets/chart/chart/chart.component';
+import { ConfirmationDialogComponent } from './utils/widgets/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import { ChartComponent } from './utils/widgets/chart/chart/chart.component';
     VendorManagementComponent,
     ServerPaginationComponent,
     VendorToEmployeePaymentsComponent,
-    ChartComponent
+    ChartComponent,
+    ConfirmationDialogComponent
 
   ],
   imports: [

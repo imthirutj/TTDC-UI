@@ -71,12 +71,12 @@ export class VendorService {
   updateEmployeePayment(file: File, payload: any): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);  // Append the file to the form data
-    formData.append('vendorId', payload.vendorId.toString());
-    formData.append('month', payload.month.toString());
-    formData.append('year', payload.year.toString());
+
+    const queryParams = this.dataService.buildQueryParams(payload);
  
   
-    const url = `${this.apiUrl}Payroll/UploadEmployeeVendorPaySlip`;  // Corrected the URL
+    const url = `${this.apiUrl}Payroll/UploadEmployeeVendorPaySlip?${queryParams}`;
+
     return this.http.post(url, formData, {
       headers: new HttpHeaders()
     });

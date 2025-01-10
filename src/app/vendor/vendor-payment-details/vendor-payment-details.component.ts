@@ -45,13 +45,13 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   filters: any = {
     selectedMonth: {
-      value: Number(new Date().getMonth()) + 1, // Default to current month
+      value: 0, // Default to current month
       show: true,
       key: 'month',
       includeInSearchParams: true
     },
     selectedYear: {
-      value: new Date().getFullYear(), // Default to current year
+      value: 0, // Default to current year
       show: true,
       key: 'year',
       includeInSearchParams: true
@@ -193,8 +193,8 @@ export class VendorPaymentDetailsComponent implements OnInit {
     }
     const payload = {
       vendorId: vendor.vendorId,
-      month: this.filters.selectedMonth.value,
-      year: this.filters.selectedYear.value
+      month: vendor.month,
+      year: vendor.year
     }
     this.vendorService.getVendorPayStatus(payload).subscribe((response: any) => {
       if (response.success) {
@@ -224,8 +224,8 @@ export class VendorPaymentDetailsComponent implements OnInit {
     }
     const payload = {
       vendorId: vendor.vendorId,
-      month: this.filters.selectedMonth.value,
-      year: this.filters.selectedYear.value
+      month: vendor.month,
+      year: vendor.year
     }
     this.vendorService.getVendorPayStatus(payload).subscribe((response: any) => {
       if (response.success) {
@@ -257,9 +257,9 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   updateEmployeePayment() {
     const payload = {
-      month: this.filters.selectedMonth.value,
-      year: this.filters.selectedYear.value,
-      vendorId: this.selectedVendor.vendorId
+      vendorId: this.selectedVendor.vendorId,
+      month: this.selectedVendor.month,
+      year: this.selectedVendor.year
     }
     if (this.selectedFile) {
       this.vendorService.updateEmployeePayment(this.selectedFile, payload)
@@ -280,16 +280,16 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   downloadEmployeePaymentForm() {
     const payload = {
-      month: this.filters.selectedMonth.value,
-      year: this.filters.selectedYear.value,
+      month: this.selectedVendor.month,
+      year: this.selectedVendor.year,
       vendorId: this.selectedVendor.vendorId
     }
     this.vendorService.downloadEmployeePaymentForm(payload);
   }
 
   navigateVendorInvoice(vendor: any, type: 'VIEW' | 'GENERATE') {
-    const month = this.filters.selectedMonth.value;
-    const year = this.filters.selectedYear.value;
+    const month = vendor.month;
+    const year = vendor.year;
     const vendorId = vendor.vendorId;
     this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId, type: type } });
   }

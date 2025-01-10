@@ -7,6 +7,10 @@ import { SnackBarComponent } from './utils/widgets/snack-bar/snack-bar/snack-bar
 import { LoadingService } from './services/loading.service';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './utils/widgets/confirmation-dialog/confirmation-dialog.component';
+import * as XLSX from 'xlsx'; // Import XLSX
+import 'jspdf-autotable';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +34,8 @@ export class DataService {
     private http: HttpClient,
     private router: Router,
     private snackBar: MatSnackBar,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private dialog: MatDialog
   ) {
     this.initializeUser();
   }
@@ -120,21 +125,36 @@ export class DataService {
 
   getPayloadValue(filters: any): any {
     const payload: any = {};
-  
+
     Object.keys(filters).forEach((key) => {
       const filter = filters[key];
       if (filter.includeInSearchParams) {
         payload[filter.key] = filter.value;
       }
     });
-  
+
     return payload;
   }
-  
+
   showSnackBar(message: string): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: { message },
       duration: 5000,
+    });
+  }
+
+  openConfirmationDialog(message: string): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: { message: message }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      } else {
+        // User clicked Cancel
+        console.log('Action canceled');
+      }
     });
   }
 
@@ -193,7 +213,7 @@ export class DataService {
   calculateDays(fromDate: string, toDate: string): number | string {
     const startDate = new Date(fromDate);
     const endDate = new Date(toDate);
-  
+
     if (fromDate && toDate && endDate >= startDate) {
       const timeDiff = endDate.getTime() - startDate.getTime();
       return Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // Including both dates
@@ -201,6 +221,18 @@ export class DataService {
       return ''; // Return empty if invalid
     }
   }
-  
-  
+
+
+
+  // Download Excel
+   downloadExcelTable(tableId: string, fileName: string) {
+    const table = document.getElementById(tableId);
+
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table as HTMLTableElement);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Payments');
+    XLSX.writeFile(wb, `${fileName}.xlsx`);
+  }
+
+
 }

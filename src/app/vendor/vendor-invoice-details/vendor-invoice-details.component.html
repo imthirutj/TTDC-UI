@@ -97,6 +97,16 @@
                         <td>{{vendorInvoiceDetails.cumulativeInvoice.subTotalEmpcount}}</td>
                         <td>{{vendorInvoiceDetails.cumulativeInvoice.subTotalSalary | currency:'INR'}}</td>
                     </tr>
+
+                    
+                    <tr>
+                        <td colspan="3" class="text-end">Total Salary With Service Charges</td>
+                        <td>{{vendorInvoiceDetails.cumulativeInvoice.totalSalWithCharges | currency:'INR'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-end">Service Charges</td>
+                        <td>{{vendorInvoiceDetails.cumulativeInvoice.serviceCharge | currency:'INR'}}</td>
+                    </tr>
                     <tr>
                         <td colspan="3" class="text-end">GST &#64;18%</td>
                         <td>{{vendorInvoiceDetails.cumulativeInvoice.gst | currency:'INR'}}</td>

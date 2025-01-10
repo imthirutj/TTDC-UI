@@ -108,7 +108,7 @@ export class PayslipNotComponent {
   }
   ngOnInit(): void {
     //this.getEmployeeList();
-
+    //his.dataService.openConfirmationDialog("ok");
   }
 
   onFilterChanged(event: any) {
@@ -128,7 +128,7 @@ export class PayslipNotComponent {
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
-          this.dataService.showSnackBar(response.message);
+          this.dataService.openConfirmationDialog(response.message);
         }
       });
   }

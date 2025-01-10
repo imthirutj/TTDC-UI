@@ -10,13 +10,17 @@
 
   <div class="container mt-4">
     <h3>Vendor Payment Details:
-      {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
+      <span *ngIf="filters.selectedMonth.value!=0">
+        {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
+      </span>
     </h3>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
           <th scope="col">Action</th>
           <th scope="col">Name</th>
+          <th scope="col">Month/Year</th>
+  
           <th scope="col">Total Payable Salary</th>
           <th scope="col">Service Charge</th>
           <th scope="col">Total Salary With Service Charges</th>
@@ -28,6 +32,12 @@
           <th scope="col">ESI</th>
 
           <th scope="col">Net Amount</th>
+
+          <th scope="col">Amount Received</th>
+          <th scope="col">Received Date</th>
+          <th scope="col">Cheque No</th>
+          <th scope="col">Cheque Amount</th>
+
 
         </tr>
       </thead>
@@ -69,6 +79,7 @@
             </div>
           </td>
           <td>{{ vendor.vendorName }}</td>
+          <td>{{ vendor.month | monthName }}-{{vendor.year}}</td>
           <td>{{ vendor.totalPayableAmount | currency:'INR' }}</td>
           <td>{{ vendor.serviceCharge | currency:'INR' }}</td>
           <td>{{ vendor.totalSalWithCharges| currency:'INR'}}</td>
@@ -80,6 +91,11 @@
           <td>{{ vendor.esi | currency:'INR' }}</td>
 
           <td>{{ vendor.netAmount | currency:'INR' }}</td>
+
+          <td>{{vendor.paymentStatus}}</td>
+          <td>{{vendor.chequeDate}}</td>
+          <td>{{vendor.chequeNumber}}</td>
+          <td>{{vendor.chequeAmount | currency:'INR'}}</td>
         </tr>
       </tbody>
     </table>

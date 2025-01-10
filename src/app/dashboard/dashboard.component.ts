@@ -91,7 +91,7 @@ export class DashboardComponent {
   constructor(
 
     private masterDataService: MasterDataService,
-    private dataService: DataService,
+    public dataService: DataService,
     private dashboardService: DashboardService
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
