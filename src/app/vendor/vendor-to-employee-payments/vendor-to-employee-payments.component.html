@@ -24,24 +24,31 @@
             <th scope="col">Gross Salary</th>
             <th scope="col">Net Salary</th>
             <th scope="col">Paid To Employee</th>
+            <th scope="col">EPF</th>
+            <th scope="col">ESI</th>
             <th scope="col">Difference</th>
             
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let vep of vendorEmployeePayments; let i = index">
+          <tr 
+          *ngFor="let vep of vendorEmployeePayments; let i = index" 
+          [ngClass]="{'highlight-row': (vep.netSalary - vep.paidToEmployee) > 0}"
+        >
             <td>
               {{i+1}}
             </td>
             <td>{{ vep.employeeName }}</td>
             <td>{{ vep.employeeCode }}</td>
             <td>{{ vep.vendorName }}</td>
-            <td>{{ vep.totalEarnings }}</td>
-            <td>{{ vep.totalDeductions }}</td>
-            <td>{{ vep.grossSalary }}</td>
-            <td>{{ vep.netSalary }}</td>
-            <td>{{ vep.paidToEmployee }}</td>
-            <td>{{ vep.netSalary - vep.paidToEmployee }}</td>
+            <td>{{ vep.totalEarnings | currency:'INR'  }}</td>
+            <td>{{ vep.totalDeductions | currency:'INR' }}</td>
+            <td>{{ vep.grossSalary | currency:'INR' }}</td>
+            <td>{{ vep.netSalary | currency:'INR' }}</td>
+            <td>{{ vep.paidToEmployee | currency:'INR' }}</td>
+            <td>{{ vep.totalEpf | currency:'INR' }}</td>
+            <td>{{ vep.totalEsi | currency:'INR' }}</td>
+            <td>{{ (vep.netSalary - vep.paidToEmployee) | currency:'INR' }}</td>
           </tr>
         </tbody>
       </table>
