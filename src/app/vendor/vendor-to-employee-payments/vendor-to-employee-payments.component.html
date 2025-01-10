@@ -21,11 +21,12 @@
             <th scope="col">Vendor Name</th>
             <th scope="col">Total Earnings</th>
             <th scope="col">Total Deductions</th>
+            <th scope="col">EPF</th>
+            <th scope="col">ESI</th>
             <th scope="col">Gross Salary</th>
             <th scope="col">Net Salary</th>
             <th scope="col">Paid To Employee</th>
-            <th scope="col">EPF</th>
-            <th scope="col">ESI</th>
+
             <th scope="col">Difference</th>
             
           </tr>
@@ -43,11 +44,12 @@
             <td>{{ vep.vendorName }}</td>
             <td>{{ vep.totalEarnings | currency:'INR'  }}</td>
             <td>{{ vep.totalDeductions | currency:'INR' }}</td>
+            <td>{{ vep.totalEpf | currency:'INR' }}</td>
+            <td>{{ vep.totalEsi | currency:'INR' }}</td>
             <td>{{ vep.grossSalary | currency:'INR' }}</td>
             <td>{{ vep.netSalary | currency:'INR' }}</td>
             <td>{{ vep.paidToEmployee | currency:'INR' }}</td>
-            <td>{{ vep.totalEpf | currency:'INR' }}</td>
-            <td>{{ vep.totalEsi | currency:'INR' }}</td>
+           
             <td>{{ (vep.netSalary - vep.paidToEmployee) | currency:'INR' }}</td>
           </tr>
         </tbody>
