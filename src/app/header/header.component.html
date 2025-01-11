@@ -56,6 +56,12 @@
               <input *ngIf="isEditMode" [(ngModel)]="userData.role" class="form-control" />
             </div>
 
+            <div class="list-group-item">
+              <strong>Company Name:</strong>
+              <span *ngIf="!isEditMode">{{ userData.companyName }}</span>
+              <input *ngIf="isEditMode" [(ngModel)]="userData.companyName" class="form-control" />
+            </div>
+
         
           </div>
 
