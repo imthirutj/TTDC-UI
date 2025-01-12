@@ -14,7 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  mobileLoginForm!: FormGroup;
   otpForm!: FormGroup;
+
   users: any = {};
   userTypes: any = {};
 
@@ -26,6 +28,8 @@ export class LoginComponent implements OnInit {
   isTimeOver: boolean = false;
 
   returnUrl: string = '/';
+
+  selectedRoleId: string = '';
 
   constructor(private fb: FormBuilder,
     private masterDataService: MasterDataService,
@@ -44,7 +48,14 @@ export class LoginComponent implements OnInit {
     });
 
     // Initialize the form group with controls and validators
+
     this.loginForm = this.fb.group({
+      rememberMe: [false],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+
+    this.mobileLoginForm = this.fb.group({
       rememberMe: [false],
       MobileNo: ['', Validators.required],
     });
@@ -105,9 +116,9 @@ export class LoginComponent implements OnInit {
   }
 
   generateOTP(): void {
-    if (this.loginForm.get('MobileNo')?.valid) {
+    if (this.mobileLoginForm.get('MobileNo')?.valid) {
       var payload = {
-        mobileNo: this.loginForm.get('MobileNo')?.value
+        mobileNo: this.mobileLoginForm.get('MobileNo')?.value
       };
       console.log(payload);
       this.loginService.generateOTP(payload).subscribe(
@@ -129,16 +140,32 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if (!this.otpForm.valid) {
-      this.dataService.showSnackBar('Please enter valid OTP');
+    var payload:any ={
+      myRoleId: this.selectedRoleId
+    };
+    if (this.selectedRoleId =='4') {
+      if(!this.otpForm.valid){
+        this.dataService.showSnackBar('Please enter valid OTP');
+        return;
+      }
+      if (!this.mobileLoginForm.valid) {
+        this.dataService.showSnackBar('Please again enter the mobile number');
+        return;
+      }
+      payload.mobileNo= this.mobileLoginForm.get('MobileNo')?.value;
+      payload.otp= this.otpForm.get('OTP')?.value;
     }
-    if (!this.loginForm.valid) {
-      this.dataService.showSnackBar('Please again enter the mobile number');
+    else{
+      payload.username= this.loginForm.get('username')?.value;
+      payload.password= this.loginForm.get('password')?.value;
+
+      if (!this.loginForm.valid) {
+        this.dataService.showSnackBar('Please  enter username and password');
+        return;
+      }
     }
-    var payload = {
-      mobileNo: this.loginForm.get('MobileNo')?.value,
-      otp: this.otpForm.get('OTP')?.value,
-    }
+    
+  
     console.log(payload)
     this.loginService.validate(payload).subscribe(
       (response: any) => {

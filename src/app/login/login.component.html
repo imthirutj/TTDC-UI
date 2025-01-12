@@ -8,21 +8,55 @@
           <h4>Login</h4>
         </div>
         <div class="card-body">
+
+          <!--Dropdown for User Type-->
+          <div class="mb-3">
+            <label for="UserType" class="form-label">Select User Type</label>
+            <select class="form-select" id="UserType" [(ngModel)]="selectedRoleId" name="UserType"
+              >
+              <option value="">Select User Type</option>
+              <option value="1">State Admin</option>
+              <option value="2">Manager</option>
+              <option value="3">Vendor</option>
+              <option value="4">Employee</option>
+              
+            </select>
+          </div>
+
+          <!--For Admin Login Form-->
+          <form *ngIf="selectedRoleId=='1' || selectedRoleId=='2'
+          || selectedRoleId=='3'" 
+          [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="mb-3">
+              <label for="username" class="form-label">Enter Username</label>
+              <input type="text" id="username" class="form-control" formControlName="username"
+                placeholder="Enter Username" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Enter Password</label>
+              <input type="text" id="password" class="form-control" formControlName="password"
+                placeholder="Enter Password" required>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+            </div>
+          </form>
+
           <!-- Enter Mobile Number Form -->
-          <form *ngIf="visibleForm=='MOBILE'" [formGroup]="loginForm" (ngSubmit)="generateOTP()">
+          <form *ngIf="visibleForm=='MOBILE' && selectedRoleId=='4'" [formGroup]="mobileLoginForm" (ngSubmit)="generateOTP()">
             <div class="mb-3">
               <label for="MobileNo" class="form-label">Enter Mobile Number</label>
               <input type="text" id="MobileNo" class="form-control" formControlName="MobileNo"
                 placeholder="Enter Mobile Number" required>
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Next</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!mobileLoginForm.valid">Next</button>
             </div>
           </form>
 
           <!-- Enter OTP Form -->
           <!-- OTP Form -->
-          <form *ngIf="visibleForm=='OTP'" [formGroup]="otpForm" (ngSubmit)="login()">
+          <form *ngIf="visibleForm=='OTP' && selectedRoleId=='4'" [formGroup]="otpForm" (ngSubmit)="login()">
             <div class="mb-3">
               <label for="OTP" class="form-label">Enter OTP</label>
               <input type="text" id="OTP" class="form-control" formControlName="OTP" placeholder="Enter OTP" required>
