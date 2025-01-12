@@ -9,25 +9,22 @@
 
   <!-- Profile icon and logout modal trigger -->
   <div class="profile-container d-flex align-items-center" style="margin-left: auto;">
-    <div *ngIf="userData">
-      <p style="color: white; margin-right: 10px; display: inline;">{{ userData.userName }}</p>
+    <div style="color: white; margin-right: 10px; display: inline;" *ngIf="userData">
+      <p >{{ userData.userName }}</p>
+      <p>{{ userData.role }}</p>
+      <p *ngIf="userData.role=='EMPLOYEE' && userData.role=='MANAGER'">
+        {{ userData.companyName }}
+      </p>
     </div>
     <i (click)="toggleProfileDialog()" class="fa fa-user-circle profile-icon" data-toggle="modal"
       data-target="#profileModal" style="cursor: pointer; font-size: 40px;"></i>
   </div>
 
   <!-- Profile Dialog -->
-  <app-common-dialog 
-  [showDialog]="showProfileDialog" 
-  [dialogTitle]="'Profile'" 
-  [showClearButton]="false"
-  [showSubmitButton]="isEditMode" 
-  [showCloseIcon]="true" 
-  [showCustomButton]="dataService.getUserId() != null && dataService.getUserId() != ''" 
-  [customButtonName]="'Logout'" 
-  (closeDialog)="showProfileDialog = false" 
-  (submitDialog)="onSubmit()" 
-  (customButton)="logout()">
+  <app-common-dialog [showDialog]="showProfileDialog" [dialogTitle]="'Profile'" [showClearButton]="false"
+    [showSubmitButton]="isEditMode" [showCloseIcon]="true"
+    [showCustomButton]="dataService.getUserId() != null && dataService.getUserId() != ''" [customButtonName]="'Logout'"
+    (closeDialog)="showProfileDialog = false" (submitDialog)="onSubmit()" (customButton)="logout()">
 
     <!-- Profile Details Section -->
     <div class="profile-dialog container py-3">
@@ -56,21 +53,85 @@
               <input *ngIf="isEditMode" [(ngModel)]="userData.role" class="form-control" />
             </div>
 
-            <div class="list-group-item">
-              <strong>Company Name:</strong>
-              <span *ngIf="!isEditMode">{{ userData.companyName }}</span>
-              <input *ngIf="isEditMode" [(ngModel)]="userData.companyName" class="form-control" />
+            <div *ngIf="userData.role == 'VENDOR' && !isEditMode" class="list-group-item">
+              <div *ngFor="let company of groupedDepartments" class="company-group">
+                <h4>{{ company.companyName }}</h4>
+                <ul>
+                  <li *ngFor="let department of company.departments">
+                    {{ department }}
+                  </li>
+                </ul>
+              </div>
             </div>
 
-        
+            <div *ngIf="userData.role == 'EMPLOYEE'">
+              <div class="list-group-item">
+                <strong>Company:</strong>
+                <span *ngIf="!isEditMode">{{ userData.companyName }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.companyId" class="form-control" />
+              </div>
+
+              <div class="list-group-item">
+                <strong>Gender:</strong>
+                <span *ngIf="!isEditMode">{{ userData.employee.gender }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.employee.gender" class="form-control" />
+              </div>
+
+              <div class="list-group-item">
+                <strong>Age:</strong>
+                <span *ngIf="!isEditMode">{{ userData.employee.age }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.employee.age" class="form-control" />
+              </div>
+
+              <div class="list-group-item">
+                <strong>Department:</strong>
+                <span *ngIf="!isEditMode">{{ userData.employee.departmentFName }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.employee.departmentId" class="form-control" />
+              </div>
+
+              <div class="list-group-item">
+                <strong>Designation:</strong>
+                <span *ngIf="!isEditMode">{{ userData.employee.designationName }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.employee.designationId" class="form-control" />
+              </div>
+
+              <div class="list-group-item">
+                <strong>Qualifications:</strong>
+                <span *ngIf="!isEditMode">{{ userData.employee.qualifications }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.employee.qualifications" class="form-control" />
+              </div>
+
+              <div class="list-group-item">
+                <strong>OverallExperience:</strong>
+                <span *ngIf="!isEditMode">{{ userData.employee.overallExperience }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.employee.overallExperience" class="form-control" />
+              </div>
+
+              <div class="list-group-item">
+                <strong>Experience:</strong>
+                <span *ngIf="!isEditMode">{{ userData.employee.experience }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.employee.experience" class="form-control" />
+              </div>
+
+              <div class="list-group-item">
+                <strong>AadhaarNumber:</strong>
+                <span *ngIf="!isEditMode">{{ userData.employee.aadhaarNumber }}</span>
+                <input *ngIf="isEditMode" [(ngModel)]="userData.employee.aadhaarNumber" class="form-control" />
+              </div>
+
+            </div>
+
+
+
           </div>
 
           <!-- Edit button to toggle edit mode -->
-          <button style="margin-top: 11px;" *ngIf="false" class="btn btn-primary" (click)="isEditMode = true">Edit</button>
+          <button style="margin-top: 11px;" *ngIf="false" class="btn btn-primary"
+            (click)="isEditMode = true">Edit</button>
         </div>
       </div>
     </div>
 
-   
+
   </app-common-dialog>
 </div>

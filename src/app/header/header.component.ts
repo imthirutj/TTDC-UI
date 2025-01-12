@@ -15,6 +15,9 @@ export class HeaderComponent {
   isEditMode = false;  // Flag for toggling between view and edit mode
   userData: any = {};
 
+
+  groupedDepartments: any[] = [];
+
   constructor(private fb: FormBuilder,
     private zone: NgZone,
     private masterDataService: MasterDataService,
@@ -30,6 +33,7 @@ export class HeaderComponent {
       (response:any)=>{
         if(response.success){
           this.userData = response.data;
+          this.groupByCompany();
         }
       }
     );
@@ -50,5 +54,21 @@ export class HeaderComponent {
     // Handle profile submission here (e.g., save changes to backend)
     console.log('Profile updated:', this.userData);
     this.isEditMode = false;  // Exit edit mode after submission
+  }
+
+  groupByCompany() {
+    const grouped = this.userData.companyDepartmentList.reduce((acc:any, curr:any) => {
+      const company = acc.find((item: any) => item.companyName === curr.companyName);
+      if (company) {
+        company.departments.push(curr.departmentName);
+      } else {
+        acc.push({
+          companyName: curr.companyName,
+          departments: [curr.departmentName]
+        });
+      }
+      return acc;
+    }, []);
+    this.groupedDepartments = grouped;
   }
 }
