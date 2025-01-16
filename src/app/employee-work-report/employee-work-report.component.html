@@ -1,0 +1,54 @@
+<div class="container">
+    <h2 class="mt-4">Employee Shift Calendar</h2>
+
+
+    <div class="card">
+        <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+            (triggerParentFunction)="fetchEmployeeShifts()">
+        </app-filter>
+        <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    </div>
+
+    <br>
+
+
+    <!-- Employee Shifts Table -->
+    <div style="overflow-y: auto; max-height: 500px;">
+        <table class="table table-bordered">
+            <thead class="sticky-header">
+                <tr>
+                    <th>Employee</th>
+                    <th *ngFor="let date of getCurrentDates()">
+                        <!-- Show date as MM-DD -->
+                        {{ date | date: 'MMM dd' }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employees">
+                    <td>{{ employee.employeeName }}</td>
+                    <td *ngFor="let date of getCurrentDates()"
+                        [ngStyle]="{ 'background-color': getShiftColor(employee.shifts[date]) }">
+                        <select class="form-control shift-select" [(ngModel)]="employee.shifts[date]"
+                            (change)="onShiftChange(employee, date)">
+                            <option *ngFor="let shift of shiftTypes" [value]="shift">
+                                {{ shift }}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <!-- Pagination Controls -->
+    <!-- Pagination Controls -->
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Next</button>
+    </div>
+
+    <button class="btn btn-primary" (click)="saveShifts()">Save Shifts</button>
+</div>

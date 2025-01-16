@@ -35,6 +35,7 @@ import { DegreeComponent } from './degree/degree.component';
 import { DesignationQualificationComponent } from './designation-qualification/designation-qualification.component';
 import { VendorManagementComponent } from './vendor/vendor-management/vendor-management.component';
 import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-payments/vendor-to-employee-payments.component';
+import { EmployeeWorkReportComponent } from './employee-work-report/employee-work-report.component';
 
 const routes: Routes = [
 
@@ -201,7 +202,12 @@ const routes: Routes = [
     data: { roles: [UserType.STATE_ADMIN ,UserType.MANAGER] },
     
   },
-
+  {
+    path:'employee-work-report',
+    component:EmployeeWorkReportComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [UserType.STATE_ADMIN ,UserType.MANAGER] },
+  },
   {
     path: 'vendor-payment-details',
     component: VendorPaymentDetailsComponent,

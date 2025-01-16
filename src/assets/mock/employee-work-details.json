@@ -1,0 +1,34 @@
+{
+    "success": true,
+    "data": [
+      {
+        "empId": 1001,
+        "employeeName": "Jhon",
+        "totalPresentDays": 20,
+        "totalAbsentDays": 2,
+        "weekOff": 8,
+        "holiday": 1,
+        "leaveRequestedDays": 3,
+        "leaveApprovedDays": 2,
+        "leaveRejectedDays": 1,
+        "dates": {
+          "2024-12-01": {
+            "status": "Present",
+            "leaveRequested": false,
+            "leaveApproved": false,
+            "odRequested": false,
+            "odApproved": false,
+            "weekOff": false,
+            "holiday": false,
+            "shift": {
+              "id": 5,
+              "type": "General",
+              "beginTime": "14:00",
+              "endTime": "22:00"
+            }
+          }
+        }
+      }
+    ]
+  }
+  

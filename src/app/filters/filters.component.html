@@ -85,7 +85,7 @@
 
     <div *ngIf="filters.catId.show" class="col-md-4">
       <div class="form-group">
-        <label for="category">Employment Type/Category</label>
+        <label for="category">Employment Type</label>
         <select [(ngModel)]="filters.catId.value" (change)="onCategoryChange()" class="form-control" id="category">
           <option value="">Select Employment Type</option>
           <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryFName }}
