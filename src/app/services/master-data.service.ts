@@ -120,17 +120,19 @@ export class MasterDataService {
   //   });
   // }
 
-  uploadMultipleCertificates(formData: FormData, empId: string): Observable<any> {
-    const url = `${this.apiUrl}Employee/UploadEmpCertificates?EmpId=${empId}`;
-    let reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/form-data',
-    });
-  
+  uploadMultipleCertificates(formData: FormData, payload:any): Observable<any> {
+    const buildQueryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Employee/UploadEmpCertificates?${buildQueryParams}`;
+
     return this.http.post(url, formData, {
-      headers: reqHeader,
-      reportProgress: true,
-      observe: 'events',
+      headers: new HttpHeaders()
     });
+  }
+
+  deleteEmpDoc(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Employee/DeleteEmpDoc?${queryParams}`;
+    return this.http.post(url,{});
   }
   
   
@@ -147,8 +149,9 @@ export class MasterDataService {
     const queryParams = this.dataService.buildQueryParams(query);
     return this.http.get(`${this.apiUrl}Employee/GetEmployees?${queryParams}`);
   }
-  vieweducertificate(query:any): Observable<any> {
-    return this.http.get(`${this.apiUrl}Employee/GetUploadedCertificates`+query);
+  viewcertificate(query:any): Observable<any> {
+    const buildQueryParams = this.dataService.buildQueryParams(query);
+    return this.http.get(`${this.apiUrl}Employee/GetUploadedCertificates?${buildQueryParams}`);
   }
   getpayslipList(query:any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(query);

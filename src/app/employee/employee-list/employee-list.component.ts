@@ -5,6 +5,8 @@ import { Employee } from 'src/app/utils/interface/Employee';
 import { Vendor } from 'src/app/utils/interface/vendor';
 import { Category, City, Company, Department, Designation } from 'src/app/utils/interface/masters';
 import { UserType } from 'src/app/common/user-type.enum';
+import { Action, ModuleType } from 'src/app/common/action.enum';
+import { ModuleTypeLabels } from 'src/app/common/labels';
 
 @Component({
   selector: 'app-employee-list',
@@ -13,30 +15,39 @@ import { UserType } from 'src/app/common/user-type.enum';
 })
 export class EmployeeListComponent {
 
-    UserType = UserType;
+  Action = Action;
+  ModuleType = ModuleType;
+  ModuleTypeLabels = ModuleTypeLabels;
+  UserType = UserType;
   user: any;
   userAccessLevel: any;
 
   Employees: any[] = [];
 
 
-   dropdowns = {
-      cities: [] as City[],
-      companies: [] as Company[],
-      departments: [] as Department[],
-      vendors:[] as Vendor[],
-      designation: [] as Designation[],
-      category: [] as Category[],
-    };
+  dropdowns = {
+    cities: [] as City[],
+    companies: [] as Company[],
+    departments: [] as Department[],
+    vendors: [] as Vendor[],
+    designation: [] as Designation[],
+    category: [] as Category[],
+  };
 
   educertificateimage: any[] = [];
 
   modal = {
+    action: Action.NONE,
+    module: ModuleType.NONE,
     show: false,
     isEdit: false,
     title: '',
     employee: new Employee(),  // Use the Employee class here
   };
+
+
+  formData = new FormData();
+
 
   filters: any = {
     selectedMonth: {
@@ -87,13 +98,13 @@ export class EmployeeListComponent {
       key: 'employeeId',
       includeInSearchParams: false
     },
-    employeeName:{
+    employeeName: {
       value: '',
       show: true,
       key: 'employeeName',
       includeInSearchParams: true
     },
-    employeeCode:{
+    employeeCode: {
       value: '',
       show: true,
       key: 'employeeCode',
@@ -119,10 +130,10 @@ export class EmployeeListComponent {
   }
 
   ngOnInit(): void {
- 
+
   }
 
-  
+
   ngAfterViewInit() {
     this.fetchCities();
     this.fetchDepartments();
@@ -130,7 +141,7 @@ export class EmployeeListComponent {
     this.fetchCategory();
   }
 
-  setValues(){
+  setValues() {
     if (this.userAccessLevel == UserType.VENDOR) {
       this.modal.employee.vendorId = this.user.vendorId;
     }
@@ -144,12 +155,12 @@ export class EmployeeListComponent {
     this.modal.employee.companyId = '';
     this.fetchCompanies(this.modal.employee.cityId);
   }
-  onCompanyChange(){
+  onCompanyChange() {
     this.modal.employee.vendorId = '';
     this.fetchVendors(this.modal.employee.companyId, this.modal.employee.departmentId);
   }
 
-  onDepartmentChange(){
+  onDepartmentChange() {
     this.fetchVendors(this.modal.employee.companyId, this.modal.employee.departmentId);
   }
 
@@ -164,7 +175,7 @@ export class EmployeeListComponent {
   }
 
   fetchCompanies(cityId: any) {
-    const payload = { 
+    const payload = {
       cityId: cityId,
     };
     this.masterDataService.getCompany(payload).subscribe((response) => {
@@ -179,7 +190,7 @@ export class EmployeeListComponent {
   }
 
   fetchVendors(companyId: any, departmentId: any) {
-    const payload = { 
+    const payload = {
       companyId: companyId,
       departmentId: departmentId
     };
@@ -188,13 +199,13 @@ export class EmployeeListComponent {
     });
   }
 
-  fetchDesignations(){
+  fetchDesignations() {
     this.masterDataService.getDesignation().subscribe((response) => {
       if (response.success) this.dropdowns.designation = response.data;
     });
   }
 
-  fetchCategory(){
+  fetchCategory() {
     this.masterDataService.getCategory().subscribe((response) => {
       if (response.success) this.dropdowns.category = response.data;
     });
@@ -227,23 +238,24 @@ export class EmployeeListComponent {
   }
 
 
-  openModal(isEdit: boolean, employee?: Employee): void {
+  openModal(action: Action,  employee?: Employee): void {
     this.modal.show = true;
-    this.modal.isEdit = isEdit;
-    this.modal.title = isEdit ? 'Edit Employee' : 'Add Employee';
-    if(isEdit) {
-      if(employee){
-        this.modal.employee = { ...employee, loginName: 'qwerty', loginPassword: '12345'};
+    this.modal.action = action;
+    this.modal.module = ModuleType.EMPLOYEE;
+    this.modal.title = action == Action.UPDATE ? 'Edit Employee' : action == Action.CREATE ? 'Add Employee' : 'View Employee';
+    if ( action == Action.UPDATE || action == Action.VIEW ) {
+      if (employee) {
+        this.modal.employee = { ...employee, loginName: 'qwerty', loginPassword: '12345' };
 
-        if(this.modal.employee.cityId){
+        if (this.modal.employee.cityId) {
           this.fetchCompanies(this.modal.employee.cityId);
         }
-        if(this.modal.employee.companyId){
+        if (this.modal.employee.companyId) {
           this.fetchVendors(this.modal.employee.companyId, this.modal.employee.departmentId);
         }
       }
     }
-    else{
+    else {
       this.modal.employee = new Employee();
       this.setValues();
     }
@@ -265,8 +277,10 @@ export class EmployeeListComponent {
     );
   }
 
-  closeModal(){
+  closeModal() {
     this.modal.show = false;
+    this.modal.module = ModuleType.EMPLOYEE;
+    this.modal.action = Action.NONE;
     this.modal.isEdit = false;
     this.modal.title = '';
     this.modal.employee = new Employee();
@@ -279,32 +293,64 @@ export class EmployeeListComponent {
       return;
     }
 
-    const formData = new FormData();
+    this.formData = new FormData();
     for (let i = 0; i < files.length; i++) {
-      formData.append('certificateImage', files[i], files[i].name);
+      this.formData.append('certificateImage', files[i], files[i].name);
     }
+  }
 
-    this.masterDataService.uploadMultipleCertificates(formData, this.modal.employee.employeeId.toString()).subscribe(
+  uploadCertificate(){
+    const payload ={
+      empId: this.modal.employee.employeeId,
+      docType:this.modal.module
+    };
+    this.masterDataService.uploadMultipleCertificates(this.formData, payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
-          alert('Certificates uploaded successfully.');
+          this.dataService.showSnackBar('Certificates uploaded successfully.');
+          this.show_Certificate(this.modal.employee, this.modal.module);
         } else {
-          alert(response.message || 'Failed to upload certificates.');
+          this.dataService.showSnackBar(response.message || 'Failed to upload certificates.');
         }
       }
     );
   }
 
-  show_Edu_Certificate(obj_clicked: any) {
+  deleteEmpDoc(obj:any){
+   const payload = {
+    docId: obj.docId
+   }
+    this.masterDataService.deleteEmpDoc(payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('Certificates deleted successfully.');
+          this.show_Certificate(this.modal.employee, this.modal.module);
+        } else {
+          this.dataService.showSnackBar(response.message || 'Failed to delete certificates.');
+        }
+      }
+    );
+  }
+
+  show_Certificate(obj_clicked: any, moduleType: ModuleType) {
+    this.modal.show = true;
+    this.modal.module = moduleType;
+    this.modal.title = ModuleTypeLabels[moduleType];
     this.modal.employee = obj_clicked;
-    this.masterDataService.vieweducertificate('?EmpId=' + obj_clicked.employeeId).subscribe(
+    const payload ={
+      empId: obj_clicked.employeeId,
+      docType:moduleType
+    }
+    this.masterDataService.viewcertificate(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response?.success && Array.isArray(response.data)) {
-          this.educertificateimage = response.data;
+          const data = response.data;
+          this.educertificateimage = data.filter((doc:any) => doc.docType == moduleType);
         } else {
-          alert(response?.message || 'Failed to fetch Department list.');
+          this.dataService.showSnackBar(response?.message || 'Failed to fetch list.');
         }
       }
     );
