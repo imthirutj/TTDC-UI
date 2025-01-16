@@ -24,3 +24,24 @@
     object-fit: cover;
   }
   
+
+  
+/* Header Styling */
+.header {
+  max-height: 110px;
+  min-height: 136px; /* Ensure the header doesn't shrink below this height */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #b22222;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensure content that exceeds the max-height is hidden */
+}
+

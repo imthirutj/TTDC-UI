@@ -140,6 +140,15 @@
     <input type="text" class="form-control" id="experience" [(ngModel)]="modal.employee.experience" name="experience"
       placeholder="Enter experience" [disabled]="modal.action === 'VIEW'">
   </div>
+  
+     <!-- Required Experience -->
+     <div class="mb-3">
+      <label for="reqExp" class="form-label">Required Experience</label>
+      <input type="text" class="form-control" id="reqExp" [(ngModel)]="modal.employee.requiredExperience" name="reqExp"
+        placeholder="Enter Required Experience" [disabled]="modal.action === 'VIEW'">
+    </div>
+
+   
 
   <!-- Date of Birth -->
   <div class="mb-3">
@@ -194,6 +203,8 @@
     <input type="date" class="form-control" id="doj" [(ngModel)]="modal.employee.doj" name="doj"
       placeholder="Enter Date OF Joining" [disabled]="modal.action === 'VIEW'">
   </div>
+
+ 
 
   <!-- City Name -->
   <div class="mb-3">

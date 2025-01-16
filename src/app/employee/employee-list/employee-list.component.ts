@@ -343,6 +343,7 @@ export class EmployeeListComponent {
       empId: obj_clicked.employeeId,
       docType:moduleType
     }
+    this.educertificateimage = [] as any[];
     this.masterDataService.viewcertificate(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);

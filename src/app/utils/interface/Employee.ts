@@ -24,6 +24,8 @@ export class Employee {
     loginName: string;
     loginPassword: string;
 employementType: any;
+totalExperience: any;
+requiredExperience: any;
 
     constructor() {
         this.employeeId = 0;
@@ -51,5 +53,7 @@ employementType: any;
         this.experience = '';
         this.loginName = 'qwerty';
         this.loginPassword = '12345';
+        this.totalExperience = '';
+        this.requiredExperience = '';
     }
 }
