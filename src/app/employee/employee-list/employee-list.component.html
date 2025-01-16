@@ -86,8 +86,11 @@
 
 
 
-<app-common-dialog [showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" [dialogTitle]="modal.title"
-  [showCloseIcon]="true" [showSubmitButton]="true" (submitDialog)="saveEmployee()" (closeDialog)="closeModal()">
+<app-common-dialog [showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" 
+  [dialogTitle]="modal.title"
+  [showCloseIcon]="true" 
+  [showSubmitButton]="modal.action==Action.UPDATE" 
+  (submitDialog)="saveEmployee()" (closeDialog)="closeModal()">
 
   <div class="container mt-4">
     <!-- Card 1: Personal Details -->
