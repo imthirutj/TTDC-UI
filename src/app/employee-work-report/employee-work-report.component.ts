@@ -292,49 +292,60 @@ export class EmployeeWorkReportComponent {
 
    // Function to get the previous previous month
   getPreviousPreviousMonth(month: number): number {
-    return month === 0 ? 10 : month === 1 ? 0 : month - 2;
+    return month === 1 ? 11 : month === 2 ? 12 : month - 2;
   }
 
   // Function to get the next month
   getNextMonth(month: number): number {
-    return month === 11 ? 0 : month + 1; // If December (11), return January (0)
+    return month === 12 ? 1 : month + 1; // If December (11), return January (0)
   }
 
   // Function to get the next year when going to the next month
   getNextYear(year: number, month: number): number {
-    return month === 11 ? year + 1 : year;
+    return month === 1 ? year - 1 : year;
   }
 
-  // Generate the date range from the 26th of the previous previous month to the 25th of the next month
+
   generateDateRange(): void {
-    const year = this.filters.selectedYear.value;
-    const month = this.getPreviousPreviousMonth(this.filters.selectedMonth.value);
-
-    // Ensure that the start date is the 26th of the selected month
-    const startDate = new Date(year, month, 26+1);  // month is now correctly adjusted
-
-    // Get the next month and year for the end date
-    const endMonth = this.getNextMonth(this.filters.selectedMonth.value);
-    const endYear = this.getNextYear(year, this.filters.selectedMonth.value);
-
-    // Ensure that the end date is the 25th of the next month
-    const endDate = new Date(endYear, endMonth - 1, 25+1);  // Adjust month here as well for the end date
-
+    const selectedYear = Number(this.filters.selectedYear.value);
+    const selectedMonth = Number(this.filters.selectedMonth.value);
+  
+    // Calculate the previous month and adjust the year if needed
+    let previousMonth = selectedMonth - 1;
+    let previousYear = selectedYear;
+  
+    if (previousMonth < 1) {
+      previousMonth = 12; // Set to December
+      previousYear -= 1;  // Decrease the year
+    }
+  
+    // Start date: 26th of the previous month
+    const startDate = new Date(previousYear, previousMonth - 1, 26);
+  
+    // End date: 25th of the current month
+    const endDate = new Date(selectedYear, selectedMonth - 1, 25);
+  
+    // Function to format date as 'YYYY-MM-DD'
+    const formatDate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add leading zero if month < 10
+      const day = date.getDate().toString().padStart(2, '0'); // Add leading zero if day < 10
+      return `${year}-${month}-${day}`;
+    };
+  
     // Initialize the dateRange array
     this.dateRange = [];
-    let currentDate = startDate;
-
-    // Loop to populate the date range from 26th to 25th
+  
+    // Loop through each date between startDate and endDate
+    let currentDate = new Date(startDate);
     while (currentDate <= endDate) {
-      // Add the date in YYYY-MM-DD format to the dateRange
-      this.dateRange.push(currentDate.toISOString().split('T')[0]);  // Only takes the date, not time
-      // Increment the date by one day
-      currentDate.setDate(currentDate.getDate() + 1);
+      this.dateRange.push(formatDate(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1); // Increment the date by 1
     }
-
-    // Debugging: Log the generated date range to ensure correctness
-    console.log('Generated Date Range:', this.dateRange);
+  
+    console.log('Date Range:', this.dateRange);  // Output for debugging
   }
+  
 
   // Navigate to the previous page
   prevPage(): void {
