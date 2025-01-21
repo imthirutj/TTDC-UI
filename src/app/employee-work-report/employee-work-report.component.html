@@ -121,7 +121,7 @@
             <div class="card-body">
                 <h5 class="card-title">Leave Details</h5>
                 <div *ngIf="modalAttr.employeeDateDetails.leave.requested">
-                    <b>Leave Requested: {{ modalAttr.employeeDateDetails.leave.status }}</b>
+                    <p><b>Leave Requested: {{ modalAttr.employeeDateDetails.leave.status }}</b></p>
                     <button *ngIf="modalAttr.employeeDateDetails.leave.status == 'PENDING'" (click)="null"
                         class="btn btn-primary">Approve</button>
                 </div>

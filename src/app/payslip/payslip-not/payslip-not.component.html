@@ -33,7 +33,7 @@
           <th>Company Name</th>      
           <th>Department Name</th>      
           <th>Category Name</th>      
-          <th>City</th>  
+        
           <th>Generate</th>    
         </tr>
       </thead>
@@ -47,7 +47,7 @@
             <td>{{ obj.companyFName }}</td>
             <td>{{ obj.departmentFName }}</td>
             <td>{{ obj.categoryFName }} </td>
-            <td>{{ obj.cityName }} </td>
+           
             <td >
               <button *ngIf="userAccessLevel == UserType.VENDOR" class="btn btn-primary" type="button" (click)="generate_payslip(obj)">
                Generate Slip
