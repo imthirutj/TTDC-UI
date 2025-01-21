@@ -1,9 +1,11 @@
 {
-    "success": true,
-    "data": [
-      {
-        "empId": 1001,
-        "employeeName": "Jhon",
+  "_comment": "This is a mock file for employee work details",
+  "success": true,
+  "data": [
+    {
+      "empId": 1001,
+      "employeeName": "Jhon",
+      "reports": {
         "totalPresentDays": 20,
         "totalAbsentDays": 2,
         "weekOff": 8,
@@ -11,24 +13,38 @@
         "leaveRequestedDays": 3,
         "leaveApprovedDays": 2,
         "leaveRejectedDays": 1,
-        "dates": {
-          "2024-12-01": {
-            "status": "Present",
-            "leaveRequested": false,
-            "leaveApproved": false,
-            "odRequested": false,
-            "odApproved": false,
-            "weekOff": false,
-            "holiday": false,
-            "shift": {
-              "id": 5,
-              "type": "General",
-              "beginTime": "14:00",
-              "endTime": "22:00"
+        "odRequestedDays": 2,
+        "odApprovedDays": 1,
+        "odRejectedDays": 1
+      },
+      "dates": {
+        "2024-12-01": {
+          "status": "Present",
+          "_status": "Present,Absent, Holiday, WeekOff, Leave Approved, OD Approved. Take it from employeeAttendance table",
+          "biometricData": [
+            {
+              "type": "In",
+              "time": "09:00 AM"
+            },
+            {
+              "type": "Out",
+              "time": "06:00 PM"
             }
+          ],
+          "leave": {
+            "leaveRequestID":1,
+            "requested": false,
+            "status": "-",
+            "reason": "-"
+          },
+          "OD": {
+            "ODRequestID":1,
+            "requested": false,
+            "status": "-",
+            "reason": "-"
           }
         }
       }
-    ]
-  }
-  
+    }
+  ]
+}

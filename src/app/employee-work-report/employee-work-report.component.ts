@@ -332,8 +332,10 @@ export class EmployeeWorkReportComponent {
     const startIndex = this.currentPage * this.daysPerPage;
     const endIndex = startIndex + this.daysPerPage;
 
+    var dates = this.dateRange.slice(startIndex, endIndex);
+    console.log('Current Dates:', dates);
     // Return a slice of the dateRange array for the current page
-    return this.dateRange.slice(startIndex, endIndex);
+    return dates;
   }
 
   // Get total pages based on the number of dates and days per page

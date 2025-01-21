@@ -18,6 +18,7 @@
             <thead class="sticky-header">
                 <tr>
                     <th>Employee</th>
+                    <th>#</th>
                     <th *ngFor="let date of getCurrentDates()">
                         <!-- Show date as MM-DD -->
                         {{ date | date: 'MMM dd' }}
@@ -27,14 +28,17 @@
             <tbody>
                 <tr *ngFor="let employee of employees">
                     <td>{{ employee.employeeName }}</td>
+                    <td><button class="btn btn-primary">Details</button></td>
                     <td *ngFor="let date of getCurrentDates()"
-                        [ngStyle]="{ 'background-color': getShiftColor(employee.shifts[date]) }">
-                        <select class="form-control shift-select" [(ngModel)]="employee.shifts[date]"
-                            (change)="onShiftChange(employee, date)">
-                            <option *ngFor="let shift of shiftTypes" [value]="shift">
-                                {{ shift }}
-                            </option>
+                       >
+                        {{ date | date: 'MMM dd' }}
+                        <p>status: -</p>
+                        <select>
+                            <option value="PRESENT">PRESENT</option>
+                            <option value="ABSENT">ABSENT</option>
                         </select>
+                        <p></p>
+                        <!-- <button class="btn-primary">Update</button> -->
                     </td>
                 </tr>
             </tbody>
