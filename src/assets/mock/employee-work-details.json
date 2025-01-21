@@ -19,8 +19,8 @@
       },
       "dates": {
         "2024-11-26": {
-          "status": "PRESENT",
-          "_status": "Present,Absent, Holiday, WeekOff, Leave Approved, OD Approved. Take it from employeeAttendance table",
+          "status": "",
+          "_status": "PRESENT,ABSENT, HOLIDAY, WEEKOFF, LEAVE_APPROVED, OD_APPROVED. Take it from employeeAttendance table, else return default empty",
           "biometricData": [
             {
               "type": "In",

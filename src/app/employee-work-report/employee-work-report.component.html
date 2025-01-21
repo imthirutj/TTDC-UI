@@ -29,13 +29,29 @@
                 <tr *ngFor="let employee of employees">
                     <td>{{ employee.employeeName }}</td>
                     <td><button class="btn btn-primary">Details</button></td>
-                    <td *ngFor="let date of getCurrentDates()"
-                       >
+                    <td *ngFor="let date of getCurrentDates()">
+                        <!-- First and Last Biometric Data -->
+                        <div *ngIf="employee.dates[date].biometricData && employee.dates[date].biometricData.length">
+                            <!-- First biometric record (In time) -->
+                            <div *ngIf="employee.dates[date].biometricData[0]">
+                                <p> {{ employee.dates[date].biometricData[0].type}}: {{
+                                    employee.dates[date].biometricData[0].time }}</p>
+                            </div>
+                            <!-- Last biometric record (Out time) -->
+                            <div
+                                *ngIf="employee.dates[date].biometricData[employee.dates[date].biometricData.length - 1]">
+                                <p> {{employee.dates[date].biometricData[employee.dates[date].biometricData.length -
+                                    1].type }}: {{
+                                    employee.dates[date].biometricData[employee.dates[date].biometricData.length -
+                                    1].time }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Status Dropdown -->
                         <select class="form-select" [(ngModel)]="employee.dates[date].status">
                             <option value="">Select</option>
-                            <option *ngFor="let st of status" [value]="st.key">{{ st.value }}</option>
+                            <option *ngFor="let st of getStatusOptions(date)" [value]="st.key">{{ st.value }}</option>
                         </select>
-                        <p></p>
                         <!-- <button class="btn-primary">Update</button> -->
                     </td>
                 </tr>

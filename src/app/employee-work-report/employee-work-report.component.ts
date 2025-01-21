@@ -67,7 +67,7 @@ export class EmployeeWorkReportComponent {
     { key: 'WEEKOFF', value: 'Weekly Off' },
   ];
 
-  
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -161,7 +161,7 @@ export class EmployeeWorkReportComponent {
     this.fetchEmployeeStatus();
   }
 
-  search(){
+  search() {
     this.fetchEmployeeStatus();
   }
 
@@ -214,10 +214,10 @@ export class EmployeeWorkReportComponent {
   fetchEmployeeStatus() {
     const payload = this.dataService.getPayloadValue(this.filters);
     this.employeeWorkReportService.getEmployeeWorkReoportDetails(payload).subscribe((response) => {
-      if (response.success){
+      if (response.success) {
         this.employees = response.data;
         this.addMissingDates();
-      } 
+      }
     });
   }
 
@@ -226,7 +226,7 @@ export class EmployeeWorkReportComponent {
       if (!employee.dates) {
         employee.dates = {}; // Initialize dates if missing
       }
-  
+
       var datesRange = this.dateRange;
       datesRange.forEach((date) => {
         if (!employee.dates[date]) {
@@ -252,7 +252,22 @@ export class EmployeeWorkReportComponent {
       });
     });
   }
-  
+
+
+  // This function filters the status options based on the date
+  getStatusOptions(date: string): { key: string; value: string }[] {
+    const currentDate = new Date();
+    const targetDate = new Date(date);
+
+    // Check if the date is current or in the past (previous date)
+    if (targetDate <= currentDate) {
+      // For current or past dates,
+      return this.status;
+    }
+    // For future dates, return only Holiday and Weekly Off
+    return this.status.filter(st => st.key === 'HOLIDAY' || st.key === 'WEEKOFF');
+  }
+
   //#endregion
 
   //#region  OnChange
@@ -290,7 +305,7 @@ export class EmployeeWorkReportComponent {
 
   //#region  Calender
 
-   // Function to get the previous previous month
+  // Function to get the previous previous month
   getPreviousPreviousMonth(month: number): number {
     return month === 1 ? 11 : month === 2 ? 12 : month - 2;
   }
@@ -309,22 +324,22 @@ export class EmployeeWorkReportComponent {
   generateDateRange(): void {
     const selectedYear = Number(this.filters.selectedYear.value);
     const selectedMonth = Number(this.filters.selectedMonth.value);
-  
+
     // Calculate the previous month and adjust the year if needed
     let previousMonth = selectedMonth - 1;
     let previousYear = selectedYear;
-  
+
     if (previousMonth < 1) {
       previousMonth = 12; // Set to December
       previousYear -= 1;  // Decrease the year
     }
-  
+
     // Start date: 26th of the previous month
     const startDate = new Date(previousYear, previousMonth - 1, 26);
-  
+
     // End date: 25th of the current month
     const endDate = new Date(selectedYear, selectedMonth - 1, 25);
-  
+
     // Function to format date as 'YYYY-MM-DD'
     const formatDate = (date: Date): string => {
       const year = date.getFullYear();
@@ -332,20 +347,20 @@ export class EmployeeWorkReportComponent {
       const day = date.getDate().toString().padStart(2, '0'); // Add leading zero if day < 10
       return `${year}-${month}-${day}`;
     };
-  
+
     // Initialize the dateRange array
     this.dateRange = [];
-  
+
     // Loop through each date between startDate and endDate
     let currentDate = new Date(startDate);
     while (currentDate <= endDate) {
       this.dateRange.push(formatDate(currentDate));
       currentDate.setDate(currentDate.getDate() + 1); // Increment the date by 1
     }
-  
+
     console.log('Date Range:', this.dateRange);  // Output for debugging
   }
-  
+
 
   // Navigate to the previous page
   prevPage(): void {
@@ -399,7 +414,7 @@ export class EmployeeWorkReportComponent {
       }
     });
 
-   // console.log(payloadCopy);
+    // console.log(payloadCopy);
     this.shiftService.updateEmployeeShifts(payloadCopy).subscribe((response) => {
       if (response.success) {
         this.dataService.showSnackBar('Shifts updated successfully');
