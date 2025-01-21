@@ -23,7 +23,8 @@ export class EmployeeWorkReportService {
    }
  
    getEmployeeWorkReoportDetails(payload: any): Observable<any> {
-    return this.http.get(`assets/mock/employee-work-details.json`);
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`assets/mock/employee-work-details.json?${queryParams}`);
    }
 
 }

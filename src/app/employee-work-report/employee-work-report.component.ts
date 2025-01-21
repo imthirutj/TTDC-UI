@@ -60,6 +60,14 @@ export class EmployeeWorkReportComponent {
   };
 
 
+  status: { key: string; value: string }[] = [
+    { key: 'PRESENT', value: 'Present' },
+    { key: 'ABSENT', value: 'Absent' },
+    { key: 'HOLIDAY', value: 'Holiday' },
+    { key: 'WEEKOFF', value: 'Weekly Off' },
+  ];
+
+  
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -150,11 +158,11 @@ export class EmployeeWorkReportComponent {
 
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
-    this.fetchEmployeeShifts();
+    this.fetchEmployeeStatus();
   }
 
   search(){
-    this.fetchEmployeeShifts();
+    this.fetchEmployeeStatus();
   }
 
   getShiftColor(shift: string): string {
@@ -203,12 +211,48 @@ export class EmployeeWorkReportComponent {
     });
   }
 
-  fetchEmployeeShifts() {
+  fetchEmployeeStatus() {
     const payload = this.dataService.getPayloadValue(this.filters);
     this.employeeWorkReportService.getEmployeeWorkReoportDetails(payload).subscribe((response) => {
-      if (response.success) this.employees = response.data;
+      if (response.success){
+        this.employees = response.data;
+        this.addMissingDates();
+      } 
     });
   }
+
+  addMissingDates() {
+    this.employees.forEach((employee) => {
+      if (!employee.dates) {
+        employee.dates = {}; // Initialize dates if missing
+      }
+  
+      var datesRange = this.dateRange;
+      datesRange.forEach((date) => {
+        if (!employee.dates[date]) {
+          // Add default values for the missing date
+          employee.dates[date] = {
+            status: '', // Default status
+            _status: '', // Optional description
+            biometricData: [], // Default empty array
+            leave: {
+              leaveRequestID: null,
+              requested: false,
+              status: '-',
+              reason: '-'
+            },
+            OD: {
+              ODRequestID: null,
+              requested: false,
+              status: '-',
+              reason: '-'
+            }
+          };
+        }
+      });
+    });
+  }
+  
   //#endregion
 
   //#region  OnChange
@@ -225,7 +269,7 @@ export class EmployeeWorkReportComponent {
   }
 
   onCompanyChange() {
-    this.fetchEmployeeShifts();
+    this.fetchEmployeeStatus();
   }
 
   // Method to update the selected month and year and regenerate the date range
@@ -233,7 +277,7 @@ export class EmployeeWorkReportComponent {
     this.generateDateRange();  // Recalculate the date range when month or year changes
     this.currentPage = 0;  // Reset the page to the first one
 
-    this.fetchEmployeeShifts();
+    this.fetchEmployeeStatus();
   }
 
   // Update shifts on change
@@ -246,54 +290,35 @@ export class EmployeeWorkReportComponent {
 
   //#region  Calender
 
-  // Function to get the next month (wrap around from December to January)
-  getNextMonth(month: any): number {
-    // Ensure the parameter is a number
-    const currentMonth = Number(month);
-
-    // Check if the input is a valid month number (0-11)
-    if (isNaN(currentMonth) || currentMonth < 0 || currentMonth > 11) {
-      throw new Error('Invalid month number. Month should be between 0 and 11.');
-    }
-
-    // Return the next month, with wrap-around from December (11) to January (0)
-    return (currentMonth + 1) % 12;
+   // Function to get the previous previous month
+  getPreviousPreviousMonth(month: number): number {
+    return month === 0 ? 10 : month === 1 ? 0 : month - 2;
   }
 
-  // Function to get the next year
-  getNextYear(year: any, month: any): number {
-    // Ensure the year is a number
-    const currentYear = Number(year);
-
-    // Check if the input is a valid year
-    if (isNaN(currentYear)) {
-      throw new Error('Invalid year. Year should be a number.');
-    }
-
-    // If the month is December (11), we need to increment the year
-    if (Number(month) === 11) {
-      return currentYear + 1;
-    }
-
-    // Otherwise, return the current year
-    return currentYear;
+  // Function to get the next month
+  getNextMonth(month: number): number {
+    return month === 11 ? 0 : month + 1; // If December (11), return January (0)
   }
 
+  // Function to get the next year when going to the next month
+  getNextYear(year: number, month: number): number {
+    return month === 11 ? year + 1 : year;
+  }
 
+  // Generate the date range from the 26th of the previous previous month to the 25th of the next month
   generateDateRange(): void {
     const year = this.filters.selectedYear.value;
-    const month = this.filters.selectedMonth.value;
+    const month = this.getPreviousPreviousMonth(this.filters.selectedMonth.value);
+
     // Ensure that the start date is the 26th of the selected month
-    const startDate = new Date(year, (month - 1), 26 + 1);
+    const startDate = new Date(year, month, 26+1);  // month is now correctly adjusted
 
-    // Get the next month using the getNextMonth function
-    const endMonth = this.getNextMonth(month - 1);
-
-    // Get the next year using the getNextYear function
-    const endYear = this.getNextYear(year, month - 1);
+    // Get the next month and year for the end date
+    const endMonth = this.getNextMonth(this.filters.selectedMonth.value);
+    const endYear = this.getNextYear(year, this.filters.selectedMonth.value);
 
     // Ensure that the end date is the 25th of the next month
-    const endDate = new Date(endYear, endMonth, 25 + 1);
+    const endDate = new Date(endYear, endMonth - 1, 25+1);  // Adjust month here as well for the end date
 
     // Initialize the dateRange array
     this.dateRange = [];
@@ -308,9 +333,8 @@ export class EmployeeWorkReportComponent {
     }
 
     // Debugging: Log the generated date range to ensure correctness
-   // console.log(this.dateRange);
+    console.log('Generated Date Range:', this.dateRange);
   }
-
 
   // Navigate to the previous page
   prevPage(): void {
@@ -368,7 +392,7 @@ export class EmployeeWorkReportComponent {
     this.shiftService.updateEmployeeShifts(payloadCopy).subscribe((response) => {
       if (response.success) {
         this.dataService.showSnackBar('Shifts updated successfully');
-        this.fetchEmployeeShifts();
+        this.fetchEmployeeStatus();
       } else {
         this.dataService.showSnackBar('Failed to update shifts');
       }

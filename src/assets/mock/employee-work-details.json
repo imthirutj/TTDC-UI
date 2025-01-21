@@ -19,7 +19,7 @@
       },
       "dates": {
         "2024-12-01": {
-          "status": "Present",
+          "status": "PRESENT",
           "_status": "Present,Absent, Holiday, WeekOff, Leave Approved, OD Approved. Take it from employeeAttendance table",
           "biometricData": [
             {

@@ -4,7 +4,7 @@
 
     <div class="card">
         <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-            (triggerParentFunction)="fetchEmployeeShifts()">
+            (triggerParentFunction)="fetchEmployeeStatus()">
         </app-filter>
         <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
     </div>
@@ -21,7 +21,7 @@
                     <th>#</th>
                     <th *ngFor="let date of getCurrentDates()">
                         <!-- Show date as MM-DD -->
-                        {{ date | date: 'MMM dd' }}
+                        {{ date | date: 'dd MMM YYYY' }}
                     </th>
                 </tr>
             </thead>
@@ -31,11 +31,9 @@
                     <td><button class="btn btn-primary">Details</button></td>
                     <td *ngFor="let date of getCurrentDates()"
                        >
-                        {{ date | date: 'MMM dd' }}
-                        <p>status: -</p>
-                        <select>
-                            <option value="PRESENT">PRESENT</option>
-                            <option value="ABSENT">ABSENT</option>
+                        <select class="form-select" [(ngModel)]="employee.dates[date].status">
+                            <option value="">Select</option>
+                            <option *ngFor="let st of status" [value]="st.key">{{ st.value }}</option>
                         </select>
                         <p></p>
                         <!-- <button class="btn-primary">Update</button> -->
