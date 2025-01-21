@@ -13,6 +13,7 @@
 
 
     <!-- Employee Shifts Table -->
+    <!-- Employee Shifts Table -->
     <div style="overflow-y: auto; max-height: 500px;">
         <table class="table table-bordered">
             <thead class="sticky-header">
@@ -20,28 +21,37 @@
                     <th>Employee</th>
                     <th>#</th>
                     <th *ngFor="let date of getCurrentDates()">
-                        <!-- Show date as MM-DD -->
-                        {{ date | date: 'dd MMM YYYY' }}
+                        <!-- Show date as dd MMM YYYY -->
+                        {{ date | date: 'dd MMM yyyy' }}
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let employee of employees">
                     <td>{{ employee.employeeName }}</td>
-                    <td><button class="btn btn-primary">Details</button></td>
-                    <td *ngFor="let date of getCurrentDates()">
+                    <td>
+                        <div>
+                            <p><b> Present Days</b> : {{ employee.reports.totalPresentDays }}</p>
+                            <p><b> Absent Days</b> : {{ employee.reports.totalAbsentDays }}</p>
+
+                        </div>
+                        <i class="fas fa-info-circle" (click)="openEmployeeReportModal(employee)"></i>
+                    </td>
+                    <td *ngFor="let date of getCurrentDates()"
+                        [ngStyle]="{ 'background-color': getStatusColor(employee.dates[date].status) }">
                         <!-- First and Last Biometric Data -->
-                        <div *ngIf="employee.dates[date].biometricData && employee.dates[date].biometricData.length">
+                        <div style="text-align: left;" *ngIf="employee.dates[date].biometricData 
+                    && employee.dates[date].biometricData.length">
                             <!-- First biometric record (In time) -->
                             <div *ngIf="employee.dates[date].biometricData[0]">
-                                <p> {{ employee.dates[date].biometricData[0].type}}: {{
+                                <p> <b> {{ employee.dates[date].biometricData[0].type}} </b>: {{
                                     employee.dates[date].biometricData[0].time }}</p>
                             </div>
                             <!-- Last biometric record (Out time) -->
                             <div
                                 *ngIf="employee.dates[date].biometricData[employee.dates[date].biometricData.length - 1]">
-                                <p> {{employee.dates[date].biometricData[employee.dates[date].biometricData.length -
-                                    1].type }}: {{
+                                <p> <b> {{employee.dates[date].biometricData[employee.dates[date].biometricData.length -
+                                        1].type }}</b>: {{
                                     employee.dates[date].biometricData[employee.dates[date].biometricData.length -
                                     1].time }}</p>
                             </div>
@@ -52,7 +62,8 @@
                             <option value="">Select</option>
                             <option *ngFor="let st of getStatusOptions(date)" [value]="st.key">{{ st.value }}</option>
                         </select>
-                        <!-- <button class="btn-primary">Update</button> -->
+
+                        <i class="fas fa-info-circle" (click)="openModal(employee.dates[date])"></i>
                     </td>
                 </tr>
             </tbody>
@@ -60,13 +71,94 @@
     </div>
 
 
+    <app-common-dialog [showDialog]="modalAttr.show" [dialogTitle]="modalAttr.title" [showCloseIcon]="true"
+        [showSubmitButton]="false" (closeDialog)="closeModal()">
 
-    <!-- Pagination Controls -->
-    <!-- Pagination Controls -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Biometric Data</h5>
+                <div
+                    *ngIf="modalAttr.employeeDateDetails.biometricData && modalAttr.employeeDateDetails.biometricData.length">
+                    <p *ngFor="let data of modalAttr.employeeDateDetails.biometricData">
+                        {{ data.type }}: {{ data.time }}
+                    </p>
+                </div>
+                <p
+                    *ngIf="modalAttr.employeeDateDetails.biometricData && !modalAttr.employeeDateDetails.biometricData.length">
+                    No biometric data found for this date.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Day Status</h5>
+                <p>{{ modalAttr.employeeDateDetails.status }}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Leave Details</h5>
+                <div *ngIf="modalAttr.employeeDateDetails.leave.requested">
+                    <b>Leave Requested: {{ modalAttr.employeeDateDetails.leave.status }}</b>
+                    <button *ngIf="modalAttr.employeeDateDetails.leave.status == 'PENDING'" (click)="null"
+                        class="btn btn-primary">Approve</button>
+                </div>
+                <div *ngIf="!modalAttr.employeeDateDetails.leave.requested">
+                    <p>No leave requested for this date.</p>
+                </div>
+            </div>
+        </div>
+
+        <!--OD-->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">OD Details</h5>
+                <div *ngIf="modalAttr.employeeDateDetails.od.requested">
+                    <b>OD Requested: {{ modalAttr.employeeDateDetails.od.status }}</b>
+                    <button *ngIf="modalAttr.employeeDateDetails.od.status == 'PENDING'" (click)="null"
+                        class="btn btn-primary">Approve</button>
+                </div>
+                <div *ngIf="!modalAttr.employeeDateDetails.od.requested">
+                    <p>No OD requested for this date.</p>
+                </div>
+            </div>
+        </div>
+    </app-common-dialog>
+
+
+
+    <app-common-dialog [showDialog]="modalAttrEmployeeReport.show" [dialogTitle]="modalAttrEmployeeReport.title"
+        [showCloseIcon]="true" [showSubmitButton]="false" (closeDialog)="closeEmployeeReportModal()">
+
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <p>Total Present Days: {{ modalAttrEmployeeReport.employeeStatus.reports.totalPresentDays }}</p>
+                    <p>Total Absent Days: {{ modalAttrEmployeeReport.employeeStatus.reports.totalAbsentDays }}</p>
+                    <p>Total Leave Requested Days: {{ modalAttrEmployeeReport.employeeStatus.reports.leaveRequestedDays
+                        }}</p>
+                    <p>Total Leave Approved Days: {{ modalAttrEmployeeReport.employeeStatus.reports.leaveApprovedDays }}
+                    </p>
+                    <p>Total Leave Rejected Days: {{ modalAttrEmployeeReport.employeeStatus.reports.leaveRejectedDays }}
+                    </p>
+                    <p>Total OD Requested Days: {{ modalAttrEmployeeReport.employeeStatus.reports.odRequestedDays }}</p>
+                    <p>Total OD Approved Days: {{ modalAttrEmployeeReport.employeeStatus.reports.odApprovedDays }}</p>
+                    <p>Total OD Rejected Days: {{ modalAttrEmployeeReport.employeeStatus.reports.odRejectedDays }}</p>
+
+                </div>
+            </div>
+        </div>
+    </app-common-dialog>
+
+
     <div class="d-flex justify-content-between">
-        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
-        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Next</button>
+        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">
+            &#8592; <!-- Left Arrow -->
+        </button>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+            &#8594; <!-- Right Arrow -->
+        </button>
     </div>
 
-    <button class="btn btn-primary" (click)="saveShifts()">Save Shifts</button>
 </div>

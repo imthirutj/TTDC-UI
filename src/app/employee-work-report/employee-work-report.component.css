@@ -1,0 +1,30 @@
+.corner-icon{
+    position: relative; bottom: 5px; right: 5px; cursor: pointer; z-index: 10;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  th {
+    background-color: #f4f4f4;
+  }
+  /* Positioning the info icon */
+  td {
+    position: relative;
+  }
+  .fas.fa-info-circle {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
+    z-index: 10;
+    color: #007bff;
+  }
+  .modal-body p {
+    margin: 5px 0;
+  }

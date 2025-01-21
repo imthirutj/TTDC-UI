@@ -6,6 +6,7 @@ import { UserType } from '../common/user-type.enum';
 import { myMonths, myYears } from '../utils/helpers/variables';
 import { ShiftService } from '../employee-shift-calendar/shift.service';
 import { EmployeeWorkReportService } from './employee-work-report.service';
+import { DateDetails, EmployeeStatus } from '../utils/interface/EmployeeStatus';
 
 @Component({
   selector: 'app-employee-work-report',
@@ -28,7 +29,7 @@ export class EmployeeWorkReportComponent {
 
 
   // List of employees
-  employees: any[] = [];
+  employees: EmployeeStatus[] = [];
 
   months = myMonths;
   years = myYears;
@@ -60,13 +61,25 @@ export class EmployeeWorkReportComponent {
   };
 
 
-  status: { key: string; value: string }[] = [
-    { key: 'PRESENT', value: 'Present' },
-    { key: 'ABSENT', value: 'Absent' },
-    { key: 'HOLIDAY', value: 'Holiday' },
-    { key: 'WEEKOFF', value: 'Weekly Off' },
+  status: { key: string; value: string, color: string }[] = [
+    { key: 'PRESENT', value: 'Present', color: '#a9f7a9' },
+    { key: 'ABSENT', value: 'Absent', color: '#ffa2a2' },
+    { key: 'HOLIDAY', value: 'Holiday', color: '#9d9deb' },
+    { key: 'WEEKOFF', value: 'Weekly Off', color: '#ffcc6e' },
   ];
 
+  modalAttr: any = {
+    show: false,
+    title: '',
+    employeeDateDetails: new DateDetails(),
+    employeeStatus: new EmployeeStatus()
+  }
+
+  modalAttrEmployeeReport: any = {
+    show: false,
+    title: '',
+    employeeStatus: new EmployeeStatus()
+  }
 
   filters: any = {
     selectedMonth: {
@@ -165,8 +178,10 @@ export class EmployeeWorkReportComponent {
     this.fetchEmployeeStatus();
   }
 
-  getShiftColor(shift: string): string {
-    return this.shiftColors[shift] || '#FFFFFF'; // Default color if shift is not found
+  getStatusColor(status: string): string {
+    // Find the status object by key and return its color
+    const statusObj = this.status.find(s => s.key === status);
+    return statusObj ? statusObj.color : '#FFFFFF'; // Default color if status not found
   }
 
   //#region  Fetch
@@ -233,16 +248,15 @@ export class EmployeeWorkReportComponent {
           // Add default values for the missing date
           employee.dates[date] = {
             status: '', // Default status
-            _status: '', // Optional description
             biometricData: [], // Default empty array
             leave: {
-              leaveRequestID: null,
+              leaveRequestID: 0,
               requested: false,
               status: '-',
               reason: '-'
             },
-            OD: {
-              ODRequestID: null,
+            od: {
+              odRequestID: 0,
               requested: false,
               status: '-',
               reason: '-'
@@ -358,7 +372,7 @@ export class EmployeeWorkReportComponent {
       currentDate.setDate(currentDate.getDate() + 1); // Increment the date by 1
     }
 
-    console.log('Date Range:', this.dateRange);  // Output for debugging
+   // console.log('Date Range:', this.dateRange);  // Output for debugging
   }
 
 
@@ -394,36 +408,27 @@ export class EmployeeWorkReportComponent {
   }
 
   //#endregion
-  saveShifts() {
-    // Create a deep copy of the payload to prevent modifying the original employees
-    const payloadCopy = JSON.parse(JSON.stringify(this.employees));
 
-    // Iterate through each employee in the deep copy
-    payloadCopy.forEach((employee: any) => {
-      for (const date in employee.shifts) {
-        const shiftName = employee.shifts[date];
-
-        // Replace the shift name with the shiftId from shiftMap
-        const shiftId = this.shiftMap[shiftName];
-
-        if (shiftId) {
-          employee.shifts[date] = shiftId; // Update shift to shiftId
-        } else {
-          console.warn(`Shift name "${shiftName}" not found in shiftMap.`);
-        }
-      }
-    });
-
-    // console.log(payloadCopy);
-    this.shiftService.updateEmployeeShifts(payloadCopy).subscribe((response) => {
-      if (response.success) {
-        this.dataService.showSnackBar('Shifts updated successfully');
-        this.fetchEmployeeStatus();
-      } else {
-        this.dataService.showSnackBar('Failed to update shifts');
-      }
-    }
-    );
-
+  openModal(employeeDates: DateDetails) {
+    this.modalAttr.show = true;
+    this.modalAttr.employeeDateDetails = employeeDates;
+    this.modalAttr.title = 'Employee Work Report';
   }
+
+  closeModal() {
+    this.modalAttr.show = false;
+    this.modalAttr.employeeDateDetails = new DateDetails(); // Reset the employeeDateDetails objec
+  }
+
+  openEmployeeReportModal(employee: EmployeeStatus) {
+    this.modalAttrEmployeeReport.show = true;
+    this.modalAttrEmployeeReport.employeeStatus = employee;
+    this.modalAttrEmployeeReport.title = `${employee.employeeName}'s Work Report`;
+  }
+
+  closeEmployeeReportModal() {
+    this.modalAttrEmployeeReport.show = false;
+    this.modalAttrEmployeeReport.employeeStatus = new EmployeeStatus(); // Reset the employeeDateDetails objec
+  }
+
 }
