@@ -55,6 +55,7 @@ export class BiometricData {
     biometricData: BiometricData[];
     leave: Leave;
     od: OD;
+    statusChanged: boolean;
   
     constructor(
       status: string = '',
@@ -66,6 +67,7 @@ export class BiometricData {
       this.biometricData = biometricData;
       this.leave = leave;
       this.od = od;
+      this.statusChanged = false; 
     }
   }
   

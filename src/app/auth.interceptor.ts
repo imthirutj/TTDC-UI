@@ -98,7 +98,7 @@ export class AuthInterceptor implements HttpInterceptor {
    private handleError(error: HttpErrorResponse): void {
     if (error.status !== 200) {
       this.snackBar.openFromComponent(SnackBarComponent, {
-        data: { message: 'Error Occured While fetching Data' },  // Pass dynamic message
+        data: { message: 'Error Occured While Processing...' },  // Pass dynamic message
         duration: 5000
       });
     }

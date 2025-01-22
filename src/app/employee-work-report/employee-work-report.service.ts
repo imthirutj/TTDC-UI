@@ -27,4 +27,8 @@ export class EmployeeWorkReportService {
     return this.http.get(`assets/mock/employee-work-details.json?${queryParams}`);
    }
 
+   updateAttendance(payload: any): Observable<any> {
+    return this.http.post(`assets/mock/employee-work-details.json`, payload);
+   }
+
 }

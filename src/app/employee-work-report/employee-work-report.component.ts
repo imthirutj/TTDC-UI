@@ -230,7 +230,7 @@ export class EmployeeWorkReportComponent {
     const payload = this.dataService.getPayloadValue(this.filters);
     this.employeeWorkReportService.getEmployeeWorkReoportDetails(payload).subscribe((response) => {
       if (response.success) {
-        this.employees = response.data;
+        this.employees = response.data as EmployeeStatus[];
         this.addMissingDates();
       }
     });
@@ -248,6 +248,7 @@ export class EmployeeWorkReportComponent {
           // Add default values for the missing date
           employee.dates[date] = {
             status: '', // Default status
+            statusChanged: false, // Default statusChanged
             biometricData: [], // Default empty array
             leave: {
               leaveRequestID: 0,
@@ -314,6 +315,30 @@ export class EmployeeWorkReportComponent {
     console.log(`${employee.name}'s shift on ${date} changed to ${employee.shifts[date]}`);
   }
 
+
+  onStatusChange(employee: EmployeeStatus, date: string, event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const newStatus = target?.value;
+  
+    if (!newStatus) {
+      console.warn(`No status selected for date: ${date}`);
+      return;
+    }
+  
+    const dateDetails = employee.dates[date];
+  
+    if (dateDetails) {
+      if (dateDetails.status) {
+        dateDetails.status = newStatus;
+        dateDetails.statusChanged = true; // Mark as changed
+      }
+    } else {
+      console.warn(`Date details for ${date} are missing or null.`);
+    }
+
+    console.log('Employee:', employee);
+  }
+  
 
   //#endregion
 
@@ -397,7 +422,7 @@ export class EmployeeWorkReportComponent {
     const endIndex = startIndex + this.daysPerPage;
 
     var dates = this.dateRange.slice(startIndex, endIndex);
-    console.log('Current Dates:', dates);
+    //console.log('Current Dates:', dates);
     // Return a slice of the dateRange array for the current page
     return dates;
   }
@@ -431,4 +456,34 @@ export class EmployeeWorkReportComponent {
     this.modalAttrEmployeeReport.employeeStatus = new EmployeeStatus(); // Reset the employeeDateDetails objec
   }
 
+  //#region  Update
+  
+  submit() {
+    const payload = {
+      attendanceUpdates: this.employees.flatMap(employee =>
+        Object.keys(employee.dates)
+          .filter(date => employee.dates[date].statusChanged) // Only changed statuses
+          .map(date => ({
+            empId: employee.empId,
+            date: date,
+            status: employee.dates[date].status
+          }))
+      )
+    };
+  
+    if (payload.attendanceUpdates.length > 0) {
+      // Call the API
+      this.employeeWorkReportService.updateAttendance(payload).subscribe(
+        (response) => {
+          this.dataService.showSnackBar("Attendance updated successfully");
+          this.fetchEmployeeStatus(); // Refresh the data
+        }
+      );
+    } else {
+      this.dataService.showSnackBar("No changes detected in Attendance");
+    }
+  }
+  
+  //#endregion
+  
 }

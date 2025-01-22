@@ -59,14 +59,16 @@
                         </div>
 
                         <!-- Status Dropdown -->
-                        <select class="form-select" [(ngModel)]="employee.dates[date].status">
+                        <select class="form-select" 
+                        (change)="onStatusChange(employee, date, $event)"
+                        [(ngModel)]="employee.dates[date].status">
                             <option value="">Select</option>
                             <option *ngFor="let st of getStatusOptions(date)" [value]="st.key">{{ st.value }}</option>
                         </select>
 
                         
 
-                        <div class="">
+                        <div style="text-align: left;" class="">
                             <div >
                                 <div *ngIf="employee.dates[date].leave.requested">
                                     <b>Leave Requested: {{ employee.dates[date].leave.status }}</b>
@@ -182,4 +184,8 @@
         </button>
     </div>
 
+    <!--Submit-->
+    <div>
+        <button class="btn btn-primary" (click)="submit()">Submit</button>
+    </div>
 </div>
