@@ -1,18 +1,16 @@
 <div class="container">
-    <h2 class="mt-4">Employee Shift Calendar</h2>
-
-
+    <h2 class="mt-4">Employee Attendance</h2>
+    <!-- Filter Section -->
     <div class="card">
         <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
             (triggerParentFunction)="fetchEmployeeStatus()">
         </app-filter>
         <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+
     </div>
 
     <br>
 
-
-    <!-- Employee Shifts Table -->
     <!-- Employee Shifts Table -->
     <div style="overflow-y: auto; max-height: 500px;">
         <table class="table table-bordered">
@@ -28,7 +26,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let employee of employees">
-                    <td>{{ employee.employeeName }}</td>
+                    <td class="fw-bold">{{ employee.employeeName }}</td>
                     <td>
                         <div>
                             <p><b> Present Days</b> : {{ employee.reports.totalPresentDays }}</p>
@@ -39,54 +37,43 @@
                     </td>
                     <td *ngFor="let date of getCurrentDates()"
                         [ngStyle]="{ 'background-color': getStatusColor(employee.dates[date].status) }">
-                        <!-- First and Last Biometric Data -->
-                        <div style="text-align: left;" *ngIf="employee.dates[date].biometricData 
-                    && employee.dates[date].biometricData.length">
-                            <!-- First biometric record (In time) -->
-                            <div *ngIf="employee.dates[date].biometricData[0]">
-                                <p> <b> {{ employee.dates[date].biometricData[0].type}} </b>: {{
-                                    employee.dates[date].biometricData[0].time }}</p>
-                            </div>
-                            <!-- Last biometric record (Out time) -->
-                            <div
-                                *ngIf="employee.dates[date].biometricData[employee.dates[date].biometricData.length - 1]">
-                                <p> <b> {{employee.dates[date].biometricData[employee.dates[date].biometricData.length -
-                                        1].type }}</b>: {{
-                                    employee.dates[date].biometricData[employee.dates[date].biometricData.length -
-                                    1].time }}</p>
-                            </div>
 
+                        <div *ngIf="employee.dates[date]?.biometricData?.length">
+                            <p class="mb-1">
+                                <b>{{ employee.dates[date].biometricData[0]?.type }}</b>: {{
+                                employee.dates[date].biometricData[0]?.time }}
+                            </p>
+                            <p class="mb-1">
+                                <b>{{ employee.dates[date].biometricData[employee.dates[date].biometricData.length -
+                                    1]?.type }}</b>: {{
+                                employee.dates[date].biometricData[employee.dates[date].biometricData.length - 1]?.time
+                                }}
+                            </p>
                         </div>
 
                         <!-- Status Dropdown -->
-                        <select class="form-select" 
-                        (change)="onStatusChange(employee, date, $event)"
-                        [(ngModel)]="employee.dates[date].status">
+                        <select class="form-select form-select-sm mt-2"
+                            (change)="onStatusChange(employee, date, $event)" [(ngModel)]="employee.dates[date].status">
                             <option value="">Select</option>
                             <option *ngFor="let st of getStatusOptions(date)" [value]="st.key">{{ st.value }}</option>
                         </select>
-
-                        
-
-                        <div style="text-align: left;" class="">
-                            <div >
-                                <div *ngIf="employee.dates[date].leave.requested">
-                                    <b>Leave Requested: {{ employee.dates[date].leave.status }}</b>
-                                    <button *ngIf="employee.dates[date].leave.status == 'PENDING'" (click)="null"
-                                        class="btn btn-primary">Approve</button>
-                                </div>
+                        <!-- Leave and OD Details -->
+                        <div class="mt-2">
+                            <div *ngIf="employee.dates[date]?.leave?.requested">
+                                <b>Leave: {{ employee.dates[date].leave.status }}</b>
+                                <button *ngIf="employee.dates[date].leave.status === 'PENDING'"
+                                    class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
-                            <div>
-                                <div *ngIf="employee.dates[date].od.requested">
-                                    <b>OD Requested: {{ employee.dates[date].od.status }}</b>
-                                    <button *ngIf="employee.dates[date].od.status == 'PENDING'" (click)="null"
-                                        class="btn btn-primary">Approve</button>
-                                </div>
+                            <div *ngIf="employee.dates[date]?.od?.requested">
+                                <b>OD: {{ employee.dates[date].od.status }}</b>
+                                <button *ngIf="employee.dates[date].od.status === 'PENDING'"
+                                    class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                         </div>
-                
+
 
                         <i class="fas fa-info-circle" (click)="openModal(employee.dates[date])"></i>
+
                     </td>
                 </tr>
             </tbody>
