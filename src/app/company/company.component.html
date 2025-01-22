@@ -1,10 +1,10 @@
 <div class="company-list-container">
 
-  <div class="card">
+  <div class="cards-filter">
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" 
     (triggerParentFunction)="getCompanyList()">
     </app-filter>
-    <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
   
     <h3>Company List</h3>

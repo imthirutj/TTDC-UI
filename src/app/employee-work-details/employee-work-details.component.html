@@ -1,11 +1,11 @@
 <div class="container">
   <h2>Employee Work Details</h2>
 
-  <div class="card">
+  <div class="cards-filter">
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
         (triggerParentFunction)="fetchEmployeeWorkDetails()">
     </app-filter>
-    <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 </div>
 
   <!-- Work Details Table -->

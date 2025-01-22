@@ -19,16 +19,22 @@ import { SnackBarComponent } from './utils/widgets/snack-bar/snack-bar/snack-bar
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private loadingService: LoadingService,
-     private helperService: HelperService,
-     private snackBar: MatSnackBar,
-     private dataService:DataService
-    ) {}
+    private helperService: HelperService,
+    private snackBar: MatSnackBar,
+    private dataService: DataService
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Show loading spinner
-    this.loadingService.setLoadingState(true);
 
     const skipAuth = this.helperService.getQueryParam(req.urlWithParams, 'skipSetAuth') === 'true';
+    const skipLoader = this.helperService.getQueryParam(req.urlWithParams, 'skipLoader') === 'true';
+
+    if (!skipLoader) {
+      // Show loading spinner
+      this.loadingService.setLoadingState(true);
+
+    }
+
 
     // Add Content-Type for all requests
     let headers = new HttpHeaders({
@@ -48,7 +54,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return next.handle(modifiedReq).pipe(
         finalize(() => {
-          this.loadingService.setLoadingState(false);
+          if (!skipLoader) {
+            this.loadingService.setLoadingState(false);
+          }
         }),
         catchError((error: HttpErrorResponse) => {
           console.error('HTTP Error:', error);
@@ -67,17 +75,22 @@ export class AuthInterceptor implements HttpInterceptor {
       console.warn('No auth token found, making request without Authorization header');
     }
 
-  //   console.log('Request Headers:', headers.keys(), headers.get('Authorization'));
+    //   console.log('Request Headers:', headers.keys(), headers.get('Authorization'));
 
     // Clone the request with the necessary headers
     const authReq = req.clone({ headers });
 
     return next.handle(authReq).pipe(
       finalize(() => {
-        this.loadingService.setLoadingState(false);
+        if (!skipLoader) {
+          this.loadingService.setLoadingState(false);
+        }
       }),
       catchError((error: HttpErrorResponse) => {
-        this.handleError(error);
+        if (!skipLoader) {
+
+          this.handleError(error);
+        }
         return throwError(error);
       }),
       tap((event: HttpEvent<any>) => {
@@ -94,8 +107,8 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
 
-   // Handle HTTP error and print status code and error response
-   private handleError(error: HttpErrorResponse): void {
+  // Handle HTTP error and print status code and error response
+  private handleError(error: HttpErrorResponse): void {
     if (error.status !== 200) {
       this.snackBar.openFromComponent(SnackBarComponent, {
         data: { message: 'Error Occured While Processing...' },  // Pass dynamic message

@@ -210,5 +210,16 @@ export class FiltersComponent implements OnInit {
       if (response.success) this.vendors = response.data;
     });
   }
+
+
+  showDialog: boolean = false;
+  openFilterModal(){
+    this.showDialog = true;
+  }
+
+  search(){
+    this.triggerParentFunction.emit();
+    this.showDialog = false;
+  }
   //#endregion
 }

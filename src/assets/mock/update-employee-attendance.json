@@ -1,3 +1,14 @@
 {
-    
+    "attendanceUpdates": [
+        {
+            "empId": 1001,
+            "date": "2024-03-26",
+            "status": "PRESENT"
+        },
+        {
+            "empId": 1001,
+            "date": "2024-03-27",
+            "status": "ABSENT"
+        }
+    ]
 }

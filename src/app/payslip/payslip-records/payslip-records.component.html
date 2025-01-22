@@ -4,11 +4,11 @@
       {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
     </h3>
 
-    <div class="card">
+    <div class="cards-filter">
       <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
        (triggerParentFunction)="getEmployeeList()">
       </app-filter>
-      <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+      <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
     </div>
 
 

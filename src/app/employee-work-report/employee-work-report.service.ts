@@ -22,13 +22,21 @@ export class EmployeeWorkReportService {
   
    }
  
-   getEmployeeWorkReoportDetails(payload: any): Observable<any> {
+   getEmployeeWorkReportDetails(payload: any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(payload);
-    return this.http.get(`assets/mock/employee-work-details.json?${queryParams}`);
+    const url = `${this.apiUrl}EmpWorkReport/GetEmployeeAttendanceReport?${queryParams}`;
+     return this.http.get(url);
    }
 
    updateAttendance(payload: any): Observable<any> {
     return this.http.post(`assets/mock/employee-work-details.json`, payload);
    }
+
+   getBiometricLogs(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}EmpWorkReport/GetBiometricLogs?${queryParams}&skipLoader=true`;
+    return this.http.get<any>(url);
+  }
+  
 
 }

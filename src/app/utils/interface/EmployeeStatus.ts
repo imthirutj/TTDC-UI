@@ -113,17 +113,20 @@ export class BiometricData {
   export class EmployeeStatus {
     empId: number;
     employeeName: string;
+    empCode: string;
     reports: Reports;
     dates: { [key: string]: DateDetails };
   
     constructor(
       empId: number = 0,
       employeeName: string = '',
+      empCode: string = '',
       reports: Reports = new Reports(),
       dates: { [key: string]: DateDetails } = {}
     ) {
       this.empId = empId;
       this.employeeName = employeeName;
+      this.empCode = empCode;
       this.reports = reports;
       this.dates = dates;
     }

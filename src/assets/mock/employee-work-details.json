@@ -19,9 +19,8 @@
       },
       "dates": {
         "2024-12-26": {
-          "status": "",
-          "_status": "PRESENT,ABSENT, HOLIDAY, WEEKOFF, LEAVE_APPROVED, OD_APPROVED. Take it from employeeAttendance table, else return default empty",
-          "biometricData": [
+           "status": "",
+           "biometricData": [
             {
               "type": "In",
               "time": "2024-11-26 09:00 AM"
@@ -35,7 +34,6 @@
             "leaveRequestID":1,
             "requested": true,
             "status": "PENDING",
-            "_status": "APPROVED, REJECTED, PENDING",
             "reason": ""
           },
           "od": {

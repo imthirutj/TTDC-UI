@@ -244,6 +244,11 @@ convertDateFormat(dateString: string): string {
   // Return the date in 'yyyy-MM-dd' format
   return `${year}-${month}-${day}`;
 }
+ formatDateWithoutTimezone(date: Date): string {
+  const localDate = new Date(date);  // Create a new Date instance to avoid modifying the original
+  localDate.setMinutes(localDate.getMinutes() - localDate.getTimezoneOffset()); // Adjust to local time
+  return localDate.toISOString().split('T')[0]; // Format the date as 'yyyy-MM-dd'
+}
 
 
 }

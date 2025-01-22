@@ -1,9 +1,9 @@
 
-<div class="card">
+<div class="cards-filter">
   <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
       (triggerParentFunction)="getLeaveRequest()">
   </app-filter>
-  <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 </div>
 
 <button class="btn btn-success mb-3" type="button" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">

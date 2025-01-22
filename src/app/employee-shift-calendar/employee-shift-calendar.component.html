@@ -2,11 +2,11 @@
     <h2 class="mt-4">Employee Shift Calendar</h2>
 
 
-    <div class="card">
+    <div class="cards-filter">
         <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
             (triggerParentFunction)="fetchEmployeeShifts()">
         </app-filter>
-        <button style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+        <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
     </div>
 
     <br>

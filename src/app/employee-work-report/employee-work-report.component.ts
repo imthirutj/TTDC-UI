@@ -81,6 +81,11 @@ export class EmployeeWorkReportComponent {
     employeeStatus: new EmployeeStatus()
   }
 
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1,
+    pageSize:10
+  }
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -228,13 +233,84 @@ export class EmployeeWorkReportComponent {
 
   fetchEmployeeStatus() {
     const payload = this.dataService.getPayloadValue(this.filters);
-    this.employeeWorkReportService.getEmployeeWorkReoportDetails(payload).subscribe((response) => {
+    const fpayload ={
+      pageNumber: this.pageAttributes.currentPage,
+      pageSize: this.pageAttributes.pageSize,
+      ...payload
+    }
+    this.employeeWorkReportService.getEmployeeWorkReportDetails(fpayload).subscribe((response) => {
       if (response.success) {
         this.employees = response.data as EmployeeStatus[];
-        this.addMissingDates();
+        this.pageAttributes.totalPages = response.totalPages;
+        // this.addMissingDates();
+        // Iterate over each employee to call GetBiometricLogs API for each date
+        this.employees.forEach(employee => {
+          this.addBiometricDataToEmployee(employee);
+        });
       }
     });
   }
+
+
+  addBiometricDataToEmployee(employee: EmployeeStatus) {
+    const empCode = employee.empCode;
+    const dates = Object.keys(employee.dates).map(date => new Date(date));
+
+    // Find the earliest and latest dates in the employee's dates
+    const minDate = new Date(Math.min(...dates.map(date => date.getTime())));
+    const maxDate = new Date(Math.max(...dates.map(date => date.getTime())));
+
+    // Start processing the date range month by month
+    let currentStartDate = new Date(minDate);
+
+    // Ensure we're making a call for each month
+    while (currentStartDate <= maxDate) {
+      // Set currentEndDate to the last day of the current month without time
+      const currentEndDate = new Date(currentStartDate.getFullYear(), currentStartDate.getMonth() + 1, 0); // Last day of the month
+
+      // Set both currentStartDate and currentEndDate to have no time part (midnight UTC)
+      currentStartDate.setHours(0, 0, 0, 0);
+      currentEndDate.setHours(0, 0, 0, 0);
+
+      // Ensure the end date does not exceed maxDate
+      if (currentEndDate > maxDate) {
+        currentEndDate.setTime(maxDate.getTime()); // Set to maxDate if currentEndDate is greater than maxDate
+      }
+
+      // Format both startDate and endDate to 'yyyy-MM-dd' (without time)
+      const startDate = this.dataService.formatDateWithoutTimezone(currentStartDate); // Format startDate
+      const endDate = this.dataService.formatDateWithoutTimezone(currentEndDate);     // Format endDate
+
+      const payload = {
+        empCode,
+        startDate,  // Use formatted date without time
+        endDate,    // Use formatted date without time
+       
+      };
+
+      this.employeeWorkReportService.getBiometricLogs(payload).subscribe((biometricResponse) => {
+        if (biometricResponse.success) {
+          const biometricData = biometricResponse.data; // Assuming response.data is an object with date keys
+
+          // Iterate through the returned data and update biometric data
+          Object.keys(biometricData).forEach(logDate => {
+            if (employee.dates[logDate]) {
+              employee.dates[logDate].biometricData = biometricData[logDate].biometricData;
+            }
+          });
+        }
+      });
+
+      // Move to the next month
+      currentStartDate.setMonth(currentStartDate.getMonth() + 1);
+      currentStartDate.setDate(1); // Start the next month from the 1st
+    }
+
+    //console.log('Employee', employee);
+
+  }
+
+
 
   addMissingDates() {
     this.employees.forEach((employee) => {
@@ -319,14 +395,14 @@ export class EmployeeWorkReportComponent {
   onStatusChange(employee: EmployeeStatus, date: string, event: Event) {
     const target = event.target as HTMLSelectElement;
     const newStatus = target?.value;
-  
+
     if (!newStatus) {
       console.warn(`No status selected for date: ${date}`);
       return;
     }
-  
+
     const dateDetails = employee.dates[date];
-  
+
     if (dateDetails) {
       if (dateDetails.status) {
         dateDetails.status = newStatus;
@@ -338,7 +414,7 @@ export class EmployeeWorkReportComponent {
 
     console.log('Employee:', employee);
   }
-  
+
 
   //#endregion
 
@@ -397,7 +473,7 @@ export class EmployeeWorkReportComponent {
       currentDate.setDate(currentDate.getDate() + 1); // Increment the date by 1
     }
 
-   // console.log('Date Range:', this.dateRange);  // Output for debugging
+    // console.log('Date Range:', this.dateRange);  // Output for debugging
   }
 
 
@@ -457,7 +533,7 @@ export class EmployeeWorkReportComponent {
   }
 
   //#region  Update
-  
+
   submit() {
     const payload = {
       attendanceUpdates: this.employees.flatMap(employee =>
@@ -470,7 +546,7 @@ export class EmployeeWorkReportComponent {
           }))
       )
     };
-  
+
     if (payload.attendanceUpdates.length > 0) {
       // Call the API
       this.employeeWorkReportService.updateAttendance(payload).subscribe(
@@ -483,7 +559,7 @@ export class EmployeeWorkReportComponent {
       this.dataService.showSnackBar("No changes detected in Attendance");
     }
   }
-  
+
   //#endregion
-  
+
 }
