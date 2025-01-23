@@ -28,8 +28,7 @@
                     <th>Employee</th>
                     <th>#</th>
                     <th *ngFor="let date of getCurrentDates()">
-                        <!-- Show date as dd MMM YYYY -->
-                        {{ date | date: 'dd MMM yyyy' }}
+                        {{ date | date: 'dd MMM yyyy' }} - {{ date | date: 'EEE' }}
                     </th>
                 </tr>
             </thead>

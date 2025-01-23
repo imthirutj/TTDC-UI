@@ -29,7 +29,7 @@ export class EmployeeWorkReportService {
    }
 
    updateAttendance(payload: any): Observable<any> {
-    return this.http.post(`assets/mock/employee-work-details.json`, payload);
+    return this.http.post(`${this.apiUrl}EmpWorkReport/UpsertEmployeeAttendance`, payload);
    }
 
    getBiometricLogs(payload:any): Observable<any> {

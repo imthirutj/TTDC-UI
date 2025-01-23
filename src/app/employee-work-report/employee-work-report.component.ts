@@ -95,7 +95,7 @@ export class EmployeeWorkReportComponent {
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    pageSize:10
+    pageSize:100
   }
   filters: any = {
     selectedMonth: {
@@ -565,19 +565,17 @@ export class EmployeeWorkReportComponent {
   //#region  Update
 
   submit() {
-    const payload = {
-      attendanceUpdates: this.employees.flatMap(employee =>
-        Object.keys(employee.dates)
-          .filter(date => employee.dates[date].statusChanged) // Only changed statuses
-          .map(date => ({
-            empId: employee.empId,
-            date: date,
-            status: employee.dates[date].status
-          }))
-      )
-    };
-
-    if (payload.attendanceUpdates.length > 0) {
+    const payload = this.employees.flatMap(employee =>
+      Object.keys(employee.dates)
+        .filter(date => employee.dates[date].statusChanged) // Only include changed statuses
+        .map(date => ({
+          employeeId: employee.empId,           // Map employee ID
+          date: date,                           // Map date
+          status: employee.dates[date].status   // Map updated status
+        }))
+    );
+    
+    if (payload.length > 0) {
       // Call the API
       this.employeeWorkReportService.updateAttendance(payload).subscribe(
         (response) => {
