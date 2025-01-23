@@ -97,8 +97,9 @@
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                             <div *ngIf="employee.dates[date]?.od?.requested">
-                                <b>OD: {{ employee.dates[date].od.status }}</b>
+                                <b>OD: {{ reqStatus[employee.dates[date].od.status] }}</b>
                                 <button *ngIf="employee.dates[date].od.status == '0'"
+                                [routerLink]="['/odslipapprovalview']" [queryParams]="{odslip_id: employee.dates[date].od.odRequestID}"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                         </div>
@@ -154,7 +155,8 @@
             <h5 class="card-title">Leave Details</h5>
             <div *ngIf="modalAttr.employeeDateDetails.leave.requested">
                 <p><b>Leave Requested: {{ reqStatus[modalAttr.employeeDateDetails.leave.status] }}</b></p>
-                <button *ngIf="modalAttr.employeeDateDetails.leave.status == '0'" (click)="null"
+                <button *ngIf="modalAttr.employeeDateDetails.leave.status == '0'" 
+                [routerLink]="['/Leaveapprovalview']" [queryParams]="{leaveRequest_Id: modalAttr.employeeDateDetails.leave.leaveRequestID}"
                     class="btn btn-primary">Approve</button>
             </div>
             <div *ngIf="!modalAttr.employeeDateDetails.leave.requested">
@@ -169,7 +171,9 @@
             <h5 class="card-title">OD Details</h5>
             <div *ngIf="modalAttr.employeeDateDetails.od.requested">
                 <b>OD Requested: {{ reqStatus[modalAttr.employeeDateDetails.od.status] }}</b>
-                <button *ngIf="modalAttr.employeeDateDetails.od.status == '0'" (click)="null"
+                <button *ngIf="modalAttr.employeeDateDetails.od.status == '0'" 
+                [routerLink]="['/odslipapprovalview']" [queryParams]="{odslip_id: modalAttr.employeeDateDetails.od.odRequestID}"
+
                     class="btn btn-primary">Approve</button>
             </div>
             <div *ngIf="!modalAttr.employeeDateDetails.od.requested">
