@@ -97,6 +97,8 @@ export class EmployeeWorkReportComponent {
     totalPages: 1,
     pageSize:100
   }
+ 
+  //#region Filter
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -161,6 +163,7 @@ export class EmployeeWorkReportComponent {
   };
 
 
+  //#endRegion
 
   constructor(
     private fb: FormBuilder,
