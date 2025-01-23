@@ -272,60 +272,49 @@ export class EmployeeWorkReportComponent {
   addBiometricDataToEmployee(employee: EmployeeStatus) {
     const empCode = employee.empCode;
     const dates = Object.keys(employee.dates).map(date => new Date(date));
-
-    // Find the earliest and latest dates in the employee's dates
     const minDate = new Date(Math.min(...dates.map(date => date.getTime())));
     const maxDate = new Date(Math.max(...dates.map(date => date.getTime())));
-
-    // Start processing the date range month by month
+    
     let currentStartDate = new Date(minDate);
-
-    // Ensure we're making a call for each month
+    const requests = []; // Collect requests to batch
+  
     while (currentStartDate <= maxDate) {
-      // Set currentEndDate to the last day of the current month without time
-      const currentEndDate = new Date(currentStartDate.getFullYear(), currentStartDate.getMonth() + 1, 0); // Last day of the month
-
-      // Set both currentStartDate and currentEndDate to have no time part (midnight UTC)
-      currentStartDate.setHours(0, 0, 0, 0);
-      currentEndDate.setHours(0, 0, 0, 0);
-
-      // Ensure the end date does not exceed maxDate
-      if (currentEndDate > maxDate) {
-        currentEndDate.setTime(maxDate.getTime()); // Set to maxDate if currentEndDate is greater than maxDate
-      }
-
-      // Format both startDate and endDate to 'yyyy-MM-dd' (without time)
-      const startDate = this.dataService.formatDateWithoutTimezone(currentStartDate); // Format startDate
-      const endDate = this.dataService.formatDateWithoutTimezone(currentEndDate);     // Format endDate
-
-      const payload = {
-        empCode,
-        startDate,  // Use formatted date without time
-        endDate,    // Use formatted date without time
-       
-      };
-
+      const currentEndDate = new Date(currentStartDate.getFullYear(), currentStartDate.getMonth() + 1, 0);
+      if (currentEndDate > maxDate) currentEndDate.setTime(maxDate.getTime());
+  
+      const startDate = this.dataService.formatDateWithoutTimezone(currentStartDate);
+      const endDate = this.dataService.formatDateWithoutTimezone(currentEndDate);
+  
+      const payload = { empCode, startDate, endDate };
+  
+      // Push the request into the batch
+      requests.push(() => this.makeBiometricCall(employee, payload));
+  
+      currentStartDate.setMonth(currentStartDate.getMonth() + 1);
+      currentStartDate.setDate(1); // Move to the 1st of the next month
+    }
+  
+    // Execute the requests in small batches
+    this.dataService.executeBatches(requests, 3, 250); // Batch size: 3, Delay: 500ms
+  }
+  
+  makeBiometricCall(employee: EmployeeStatus, payload: any) {
+    return new Promise<void>((resolve) => {
       this.employeeWorkReportService.getBiometricLogs(payload).subscribe((biometricResponse) => {
         if (biometricResponse.success) {
-          const biometricData = biometricResponse.data; // Assuming response.data is an object with date keys
-
-          // Iterate through the returned data and update biometric data
+          const biometricData = biometricResponse.data;
           Object.keys(biometricData).forEach(logDate => {
             if (employee.dates[logDate]) {
               employee.dates[logDate].biometricData = biometricData[logDate].biometricData;
             }
           });
         }
+        resolve();
       });
-
-      // Move to the next month
-      currentStartDate.setMonth(currentStartDate.getMonth() + 1);
-      currentStartDate.setDate(1); // Start the next month from the 1st
-    }
-
-    //console.log('Employee', employee);
-
+    });
   }
+  
+  
 
 
 

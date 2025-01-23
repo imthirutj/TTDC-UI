@@ -25,6 +25,7 @@
         <table class="table table-bordered">
             <thead class="sticky-header">
                 <tr>
+                    <th>S.NO</th>
                     <th>Employee</th>
                     <th>#</th>
                     <th *ngFor="let date of getCurrentDates()">
@@ -33,7 +34,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let employee of employees">
+                <tr *ngFor="let employee of employees; let i=index">
+                    <td>
+                        {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
+                    </td>
                     <td class="fw-bold">
                         {{ employee.employeeName }} ({{employee.empCode}})
 

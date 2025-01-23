@@ -225,7 +225,7 @@ export class DataService {
 
 
   // Download Excel
-   downloadExcelTable(tableId: string, fileName: string) {
+  downloadExcelTable(tableId: string, fileName: string) {
     const table = document.getElementById(tableId);
 
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table as HTMLTableElement);
@@ -235,20 +235,45 @@ export class DataService {
   }
 
   // Function to convert 'dd/MM/yyyy' to 'yyyy-MM-dd'
-convertDateFormat(dateString: string): string {
-  const parts = dateString.split('/'); // Split the date into parts [day, month, year]
-  const day = parts[0];
-  const month = parts[1];
-  const year = parts[2];
+  convertDateFormat(dateString: string): string {
+    const parts = dateString.split('/'); // Split the date into parts [day, month, year]
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
 
-  // Return the date in 'yyyy-MM-dd' format
-  return `${year}-${month}-${day}`;
-}
- formatDateWithoutTimezone(date: Date): string {
-  const localDate = new Date(date);  // Create a new Date instance to avoid modifying the original
-  localDate.setMinutes(localDate.getMinutes() - localDate.getTimezoneOffset()); // Adjust to local time
-  return localDate.toISOString().split('T')[0]; // Format the date as 'yyyy-MM-dd'
-}
+    // Return the date in 'yyyy-MM-dd' format
+    return `${year}-${month}-${day}`;
+  }
+  formatDateWithoutTimezone(date: Date): string {
+    const localDate = new Date(date);  // Create a new Date instance to avoid modifying the original
+    localDate.setMinutes(localDate.getMinutes() - localDate.getTimezoneOffset()); // Adjust to local time
+    return localDate.toISOString().split('T')[0]; // Format the date as 'yyyy-MM-dd'
+  }
 
+
+
+  executeBatches(requests: (() => Promise<void>)[], batchSize: number, delay: number) {
+    const executeBatch = async (batch: (() => Promise<void>)[]) => {
+      for (const request of batch) {
+        await request(); // Wait for each request to complete
+      }
+    };
+
+    const batches = [];
+    for (let i = 0; i < requests.length; i += batchSize) {
+      const batch = requests.slice(i, i + batchSize);
+      batches.push(batch);
+    }
+
+    batches.reduce((promise, batch, index) => {
+      return promise.then(() =>
+        new Promise((resolve) => {
+          setTimeout(() => {
+            executeBatch(batch).then(resolve);
+          }, index * delay);
+        })
+      );
+    }, Promise.resolve());
+  }
 
 }
