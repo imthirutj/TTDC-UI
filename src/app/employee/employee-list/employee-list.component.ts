@@ -23,6 +23,7 @@ export class EmployeeListComponent {
   userAccessLevel: any;
 
   Employees: any[] = [];
+  allEmlpoyees: any[] = [];
 
 
   dropdowns = {
@@ -48,6 +49,11 @@ export class EmployeeListComponent {
 
   formData = new FormData();
 
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1,
+    itemsPerPage: 10,
+  }
 
   filters: any = {
     selectedMonth: {
@@ -223,19 +229,28 @@ export class EmployeeListComponent {
 
   getEmployeeList(): void {
     const payload = this.dataService.getPayloadValue(this.filters);
-
+    this.pageAttributes.currentPage = 1;
     this.masterDataService.getEmployeeList(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {
-          this.Employees = response.data;
+          this.allEmlpoyees = response.data;
+          this.pageAttributes.totalPages = Math.ceil(this.allEmlpoyees.length / this.pageAttributes.itemsPerPage);
+          this.paginate();
         } else {
-          this.Employees = [];
+          this.allEmlpoyees = [];
           this.dataService.showSnackBar(response.message);
         }
       }
     );
   }
+
+  paginate(): void {
+    const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
+    const endIndex = startIndex + this.pageAttributes.itemsPerPage;
+    this.Employees = this.allEmlpoyees.slice(startIndex, endIndex);
+  }
+
 
 
   openModal(action: Action,  employee?: Employee): void {

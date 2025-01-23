@@ -8,7 +8,7 @@
   Add Employee
 </button>
 
-<div class="Employee-list-container">
+<div  style="overflow-y: auto; max-height: 700px;" class="Employee-list-container" >
   <h3>Employee List</h3>
   <table class="table table-bordered">
     <thead>
@@ -35,7 +35,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let employee of Employees; let i = index">
-        <td>{{ i + 1 }}
+        <td>
+          {{ ((pageAttributes.currentPage - 1) * pageAttributes.itemsPerPage) + (i + 1) }}
           <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, employee)">
             Edit
           </button>
@@ -74,6 +75,9 @@
     </tbody>
   </table>
 </div>
+<app-server-pagination  [pageAttributes]="pageAttributes" 
+(triggerParentFunction)="paginate()">
+</app-server-pagination>
 
 
 

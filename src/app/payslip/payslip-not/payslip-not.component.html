@@ -39,7 +39,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let obj of Employees; let i = index">
-          <td>{{ ((pageAttributes.currentPage - 1) * pageAttributes.itemsPerPage) + (i + 1) }}</td>
+          <td>
+            {{ ((pageAttributes.currentPage - 1) * pageAttributes.itemsPerPage) + (i + 1) }}
+          </td>
             <!-- <td>{{ department.employeeId  }}</td> -->
             <td>{{ obj.employeeName }}</td>
             <td>{{ obj.employeeCode }}</td>

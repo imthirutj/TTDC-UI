@@ -13,6 +13,14 @@
     <br>
 
     <!-- Employee Shifts Table -->
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">
+            &#8592; <!-- Left Arrow -->
+        </button>
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+            &#8594; <!-- Right Arrow -->
+        </button>
+    </div>
     <div style="overflow-y: auto; max-height: 500px;">
         <table class="table table-bordered">
             <thead class="sticky-header">
@@ -42,7 +50,23 @@
                     <td *ngFor="let date of getCurrentDates()"
                         [ngStyle]="{ 'background-color': getStatusColor(employee.dates[date].status) }">
 
-                        <div *ngIf="employee.dates[date]?.biometricData?.length">
+                        <!-- Status Dropdown -->
+                        <select 
+                        *ngIf="!isOtherStatus(employee.dates[date].status)"
+                            class="status-dropdown form-select form-select-sm mt-2"
+                            (change)="onStatusChange(employee, date, $event)" [(ngModel)]="employee.dates[date].status">
+                            <option value="">Select</option>
+                            <option *ngFor="let st of getStatusOptions(date)" [value]="st.key">{{ st.value }}</option>
+                        </select>
+                        <input 
+                        *ngIf="isOtherStatus(employee.dates[date].status)"
+                        type="text" class="form-control form-control-sm mt-2" 
+                        [value]="getOtherStatusValue(employee.dates[date].status)" disabled>
+
+                        <div
+                        class="time-card"
+                        (click)="openModal(employee.dates[date])"
+                         style="text-align: left;" *ngIf="employee.dates[date]?.biometricData?.length">
                             <!-- Show the first biometric log -->
                             <p *ngIf="employee.dates[date].biometricData[0]?.type" class="mb-1">
                                 <b>{{ employee.dates[date].biometricData[0]?.type }}</b>: {{
@@ -62,28 +86,25 @@
                         </div>
 
 
-                        <!-- Status Dropdown -->
-                        <select class="form-select form-select-sm mt-2"
-                            (change)="onStatusChange(employee, date, $event)" [(ngModel)]="employee.dates[date].status">
-                            <option value="">Select</option>
-                            <option *ngFor="let st of getStatusOptions(date)" [value]="st.key">{{ st.value }}</option>
-                        </select>
+                        
                         <!-- Leave and OD Details -->
                         <div class="mt-2">
                             <div *ngIf="employee.dates[date]?.leave?.requested">
-                                <b>Leave: {{ employee.dates[date].leave.status }}</b>
-                                <button *ngIf="employee.dates[date].leave.status === 'PENDING'"
+                                <b>Leave: {{ reqStatus[employee.dates[date].leave.status] }}</b>
+                                <button
+                                [routerLink]="['/Leaveapprovalview']" [queryParams]="{leaveRequest_Id: employee.dates[date].leave.leaveRequestID}"
+                                 *ngIf="employee.dates[date].leave.status == '0'"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                             <div *ngIf="employee.dates[date]?.od?.requested">
                                 <b>OD: {{ employee.dates[date].od.status }}</b>
-                                <button *ngIf="employee.dates[date].od.status === 'PENDING'"
+                                <button *ngIf="employee.dates[date].od.status == '0'"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                         </div>
 
-
-                        <i class="fas fa-info-circle" (click)="openModal(employee.dates[date])"></i>
+                        <div (click)="openModal(employee.dates[date])" class="triangle"></div>
+                        <!-- <i class="fas fa-info-circle" (click)="openModal(employee.dates[date])"></i> -->
 
                     </td>
                 </tr>
@@ -94,75 +115,70 @@
 
     <!--Submit-->
     <div>
-        <button class="btn btn-primary" (click)="submit()">Submit</button>
+        <button class="btn btn-primary" (click)="submit()">Update Attendance</button>
     </div>
-    <div class="d-flex justify-content-between">
-        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">
-            &#8592; <!-- Left Arrow -->
-        </button>
-        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
-            &#8594; <!-- Right Arrow -->
-        </button>
-    </div>
+ 
 
     <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="fetchEmployeeStatus()">
     </app-server-pagination>
 
-
     <app-common-dialog [showDialog]="modalAttr.show" [dialogTitle]="modalAttr.title" [showCloseIcon]="true"
-        [showSubmitButton]="false" (closeDialog)="closeModal()">
+    [showSubmitButton]="false" (closeDialog)="closeModal()">
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Biometric Data</h5>
-                <div
-                    *ngIf="modalAttr.employeeDateDetails.biometricData && modalAttr.employeeDateDetails.biometricData.length">
-                    <p *ngFor="let data of modalAttr.employeeDateDetails.biometricData">
-                        {{ data.type }}: {{ data.time }}
-                    </p>
-                </div>
-                <p
-                    *ngIf="modalAttr.employeeDateDetails.biometricData && !modalAttr.employeeDateDetails.biometricData.length">
-                    No biometric data found for this date.</p>
+    <!-- Biometric Data Section -->
+    <div class="card custom-card">
+        <div class="card-body">
+            <h5 class="card-title">Biometric Data</h5>
+            <div *ngIf="modalAttr.employeeDateDetails.biometricData && modalAttr.employeeDateDetails.biometricData.length">
+                <p *ngFor="let data of modalAttr.employeeDateDetails.biometricData" class="data-item">
+                    <strong>{{ data.type }}:</strong> {{ data.time }}
+                </p>
+            </div>
+            <p *ngIf="!modalAttr.employeeDateDetails.biometricData.length" class="no-data-text">
+                No biometric data found for this date.
+            </p>
+        </div>
+    </div>
+
+    <!-- Day Status Section -->
+    <div class="card custom-card">
+        <div class="card-body">
+            <h5 class="card-title">Day Status</h5>
+            <p class="status-text">{{ modalAttr.employeeDateDetails.status }}</p>
+        </div>
+    </div>
+
+    <!-- Leave Details Section -->
+    <div class="card custom-card">
+        <div class="card-body">
+            <h5 class="card-title">Leave Details</h5>
+            <div *ngIf="modalAttr.employeeDateDetails.leave.requested">
+                <p><b>Leave Requested: {{ reqStatus[modalAttr.employeeDateDetails.leave.status] }}</b></p>
+                <button *ngIf="modalAttr.employeeDateDetails.leave.status == '0'" (click)="null"
+                    class="btn btn-primary">Approve</button>
+            </div>
+            <div *ngIf="!modalAttr.employeeDateDetails.leave.requested">
+                <p>No leave requested for this date.</p>
             </div>
         </div>
+    </div>
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Day Status</h5>
-                <p>{{ modalAttr.employeeDateDetails.status }}</p>
+    <!-- OD Details Section -->
+    <div class="card custom-card">
+        <div class="card-body">
+            <h5 class="card-title">OD Details</h5>
+            <div *ngIf="modalAttr.employeeDateDetails.od.requested">
+                <b>OD Requested: {{ reqStatus[modalAttr.employeeDateDetails.od.status] }}</b>
+                <button *ngIf="modalAttr.employeeDateDetails.od.status == '0'" (click)="null"
+                    class="btn btn-primary">Approve</button>
+            </div>
+            <div *ngIf="!modalAttr.employeeDateDetails.od.requested">
+                <p>No OD requested for this date.</p>
             </div>
         </div>
+    </div>
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Leave Details</h5>
-                <div *ngIf="modalAttr.employeeDateDetails.leave.requested">
-                    <p><b>Leave Requested: {{ modalAttr.employeeDateDetails.leave.status }}</b></p>
-                    <button *ngIf="modalAttr.employeeDateDetails.leave.status == 'PENDING'" (click)="null"
-                        class="btn btn-primary">Approve</button>
-                </div>
-                <div *ngIf="!modalAttr.employeeDateDetails.leave.requested">
-                    <p>No leave requested for this date.</p>
-                </div>
-            </div>
-        </div>
-
-        <!--OD-->
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">OD Details</h5>
-                <div *ngIf="modalAttr.employeeDateDetails.od.requested">
-                    <b>OD Requested: {{ modalAttr.employeeDateDetails.od.status }}</b>
-                    <button *ngIf="modalAttr.employeeDateDetails.od.status == 'PENDING'" (click)="null"
-                        class="btn btn-primary">Approve</button>
-                </div>
-                <div *ngIf="!modalAttr.employeeDateDetails.od.requested">
-                    <p>No OD requested for this date.</p>
-                </div>
-            </div>
-        </div>
-    </app-common-dialog>
+</app-common-dialog>
 
 
 

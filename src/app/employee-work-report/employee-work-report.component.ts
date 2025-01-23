@@ -68,6 +68,17 @@ export class EmployeeWorkReportComponent {
     { key: 'WEEKOFF', value: 'Weekly Off', color: '#ffcc6e' },
   ];
 
+  otherStatus: { key: string; value: string, color: string }[] = [
+    { key: 'LEAVE', value: 'Leave', color: '#a9f7a9' },
+    { key: 'OD', value: 'OD', color: '#ffa2a2' },
+  ];
+
+   reqStatus: { [key: string]: string } = {
+    0: 'Pending',
+    1: 'Approved',
+    2: 'Rejected'
+  };
+  
   modalAttr: any = {
     show: false,
     title: '',
@@ -129,10 +140,16 @@ export class EmployeeWorkReportComponent {
       key: 'catId',
       includeInSearchParams: true
     },
-    employeeId: {
+    employeeCode: {
       value: '',
       show: true,
-      key: 'employeeId',
+      key: 'employeeCode',
+      includeInSearchParams: true
+    },
+    employeeName:{
+      value: '',
+      show: true,
+      key: 'employeeName',
       includeInSearchParams: true
     },
     vendorId: {
@@ -358,6 +375,19 @@ export class EmployeeWorkReportComponent {
     // For future dates, return only Holiday and Weekly Off
     return this.status.filter(st => st.key === 'HOLIDAY' || st.key === 'WEEKOFF');
   }
+
+  isStatus(statusKey: string): boolean {
+    return this.status.some(os => os.key === statusKey);
+  }
+
+  isOtherStatus(statusKey: string): boolean {
+    return this.otherStatus.some(os => os.key === statusKey);
+  }
+
+  getOtherStatusValue(statusKey: string): string {
+    const status = this.otherStatus.find(os => os.key === statusKey);
+    return status ? status.value : '';
+}
 
   //#endregion
 

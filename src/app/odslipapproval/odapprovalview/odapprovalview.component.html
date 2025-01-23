@@ -73,7 +73,8 @@
     <div class="col-md-6">
         <p><strong>Approve Authority</strong></p>   
         <p>{{payobj.visiting_Manager_Approval}}</p> 
-        <div *ngIf="payobj.visiting_Manager_Approval != 'Approved'">
+        <div *ngIf="payobj.visiting_Manager_Approval != 'Approved' &&
+        payobj.visiting_Manager_Approval != 'Not Approved'">
           <button class="btn btn-success" (click)="approveODSlip()">Approve</button>
           <button class="btn btn-danger" (click)="disapproveODSlip()">Disapprove</button>
         </div>    
