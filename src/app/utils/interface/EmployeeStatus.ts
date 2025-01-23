@@ -56,18 +56,21 @@ export class BiometricData {
     leave: Leave;
     od: OD;
     statusChanged: boolean;
+    selected: boolean;
   
     constructor(
       status: string = '',
       biometricData: BiometricData[] = [],
       leave: Leave = new Leave(),
-      od: OD = new OD()
+      od: OD = new OD(),
+      selected: boolean = false
     ) {
       this.status = status;
       this.biometricData = biometricData;
       this.leave = leave;
       this.od = od;
       this.statusChanged = false; 
+      this.selected = selected;
     }
   }
   

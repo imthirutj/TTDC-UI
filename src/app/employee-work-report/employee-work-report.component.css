@@ -101,3 +101,9 @@
   background-color: #0056b3;
   border-color: #004085;
 }
+
+.date-select-checkbox{
+  cursor: pointer;
+    position: absolute;
+    bottom: 0;
+}

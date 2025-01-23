@@ -73,12 +73,12 @@ export class EmployeeWorkReportComponent {
     { key: 'OD', value: 'OD', color: '#ffa2a2' },
   ];
 
-   reqStatus: { [key: string]: string } = {
+  reqStatus: { [key: string]: string } = {
     0: 'Pending',
     1: 'Approved',
     2: 'Rejected'
   };
-  
+
   modalAttr: any = {
     show: false,
     title: '',
@@ -95,9 +95,11 @@ export class EmployeeWorkReportComponent {
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    pageSize:100
+    pageSize: 10
   }
- 
+
+  headerSelection: { [key: string]: boolean } = {};
+
   //#region Filter
   filters: any = {
     selectedMonth: {
@@ -148,7 +150,7 @@ export class EmployeeWorkReportComponent {
       key: 'employeeCode',
       includeInSearchParams: true
     },
-    employeeName:{
+    employeeName: {
       value: '',
       show: true,
       key: 'employeeName',
@@ -253,7 +255,7 @@ export class EmployeeWorkReportComponent {
 
   fetchEmployeeStatus() {
     const payload = this.dataService.getPayloadValue(this.filters);
-    const fpayload ={
+    const fpayload = {
       pageNumber: this.pageAttributes.currentPage,
       pageSize: this.pageAttributes.pageSize,
       ...payload
@@ -277,30 +279,30 @@ export class EmployeeWorkReportComponent {
     const dates = Object.keys(employee.dates).map(date => new Date(date));
     const minDate = new Date(Math.min(...dates.map(date => date.getTime())));
     const maxDate = new Date(Math.max(...dates.map(date => date.getTime())));
-    
+
     let currentStartDate = new Date(minDate);
     const requests = []; // Collect requests to batch
-  
+
     while (currentStartDate <= maxDate) {
       const currentEndDate = new Date(currentStartDate.getFullYear(), currentStartDate.getMonth() + 1, 0);
       if (currentEndDate > maxDate) currentEndDate.setTime(maxDate.getTime());
-  
+
       const startDate = this.dataService.formatDateWithoutTimezone(currentStartDate);
       const endDate = this.dataService.formatDateWithoutTimezone(currentEndDate);
-  
+
       const payload = { empCode, startDate, endDate };
-  
+
       // Push the request into the batch
       requests.push(() => this.makeBiometricCall(employee, payload));
-  
+
       currentStartDate.setMonth(currentStartDate.getMonth() + 1);
       currentStartDate.setDate(1); // Move to the 1st of the next month
     }
-  
+
     // Execute the requests in small batches
     this.dataService.executeBatches(requests, 3, 250); // Batch size: 3, Delay: 500ms
   }
-  
+
   makeBiometricCall(employee: EmployeeStatus, payload: any) {
     return new Promise<void>((resolve) => {
       this.employeeWorkReportService.getBiometricLogs(payload).subscribe((biometricResponse) => {
@@ -316,8 +318,8 @@ export class EmployeeWorkReportComponent {
       });
     });
   }
-  
-  
+
+
 
 
 
@@ -334,6 +336,7 @@ export class EmployeeWorkReportComponent {
           employee.dates[date] = {
             status: '', // Default status
             statusChanged: false, // Default statusChanged
+            selected: false, // Default selected
             biometricData: [], // Default empty array
             leave: {
               leaveRequestID: 0,
@@ -379,7 +382,7 @@ export class EmployeeWorkReportComponent {
   getOtherStatusValue(statusKey: string): string {
     const status = this.otherStatus.find(os => os.key === statusKey);
     return status ? status.value : '';
-}
+  }
 
   //#endregion
 
@@ -557,6 +560,7 @@ export class EmployeeWorkReportComponent {
   //#region  Update
 
   submit() {
+    // Flatten the payload and include only changed statuses
     const payload = this.employees.flatMap(employee =>
       Object.keys(employee.dates)
         .filter(date => employee.dates[date].statusChanged) // Only include changed statuses
@@ -566,20 +570,104 @@ export class EmployeeWorkReportComponent {
           status: employee.dates[date].status   // Map updated status
         }))
     );
-    
+
     if (payload.length > 0) {
-      // Call the API
-      this.employeeWorkReportService.updateAttendance(payload).subscribe(
-        (response) => {
+      // Create requests (promises) for each status change in chunks of 100
+      const chunkSize = 100;
+      const chunkedRequests = [];
+
+      // Split the payload into chunks of 100
+      for (let i = 0; i < payload.length; i += chunkSize) {
+        const chunk = payload.slice(i, i + chunkSize);
+        const request = () => this.employeeWorkReportService.updateAttendance(chunk).toPromise();
+        chunkedRequests.push(request);
+      }
+
+      // Execute the batches in parallel
+      const batchSize = 100; // Batch size
+      const delay = 200; // Delay in ms between batches
+
+      const batchPromises = chunkedRequests.map((request, index) => {
+        return new Promise<void>((resolve, reject) => {
+          // Wait for the delay before each batch execution
+          setTimeout(() => {
+            request().then(() => {
+              resolve();
+            }).catch(error => {
+              reject(error);
+            });
+          }, index * delay); // Delay before each batch
+        });
+      });
+
+      // Wait for all batches to finish
+      Promise.all(batchPromises)
+        .then(() => {
+          // Once all batches are done, fetch employee status
           this.dataService.showSnackBar("Attendance updated successfully");
           this.fetchEmployeeStatus(); // Refresh the data
-        }
-      );
+        })
+        .catch(error => {
+          // Handle errors here
+          console.error("Error updating attendance", error);
+        });
     } else {
       this.dataService.showSnackBar("No changes detected in Attendance");
     }
   }
 
+
+
+
   //#endregion
+  onHeaderCheckboxChange(date: string, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked; // Typecast here
+    this.headerSelection[date] = isChecked; // Update header selection state
+    this.employees.forEach(employee => {
+      if (employee.dates[date]) {
+        employee.dates[date].selected = isChecked; // Update all rows based on header checkbox
+      }
+    });
+  }
+
+
+  onRowCheckboxChange(date: string): void {
+    const allSelected = this.employees.every(employee => employee.dates[date]?.selected);
+    this.headerSelection[date] = allSelected;
+  }
+
+  selectedStatus: string = ''; // Stores the selected status
+
+
+  applyStatus(): void {
+    
+
+    this.employees.forEach(employee => {
+      Object.keys(employee.dates).forEach(date => {
+        if (employee.dates[date]?.selected) {
+          // Update the status for selected dates
+          employee.dates[date].status = this.selectedStatus;
+          employee.dates[date].statusChanged = true; // Mark as changed
+        }
+      });
+    });
+
+    // Clear selection after applying status
+    this.employees.forEach(employee => {
+      Object.keys(employee.dates).forEach(date => {
+        employee.dates[date].selected = false;
+      });
+    });
+
+    this.headerSelection = {}; // Clear the header selection
+    this.selectedStatus = ''; // Reset selected status
+  }
+
+
+  reset() {
+    this.headerSelection = {}; // Clear the header selection
+    this.selectedStatus = ''; // Reset selected status
+    this.fetchEmployeeStatus();
+  }
 
 }
