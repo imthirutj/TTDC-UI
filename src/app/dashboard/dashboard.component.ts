@@ -5,7 +5,7 @@ import { UserType } from '../common/user-type.enum';
 import { MasterDataService } from '../services/master-data.service';
 import { DataService } from '../data.Service';
 import { DashboardService } from './dashboard.service';
-import { DashboardData } from '../utils/interface/Dashboard';
+import { AttendanceSummaryDashboard, DashboardData } from '../utils/interface/Dashboard';
 import { ChartType } from 'chart.js';
 
 @Component({
@@ -24,7 +24,7 @@ export class DashboardComponent {
 
   dashboardData: DashboardData = new DashboardData();
 
-
+  attendanceSummaryDashboard: AttendanceSummaryDashboard = new AttendanceSummaryDashboard();
   paymentGeneratedList: any[] = [];
 
   filters: any = {
@@ -124,7 +124,8 @@ export class DashboardComponent {
 
     this.dashboardService.getDashboardData(payload).subscribe((response: any) => {
       if (response.success) {
-       this.dashboardData = response.data;
+       this.dashboardData = response.data.dashboardObj;
+       this.attendanceSummaryDashboard = response.data.attendanceSummary;
       }
     })
   }

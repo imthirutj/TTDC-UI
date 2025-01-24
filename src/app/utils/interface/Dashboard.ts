@@ -17,3 +17,30 @@ export class DashboardData {
     this.paymentProcessedForSelectedMonth = data?.paymentProcessedForSelectedMonth ?? 0;
   }
 }
+
+export class AttendanceSummaryDashboard{
+  totalPresentDays: number;
+  totalAbsentDays: number;
+  weekOff: number;
+  holiday: number;
+  leaveRequestedDays: number;
+  leaveApprovedDays: number;
+  leaveRejectedDays: number;
+  odRequestedDays: number;
+  odApprovedDays: number;
+  odRejectedDays: number;
+
+  constructor(data?: Partial<AttendanceSummaryDashboard>) {
+    this.totalPresentDays = data?.totalPresentDays ?? 0;
+    this.totalAbsentDays = data?.totalAbsentDays ?? 0;
+    this.weekOff = data?.weekOff ?? 0;
+    this.holiday = data?.holiday ?? 0;
+    this.leaveRequestedDays = data?.leaveRequestedDays ?? 0;
+    this.leaveApprovedDays = data?.leaveApprovedDays ?? 0;
+    this.leaveRejectedDays = data?.leaveRejectedDays ?? 0;
+    this.odRequestedDays = data?.odRequestedDays ?? 0;
+    this.odApprovedDays = data?.odApprovedDays ?? 0;
+    this.odRejectedDays = data?.odRejectedDays ?? 0;
+  }
+}
+
