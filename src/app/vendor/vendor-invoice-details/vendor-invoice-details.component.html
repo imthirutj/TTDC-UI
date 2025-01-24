@@ -177,7 +177,7 @@
                         <td>{{empInvoiceDetail.grossSalary  | currency:'INR'}}</td>
                         <td>{{empInvoiceDetail.epf  | currency:'INR'}}</td>
                         <td>{{empInvoiceDetail.esi  | currency:'INR'}}</td>
-                        <td>{{empInvoiceDetail.amountClaimed | currency:'INR'}}</td>
+                        <td>{{empInvoiceDetail.netAmount | currency:'INR'}}</td>
                       </tr>
                     </ng-container>
                   </ng-container>
@@ -189,7 +189,7 @@
                     <td>{{totals.totalGrossSalary | currency:'INR' }}</td>
                     <td>{{totals.totalEPF | currency:'INR' }}</td> <!-- Add any other columns you need -->
                     <td>{{totals.totalESI | currency:'INR'}}</td> <!-- Same as above for Empir PF and Empir ESI if required -->
-                    <td>{{totals.totalAmountClaimed | currency:'INR'}}</td>
+                    <td>{{totals.totalNetAmount | currency:'INR'}}</td>
                   </tr>
                 </tbody>
               </table>

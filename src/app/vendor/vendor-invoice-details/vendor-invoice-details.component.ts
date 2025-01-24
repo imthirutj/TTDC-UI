@@ -41,7 +41,7 @@ export class VendorInvoiceDetailsComponent {
       totalESI: 0,
       totalActualCharge: 0,
       totalServiceCharge: 0,
-      totalAmountClaimed: 0
+      totalNetAmount: 0
     };
 
   vendorDetails: any={};
@@ -77,7 +77,7 @@ export class VendorInvoiceDetailsComponent {
         monthDays: number;
         actualCharge: number;
         serviceCharge: number;
-        amountClaimed: number;
+        netAmount: number;
       }>;
     }>
   };
@@ -166,7 +166,7 @@ export class VendorInvoiceDetailsComponent {
     this.totals.totalESI = 0;
     this.totals.totalActualCharge = 0;
     this.totals.totalServiceCharge = 0;
-    this.totals.totalAmountClaimed = 0;
+    this.totals.totalNetAmount = 0;
 
     // Loop through the invoice details and employee invoices to sum the values
     this.vendorInvoiceDetails.invoiceDetail.forEach(invDetail => {
@@ -178,7 +178,7 @@ export class VendorInvoiceDetailsComponent {
         this.totals.totalESI += empInvoiceDetail.esi;
         this.totals.totalActualCharge += empInvoiceDetail.actualCharge;
         this.totals.totalServiceCharge += empInvoiceDetail.serviceCharge;
-        this.totals.totalAmountClaimed += empInvoiceDetail.amountClaimed;
+        this.totals.totalNetAmount += empInvoiceDetail.netAmount;
       });
     });
   }

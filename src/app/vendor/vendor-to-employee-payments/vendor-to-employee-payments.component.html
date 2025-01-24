@@ -26,7 +26,7 @@
             <th scope="col">Gross Salary</th>
             <th scope="col">Net Salary</th>
             <th scope="col">Paid To Employee</th>
-
+            <th scope="col">Payment Type</th>
             <th scope="col">Difference</th>
             
           </tr>
@@ -49,6 +49,7 @@
             <td>{{ vep.grossSalary | currency:'INR' }}</td>
             <td>{{ vep.netSalary | currency:'INR' }}</td>
             <td>{{ vep.paidToEmployee | currency:'INR' }}</td>
+            <td>{{ vep.paymentType }}</td>
            
             <td>{{ (vep.netSalary - vep.paidToEmployee) | currency:'INR' }}</td>
           </tr>
