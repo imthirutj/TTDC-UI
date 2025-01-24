@@ -1,7 +1,7 @@
 <div class="cards-filter">
   <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="getEmployeeList()">
   </app-filter>
-  <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 </div>
 
 <button *ngIf="false" class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
@@ -9,7 +9,7 @@
 </button>
 
 <h3>Employee List</h3>
-<div  style="overflow-y: auto; max-height: 700px;" class="Employee-list-container" >
+<div style="overflow-y: auto; max-height: 700px;" class="Employee-list-container">
 
   <table class="table table-bordered">
     <thead>
@@ -25,13 +25,14 @@
 
         <th>Employment Type</th>
 
-        <th>Aadhaar</th>
 
         <th>Experience</th>
         <th>Educational Qualifications</th>
+
+        <th>Aadhaar</th>
         <th>Education Certificate</th>
 
-
+        <th>Bank Details</th>
       </tr>
     </thead>
     <tbody>
@@ -57,27 +58,32 @@
 
         <td>{{ employee.employementType }}</td>
 
-        <td>{{ employee.aadhaarNumber }}
-          <button type="button" class="btn btn-primary"
-            (click)="show_Certificate(employee, ModuleType.ADHAR)">View</button>
-        </td>
 
         <td>{{ employee.experience }}</td>
 
         <td>{{ employee.qualifications }}</td>
+
+        <td>{{ employee.aadhaarNumber }}
+          <button type="button" class="btn btn-primary"
+            (click)="show_Certificate(employee, ModuleType.ADHAR)">View</button>
+        </td>
 
         <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
             (click)="show_Certificate(employee, ModuleType.EDUCATION_CERT)">
             View education certificate
           </button></td>
 
-
+        <!--Update Bank Details Action-->
+        <td>
+          <button class="btn btn-primary" type="button" (click)="openBankModal(employee.employeeId)">
+            View/Update Bank Details
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
-<app-server-pagination  [pageAttributes]="pageAttributes" 
-(triggerParentFunction)="paginate()">
+<app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="paginate()">
 </app-server-pagination>
 
 
@@ -101,8 +107,7 @@
         <div class="mb-3">
           <label for="EmployeeCode" class="form-label">Employee Code</label>
           <input type="text" class="form-control" id="EmployeeCode" [(ngModel)]="modal.employee.employeeCode"
-            name="EmployeeCode" placeholder="Enter Employee Code" 
-            required [disabled]="true">
+            name="EmployeeCode" placeholder="Enter Employee Code" required [disabled]="true">
         </div>
 
 
@@ -140,7 +145,7 @@
       </div>
       <div class="card-body">
         <form>
-         
+
           <!-- Employment Type -->
           <div class="mb-3">
             <label for="employementType" class="form-label">Employement Type</label>
@@ -165,12 +170,10 @@
           <div class="mb-3">
             <label for="City" class="form-label">City Name</label>
 
-            <input *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg" id="City" 
-            [(ngModel)]="modal.employee.cityName" 
-            name="City"/>
-            <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE"
-             (change)="onCityChange()" class="form-select" id="City" [(ngModel)]="modal.employee.cityId"
-              name="cityId" >
+            <input *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg" id="City"
+              [(ngModel)]="modal.employee.cityName" name="City" />
+            <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE" (change)="onCityChange()"
+              class="form-select" id="City" [(ngModel)]="modal.employee.cityId" name="cityId">
               <option value="">Select City</option>
               <option *ngFor="let city of dropdowns.cities" [value]="city.cityId">{{ city.cityName }}</option>
             </select>
@@ -179,11 +182,11 @@
           <!-- Company Name -->
           <div class="mb-3">
             <label for="CompanyId" class="form-label">Company Name</label>
-            <input  *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg" id="City" 
-            [(ngModel)]="modal.employee.companyFName" />
+            <input [disabled]="true" *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg"
+              id="City" [(ngModel)]="modal.employee.companyFName" />
             <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE"
-             (change)="onCompanyChange()" class="form-select" id="CompanyId"
-              [(ngModel)]="modal.employee.companyId" name="companyId">
+              (change)="onCompanyChange()" class="form-select" id="CompanyId" [(ngModel)]="modal.employee.companyId"
+              name="companyId">
               <option value="">Select Company</option>
               <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}
               </option>
@@ -193,11 +196,10 @@
           <!-- Vendor -->
           <div class="mb-3">
             <label for="vendorId" class="form-label">Vendor</label>
-            <input  *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg" id="City" 
-            [(ngModel)]="modal.employee.vendorName" />
-            <select  *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE"
-             class="form-select" id="vendorId" [(ngModel)]="modal.employee.vendorId" 
-             name="vendorId">
+            <input [disabled]="true" *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg"
+              id="City" [(ngModel)]="modal.employee.vendorName" />
+            <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE" class="form-select"
+              id="vendorId" [(ngModel)]="modal.employee.vendorId" name="vendorId">
               <option value="">Select Vendor</option>
               <option *ngFor="let vendor of dropdowns.vendors" [value]="vendor.vendorId">{{ vendor.vendorName }}
               </option>
@@ -208,10 +210,10 @@
           <!-- Department Name -->
           <div class="mb-3">
             <label for="DepartmentId" class="form-label">Department Name</label>
-            <input  *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg" id="City" 
-            [(ngModel)]="modal.employee.departmentFName" />
+            <input [disabled]="true" *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg"
+              id="City" [(ngModel)]="modal.employee.departmentFName" />
             <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE"
-             (change)="onDepartmentChange()" class="form-select" id="DesignationId"
+              (change)="onDepartmentChange()" class="form-select" id="DesignationId"
               [(ngModel)]="modal.employee.departmentId" name="departmentId">
               <option value="">Select Department</option>
               <option *ngFor="let department of dropdowns.departments" [value]="department.departmentId">{{
@@ -222,19 +224,18 @@
           <!-- Designation Name -->
           <div class="mb-3">
             <label for="DesignationId" class="form-label">Designation Name</label>
-            <input  *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg" id="City" 
-            [(ngModel)]="modal.employee.designationName" />
+            <input [disabled]="true" *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg"
+              id="City" [(ngModel)]="modal.employee.designationName" />
 
-            <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE" 
-            class="form-select" id="DesignationId" [(ngModel)]="modal.employee.designationId"
-              name="designationId">
+            <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE" class="form-select"
+              id="DesignationId" [(ngModel)]="modal.employee.designationId" name="designationId">
               <option value="">Select Designation</option>
               <option *ngFor="let designation of dropdowns.designation" [value]="designation.designationId">{{
                 designation.designationName }}</option>
             </select>
           </div>
-          
-          
+
+
           <!-- Passed Out Year -->
           <div class="mb-3">
             <label for="passedOutYear" class="form-label">Passed Out Year</label>
@@ -248,8 +249,8 @@
               name="Qualifications" placeholder="Enter Qualifications" [disabled]="modal.action === 'VIEW'">
           </div>
 
-           <!-- Experience -->
-           <div class="mb-3">
+          <!-- Experience -->
+          <div class="mb-3">
             <label for="experience" class="form-label">Experience</label>
             <input type="text" class="form-control" id="experience" [(ngModel)]="modal.employee.experience"
               name="experience" placeholder="Enter experience" [disabled]="modal.action === 'VIEW'">
@@ -283,7 +284,7 @@
       </div>
       <div class="card-body">
         <form>
-           <div class="mb-3">
+          <div class="mb-3">
             <label>Education Certificate</label>
             <div class="form-control">
               <button type="button" class="btn btn-primary"
@@ -343,5 +344,69 @@
       </tr>
     </tbody>
   </table>
+
+</app-common-dialog>
+
+
+<!-- Bank Details Modal -->
+<app-common-dialog [showDialog]="bankModal.show" [dialogTitle]="bankModal.title" 
+  [showCloseIcon]="true"
+  [showSubmitButton]="true" (submitDialog)="submitBankDetails()" (closeDialog)="closeBankModal()">
+
+  <div class="mb-3">
+    <label for="bankName" class="form-label">Bank Name</label>
+    <input type="text" class="form-control disabled-bg" id="bankName" 
+    [(ngModel)]="bankModal.bankDetails.bankName"
+      name="bankName" placeholder="Enter Bank Name" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">Account Number</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber"
+      [(ngModel)]="bankModal.bankDetails.bankAccountNumber" name="accountNumber" placeholder="Enter Account Number"
+      [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--Isce Code-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">IFSC Code</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber" 
+    [(ngModel)]="bankModal.bankDetails.isceCode"
+      name="accountNumber" placeholder="Enter IFSC Code" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--pfNumber-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">Pf Number</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber" 
+    [(ngModel)]="bankModal.bankDetails.pfNumber"
+      name="accountNumber" placeholder="Enter PF Number" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+
+  <!--esicNumber-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">Esic Number</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber"
+      [(ngModel)]="bankModal.bankDetails.esicNumber" 
+      name="accountNumber" placeholder="Enter ESIC Number"
+      [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--pfScheme-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">PF Scheme</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber" 
+    [(ngModel)]="bankModal.bankDetails.pfScheme"
+      name="accountNumber" placeholder="Enter PF Scheme" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--paymentType-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">Payment Type</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber"
+      [(ngModel)]="bankModal.bankDetails.paymentType" name="accountNumber" placeholder="Enter Payment Type"
+      [disabled]="modal.action === 'VIEW'">
+  </div>
 
 </app-common-dialog>

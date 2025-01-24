@@ -208,5 +208,13 @@ export class MasterDataService {
     return this.http.post(`${this.apiUrl}Master/UpdateLeaveRequest_ApprovalStatus`, query);
   }
 
+  getEmpPayDetails(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Employee/GetEmpPayDetails?${queryParams}`);
+  }
+  saveBankDetails(payload:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Employee/InsertUpdateEmpPayDetail`, payload);
+  }
+
 
 }

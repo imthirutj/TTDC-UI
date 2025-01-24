@@ -7,6 +7,7 @@ import { Category, City, Company, Department, Designation } from 'src/app/utils/
 import { UserType } from 'src/app/common/user-type.enum';
 import { Action, ModuleType } from 'src/app/common/action.enum';
 import { ModuleTypeLabels } from 'src/app/common/labels';
+import { BankDetails } from 'src/app/utils/interface/BankDetails';
 
 @Component({
   selector: 'app-employee-list',
@@ -46,6 +47,11 @@ export class EmployeeListComponent {
     employee: new Employee(),  // Use the Employee class here
   };
 
+  bankModal = {
+    show: false,
+    title: '',
+    bankDetails: new BankDetails()
+  }
 
   formData = new FormData();
 
@@ -253,12 +259,12 @@ export class EmployeeListComponent {
 
 
 
-  openModal(action: Action,  employee?: Employee): void {
+  openModal(action: Action, employee?: Employee): void {
     this.modal.show = true;
     this.modal.action = action;
     this.modal.module = ModuleType.EMPLOYEE;
     this.modal.title = action == Action.UPDATE ? 'Edit Employee' : action == Action.CREATE ? 'Add Employee' : 'View Employee';
-    if ( action == Action.UPDATE || action == Action.VIEW ) {
+    if (action == Action.UPDATE || action == Action.VIEW) {
       if (employee) {
         this.modal.employee = { ...employee, loginName: 'qwerty', loginPassword: '12345' };
 
@@ -314,10 +320,10 @@ export class EmployeeListComponent {
     }
   }
 
-  uploadCertificate(){
-    const payload ={
+  uploadCertificate() {
+    const payload = {
       empId: this.modal.employee.employeeId,
-      docType:this.modal.module
+      docType: this.modal.module
     };
     this.masterDataService.uploadMultipleCertificates(this.formData, payload).subscribe(
       (response: any) => {
@@ -332,10 +338,10 @@ export class EmployeeListComponent {
     );
   }
 
-  deleteEmpDoc(obj:any){
-   const payload = {
-    docId: obj.docId
-   }
+  deleteEmpDoc(obj: any) {
+    const payload = {
+      docId: obj.docId
+    }
     this.masterDataService.deleteEmpDoc(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
@@ -354,9 +360,9 @@ export class EmployeeListComponent {
     this.modal.module = moduleType;
     this.modal.title = ModuleTypeLabels[moduleType];
     this.modal.employee = obj_clicked;
-    const payload ={
+    const payload = {
       empId: obj_clicked.employeeId,
-      docType:moduleType
+      docType: moduleType
     }
     this.educertificateimage = [] as any[];
     this.masterDataService.viewcertificate(payload).subscribe(
@@ -364,11 +370,45 @@ export class EmployeeListComponent {
         console.log('API Response:', response);
         if (response?.success && Array.isArray(response.data)) {
           const data = response.data;
-          this.educertificateimage = data.filter((doc:any) => doc.docType == moduleType);
+          this.educertificateimage = data.filter((doc: any) => doc.docType == moduleType);
         } else {
           this.dataService.showSnackBar(response?.message || 'Failed to fetch list.');
         }
       }
     );
   }
+
+
+  openBankModal(empId: any) {
+    this.bankModal.show = true;
+    this.bankModal.title = 'Bank Details';
+    const payload = {
+      empId: empId
+    }
+    this.masterDataService.getEmpPayDetails(payload).subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.bankModal.bankDetails = response.data;
+        }
+      }
+    );
+  }
+
+  closeBankModal() {
+    this.bankModal.show = false;
+    this.bankModal.title = '';
+  }
+
+  submitBankDetails() {
+    this.masterDataService.saveBankDetails(this.bankModal.bankDetails).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('Bank Details updated successfully.');
+          this.closeBankModal();
+        }
+      }
+    );
+  }
+
 }
