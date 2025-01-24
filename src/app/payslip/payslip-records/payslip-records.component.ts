@@ -14,6 +14,11 @@ export class PayslipRecordsComponent {
   payslips: any[] = []
   employee: any;
 
+  modalAttr: any = {
+    show: false,
+    title:'',
+    maxWidth: '90vw',
+  }
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -121,6 +126,8 @@ export class PayslipRecordsComponent {
   }
 
   show_list_slip(obj_clicked: any) {
+    this.modalAttr.show=true;
+    this.modalAttr.title = 'Payslip Records';
     this.employee = obj_clicked
     this.masterDataService.payslips('?EffPeriod=Nov-2024&EmpId=' + obj_clicked.employeeId + '').subscribe(
       (response: any) => {
@@ -136,5 +143,10 @@ export class PayslipRecordsComponent {
         alert('An error occurred while fetching the Department list.');
       }
     );
+  }
+
+  closePaySlip(){
+    this.modalAttr.show = false;
+    this.modalAttr.title = '';
   }
 }

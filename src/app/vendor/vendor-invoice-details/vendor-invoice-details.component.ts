@@ -51,6 +51,7 @@ export class VendorInvoiceDetailsComponent {
         designationName: string;
         employeeCount: number;
         totalGrossSalary: number;
+        totalNetSalary: number;
       }>,
       subTotalSalary: 0,
       subTotalEmpcount: 0,

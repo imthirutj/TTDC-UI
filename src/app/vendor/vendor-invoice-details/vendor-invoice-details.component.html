@@ -89,7 +89,7 @@
                         <td>{{i+1}}</td>
                         <td>{{invoiceRecords.designationName}}</td>
                         <td>{{invoiceRecords.employeeCount}}</td>
-                        <td>{{invoiceRecords.totalGrossSalary | currency:'INR'}}</td>
+                        <td>{{invoiceRecords.totalNetSalary | currency:'INR'}}</td>
                     </tr>
 
                     <tr>
@@ -141,7 +141,7 @@
                 <thead>
                     <tr>
                         <th colspan="9">TTDC - {{month | monthName}} {{year}}</th>
-                        <th colspan="3">TTDC2024000041</th>
+                        <th colspan="1">TTDC2024000041</th>
                     </tr>
                   <tr>
                     <th>S.N</th>
@@ -153,9 +153,7 @@
                     <th>Gross Salary</th>
                     <th>Empir PF</th>
                     <th>Empir ESI</th>
-                    <th>Actual Amount</th>
-                    <th>Service Charges</th>
-                    <th>Amount Claimed</th>
+                    <th>Net Salary</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -163,7 +161,7 @@
                   <ng-container *ngFor="let invDetail of vendorInvoiceDetails.invoiceDetail; let designationIndex = index">
                     <!-- Designation Row -->
                     <tr *ngIf=" invDetail.employeeInvoices.length >0">
-                      <td colspan="12" class="designation-row"><strong>{{invDetail.designationName}}</strong></td>
+                      <td colspan="10" class="designation-row"><strong>{{invDetail.designationName}}</strong></td>
                     </tr>
               
                     <!-- Loop through employeeInvoices to show employee details -->
@@ -176,12 +174,10 @@
                         <td>{{invDetail.designationName}}</td>
                         <td>{{empInvoiceDetail.presentDays}}</td>
                         <td>{{empInvoiceDetail.monthDays}}</td>
-                        <td>{{empInvoiceDetail.grossSalary}}</td>
-                        <td>{{empInvoiceDetail.epf}}</td>
-                        <td>{{empInvoiceDetail.esi}}</td>
-                        <td>{{empInvoiceDetail.actualCharge}}</td>
-                        <td>{{empInvoiceDetail.serviceCharge}}</td>
-                        <td>{{empInvoiceDetail.amountClaimed}}</td>
+                        <td>{{empInvoiceDetail.grossSalary  | currency:'INR'}}</td>
+                        <td>{{empInvoiceDetail.epf  | currency:'INR'}}</td>
+                        <td>{{empInvoiceDetail.esi  | currency:'INR'}}</td>
+                        <td>{{empInvoiceDetail.amountClaimed | currency:'INR'}}</td>
                       </tr>
                     </ng-container>
                   </ng-container>
@@ -190,12 +186,10 @@
                     <td colspan="4"><strong>Total</strong></td>
                     <td>{{totals.totalPresentDays}}</td>
                     <td>{{totals.totalMonthDays}}</td> 
-                    <td>{{totals.totalGrossSalary}}</td>
-                    <td>{{totals.totalEPF}}</td> <!-- Add any other columns you need -->
-                    <td>{{totals.totalESI}}</td> <!-- Same as above for Empir PF and Empir ESI if required -->
-                    <td>{{totals.totalActualCharge}}</td>
-                    <td>{{totals.totalServiceCharge}}</td>
-                    <td>{{totals.totalAmountClaimed}}</td>
+                    <td>{{totals.totalGrossSalary | currency:'INR' }}</td>
+                    <td>{{totals.totalEPF | currency:'INR' }}</td> <!-- Add any other columns you need -->
+                    <td>{{totals.totalESI | currency:'INR'}}</td> <!-- Same as above for Empir PF and Empir ESI if required -->
+                    <td>{{totals.totalAmountClaimed | currency:'INR'}}</td>
                   </tr>
                 </tbody>
               </table>

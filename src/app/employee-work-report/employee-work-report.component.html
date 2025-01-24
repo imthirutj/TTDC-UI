@@ -232,24 +232,62 @@
     <app-common-dialog [showDialog]="modalAttrEmployeeReport.show" [dialogTitle]="modalAttrEmployeeReport.title"
         [showCloseIcon]="true" [showSubmitButton]="false" (closeDialog)="closeEmployeeReportModal()">
 
-        <div class="card">
-            <div class="card-body">
-                <div>
-                    <p>Total Present Days: {{ modalAttrEmployeeReport.employeeStatus.reports.totalPresentDays }}</p>
-                    <p>Total Absent Days: {{ modalAttrEmployeeReport.employeeStatus.reports.totalAbsentDays }}</p>
-                    <p>Total Leave Requested Days: {{ modalAttrEmployeeReport.employeeStatus.reports.leaveRequestedDays
-                        }}</p>
-                    <p>Total Leave Approved Days: {{ modalAttrEmployeeReport.employeeStatus.reports.leaveApprovedDays }}
-                    </p>
-                    <p>Total Leave Rejected Days: {{ modalAttrEmployeeReport.employeeStatus.reports.leaveRejectedDays }}
-                    </p>
-                    <p>Total OD Requested Days: {{ modalAttrEmployeeReport.employeeStatus.reports.odRequestedDays }}</p>
-                    <p>Total OD Approved Days: {{ modalAttrEmployeeReport.employeeStatus.reports.odApprovedDays }}</p>
-                    <p>Total OD Rejected Days: {{ modalAttrEmployeeReport.employeeStatus.reports.odRejectedDays }}</p>
-
+        <div class="container">
+           
+            <!-- Group 1: Attendance -->
+            <div class="group-card">
+              <div class="group-header">Attendance Summary</div>
+              <div class="group-content">
+                <div class="item">
+                  <span>Total Present Days</span>
+                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.totalPresentDays }}</span>
                 </div>
+                <div class="item">
+                  <span>Total Absent Days</span>
+                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.totalAbsentDays }}</span>
+                </div>
+              </div>
             </div>
-        </div>
+        
+            <!-- Group 2: Leave -->
+            <div class="group-card">
+              <div class="group-header">Leave Summary</div>
+              <div class="group-content">
+                <div class="item">
+                  <span>Total Leave Requested</span>
+                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveRequestedDays }}</span>
+                </div>
+                <div class="item">
+                  <span>Total Leave Approved</span>
+                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveApprovedDays }}</span>
+                </div>
+                <div class="item">
+                  <span>Total Leave Rejected</span>
+                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveRejectedDays }}</span>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Group 3: OD -->
+            <div class="group-card">
+              <div class="group-header">On-Duty Summary</div>
+              <div class="group-content">
+                <div class="item">
+                  <span>Total OD Requested</span>
+                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odRequestedDays }}</span>
+                </div>
+                <div class="item">
+                  <span>Total OD Approved</span>
+                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odApprovedDays }}</span>
+                </div>
+                <div class="item">
+                  <span>Total OD Rejected</span>
+                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odRejectedDays }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
     </app-common-dialog>
 
 </div>

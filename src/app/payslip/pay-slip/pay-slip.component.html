@@ -1,45 +1,44 @@
-
 <button class="btn btn-primary mb-3" (click)="downloadPDF()">Download pay Slip</button>
 <div id="pdfContent" class="card p-4">
-<div  >
-  <div class="payslip-header">
-    <h3>PAYSLIP</h3>
-    <p>For the month of <strong>{{payobj.month | monthName}} {{payobj.year}}</strong></p>
-  </div>
+  <div>
+    <div class="payslip-header">
+      <h3>PAYSLIP</h3>
+      <p>For the month of <strong>{{payobj.month | monthName}} {{payobj.year}}</strong></p>
+    </div>
 
-  <!-- Company and Employee Details -->
-  <div class="row">
-    <div class="col-md-6">
+    <!-- Company and Employee Details -->
+    <div class="row">
+      <div class="col-md-6">
         <img src="/assets/images/logo/logo_3.png" alt="Logo" />
-    </div>
-    <div class="col-md-6">
-      <h5>Tamilnadu Tourism Developement Corporation</h5>
-      <!-- <p><strong>ABC Pvt Ltd</strong></p> -->
-      <p>123, Corporate Avenue</p>
-      <p>Chennai, Tamilnadu, 600029</p>
-    </div>
-    <!-- <div class="col-md-6 text-end">
+      </div>
+      <div class="col-md-6">
+        <h5>Tamilnadu Tourism Developement Corporation</h5>
+        <!-- <p><strong>ABC Pvt Ltd</strong></p> -->
+        <p>123, Corporate Avenue</p>
+        <p>Chennai, Tamilnadu, 600029</p>
+      </div>
+      <!-- <div class="col-md-6 text-end">
       <h5>Employee Details</h5>
       <p><strong>Name:</strong> John Doe</p>
       <p><strong>Employee ID:</strong> EMP12345</p>
       <p><strong>Department:</strong> IT</p>
     </div> -->
-  </div>
-  <hr>
-  <!-- Earnings and Deductions -->
-  <div class="row">
-    <table class="table table-bordered">
+    </div>
+    <hr>
+    <!-- Earnings and Deductions -->
+    <div class="row">
+      <table class="table table-bordered">
         <tbody>
           <tr>
             <td>Emp No</td>
             <th class="text-center">{{payobj.employeeId}}</th>
             <td>Emp Name</td>
             <th class="text-center">{{payobj.employeeName}}</th>
-            <td>Total Days</td>
+            <td>Month Days</td>
             <th class="text-center">{{payobj.totalDays}}</th>
             <td>Absent Days</td>
-            <th class="text-center">{{payobj.absentDays}}</th>            
-          </tr>          
+            <th class="text-center">{{payobj.absentDays}}</th>
+          </tr>
           <tr>
             <td>Level</td>
             <th class="text-center">4</th>
@@ -48,7 +47,7 @@
             <td>Present Days</td>
             <th class="text-center">{{payobj.presentDays}}</th>
             <td>Normal Days</td>
-            <th class="text-center">{{payobj.normalDays}}</th>            
+            <th class="text-center">{{payobj.normalDays}}</th>
           </tr>
           <tr>
             <td>PF No</td>
@@ -56,49 +55,40 @@
             <td>ESI No</td>
             <th class="text-center">-</th>
             <td>OD</td>
-            <th class="text-center">{{payobj.odDays}}</th>      
-            <td >Date of Joining</td>
-            <th  class="text-center">{{payobj.doj}}</th>          
+            <th class="text-center">{{payobj.odDays}}</th>
+            <td>Date of Joining</td>
+            <th class="text-center">{{payobj.doj}}</th>
           </tr>
         </tbody>
-    </table>
-    <div class="col-md-6" style="float: left;">
-      <h5>Earnings</h5>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th class="text-end">Eligible</th>
-            <th class="text-end">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Basic Salary</td>
-            <td class="text-end">{{payobj.basicRate}}</td>
-            <td class="text-end">{{payobj.basicRate}}</td>
-          </tr>
-          <tr>
-            <td>DA</td>
-            <td class="text-end">{{payobj.da}}</td>
-            <td class="text-end">{{payobj.da}}</td>
-          </tr>
-          <tr>
-            <td>Special Wages</td>
-            <td class="text-end">{{payobj.specialWages}}</td>
-            <td class="text-end">{{payobj.specialWages}}</td>
-          </tr>
-          <tr>
-            <td>EPF Employer Contribution</td>
-            <td class="text-end">{{payobj.epfEmployerContribution}}</td>
-            <td class="text-end">{{payobj.epfEmployerContribution}}</td>
+      </table>
+      <div class="col-md-6" style="float: left;">
+        <h5>Earnings</h5>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th class="text-end">Eligible</th>
+              <th class="text-end">Amount</th>
             </tr>
-          <tr>
-            <td>ESI Employer Contribution</td>
-            <td class="text-end">{{payobj.esiEmployerContribution}}</td>
-            <td class="text-end">{{payobj.esiEmployerContribution}}</td>
-        </tr>
-        <!-- <tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Basic Salary</td>
+              <td class="text-end">{{payobj.basicRate}}</td>
+              <td class="text-end">{{payobj.basicRate}}</td>
+            </tr>
+            <tr>
+              <td>DA</td>
+              <td class="text-end">{{payobj.da}}</td>
+              <td class="text-end">{{payobj.da}}</td>
+            </tr>
+            <tr>
+              <td>Special Wages</td>
+              <td class="text-end">{{payobj.specialWages}}</td>
+              <td class="text-end">{{payobj.specialWages}}</td>
+            </tr>
+
+            <!-- <tr>
           <td>-</td>
           <td>-</td>
           <td>-</td>
@@ -108,100 +98,108 @@
           <td>-</td>
           <td>-</td>
         </tr> -->
-          
-          
-        </tbody>
-        <tfoot>
-          <tr>
-            <th>Total Earnings</th>
-            <td>-</td>
-            <th class="text-end">{{payobj.totalEarnings}}</th>
-          </tr>
-        </tfoot>        
-      </table>
-    </div>
 
-    <div class="col-md-6"  style="float: left;">
-      <h5>Deductions</h5>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th class="text-end">Amount (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>EPF Employee Contribution</td>
-            <td class="text-end">{{payobj.epfEmployeeContribution}}</td>
-            </tr>          
-            
-        <tr>
-            <td>ESI Employee Contribution</td>
-            <td class="text-end">{{payobj.esiEmployeeContribution}}</td>
-          </tr>
-          <!-- <tr>
+
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total Earnings</th>
+              <td>-</td>
+              <th class="text-end">{{payobj.totalEarnings}}</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="col-md-6" style="float: left;">
+        <h5>Deductions</h5>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th class="text-end">Amount (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EPF Employee Contribution</td>
+              <td class="text-end">{{payobj.epfEmployeeContribution}}</td>
+            </tr>
+            <tr>
+              <td>EPF Employer Contribution</td>
+              <td class="text-end">{{payobj.epfEmployerContribution}}</td>
+            </tr>
+            <tr>
+              <td>ESI Employee Contribution</td>
+              <td class="text-end">{{payobj.esiEmployeeContribution}}</td>
+            </tr>
+
+            <tr>
+              <td>ESI Employer Contribution</td>
+              <td class="text-end">{{payobj.esiEmployerContribution}}</td>
+            </tr>
+            <!-- <tr>
             <td>Service Charge</td>
             <td class="text-end">{{payobj.serviceCharge}}</td>
           </tr> -->
-          <!-- <tr>
+            <!-- <tr>
             <td>GST</td>
             <td class="text-end">{{payobj.gst}}</td>
           </tr> -->
-          <tr>
-            <td>TDS</td>
-            <td class="text-end">0</td>
-          </tr>
-         
-        </tbody>
-        <tfoot>
-          <tr>
-            <th>Gross Deductions</th>
-            <th class="text-end">{{payobj.totalDeductions}}</th>
-          </tr>
-        </tfoot>
-      </table>
+            <!-- <tr>
+              <td>TDS</td>
+              <td class="text-end">0</td>
+            </tr> -->
+
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Gross Deductions</th>
+              <th class="text-end">{{payobj.totalDeductions}}</th>
+            </tr>
+          </tfoot>
+        </table>
       </div>
       <div class="row">
-      <div class="col-md-12">
-      <table  class="table table-bordered">
-        <tbody>
-            <tr>
-            <td style="width:30%;" rowspan="3"></td>
-            <td style="width:15%;">Bank name</td>
-            <td style="width:15%;">{{payobj.bankname}}</td>
-            <td style="width:30%;" rowspan="3">
-                <label>Authorized Signature</label>
-            </td>
-        </tr>
-        <tr>
-          <td>Bank Account Number</td>
-          <td>{{payobj.bankaccountnumber}}</td>
-      </tr>
-        <tr>
-            <td>Amount</td>
-            <td>{{payobj.netSalary}}</td>
-        </tr>       
-        </tbody>
-      </table>
+        <div class="col-md-12">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td style="width:30%;" rowspan="3"></td>
+                <td style="width:15%;">Bank name</td>
+                <td style="width:15%;">{{payobj.bankname}}</td>
+                <td style="width:30%;" rowspan="3">
+                  <label>Authorized Signature</label>
+                </td>
+              </tr>
+              <tr>
+                <td>Bank Account Number</td>
+                <td>{{payobj.bankaccountnumber}}</td>
+              </tr>
+              <tr>
+                <td>Amount</td>
+                <td>{{payobj.netSalary}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
+    <hr>
+
+    <!-- Net Pay -->
+    <div class="row">
+      <div class="col-md-12 text-end">
+        <h5><strong>Net Pay: ₹{{payobj.netSalary}}</strong></h5>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <div class="text-center">
+      <p><small>This is a computer-generated payslip and does not require a signature.</small></p>
     </div>
   </div>
-
-  <hr>
-
-  <!-- Net Pay -->
-  <div class="row">
-    <div class="col-md-12 text-end">
-      <h5><strong>Net Pay: ₹{{payobj.netSalary}}</strong></h5>
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- Footer -->
-  <div class="text-center">
-    <p><small>This is a computer-generated payslip and does not require a signature.</small></p>
-  </div>
-</div>
 </div>

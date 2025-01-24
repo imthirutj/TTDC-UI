@@ -107,3 +107,51 @@
     position: absolute;
     bottom: 0;
 }
+
+
+.group-card {
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.group-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.group-header {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.group-content {
+  padding: 15px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.item-value {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #2575fc;
+}
+
+.row {
+  gap: 20px;
+}
+
