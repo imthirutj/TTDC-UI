@@ -130,12 +130,12 @@ export class SidebarComponent {
         route: '/shift-management',
         allowedUserTypes: [ UserType.MANAGER]  
       },
-      {
-        label: 'Employee Report',
-        icon: 'fa-solid fa-chart-line',
-        route: '/employee-report',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
-      },
+      // {
+      //   label: 'Employee Report',
+      //   icon: 'fa-solid fa-chart-line',
+      //   route: '/employee-report',
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+      // },
       {
         label: 'Employee Work Report',
         icon: 'fa-solid fa-chart-line',
