@@ -52,9 +52,12 @@
 
 /* Highlight the active link */
 .sidebar a.active-link {
-    background-color: #007bff; /* Desired background color */
-    font-weight: bold; /* Optional: Make the font bold */
+    
     color: white; /* Ensure text color is readable */
-    border-radius: 4px; /* Optional: Add rounded corners */
+
+    background: linear-gradient(135deg, #cb1111, #2575fc);
+    border-radius: 7px;
+    box-shadow: 2px 5px 10px #111;
+    transition: all .3s;
 }
 
