@@ -107,33 +107,35 @@
 
     <div class="row">
       <div class="col-md-6">
-        <label for="totalPayableAmount">Total Payable Salary:</label>
-        <input [disabled]="true" type="number" class="form-control" id="totalPayableAmount"
-          [(ngModel)]="selectedVendor.totalPayableAmount">
+        <b for="totalPayableAmount">Total Payable Salary:</b>
+        <span>{{selectedVendor.totalPayableAmount}}</span>
+       
       </div>
       <div class="col-md-6">
-        <label for="gst">GST:</label>
-        <input [disabled]="true" type="number" class="form-control" id="gst" [(ngModel)]="selectedVendor.gst">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <label for="serviceCharge">Service Charge:</label>
-        <input [disabled]="true" type="number" class="form-control" id="serviceCharge"
-          [(ngModel)]="selectedVendor.serviceCharge">
-      </div>
-      <div class="col-md-6">
-        <label for="tds">TDS:</label>
-        <input [disabled]="true" type="number" class="form-control" id="tds" [(ngModel)]="selectedVendor.tds">
+        <b for="gst">GST:</b>
+        <span>{{selectedVendor.gst}}</span>
+        
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6">
-        <label for="netAmount">Net Amount:</label>
-        <input [disabled]="true" type="number" class="form-control" id="netAmount"
-          [(ngModel)]="selectedVendor.netAmount">
+        <b for="serviceCharge">Service Charge:</b>
+        <span>{{selectedVendor.serviceCharge}}</span>
+       
+      </div>
+      <div class="col-md-6">
+        <b for="tds">TDS:</b>
+        <span>{{selectedVendor.tds}}</span>
+      
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <b for="netAmount">Net Amount:</b>
+        <span>{{selectedVendor.netAmountt}}</span>
+        
       </div>
     </div>
 

@@ -19,7 +19,150 @@
       },
       "dates": {
         "2024-12-26": {
-           "status": "",
+           "status": "PRESENT",
+           "shift": "GENERAL",
+           "biometricData": [
+            {
+              "type": "In",
+              "time": "2024-11-26 09:00 AM"
+            },
+            {
+              "type": "Out",
+              "time": "2024-11-26 06:00 PM"
+            }
+          ],
+          "leave": {
+            "leaveRequestID":1,
+            "requested": true,
+            "status": "PENDING",
+            "reason": ""
+          },
+          "od": {
+            "odRequestID":0,
+            "requested": false,
+            "status": "",
+            "reason": ""
+          }
+        },
+        "2024-12-27": {
+           "status": "PRESENT",
+           "shift": "GENERAL",
+           "biometricData": [
+            {
+              "type": "In",
+              "time": "2024-11-26 09:00 AM"
+            },
+            {
+              "type": "Out",
+              "time": "2024-11-26 06:00 PM"
+            }
+          ],
+          "leave": {
+            "leaveRequestID":1,
+            "requested": true,
+            "status": "PENDING",
+            "reason": ""
+          },
+          "od": {
+            "odRequestID":0,
+            "requested": false,
+            "status": "",
+            "reason": ""
+          }
+        },
+        "2024-12-28": {
+           "status": "PRESENT",
+           "shift": "GENERAL",
+           "biometricData": [
+            {
+              "type": "In",
+              "time": "2024-11-26 09:00 AM"
+            },
+            {
+              "type": "Out",
+              "time": "2024-11-26 06:00 PM"
+            }
+          ],
+          "leave": {
+            "leaveRequestID":1,
+            "requested": true,
+            "status": "PENDING",
+            "reason": ""
+          },
+          "od": {
+            "odRequestID":0,
+            "requested": false,
+            "status": "",
+            "reason": ""
+          }
+        },
+        "2024-12-29": {
+           "status": "WEEKOFF",
+           "shift": "",
+           "biometricData": [
+         
+          ],
+          "leave": {
+            "leaveRequestID":1,
+            "requested": true,
+            "status": "PENDING",
+            "reason": ""
+          },
+          "od": {
+            "odRequestID":0,
+            "requested": false,
+            "status": "",
+            "reason": ""
+          }
+        },
+        "2024-12-30": {
+           "status": "ABSENT",
+           "shift": "",
+           "biometricData": [
+            
+          ],
+          "leave": {
+            "leaveRequestID":1,
+            "requested": true,
+            "status": "PENDING",
+            "reason": ""
+          },
+          "od": {
+            "odRequestID":0,
+            "requested": false,
+            "status": "",
+            "reason": ""
+          }
+        },
+        "2024-12-31": {
+           "status": "PRESENT",
+           "shift": "GENERAL",
+           "biometricData": [
+            {
+              "type": "In",
+              "time": "2024-11-26 09:00 AM"
+            },
+            {
+              "type": "Out",
+              "time": "2024-11-26 06:00 PM"
+            }
+          ],
+          "leave": {
+            "leaveRequestID":1,
+            "requested": true,
+            "status": "PENDING",
+            "reason": ""
+          },
+          "od": {
+            "odRequestID":0,
+            "requested": false,
+            "status": "",
+            "reason": ""
+          }
+        },
+        "2025-01-01": {
+           "status": "PRESENT",
+           "shift": "GENERAL",
            "biometricData": [
             {
               "type": "In",

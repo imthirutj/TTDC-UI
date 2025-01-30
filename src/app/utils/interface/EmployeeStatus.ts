@@ -52,6 +52,7 @@ export class BiometricData {
   // DateDetails export class
   export class DateDetails {
     status: string;
+    shift: string;
     biometricData: BiometricData[];
     leave: Leave;
     od: OD;
@@ -60,12 +61,14 @@ export class BiometricData {
   
     constructor(
       status: string = '',
+      shift: string = '',
       biometricData: BiometricData[] = [],
       leave: Leave = new Leave(),
       od: OD = new OD(),
       selected: boolean = false
     ) {
       this.status = status;
+      this.shift = shift;
       this.biometricData = biometricData;
       this.leave = leave;
       this.od = od;

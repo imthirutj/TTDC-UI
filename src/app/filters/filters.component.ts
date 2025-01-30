@@ -221,5 +221,31 @@ export class FiltersComponent implements OnInit {
     this.triggerParentFunction.emit();
     this.showDialog = false;
   }
+
+  changeMonth(direction: number) {
+    let currentMonth = this.filters.selectedMonth.value;
+    let currentYear = this.filters.selectedYear.value;
+  
+    if (direction === -1) {
+      // Move to previous month
+      if (currentMonth === 1) {
+        this.filters.selectedMonth.value = 12; // Go to December
+        this.filters.selectedYear.value = currentYear - 1; // Decrease year
+      } else {
+        this.filters.selectedMonth.value = currentMonth - 1;
+      }
+    } else if (direction === 1) {
+      // Move to next month
+      if (currentMonth === 12) {
+        this.filters.selectedMonth.value = 1; // Go to January
+        this.filters.selectedYear.value = currentYear + 1; // Increase year
+      } else {
+        this.filters.selectedMonth.value = currentMonth + 1;
+      }
+    }
+  
+    this.onFilterChange(); // Emit the filter change event
+  }
+  
   //#endregion
 }

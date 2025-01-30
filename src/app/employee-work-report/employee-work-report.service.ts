@@ -24,7 +24,8 @@ export class EmployeeWorkReportService {
  
    getEmployeeWorkReportDetails(payload: any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(payload);
-    const url = `${this.apiUrl}EmpWorkReport/GetEmployeeAttendanceReport?${queryParams}`;
+    const url = `assets/mock/employee-work-details.json`;
+    //const url = `${this.apiUrl}EmpWorkReport/GetEmployeeAttendanceReport?${queryParams}`;
      return this.http.get(url);
    }
 

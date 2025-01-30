@@ -19,12 +19,17 @@
           <!-- <th>Employee ID</th> -->
           <th>Employee Name</th>
           <th>Employee Code</th>
-          <th>Designation Name</th>  
-          <th>Company Name</th>      
-          <th>Department Name</th>      
+          <th>Unit Name</th>
+          <th>Vendor Name</th>   
+          <th>Designation Name</th> 
           <th>Category Name</th>      
-   
-          <th>Pay Slips</th>    
+          <th>Basic Salary</th>
+          <th>DA</th>
+          <th>Special Wages</th>
+          <th>EPF</th>
+          <th>ESI</th>
+          <th>Net Salary</th>
+          <th>View Slips</th>    
         </tr>
       </thead>
       <tbody>
@@ -33,11 +38,17 @@
             <!-- <td>{{ department.employeeId  }}</td> -->
             <td>{{ department.employeeName }}</td>
             <td>{{ department.employeeCode }}</td>
-            <td>{{ department.designationName }}</td>
             <td>{{ department.companyFName }}</td>
-            <td>{{ department.departmentFName }}</td>
+            <td>LipiInterior</td>
+            <td>{{ department.designationName }}</td>
+            <!-- <td>{{ department.departmentFName }}</td> -->
             <td>{{ department.categoryFName }} </td>
-           
+            <td>9200</td>
+            <td>920</td>
+            <td>12880</td>
+            <td>1196</td>
+            <td>196</td>
+            <td>21038</td>
             <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"  
               (click)="show_list_slip(department)">
                 View Pay Slips

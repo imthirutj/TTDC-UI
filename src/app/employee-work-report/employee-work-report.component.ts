@@ -62,10 +62,17 @@ export class EmployeeWorkReportComponent {
 
 
   status: { key: string; value: string, color: string }[] = [
-    { key: 'PRESENT', value: 'Present', color: '#a9f7a9' },
-    { key: 'ABSENT', value: 'Absent', color: '#ffa2a2' },
-    { key: 'HOLIDAY', value: 'Holiday', color: '#9d9deb' },
-    { key: 'WEEKOFF', value: 'Weekly Off', color: '#ffcc6e' },
+    { key: 'PRESENT', value: 'Present', color: 'rgb(63 107 51)' },
+    { key: 'ABSENT', value: 'Absent', color: 'rgb(203 72 72)' },
+    { key: 'HOLIDAY', value: 'Holiday', color: 'rgb(97 114 219)' },
+    { key: 'WEEKOFF', value: 'Weekly Off', color: 'rgb(121 4 81)' },
+  ];
+
+  shiftStatus: { key: string; value: string, color: string }[] = [
+    { key: 'MORNING', value: 'Morning', color: 'rgb(50 173 241)' },
+    { key: 'AFTERNOON', value: 'Evening', color: 'rgb(165 56 46)' },
+    { key: 'NIGHT', value: 'Night', color: 'rgb(50 46 85)' },
+    { key: 'GENERAL', value: 'General', color: 'rgb(135 109 55)' },
   ];
 
   otherStatus: { key: string; value: string, color: string }[] = [
@@ -89,6 +96,13 @@ export class EmployeeWorkReportComponent {
   modalAttrEmployeeReport: any = {
     show: false,
     title: '',
+    employeeStatus: new EmployeeStatus()
+  }
+
+  modalAttrAdjust: any = {
+    show: false,
+    title: '',
+    maxWidth: '900px',
     employeeStatus: new EmployeeStatus()
   }
 
@@ -211,6 +225,12 @@ export class EmployeeWorkReportComponent {
     return statusObj ? statusObj.color : '#FFFFFF'; // Default color if status not found
   }
 
+
+  getShiftColor(status: string): string {
+    // Find the status object by key and return its color
+    const statusObj = this.shiftStatus.find(s => s.key === status);
+    return statusObj ? statusObj.color : 'rgb(161 87 87)'; // Default color if status not found
+  }
   //#region  Fetch
 
   fetchShifts() {
@@ -335,6 +355,7 @@ export class EmployeeWorkReportComponent {
           // Add default values for the missing date
           employee.dates[date] = {
             status: '', // Default status
+            shift: '', // Default shift
             statusChanged: false, // Default statusChanged
             selected: false, // Default selected
             biometricData: [], // Default empty array
@@ -354,6 +375,20 @@ export class EmployeeWorkReportComponent {
         }
       });
     });
+  }
+
+  // This function filters the status options based on the date
+  getAllStatusOptions(date: string): { key: string; value: string }[] {
+    const currentDate = new Date();
+    const targetDate = new Date(date);
+
+    // Check if the date is current or in the past (previous date)
+    // if (targetDate <= currentDate) {
+    //   // For current or past dates,
+    //   return this.status;
+    // }
+    // For future dates, return only Holiday and Weekly Off
+    return this.status.filter(st => st.key === '' || st.key === '');
   }
 
 
@@ -640,7 +675,7 @@ export class EmployeeWorkReportComponent {
 
 
   applyStatus(): void {
-    
+
 
     this.employees.forEach(employee => {
       Object.keys(employee.dates).forEach(date => {
@@ -670,4 +705,45 @@ export class EmployeeWorkReportComponent {
     this.fetchEmployeeStatus();
   }
 
+
+  compensateDates: string[] = ['2024-12-21'];
+  absentWeekOffHolidayData: any[] = [];
+  openAdjustModal(employee: EmployeeStatus) {
+    this.modalAttrAdjust.show = true;
+    this.modalAttrAdjust.employeeStatus = employee;
+    this.modalAttrAdjust.title = `Manage ${employee.employeeName}'s Status`;
+    this.updateEmployeeAdjust();
+  }
+
+  updateEmployeeAdjust() {
+    this.absentWeekOffHolidayData = [];
+
+    const employee = this.modalAttrAdjust.employeeStatus as EmployeeStatus; // Ensure correct type
+
+    Object.entries(employee.dates).forEach(([date, details]) => {
+      const record = details as DateDetails; // Use your defined class
+      if (['ABSENT', 'HOLIDAY'].includes(record.status)) {
+        this.absentWeekOffHolidayData.push({
+          empId: employee.empId,
+          employeeName: employee.employeeName,
+          date,
+          totalWorkedHours:'1 hr',
+          reason:'',
+          status: record.status,
+          newStatus: '',
+          isCompensated: 'No',
+          compensateDate: ''
+        });
+      }
+    });
+
+    console.log('Holiday/WeekOff/Absent Data:', this.absentWeekOffHolidayData);
+  }
+
+
+
+  closeAdjustModal() {
+    this.modalAttrAdjust.show = false;
+    this.modalAttrAdjust.employeeStatus = new EmployeeStatus(); // Reset the employeeDateDetails objec
+  }
 }

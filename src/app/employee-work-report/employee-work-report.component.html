@@ -4,13 +4,13 @@
     <!-- Filter Section -->
     <div class="cards-filter">
         <div class="d-flex align-items-center justify-content-between mb-3">
-           
+
 
             <!-- Filter Component -->
             <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
                 (triggerParentFunction)="fetchEmployeeStatus()">
             </app-filter>
-            
+
             <!-- Reset Button -->
             <button class="btn btn-primary d-flex align-items-center ms-3" (click)="reset()">
                 <i class="fa fa-refresh"></i>
@@ -31,7 +31,7 @@
             &#8592; <!-- Left Arrow -->
         </button>
         <!-- Dropdown -->
-        <div>
+        <div *ngIf="false">
             <select (change)="applyStatus()" class="form-select" [(ngModel)]="selectedStatus">
                 <option value="">Select Status</option>
                 <option *ngFor="let option of status" [value]="option.key">
@@ -52,7 +52,7 @@
                     <th>Employee</th>
                     <th>#</th>
                     <th *ngFor="let date of getCurrentDates()">
-                        <input type="checkbox" [checked]="headerSelection[date] || false"
+                        <input *ngIf="false" type="checkbox" [checked]="headerSelection[date] || false"
                             (change)="onHeaderCheckboxChange(date, $event)" />
                         {{ date | date: 'dd MMM yyyy' }} - {{ date | date: 'EEE' }}
 
@@ -74,21 +74,23 @@
                             <p><b> Absent Days</b> : {{ employee.reports.totalAbsentDays }}</p>
 
                         </div>
+                        <button (click)="openAdjustModal(employee)" style="background-color: #a60015;"
+                            class="btn btn-secondary">Adjust</button>
                         <i class="fas fa-info-circle" (click)="openEmployeeReportModal(employee)"></i>
                     </td>
-                    <td *ngFor="let date of getCurrentDates()"
-                        [ngStyle]="{ 'background-color': getStatusColor(employee.dates[date].status) }">
+                    <td *ngFor="let date of getCurrentDates()">
 
                         <!-- Status Dropdown -->
-                        <select *ngIf="!isOtherStatus(employee.dates[date].status)"
+                        <select *ngIf=" false && !isOtherStatus(employee.dates[date].status)"
                             class="status-dropdown form-select form-select-sm mt-2"
                             (change)="onStatusChange(employee, date, $event)" [(ngModel)]="employee.dates[date].status">
                             <option value="">Select</option>
                             <option *ngFor="let st of getStatusOptions(date)" [value]="st.key">{{ st.value }}</option>
                         </select>
-                        <input *ngIf="isOtherStatus(employee.dates[date].status)" type="text"
-                            class="form-control form-control-sm mt-2"
-                            [value]="getOtherStatusValue(employee.dates[date].status)" disabled>
+                        <p [ngStyle]="{'background-color': getStatusColor(employee.dates[date].status), 'color': 'white'}"
+                            type="text" class="">
+                            {{(employee.dates[date].status)}}
+                        </p>
 
                         <div class="time-card" (click)="openModal(employee.dates[date])" style="text-align: left;"
                             *ngIf="employee.dates[date]?.biometricData?.length">
@@ -109,12 +111,16 @@
                                 1]?.time | date: 'hh:mm a'
                                 }}
                             </p>
+
+                            <p
+                                [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].shift), 'color': 'white' }">
+                                {{ employee.dates[date].shift }}</p>
                         </div>
 
 
 
                         <!-- Leave and OD Details -->
-                        <div class="mt-2">
+                        <div *ngIf="false" class="mt-2">
                             <div *ngIf="employee.dates[date]?.leave?.requested">
                                 <b>Leave: {{ reqStatus[employee.dates[date].leave.status] }}</b>
                                 <button [routerLink]="['/Leaveapprovalview']"
@@ -131,10 +137,12 @@
                             </div>
                         </div>
 
-                        <div (click)="openModal(employee.dates[date])" class="triangle"></div>
-                        <!-- <i class="fas fa-info-circle" (click)="openModal(employee.dates[date])"></i> -->
-                        <input type="checkbox" [(ngModel)]="employee.dates[date].selected"
-                            (change)="onRowCheckboxChange(date)" />
+                        <div *ngIf="false">
+                            <div (click)="openModal(employee.dates[date])" class="triangle"></div>
+                            <!-- <i class="fas fa-info-circle" (click)="openModal(employee.dates[date])"></i> -->
+                            <input type="checkbox" [(ngModel)]="employee.dates[date].selected"
+                                (change)="onRowCheckboxChange(date)" />
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -145,11 +153,10 @@
     <!--Submit-->
     <div class="d-flex justify-content-between">
         <button class="btn btn-primary" (click)="submit()">Update Attendance</button>
-         <!-- Page Size Dropdown -->
-         <div class="d-flex align-items-center">
+        <!-- Page Size Dropdown -->
+        <div class="d-flex align-items-center">
             <label for="pageSize" class="me-2">Page Size:</label>
-            <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize" 
-            >
+            <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize">
                 <option [value]="10">10</option>
                 <option [value]="20">20</option>
                 <option [value]="30">30</option>
@@ -233,61 +240,182 @@
         [showCloseIcon]="true" [showSubmitButton]="false" (closeDialog)="closeEmployeeReportModal()">
 
         <div class="container">
-           
+
             <!-- Group 1: Attendance -->
             <div class="group-card">
-              <div class="group-header">Attendance Summary</div>
-              <div class="group-content">
-                <div class="item">
-                  <span>Total Present Days</span>
-                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.totalPresentDays }}</span>
+                <div class="group-header">Attendance Summary</div>
+                <div class="group-content">
+                    <div class="item">
+                        <span>Total Present Days</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.totalPresentDays
+                            }}</span>
+                    </div>
+                    <div class="item">
+                        <span>Total Absent Days</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.totalAbsentDays
+                            }}</span>
+                    </div>
                 </div>
-                <div class="item">
-                  <span>Total Absent Days</span>
-                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.totalAbsentDays }}</span>
-                </div>
-              </div>
             </div>
-        
+
             <!-- Group 2: Leave -->
             <div class="group-card">
-              <div class="group-header">Leave Summary</div>
-              <div class="group-content">
-                <div class="item">
-                  <span>Total Leave Requested</span>
-                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveRequestedDays }}</span>
+                <div class="group-header">Leave Summary</div>
+                <div class="group-content">
+                    <div class="item">
+                        <span>Total Leave Requested</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveRequestedDays
+                            }}</span>
+                    </div>
+                    <div class="item">
+                        <span>Total Leave Approved</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveApprovedDays
+                            }}</span>
+                    </div>
+                    <div class="item">
+                        <span>Total Leave Rejected</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveRejectedDays
+                            }}</span>
+                    </div>
                 </div>
-                <div class="item">
-                  <span>Total Leave Approved</span>
-                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveApprovedDays }}</span>
-                </div>
-                <div class="item">
-                  <span>Total Leave Rejected</span>
-                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.leaveRejectedDays }}</span>
-                </div>
-              </div>
             </div>
-        
+
             <!-- Group 3: OD -->
             <div class="group-card">
-              <div class="group-header">On-Duty Summary</div>
-              <div class="group-content">
-                <div class="item">
-                  <span>Total OD Requested</span>
-                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odRequestedDays }}</span>
+                <div class="group-header">On-Duty Summary</div>
+                <div class="group-content">
+                    <div class="item">
+                        <span>Total OD Requested</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odRequestedDays
+                            }}</span>
+                    </div>
+                    <div class="item">
+                        <span>Total OD Approved</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odApprovedDays
+                            }}</span>
+                    </div>
+                    <div class="item">
+                        <span>Total OD Rejected</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odRejectedDays
+                            }}</span>
+                    </div>
                 </div>
-                <div class="item">
-                  <span>Total OD Approved</span>
-                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odApprovedDays }}</span>
-                </div>
-                <div class="item">
-                  <span>Total OD Rejected</span>
-                  <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.odRejectedDays }}</span>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
 
     </app-common-dialog>
 
+
+    <!--Manage Employee Modal-->
+    <app-common-dialog [showDialog]="modalAttrAdjust.show" [dialogTitle]="modalAttrAdjust.title" [showCloseIcon]="true"
+        [showSubmitButton]="true" (closeDialog)="closeAdjustModal()" (submitDialog)="closeAdjustModal()"
+        [maxWidth]="modalAttrAdjust.maxWidth">
+        <div class="container">
+            <h3>Absent/Holiday/WeekOff</h3>
+            <table class="table table-bordered">
+                <thead class="sticky-header">
+                    <tr>
+                        <th>Day</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        <th>Is Compensated?</th>
+                        <th>Compensate Date</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let entry of absentWeekOffHolidayData">
+                        <td>
+                            <span>
+                                {{ entry.date }}
+                            </span>
+                            <p>Total Worked Hours: {{ entry.totalWorkedHours }}</p>
+                        </td>
+                        <td>{{ entry.status }}</td>
+                        <td>
+                            <select [(ngModel)]="entry.newStatus" (change)="null">
+                                <option value="">None</option>
+                                <option value="PRESENT">Present</option>
+                                <option value="ABSENT">Absent</option>
+                            </select>
+                        </td>
+                        <td>
+                            <span *ngIf="entry.newStatus === 'PRESENT'">
+
+                                <!-- Radio Buttons -->
+                                <label>
+                                    <input type="radio" [(ngModel)]="entry.isCompensated" value="NO" /> No
+                                </label>
+                                <label>
+                                    <input type="radio" [(ngModel)]="entry.isCompensated" value="YES" /> Yes
+                                </label>
+                            </span>
+
+                            <span *ngIf="entry.newStatus !== 'PRESENT'">
+                                -
+                            </span>
+
+
+                        </td>
+                        <td>
+                            <span *ngIf="entry.newStatus === 'PRESENT' && entry.isCompensated === 'YES'">
+                                <select [(ngModel)]="entry.compensateDate">
+                                    <option value="">Select a Date for Compensation</option>
+                                    <option *ngFor="let date of compensateDates">{{ date }}</option>
+                                </select>
+                            </span>
+
+                            <span *ngIf="entry.newStatus != 'PRESENT' || entry.isCompensated != 'YES'">
+                                -
+                            </span>
+                        </td>
+                        <td><textarea type="text" placeholder="Remarks"></textarea></td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="container">
+            <h3>Leave Requested</h3>
+            <table lass="table table-bordered">
+                <thead class="sticky-header">
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Day</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JohnDoe</td>
+                        <td>23-Dec-2024</td>
+                        <td><button class="approve-btn">Approve</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="container">
+            <h3>OD Requested</h3>
+            <table lass="table table-bordered">
+                <thead class="sticky-header">
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Day</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JohnDoe</td>
+                        <td>24-Dec-2024</td>
+                        <td><button class="approve-btn">Approve</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </app-common-dialog>
 </div>
