@@ -154,30 +154,30 @@ export class SidebarComponent {
         route: '/vendor-employee-payment-details',
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
-      {
-        label: 'OD Slip',
-        icon: 'fa-solid fa-file-alt',
-        route: '/odslipcompanylist',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
-      },
-      {
-        label: 'OD Slip Approval',
-        icon: 'fa-solid fa-check-circle',
-        route: '/odslipapproval',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
-      },
-      {
-        label: 'Leave Request',
-        icon: 'fa-solid fa-envelope-open-text',
-        route: '/empleaverequest',
-        allowedUserTypes: [UserType.EMPLOYEE] 
-      },
-      {
-        label: 'Leave Approval',
-        icon: 'fa-solid fa-thumbs-up',
-        route: '/Leaveapproval',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
-      }
+      // {
+      //   label: 'OD Slip',
+      //   icon: 'fa-solid fa-file-alt',
+      //   route: '/odslipcompanylist',
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.EMPLOYEE] 
+      // },
+      // {
+      //   label: 'OD Slip Approval',
+      //   icon: 'fa-solid fa-check-circle',
+      //   route: '/odslipapproval',
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+      // },
+      // {
+      //   label: 'Leave Request',
+      //   icon: 'fa-solid fa-envelope-open-text',
+      //   route: '/empleaverequest',
+      //   allowedUserTypes: [UserType.EMPLOYEE] 
+      // },
+      // {
+      //   label: 'Leave Approval',
+      //   icon: 'fa-solid fa-thumbs-up',
+      //   route: '/Leaveapproval',
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+      // }
     ];
     
 
