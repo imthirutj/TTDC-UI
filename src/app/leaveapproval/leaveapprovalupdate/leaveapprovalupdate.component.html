@@ -117,12 +117,7 @@
             <input type="text" class="form-control" [(ngModel)]="approval.Nos_Days_Approved_by_Manager" id="Nos_Days"
               name="Nos_Days_Approved_by_Manager" placeholder="Number of Days" required>
           </div>
-          <div class="mb-3">
-            <label for="Remarks" class="form-label">Remarks</label>
-            <input type="text" class="form-control" [(ngModel)]="approval.Manager_Approval_Remarks" id="Remarks"
-              name="Manager_Approval_Remarks" placeholder="Remarks">
-          </div>
-
+          
 
           <div class="mb-3">
             <label for="ApprovedDates" class="form-label">Approved Dates</label>
@@ -132,6 +127,13 @@
               <option *ngFor="let date of availableDates" [value]="date">{{ date }}</option>
             </select>
           </div>
+
+          <div class="mb-3">
+            <label for="Remarks" class="form-label">Remarks</label>
+            <input type="text" class="form-control" [(ngModel)]="approval.Manager_Approval_Remarks" id="Remarks"
+              name="Manager_Approval_Remarks" placeholder="Remarks">
+          </div>
+
 
         </div>
         <div class="modal-footer">
