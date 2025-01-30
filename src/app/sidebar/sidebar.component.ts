@@ -68,7 +68,7 @@ export class SidebarComponent {
         label: 'Pay Not Generated', 
         icon: 'fa-solid fa-file-excel', 
         route: '/payslip-records-waiting', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER, UserType.VENDOR]  
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER]  
       },
       { 
         label: 'State List', 

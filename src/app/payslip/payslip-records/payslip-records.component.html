@@ -1,108 +1,102 @@
-
 <div class="Department-list-container">
-    <h3>Payslip Generated Employees:
-      {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
-    </h3>
+  <h3>Payslip Generated Employees:
+    {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
+  </h3>
 
-    <div class="cards-filter">
-      <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-       (triggerParentFunction)="getEmployeeList()">
-      </app-filter>
-      <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
-    </div>
-
-
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>#</th>
-          <!-- <th>Employee ID</th> -->
-          <th>Employee Name</th>
-          <th>Employee Code</th>
-          <th>Unit Name</th>
-          <th>Vendor Name</th>   
-          <th>Designation Name</th> 
-          <th>Category Name</th>      
-          <th>Basic Salary</th>
-          <th>DA</th>
-          <th>Special Wages</th>
-          <th>EPF</th>
-          <th>ESI</th>
-          <th>Net Salary</th>
-          <th>View Slips</th>    
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let department of Department; let i = index">
-            <td>{{ i + 1 }}</td>
-            <!-- <td>{{ department.employeeId  }}</td> -->
-            <td>{{ department.employeeName }}</td>
-            <td>{{ department.employeeCode }}</td>
-            <td>{{ department.companyFName }}</td>
-            <td>LipiInterior</td>
-            <td>{{ department.designationName }}</td>
-            <!-- <td>{{ department.departmentFName }}</td> -->
-            <td>{{ department.categoryFName }} </td>
-            <td>9200</td>
-            <td>920</td>
-            <td>12880</td>
-            <td>1196</td>
-            <td>196</td>
-            <td>21038</td>
-            <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"  
-              (click)="show_list_slip(department)">
-                View Pay Slips
-            </button></td>
-          </tr>          
-      </tbody>
-    </table>
+  <div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+      (triggerParentFunction)="getEmployeeList()">
+    </app-filter>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
- 
-  
-  <app-common-dialog
-  [showDialog]="modalAttr.show"
-  [dialogTitle]="modalAttr.title"
-  [showCloseIcon]="true"
-  [showSubmitButton]="false"
-  (closeDialog)="closePaySlip()"
-  [maxWidth]="modalAttr.maxWidth"
-  >
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Pay Record Id</th>
-          <th>Generated Date</th>
-          <th>Month</th>
-          <th>Year</th>
-          <th>Present Days</th>
-          <th>Absent Days</th>
-          <th>Total Earinings</th>      
-          <th>Total Deductions</th>      
-          <th>Gross Salary</th>      
-          <th>Net Salary</th>  
-          <th>View Slip</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let department of payslips; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ department.payslipRecordId  }}</td>
-            <td>{{ department.payslipDate }}</td>
-            <td>{{department.month | monthName}}</td>
-            <td>{{department.year}}</td>
-            <td>{{ department.presentDays }}</td>
-            <td>{{ department.absentDays }}</td>
-            <td>{{ department.totalEarnings }}</td>
-            <td>{{ department.totalDeductions }}</td>
-            <td>{{ department.grossSalary }} </td>
-            <td>{{ department.netSalary }} </td>
-            <td><a class="btn btn-primary"  data-bs-dismiss="modal"  type="button" [routerLink]="['/payslip', department.payslipRecordId]" [queryParams]="{ empId: employee.employeeId }">
-                View Slip
-            </a></td>
-          </tr>          
-      </tbody>
-    </table>
-  </app-common-dialog>
-  
-  
+
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <!-- <th>Employee ID</th> -->
+        <th>Employee Name</th>
+        <th>Employee Code</th>
+        <th>Unit Name</th>
+        <th>Vendor Name</th>
+        <th>Designation Name</th>
+        <th>Category Name</th>
+        <th>Basic Salary</th>
+        <th>DA</th>
+        <th>Special Wages</th>
+        <th>EPF</th>
+        <th>ESI</th>
+        <th>Net Salary</th>
+        <th>View Slips</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of Department; let i = index">
+        <td>{{ i + 1 }}</td>
+        <!-- <td>{{ department.employeeId  }}</td> -->
+        <td>{{ d.employeeName }}</td>
+        <td>{{ d.employeeCode }}</td>
+        <td>{{ d.companyFName }}</td>
+        <td>LipiInterior</td>
+        <td>{{ d.designationName }}</td>
+        <!-- <td>{{ department.departmentFName }}</td> -->
+        <td>{{ d.categoryFName }} </td>
+        <td>{{ d.basicRate | currency:'INR' }}</td>
+        <td>{{ d.da | currency:'INR' }}</td>
+        <td>{{ d.specialWages | currency:'INR' }}</td>
+        <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
+        <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
+        <td>{{ d.netSalary | currency:'INR' }}</td>
+        <td>
+          <button class="btn btn-primary" type="button" [routerLink]="['/payslip', d.payslipRecordId]"
+            [queryParams]="{ empId: d.employeeId }">
+            View Pay Slips
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<app-common-dialog [showDialog]="modalAttr.show" [dialogTitle]="modalAttr.title" [showCloseIcon]="true"
+  [showSubmitButton]="false" (closeDialog)="closePaySlip()" [maxWidth]="modalAttr.maxWidth">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Pay Record Id</th>
+        <th>Generated Date</th>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Present Days</th>
+        <th>Absent Days</th>
+        <th>Total Earinings</th>
+        <th>Total Deductions</th>
+        <th>Gross Salary</th>
+        <th>Net Salary</th>
+        <th>View Slip</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let department of payslips; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ department.payslipRecordId }}</td>
+        <td>{{ department.payslipDate }}</td>
+        <td>{{department.month | monthName}}</td>
+        <td>{{department.year}}</td>
+        <td>{{ department.presentDays }}</td>
+        <td>{{ department.absentDays }}</td>
+        <td>{{ department.totalEarnings }}</td>
+        <td>{{ department.totalDeductions }}</td>
+        <td>{{ department.grossSalary }} </td>
+        <td>{{ department.netSalary }} </td>
+        <td><a class="btn btn-primary" data-bs-dismiss="modal" type="button"
+            [routerLink]="['/payslip', department.payslipRecordId]" [queryParams]="{ empId: employee.employeeId }">
+            View Slip
+          </a></td>
+      </tr>
+    </tbody>
+  </table>
+</app-common-dialog>

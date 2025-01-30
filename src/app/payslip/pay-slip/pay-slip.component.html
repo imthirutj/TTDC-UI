@@ -104,7 +104,7 @@
           <tfoot>
             <tr>
               <th>Total Earnings</th>
-              <td>-</td>
+
               <th class="text-end">{{payobj.totalEarnings}}</th>
             </tr>
           </tfoot>
@@ -122,22 +122,22 @@
           </thead>
           <tbody>
             <tr>
-              <td>EPF Employee Contribution</td>
+              <td>EPF</td>
               <td class="text-end">{{payobj.epfEmployeeContribution}}</td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td>EPF Employer Contribution</td>
               <td class="text-end">{{payobj.epfEmployerContribution}}</td>
-            </tr>
+            </tr> -->
             <tr>
-              <td>ESI Employee Contribution</td>
+              <td>ESI</td>
               <td class="text-end">{{payobj.esiEmployeeContribution}}</td>
             </tr>
 
-            <tr>
+            <!-- <tr>
               <td>ESI Employer Contribution</td>
               <td class="text-end">{{payobj.esiEmployerContribution}}</td>
-            </tr>
+            </tr> -->
             <!-- <tr>
             <td>Service Charge</td>
             <td class="text-end">{{payobj.serviceCharge}}</td>
@@ -150,7 +150,10 @@
               <td>TDS</td>
               <td class="text-end">0</td>
             </tr> -->
-
+            <tr>
+              <td>LOP</td>
+              <td class="text-end">{{payobj.lopAmount}}</td>
+            </tr>
           </tbody>
           <tfoot>
             <tr>
