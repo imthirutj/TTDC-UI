@@ -32,7 +32,7 @@
       </button>
       <button *ngIf="userAccessLevel == UserType.STATE_ADMIN && companyVendors.invoiceGenerated" class="btn btn-primary"
         (click)="openVendorModal('UPDATE', companyVendors)">
-        Update Payment
+        Update Payment to Vendor
       </button>
       <button *ngIf="userAccessLevel == UserType.VENDOR && companyVendors.invoiceGenerated" class="btn btn-primary"
         (click)="openVendorModal('VIEW', companyVendors)">
