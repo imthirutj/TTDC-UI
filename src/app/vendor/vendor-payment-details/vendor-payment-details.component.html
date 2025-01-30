@@ -1,11 +1,14 @@
 <div class="container">
-  <h2>Employee Work Details</h2>
+
 
   <div class="cards-filter">
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
       (triggerParentFunction)="fetchPayRecordsbyComp()">
     </app-filter>
-    <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    <button (click)="this.dataService.downloadPDF('vendorPaymentTable')" class="btn btn-primary">
+      Download as PDF
+    </button>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
 
   <div class="container mt-4">
@@ -14,90 +17,100 @@
         {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
       </span>
     </h3>
-    <table class="table table-striped table-bordered">
+    <div *ngIf="payRecords.length > 0" class="d-flex flex-wrap gap-2">
+      <button *ngIf="!companyVendors.invoiceGenerated && userAccessLevel == UserType.VENDOR" class="btn btn-primary"
+        (click)="navigateVendorInvoice(companyVendors, 'PREVIEW')">
+        Preview Invoice
+      </button>
+      <button *ngIf="!companyVendors.invoiceGenerated && userAccessLevel == UserType.VENDOR" class="btn btn-primary"
+        (click)="generateInvoice(companyVendors)">
+        Generate Invoice
+      </button>
+      <button *ngIf="companyVendors.invoiceGenerated" class="btn btn-primary"
+        (click)="navigateVendorInvoice(companyVendors, 'VIEW')">
+        View Invoice
+      </button>
+      <!-- <button *ngIf="userAccessLevel == UserType.STATE_ADMIN && companyVendors.invoiceGenerated" class="btn btn-primary"
+        (click)="openVendorModal('UPDATE', companyVendors)">
+        Update Payment
+      </button>
+      <button *ngIf="userAccessLevel == UserType.VENDOR && companyVendors.invoiceGenerated" class="btn btn-primary"
+        (click)="openVendorModal('VIEW', companyVendors)">
+        View Payment
+      </button>
+      <button *ngIf="userAccessLevel == UserType.VENDOR && companyVendors.invoiceGenerated" class="btn btn-primary"
+        (click)="openEmployeePaymentModal('UPDATE', companyVendors)">
+        Update Employee Payment
+      </button>
+      <button *ngIf="!companyVendors.invoiceGenerated && userAccessLevel == UserType.VENDOR" class="btn btn-primary"
+        (click)="navigateVendorInvoice(companyVendors, 'GENERATE')">
+        Generate Invoice
+      </button>
+      <button *ngIf="companyVendors.invoiceGenerated" class="btn btn-primary"
+        (click)="navigateVendorInvoice(companyVendors, 'VIEW')">
+        View Invoice
+      </button>
+      <p [ngClass]="{
+        'invoice-generated': companyVendors.invoiceGenerated,
+        'invoice-not-generated': !companyVendors.invoiceGenerated
+    }" class="invoice-label">
+        {{ companyVendors.invoiceGenerated ? 'Invoice Generated' : 'Invoice Not Generated' }}
+      </p> -->
+
+    </div>
+
+    <table id="vendorPaymentTable" class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th scope="col">Action</th>
-          <th scope="col">Name</th>
-          <th scope="col">Month/Year</th>
-  
-          <th scope="col">Total Payable Salary</th>
-          <th scope="col">Service Charge</th>
-          <th scope="col">Total Salary With Service Charges</th>
-          <th scope="col">GST</th>
-    
-          <th scope="col">TDS</th>
-
-          <th scope="col">EPF</th>
-          <th scope="col">ESI</th>
-
-          <th scope="col">Net Amount</th>
-
-          <th scope="col">Amount Received</th>
-          <th scope="col">Received Date</th>
-          <th scope="col">Cheque No</th>
-          <th scope="col">Cheque Amount</th>
+          <th>#</th>
+          <th>Employee Name</th>
+          <th>Employee Code</th>
+          <th>Unit Name</th>
+          <th>Vendor Name</th>
+          <th>Designation Name</th>
+          <th>Category Name</th>
+          <th>Basic Salary</th>
+          <th>DA</th>
+          <th>Special Wages</th>
+          <th>EPF</th>
+          <th>ESI</th>
+          <th>Net Salary</th>
 
 
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let vendor of companyVendors">
-          <td>
-            <div class="d-flex flex-wrap gap-2">
-              <button *ngIf="userAccessLevel == UserType.STATE_ADMIN && vendor.invoiceGenerated" class="btn btn-primary"
-                (click)="openVendorModal('UPDATE', vendor)">
-                Update Payment
-              </button>
-              <button *ngIf="userAccessLevel == UserType.VENDOR && vendor.invoiceGenerated" class="btn btn-primary"
-                (click)="openVendorModal('VIEW', vendor)">
-                View Payment
-              </button>
-              <!-- <button *ngIf="userAccessLevel == UserType.STATE_ADMIN && vendor.invoiceGenerated" class="btn btn-primary"
-                (click)="openEmployeePaymentModal('VIEW', vendor)">
-                VIEW Employee Payment
-              </button> -->
-              <button *ngIf="userAccessLevel == UserType.VENDOR && vendor.invoiceGenerated" class="btn btn-primary"
-                (click)="openEmployeePaymentModal('UPDATE', vendor)">
-                Update Employee Payment
-              </button>
-              <button *ngIf="!vendor.invoiceGenerated && userAccessLevel == UserType.VENDOR" class="btn btn-primary"
-                (click)="navigateVendorInvoice(vendor, 'GENERATE')">
-                Generate Invoice
-              </button>
-              <button *ngIf="vendor.invoiceGenerated" class="btn btn-primary"
-                (click)="navigateVendorInvoice(vendor, 'VIEW')">
-                View Invoice
-              </button>
-              <p [ngClass]="{
-                'invoice-generated': vendor.invoiceGenerated,
-                'invoice-not-generated': !vendor.invoiceGenerated
-            }" class="invoice-label">
-              {{ vendor.invoiceGenerated ? 'Invoice Generated' : 'Invoice Not Generated' }}
-          </p>
-            
-            </div>
-          </td>
-          <td>{{ vendor.vendorName }}</td>
-          <td>{{ vendor.month | monthName }}-{{vendor.year}}</td>
-          <td>{{ vendor.totalPayableAmount | currency:'INR' }}</td>
-          <td>{{ vendor.serviceCharge | currency:'INR' }}</td>
-          <td>{{ vendor.totalSalWithCharges| currency:'INR'}}</td>
-          <td>{{ vendor.gst | currency:'INR' }}</td>
-         
-          <td>{{ vendor.tds | currency:'INR' }}</td>
+        <tr *ngFor="let d of payRecords; let i = index">
 
-          <td>{{ vendor.epf | currency:'INR' }}</td>
-          <td>{{ vendor.esi | currency:'INR' }}</td>
+          <td>{{ i + 1 }}</td>
+          <!-- <td>{{ department.employeeId  }}</td> -->
+          <td>{{ d.employeeName }}</td>
+          <td>{{ d.employeeCode }}</td>
+          <td>{{ d.companyFName }}</td>
+          <td>LipiInterior</td>
+          <td>{{ d.designationName }}</td>
+          <!-- <td>{{ department.departmentFName }}</td> -->
+          <td>{{ d.categoryFName }} </td>
+          <td>{{ d.basicRate | currency:'INR' }}</td>
+          <td>{{ d.da | currency:'INR' }}</td>
+          <td>{{ d.specialWages | currency:'INR' }}</td>
+          <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
+          <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
+          <td>{{ d.netSalary | currency:'INR' }}</td>
 
-          <td>{{ vendor.netAmount | currency:'INR' }}</td>
-
-          <td>{{vendor.paymentStatus}}</td>
-          <td>{{vendor.chequeDate}}</td>
-          <td>{{vendor.chequeNumber}}</td>
-          <td>{{vendor.chequeAmount | currency:'INR'}}</td>
         </tr>
       </tbody>
+      <tfoot *ngIf="payRecords.length > 0">
+        <tr>
+          <td colspan="7" class="text-right"><strong>Total:</strong></td>
+          <td>{{ getTotal('basicRate') | currency:'INR' }}</td>
+          <td>{{ getTotal('da') | currency:'INR' }}</td>
+          <td>{{ getTotal('specialWages') | currency:'INR' }}</td>
+          <td>{{ getTotal('epfEmployeeContribution') | currency:'INR' }}</td>
+          <td>{{ getTotal('esiEmployeeContribution') | currency:'INR' }}</td>
+          <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 
@@ -109,12 +122,12 @@
       <div class="col-md-6">
         <b for="totalPayableAmount">Total Payable Salary:</b>
         <span>{{selectedVendor.totalPayableAmount}}</span>
-       
+
       </div>
       <div class="col-md-6">
         <b for="gst">GST:</b>
         <span>{{selectedVendor.gst}}</span>
-        
+
       </div>
     </div>
 
@@ -122,12 +135,12 @@
       <div class="col-md-6">
         <b for="serviceCharge">Service Charge:</b>
         <span>{{selectedVendor.serviceCharge}}</span>
-       
+
       </div>
       <div class="col-md-6">
         <b for="tds">TDS:</b>
         <span>{{selectedVendor.tds}}</span>
-      
+
       </div>
     </div>
 
@@ -135,7 +148,7 @@
       <div class="col-md-6">
         <b for="netAmount">Net Amount:</b>
         <span>{{selectedVendor.netAmountt}}</span>
-        
+
       </div>
     </div>
 

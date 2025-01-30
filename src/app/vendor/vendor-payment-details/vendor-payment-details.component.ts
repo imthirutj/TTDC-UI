@@ -32,7 +32,9 @@ export class VendorPaymentDetailsComponent implements OnInit {
   years = myYears;
 
 
-  companyVendors: any;
+  companyVendors: any ={};
+
+  payRecords: any[] = [];
 
   isVendorModalOpen: boolean = false;
   isEmployeePaymentModelOpen: boolean = false;
@@ -45,18 +47,17 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   filters: any = {
     selectedMonth: {
-      value: 0, // Default to current month
+      value: Number(new Date().getMonth()) + 1, // Default to current month
       show: true,
       key: 'month',
       includeInSearchParams: true
     },
     selectedYear: {
-      value: 0, // Default to current year
+      value: new Date().getFullYear(), // Default to current year
       show: true,
       key: 'year',
       includeInSearchParams: true
     },
-
     cityId: {
       value: '',
       show: true,
@@ -85,7 +86,7 @@ export class VendorPaymentDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private masterDataService: MasterDataService,
-    private dataService: DataService,
+    public  dataService: DataService,
     private vendorService: VendorService
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
@@ -98,17 +99,18 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
-    this.fetchPayRecordsbyComp();
+    this.search();
   }
 
   search() {
     this.fetchPayRecordsbyComp();
+    this.fetchPayRecords();
   }
 
 
   ngOnInit(): void {
     this.fetchStates();
-    this.fetchPayRecordsbyComp();
+    this.search();
   }
 
 
@@ -135,16 +137,37 @@ export class VendorPaymentDetailsComponent implements OnInit {
   }
 
   fetchPayRecordsbyComp() {
+    if(!this.filters.selectedMonth.value || !this.filters.selectedYear.value || !this.filters.vendorId.value){
+      this.dataService.showSnackBar('Please select month/year/vendor');
+    }
     const payload = this.dataService.getPayloadValue(this.filters);
     this.vendorService.getPayRecordsbyComp(payload).subscribe((response: any) => {
       if (response.success) {
-        this.companyVendors = response.data;
+        this.companyVendors = response.data[0];
+        console.log('companyVendors:', this.companyVendors);
       }
       else {
         this.companyVendors = [];
       }
     })
   }
+
+  fetchPayRecords(){
+    const payload = this.dataService.getPayloadValue(this.filters);
+    this.masterDataService.getpayslipList(payload).subscribe((response: any) => {
+      if (response.success) {
+        this.payRecords = response.data.paidRecords;
+      }
+      else {
+        this.payRecords = [];
+      }
+    })
+  }
+
+  getTotal(field: string): number {
+    return this.payRecords.reduce((sum, record) => sum + (record[field] || 0), 0);
+  }
+  
 
   //#endregion
 
@@ -250,7 +273,7 @@ export class VendorPaymentDetailsComponent implements OnInit {
     this.vendorService.updateVendorPayments(this.selectedVendor).subscribe((response: any) => {
       if (response.success) {
         this.dataService.showSnackBar('Vendor updated successfully');
-        this.fetchPayRecordsbyComp();
+        this.search();
       }
     })
   }
@@ -287,11 +310,24 @@ export class VendorPaymentDetailsComponent implements OnInit {
     this.vendorService.downloadEmployeePaymentForm(payload);
   }
 
-  navigateVendorInvoice(vendor: any, type: 'VIEW' | 'GENERATE') {
+  navigateVendorInvoice(vendor: any, type: 'VIEW' | 'PREVIEW') {
     const month = vendor.month;
     const year = vendor.year;
     const vendorId = vendor.vendorId;
     this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId, type: type } });
+  }
+
+  generateInvoice(vendor: any) {
+    var payload={
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value,
+      vendorId: this.filters.vendorId.value
+    }
+    this.vendorService.generateVendeorInvoiceDetails(payload).subscribe((response) => {
+      console.log('Vendor Invoice Details:', response);
+      this.dataService.openConfirmationDialog(response.message);
+      this.navigateVendorInvoice(vendor, 'VIEW');
+    });
   }
 
 

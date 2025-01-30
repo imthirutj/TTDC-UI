@@ -60,10 +60,10 @@
                     <div class="col-6 p-3">
                         <strong>Payment Terms:</strong> Immediate<br>
                         <strong>Bank Account Details for Payment:</strong><br>
-                        <strong>Company Name: Lipi Interior</strong><br>
-                        <strong>Account Number </strong>: 6138941653<br>
-                        <strong>Bank Name & Branch </strong>: Indian Bank Salem Main Branch<br>
-                        <strong>IFSC Code</strong>: IDIB000S007
+                        <strong>Vendor Name: </strong>{{vendorDetails.vendorName }}<br>
+                        <strong>Account Number </strong>:  {{vendorDetails.bankAccountNo}}<br>
+                        <strong>Bank Name & Branch </strong>: {{vendorDetails.bankName}}<br>
+                        <strong>IFSC Code</strong>: {{vendorDetails.bankIFSC}}
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                         <td>{{i+1}}</td>
                         <td>{{invoiceRecords.designationName}}</td>
                         <td>{{invoiceRecords.employeeCount}}</td>
-                        <td>{{invoiceRecords.totalNetSalary | currency:'INR'}}</td>
+                        <td>{{invoiceRecords.totalGrossSalary | currency:'INR'}}</td>
                     </tr>
 
                     <tr>
@@ -133,7 +133,7 @@
 
     </div>
 
-    <div class="page-2">
+    <div *ngIf="false" class="page-2">
         <div class="container mt-4">
             <h3 class="text-center"></h3>
 

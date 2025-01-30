@@ -24,7 +24,7 @@ export class VendorInvoiceDetailsComponent {
   userAccessLevel: any;
   user: any;
 
-  type: 'VIEW' | 'GENERATE' = 'VIEW';
+  type: 'VIEW' | 'PREVIEW' = 'VIEW';
 
   month: any;
   year: any;
@@ -125,34 +125,47 @@ export class VendorInvoiceDetailsComponent {
       year: this.year,
       vendorId: this.vendorID
     }
-    if(this.type== 'GENERATE'){
-      this.vendorService.generateVendeorInvoiceDetails(payload).subscribe((response) => {
-        console.log('Vendor Invoice Details:', response);
-        this.vendorInvoiceDetails = response.data;
-        this.calculateTotals();
-
-        this.router.navigateByUrl('/blank', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: payload.month, year: payload.year, vendorId: payload.vendorId, type:'VIEW' } });
-        });
-      });
-    }
-    else{
+    if(this.type== 'VIEW'){
       this.vendorService.viewVendorInvoiceDetails(payload).subscribe((response) => {
         console.log('Vendor Invoice Details:', response);
         this.vendorInvoiceDetails = response.data.invoice;
-        this.vendorDetails = {
-          vendorName: response.data.vendorName,
-          vendorId: response.data.vendorId,
-          gstin : response.data.gstin,
-          panNo: response.data.panNo,
-          emailId: response.data.emailId,
-          address: response.data.address,
-          contactNo: response.data.contactNo,
-          updateDate: response.data.updateDate,
-          vendorInvoiceID: response.data.vendorInvoiceID
-        }
+        //rmoeve invoive object from response.data
+        var vendorDetailsObj = { ...response.data };
+        delete vendorDetailsObj.invoice;
+        this.vendorDetails = vendorDetailsObj;
+        
         this.calculateTotals();
       });
+    }
+    else if(this.type== 'PREVIEW'){
+      this.vendorService.preViewVendorInvoiceDetails(payload).subscribe((response) => {
+        console.log('Vendor Invoice Details:', response);
+        this.vendorInvoiceDetails = response.data.invoice;
+        var vendorDetailsObj = { ...response.data };
+        delete vendorDetailsObj.invoice;
+        this.vendorDetails = vendorDetailsObj;
+
+        this.calculateTotals();
+      });
+      // this.vendorService.viewVendorInvoiceDetails(payload).subscribe((response) => {
+      //   console.log('Vendor Invoice Details:', response);
+      //   this.vendorInvoiceDetails = response.data.invoice;
+      //   this.vendorDetails = {
+      //     vendorName: response.data.vendorName,
+      //     vendorId: response.data.vendorId,
+      //     gstin : response.data.gstin,
+      //     panNo: response.data.panNo,
+      //     emailId: response.data.emailId,
+      //     address: response.data.address,
+      //     contactNo: response.data.contactNo,
+      //     updateDate: response.data.updateDate,
+      //     vendorInvoiceID: response.data.vendorInvoiceID
+      //   }
+      //   this.calculateTotals();
+      // });
+    }
+    else{
+      this.dataService.showSnackBar('Invalid URL');
     }
     
   }
