@@ -78,6 +78,7 @@ export class FiltersComponent implements OnInit {
     this.fetchDepartments();
     this.fetchDesignations();
     this.fetchCategories();
+    this.fetchVendors();
 
   }
 

@@ -139,6 +139,7 @@ export class VendorPaymentDetailsComponent implements OnInit {
   fetchPayRecordsbyComp() {
     if(!this.filters.selectedMonth.value || !this.filters.selectedYear.value || !this.filters.vendorId.value){
       this.dataService.showSnackBar('Please select month/year/vendor');
+      return;
     }
     const payload = this.dataService.getPayloadValue(this.filters);
     this.vendorService.getPayRecordsbyComp(payload).subscribe((response: any) => {
@@ -153,6 +154,10 @@ export class VendorPaymentDetailsComponent implements OnInit {
   }
 
   fetchPayRecords(){
+    if(!this.filters.selectedMonth.value || !this.filters.selectedYear.value || !this.filters.vendorId.value){
+      this.dataService.showSnackBar('Please select month/year/vendor');
+      return;
+    }
     const payload = this.dataService.getPayloadValue(this.filters);
     this.masterDataService.getpayslipList(payload).subscribe((response: any) => {
       if (response.success) {
@@ -231,7 +236,7 @@ export class VendorPaymentDetailsComponent implements OnInit {
       else{
         this.selectedVendor = vendor;
       }
-    })
+    });
     
   }
 

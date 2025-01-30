@@ -30,32 +30,25 @@
         (click)="navigateVendorInvoice(companyVendors, 'VIEW')">
         View Invoice
       </button>
-      <!-- <button *ngIf="userAccessLevel == UserType.STATE_ADMIN && companyVendors.invoiceGenerated" class="btn btn-primary"
+      <button *ngIf="userAccessLevel == UserType.STATE_ADMIN && companyVendors.invoiceGenerated" class="btn btn-primary"
         (click)="openVendorModal('UPDATE', companyVendors)">
         Update Payment
       </button>
       <button *ngIf="userAccessLevel == UserType.VENDOR && companyVendors.invoiceGenerated" class="btn btn-primary"
         (click)="openVendorModal('VIEW', companyVendors)">
-        View Payment
+        View Payment And Cheque Details
       </button>
       <button *ngIf="userAccessLevel == UserType.VENDOR && companyVendors.invoiceGenerated" class="btn btn-primary"
         (click)="openEmployeePaymentModal('UPDATE', companyVendors)">
         Update Employee Payment
       </button>
-      <button *ngIf="!companyVendors.invoiceGenerated && userAccessLevel == UserType.VENDOR" class="btn btn-primary"
-        (click)="navigateVendorInvoice(companyVendors, 'GENERATE')">
-        Generate Invoice
-      </button>
-      <button *ngIf="companyVendors.invoiceGenerated" class="btn btn-primary"
-        (click)="navigateVendorInvoice(companyVendors, 'VIEW')">
-        View Invoice
-      </button>
       <p [ngClass]="{
-        'invoice-generated': companyVendors.invoiceGenerated,
-        'invoice-not-generated': !companyVendors.invoiceGenerated
-    }" class="invoice-label">
+    'invoice-generated': companyVendors.invoiceGenerated,
+    'invoice-not-generated': !companyVendors.invoiceGenerated
+}" class="invoice-label">
         {{ companyVendors.invoiceGenerated ? 'Invoice Generated' : 'Invoice Not Generated' }}
-      </p> -->
+      </p>
+     
 
     </div>
 
@@ -120,7 +113,7 @@
 
     <div class="row">
       <div class="col-md-6">
-        <b for="totalPayableAmount">Total Payable Salary:</b>
+        <b for="totalPayableAmount">Total Payment:</b>
         <span>{{selectedVendor.totalPayableAmount}}</span>
 
       </div>
