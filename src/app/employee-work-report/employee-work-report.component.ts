@@ -67,7 +67,10 @@ export class EmployeeWorkReportComponent {
     { key: 'ABSENT', value: 'Absent', color: 'rgb(203 72 72)' },
     { key: 'ABSENT-LWT', value: 'Absent', color: 'rgb(203 72 72)' },//LWT-Less Working Hours
     { key: 'HOLIDAY', value: 'Holiday', color: 'rgb(97 114 219)' },
+    { key: 'HOLIDAY-PRESENT', value: 'Holiday Present', color: 'rgb(97 114 219)' },
     { key: 'WEEKOFF', value: 'Weekly Off', color: 'rgb(121 4 81)' },
+    { key: 'LEAVE', value: 'Leave', color: 'rgb(63 133 143)' },
+    { key: 'OD', value: 'ODf', color: 'rgb(63 133 143)' },
   ];
 
   shiftStatus: { key: string; value: string, color: string }[] = [
@@ -105,7 +108,7 @@ export class EmployeeWorkReportComponent {
   modalAttrAdjust: any = {
     show: false,
     title: '',
-    maxWidth: '900px',
+    maxWidth: '1200px',
     employeeStatus: new EmployeeStatus()
   }
 
@@ -117,6 +120,11 @@ export class EmployeeWorkReportComponent {
 
   headerSelection: { [key: string]: boolean } = {};
 
+  compensateDates: string[] = [];
+  absentWeekOffHolidayData: DateDetails[] = [];
+  leaveRequestedDays: DateDetails[]=[];
+  odRequestedDays: DateDetails[]=[];
+  
   //#region Filter
   filters: any = {
     selectedMonth: {
@@ -408,6 +416,18 @@ export class EmployeeWorkReportComponent {
     return status ? status.value : '';
   }
 
+
+  getAvailableCompensatedDates(employeeId:any){
+    var payload = {
+      employeeId: employeeId
+    }
+    this.compensateDates =[];
+    this.employeeWorkReportService.getAvailableCompensatedDates(payload).subscribe((response) => {
+      if(response.success){
+        this.compensateDates = response.data;
+      }
+    })
+  }
   //#endregion
 
   //#region  OnChange
@@ -700,8 +720,7 @@ export class EmployeeWorkReportComponent {
   }
 
 
-  compensateDates: string[] = ['2024-12-21'];
-  absentWeekOffHolidayData: any[] = [];
+
   openAdjustModal(employee: EmployeeStatus) {
     this.modalAttrAdjust.show = true;
     this.modalAttrAdjust.employeeStatus = employee;
@@ -711,14 +730,25 @@ export class EmployeeWorkReportComponent {
 
   updateEmployeeAdjust() {
     this.absentWeekOffHolidayData = [];
+    this.leaveRequestedDays=[];
+    this.odRequestedDays=[];
 
     const employee = this.modalAttrAdjust.employeeStatus as EmployeeStatus; // Ensure correct type
-
+    this.getAvailableCompensatedDates(employee.empId);
     Object.entries(employee.dates).forEach(([date, details]) => {
       const record = details as DateDetails; // Use your defined class
-      if (['ABSENT', 'ABSENT-LWT', 'HOLIDAY', 'WEEKOFF'].includes(record.status)) {
+      if (['ABSENT', 'ABSENT-LWT', 'HOLIDAY', 'WEEKOFF'].includes(record.status)
+      || record.hasOverwrited ==1) {
         this.absentWeekOffHolidayData.push({...record, newStatus: '', date: date});
       }
+
+      if(record.leaveRequested == 1){
+        this.leaveRequestedDays.push({...record, newStatus: '', date: date});
+      }
+      if(record.odRequested == 1){
+        this.odRequestedDays.push({...record, newStatus: '', date: date});
+      }
+      
     });
 
     console.log('Holiday/WeekOff/Absent Data:', this.absentWeekOffHolidayData);
@@ -735,13 +765,21 @@ export class EmployeeWorkReportComponent {
     // Filter the data to only include entries where newStatus is not 'None'
     const filteredData = this.absentWeekOffHolidayData.filter(entry => entry.newStatus !== '');
 
+    // Validate: Ensure compensatedDate is provided if isCompensated is 'YES'
+    for (const entry of filteredData) {
+      if (entry.isCompensated === 'YES' && !entry.compensatedDate) {
+        this.dataService.showSnackBar('Compensate date is required when compensation is marked as "YES".');
+        return; // Stop the submission if validation fails
+      }
+    }
+
     // Create the payload for the API
     const payload = filteredData.map(entry => ({
       employeeId: entry.employeeId,
       status: entry.newStatus,
       date: entry.date,
       isCompensated: entry.isCompensated === 'YES' ? 1 : 0,
-      compensatedDate: entry.isCompensated === 'YES' ? entry.compensateDate : null,
+      compensatedDate: entry.isCompensated === 'YES' ? entry.compensatedDate : null,
       remarks: entry.remarks
     }));
 

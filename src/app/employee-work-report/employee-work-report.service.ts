@@ -38,6 +38,12 @@ export class EmployeeWorkReportService {
     const url = `${this.apiUrl}EmpWorkReport/GetBiometricLogs?${queryParams}&skipLoader=true`;
     return this.http.get<any>(url);
   }
+
+  getAvailableCompensatedDates(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}EmpWorkReport/GetAvailableCompensatedDates?${queryParams}`;
+    return this.http.get<any>(url);
+  }
   
 
 }

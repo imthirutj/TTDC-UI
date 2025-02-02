@@ -74,8 +74,8 @@
                             <p><b> Absent Days</b> : {{ employee.reports.totalAbsentDays }}</p>
 
                         </div>
-                        <button *ngIf="isAdjustable()" (click)="openAdjustModal(employee)" style="background-color: #a60015;"
-                            class="btn btn-secondary">Adjust</button>
+                        <button *ngIf="isAdjustable()" (click)="openAdjustModal(employee)"
+                            style="background-color: #a60015;" class="btn btn-secondary">Adjust</button>
                         <i class="fas fa-info-circle" (click)="openEmployeeReportModal(employee)"></i>
                     </td>
                     <td *ngFor="let date of getCurrentDates()">
@@ -112,27 +112,27 @@
                                 }}
                             </p>
 
-                            <p
+                            <p *ngIf="employee.dates[date].workingShift != 'UNKNOWN'"
                                 [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].workingShift), 'color': 'white' }">
-                                {{ employee.dates[date].workingShift | titlecase  }} Shift</p>
+                                {{ employee.dates[date].workingShift | titlecase }} Shift</p>
                         </div>
 
 
 
                         <!-- Leave and OD Details -->
-                        <div *ngIf="false" class="mt-2">
-                            <div *ngIf="employee.dates[date]?.leave?.requested">
-                                <b>Leave: {{ reqStatus[employee.dates[date].leave.status] }}</b>
+                        <div  class="mt-2">
+                            <div *ngIf="employee.dates[date]?.leaveRequested">
+                                <b>Leave: {{ reqStatus[employee.dates[date].leaveRequestStatus] }}</b>
                                 <button [routerLink]="['/Leaveapprovalview']"
-                                    [queryParams]="{leaveRequest_Id: employee.dates[date].leave.leaveRequestID}"
-                                    *ngIf="employee.dates[date].leave.status == '0'"
+                                    [queryParams]="{leaveRequest_Id: employee.dates[date].leaveRequestedId}"
+                                    *ngIf="employee.dates[date].leaveRequestStatus == 0"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
-                            <div *ngIf="employee.dates[date]?.od?.requested">
-                                <b>OD: {{ reqStatus[employee.dates[date].od.status] }}</b>
-                                <button *ngIf="employee.dates[date].od.status == '0'"
+                            <div *ngIf="employee.dates[date]?.odRequested">
+                                <b>OD: {{ reqStatus[employee.dates[date].odRequestStatus] }}</b>
+                                <button *ngIf="employee.dates[date].odRequestStatus == 0"
                                     [routerLink]="['/odslipapprovalview']"
-                                    [queryParams]="{odslip_id: employee.dates[date].od.odRequestID}"
+                                    [queryParams]="{odslip_id: employee.dates[date].odRequestId}"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                         </div>
@@ -148,6 +148,9 @@
             </tbody>
 
         </table>
+
+
+
     </div>
 
     <!--Submit-->
@@ -202,14 +205,14 @@
         <div class="card custom-card">
             <div class="card-body">
                 <h5 class="card-title">Leave Details</h5>
-                <div *ngIf="modalAttr.employeeDateDetails.leave.requested">
-                    <p><b>Leave Requested: {{ reqStatus[modalAttr.employeeDateDetails.leave.status] }}</b></p>
-                    <button *ngIf="modalAttr.employeeDateDetails.leave.status == '0'"
+                <div *ngIf="modalAttr.employeeDateDetails.leaveRequested">
+                    <p><b>Leave Requested: {{ reqStatus[modalAttr.employeeDateDetails.leaveRequestStatus] }}</b></p>
+                    <button *ngIf="modalAttr.employeeDateDetails.leaveRequestStatus == 0"
                         [routerLink]="['/Leaveapprovalview']"
-                        [queryParams]="{leaveRequest_Id: modalAttr.employeeDateDetails.leave.leaveRequestID}"
+                        [queryParams]="{leaveRequest_Id: modalAttr.employeeDateDetails.leaveRequestedId}"
                         class="btn btn-primary">Approve</button>
                 </div>
-                <div *ngIf="!modalAttr.employeeDateDetails.leave.requested">
+                <div *ngIf="!modalAttr.employeeDateDetails.leaveRequested">
                     <p>No leave requested for this date.</p>
                 </div>
             </div>
@@ -219,14 +222,14 @@
         <div class="card custom-card">
             <div class="card-body">
                 <h5 class="card-title">OD Details</h5>
-                <div *ngIf="modalAttr.employeeDateDetails.od.requested">
-                    <b>OD Requested: {{ reqStatus[modalAttr.employeeDateDetails.od.status] }}</b>
-                    <button *ngIf="modalAttr.employeeDateDetails.od.status == '0'"
+                <div *ngIf="modalAttr.employeeDateDetails.odRequested">
+                    <b>OD Requested: {{ reqStatus[modalAttr.employeeDateDetails.odRequestStatus] }}</b>
+                    <button *ngIf="modalAttr.employeeDateDetails.odRequestStatus == '0'"
                         [routerLink]="['/odslipapprovalview']"
-                        [queryParams]="{odslip_id: modalAttr.employeeDateDetails.od.odRequestID}"
+                        [queryParams]="{odslip_id: modalAttr.employeeDateDetails.odRequestId}"
                         class="btn btn-primary">Approve</button>
                 </div>
-                <div *ngIf="!modalAttr.employeeDateDetails.od.requested">
+                <div *ngIf="!modalAttr.employeeDateDetails.odRequested">
                     <p>No OD requested for this date.</p>
                 </div>
             </div>
@@ -310,13 +313,17 @@
     <app-common-dialog [showDialog]="modalAttrAdjust.show" [dialogTitle]="modalAttrAdjust.title" [showCloseIcon]="true"
         [showSubmitButton]="true" (closeDialog)="closeAdjustModal()" (submitDialog)="submitAdjust()"
         [maxWidth]="modalAttrAdjust.maxWidth">
-        <div class="container">
+        <div class="">
             <h3>Absent/Holiday/WeekOff</h3>
             <table class="table table-bordered">
                 <thead class="sticky-header">
                     <tr>
                         <th>Day</th>
+
                         <th>Status</th>
+                       
+                        <th>Biometric</th>
+
                         <th>Action</th>
                         <th>Is Compensated?</th>
                         <th>Compensate Date</th>
@@ -329,9 +336,38 @@
                             <span>
                                 {{ entry.date }}
                             </span>
-                            <p>Total Worked Hours: {{ entry.totalWorkedHours }}</p>
+                            <p *ngIf="entry.workingHour>0">Total Hours: {{ entry.workingHour }}</p>
                         </td>
+
                         <td>{{ entry.status }}</td>
+                        
+                        <td>
+                            <div class="time-card"  style="text-align: left;"
+                                *ngIf="entry?.biometricData?.length">
+                                <!-- Show the first biometric log -->
+                                <p *ngIf="entry.biometricData[0]?.type" class="mb-1">
+                                    <b>{{ entry.biometricData[0]?.type }}</b>: {{
+                                    entry.biometricData[0]?.time | date: 'hh:mm a' }}
+                                </p>
+
+                                <!-- Show the last biometric log if it's different from the first one -->
+                                <p *ngIf="entry.biometricData.length > 1 && entry.biometricData[entry.biometricData.length - 1]?.type"
+                                    class="mb-1">
+                                    <b>
+                                        {{ entry.biometricData[entry.biometricData.length
+                                        -
+                                        1]?.type }}
+                                    </b>
+                                    : {{entry.biometricData[entry.biometricData.length -
+                                    1]?.time | date: 'hh:mm a'
+                                    }}
+                                </p>
+
+                                <p *ngIf="entry.workingShift != 'UNKNOWN'"
+                                    [ngStyle]="{ 'background-color': getShiftColor(entry.workingShift), 'color': 'white' }">
+                                    {{ entry.workingShift | titlecase }} Shift</p>
+                            </div>
+                        </td>
                         <td>
                             <select [(ngModel)]="entry.newStatus" (change)="null">
                                 <option value="">None</option>
@@ -342,6 +378,12 @@
                             </select>
                         </td>
                         <td>
+
+
+                            <span *ngIf="entry.hasOverwrited ==1">
+                                {{entry.isCompensated == '1' ? 'YES': 'NO'}}
+                            </span>
+                            <br>
                             <span *ngIf="entry.newStatus === 'PRESENT'">
 
                                 <!-- Radio Buttons -->
@@ -353,25 +395,32 @@
                                 </label>
                             </span>
 
-                            <span *ngIf="entry.newStatus !== 'PRESENT'">
+                            <span *ngIf="entry.hasOverwrited !=1 && entry.newStatus!='PRESENT'">
                                 -
                             </span>
 
-
                         </td>
                         <td>
+
+
+                            <span *ngIf="entry.hasOverwrited ==1">
+                                {{entry.compensatedDate}}
+                            </span>
+                            <br>
                             <span *ngIf="entry.newStatus === 'PRESENT' && entry.isCompensated === 'YES'">
-                                <select [(ngModel)]="entry.compensateDate">
+                                <select [(ngModel)]="entry.compensatedDate">
                                     <option value="">Select a Date for Compensation</option>
                                     <option *ngFor="let date of compensateDates">{{ date }}</option>
                                 </select>
                             </span>
 
-                            <span *ngIf="entry.newStatus != 'PRESENT' || entry.isCompensated != 'YES'">
+                            <span
+                                *ngIf="entry.hasOverwrited !=1 && entry.newStatus!='PRESENT' && entry.isCompensated != 'YES'">
                                 -
                             </span>
+
                         </td>
-                        <td><textarea  [(ngModel)]="entry.remarks"  type="text" placeholder="Remarks"></textarea></td>
+                        <td><textarea [(ngModel)]="entry.remarks" type="text" placeholder="Remarks"></textarea></td>
                     </tr>
 
                 </tbody>
@@ -383,16 +432,33 @@
             <table lass="table table-bordered">
                 <thead class="sticky-header">
                     <tr>
-                        <th>Employee Name</th>
                         <th>Day</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>JohnDoe</td>
-                        <td>23-Dec-2024</td>
-                        <td><button class="approve-btn">Approve</button></td>
+                    <tr *ngFor="let entry of leaveRequestedDays">
+                        
+                        <td>
+                            <span>
+                                {{ entry.date }}
+                            </span>
+                         </td>
+
+                        <td>
+                            <span>
+                                {{ entry.leaveRequestStatus == 0 ? 'Pending' : entry.leaveRequestStatus == 1 ? 'Approved' : 'Rejected' }}
+                            </span>
+                         </td>
+
+                        <td>
+                            <button class="btn btn-primary"
+                            *ngIf="entry.leaveRequestStatus == 0"
+                            [routerLink]="['/Leaveapprovalview']"
+                            [queryParams]="{leaveRequest_Id: entry.leaveRequestedId}">
+                            Approve</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -403,16 +469,32 @@
             <table lass="table table-bordered">
                 <thead class="sticky-header">
                     <tr>
-                        <th>Employee Name</th>
                         <th>Day</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>JohnDoe</td>
-                        <td>24-Dec-2024</td>
-                        <td><button class="approve-btn">Approve</button></td>
+                    <tr *ngFor="let entry of odRequestedDays">
+                        <td>
+                            <span>
+                                {{ entry.date }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <span>
+                                {{ entry.leaveRequestStatus == 0 ? 'Pending' : entry.leaveRequestStatus == 1 ? 'Approved' : 'Rejected' }}
+                            </span>
+                         </td>
+
+                        <td>
+                            <button class="btn btn-primary"
+                            *ngIf="entry.odRequestStatus == 0"
+                            [routerLink]="['/odslipapprovalview']"
+                            [queryParams]="{odslip_id: entry.odRequestId}">
+                                Approve</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

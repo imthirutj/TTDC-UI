@@ -51,8 +51,11 @@ export class BiometricData {
   
   // DateDetails export class
   export class DateDetails {
+    employeeId: number;
     status: string;
+    newStatus: string;
     statusId: number;
+
     workingShift: string;
     workingShiftCount: number;
     workingHour: number;
@@ -60,19 +63,35 @@ export class BiometricData {
     holidayName: string;
 
     remarks: string;
-    isCompensated: number;
+    isCompensated: string;
     compensatedDate: string;
     hasOverwrited:number;
 
     biometricData: BiometricData[];
+
+    leaveRequested:number;
+    leaveRequestedId: number;
+    leaveRequestStatus:number;
+
+    odRequested : number;
+    odRequestId: number;
+    odRequestStatus: number;
+
     leave: Leave;
     od: OD;
     statusChanged: boolean;
+
+    date:string;
+
     selected: boolean;
   
     constructor(
+      employeeId: number = 0,
+
       statusId: number = 0,
       status: string = '',
+      newStatus: string ='',
+
       shift: string = '',
       workingShiftCount: number = 0,
       workingHour: number = 0,
@@ -80,17 +99,31 @@ export class BiometricData {
       holidayName: string = '',
 
       remarks: string = '',
-      isCompensated: number = 0,
+      isCompensated: string = '',
       compensatedDate: string = '',
       hasOverwrited: number = 0,
 
       biometricData: BiometricData[] = [],
+
+      leaveRequested: number = 0,
+      leaveRequestedId: number = 0,
+      leaveRequestStatus: number = 0,
+
+      odRequested: number = 0,
+      odRequestId: number = 0,
+      odRequestStatus: number = 0,
+
       leave: Leave = new Leave(),
       od: OD = new OD(),
+
+      date: string = '',
       selected: boolean = false
     ) {
+      this.employeeId = employeeId;
       this.statusId = statusId;
       this.status = status;
+      this.newStatus ='';
+
       this.workingShift = shift;
       this.workingShiftCount = workingShiftCount;
       this.workingHour = workingHour;
@@ -103,9 +136,20 @@ export class BiometricData {
       this.hasOverwrited = hasOverwrited;
 
       this.biometricData = biometricData;
+
+      this.leaveRequested = leaveRequested;
+      this.leaveRequestedId = leaveRequestedId;
+      this.leaveRequestStatus = leaveRequestStatus;
+
+      this.odRequested = odRequested;
+      this.odRequestId = odRequestId;
+      this.odRequestStatus = odRequestStatus;
+
       this.leave = leave;
       this.od = od;
       this.statusChanged = false; 
+
+      this.date ='';
       this.selected = selected;
     }
   }
