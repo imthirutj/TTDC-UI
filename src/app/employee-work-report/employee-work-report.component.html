@@ -74,7 +74,7 @@
                             <p><b> Absent Days</b> : {{ employee.reports.totalAbsentDays }}</p>
 
                         </div>
-                        <button (click)="openAdjustModal(employee)" style="background-color: #a60015;"
+                        <button *ngIf="isAdjustable()" (click)="openAdjustModal(employee)" style="background-color: #a60015;"
                             class="btn btn-secondary">Adjust</button>
                         <i class="fas fa-info-circle" (click)="openEmployeeReportModal(employee)"></i>
                     </td>
@@ -113,8 +113,8 @@
                             </p>
 
                             <p
-                                [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].shift), 'color': 'white' }">
-                                {{ employee.dates[date].shift }}</p>
+                                [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].workingShift), 'color': 'white' }">
+                                {{ employee.dates[date].workingShift | titlecase  }} Shift</p>
                         </div>
 
 
@@ -152,7 +152,7 @@
 
     <!--Submit-->
     <div class="d-flex justify-content-between">
-        <button class="btn btn-primary" (click)="submit()">Update Attendance</button>
+        <button *ngIf="false" class="btn btn-primary" (click)="submit()">Update Attendance</button>
         <!-- Page Size Dropdown -->
         <div class="d-flex align-items-center">
             <label for="pageSize" class="me-2">Page Size:</label>
@@ -308,7 +308,7 @@
 
     <!--Manage Employee Modal-->
     <app-common-dialog [showDialog]="modalAttrAdjust.show" [dialogTitle]="modalAttrAdjust.title" [showCloseIcon]="true"
-        [showSubmitButton]="true" (closeDialog)="closeAdjustModal()" (submitDialog)="closeAdjustModal()"
+        [showSubmitButton]="true" (closeDialog)="closeAdjustModal()" (submitDialog)="submitAdjust()"
         [maxWidth]="modalAttrAdjust.maxWidth">
         <div class="container">
             <h3>Absent/Holiday/WeekOff</h3>
@@ -337,6 +337,8 @@
                                 <option value="">None</option>
                                 <option value="PRESENT">Present</option>
                                 <option value="ABSENT">Absent</option>
+                                <option value="WEEKOFF">WeekOff</option>
+                                <option value="HOLIDAY">Holiday</option>
                             </select>
                         </td>
                         <td>
@@ -369,7 +371,7 @@
                                 -
                             </span>
                         </td>
-                        <td><textarea type="text" placeholder="Remarks"></textarea></td>
+                        <td><textarea  [(ngModel)]="entry.remarks"  type="text" placeholder="Remarks"></textarea></td>
                     </tr>
 
                 </tbody>

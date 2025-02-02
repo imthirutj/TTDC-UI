@@ -52,7 +52,18 @@ export class BiometricData {
   // DateDetails export class
   export class DateDetails {
     status: string;
-    shift: string;
+    statusId: number;
+    workingShift: string;
+    workingShiftCount: number;
+    workingHour: number;
+    holidayFlag: boolean;
+    holidayName: string;
+
+    remarks: string;
+    isCompensated: number;
+    compensatedDate: string;
+    hasOverwrited:number;
+
     biometricData: BiometricData[];
     leave: Leave;
     od: OD;
@@ -60,15 +71,37 @@ export class BiometricData {
     selected: boolean;
   
     constructor(
+      statusId: number = 0,
       status: string = '',
       shift: string = '',
+      workingShiftCount: number = 0,
+      workingHour: number = 0,
+      holidayFlag: boolean = false,
+      holidayName: string = '',
+
+      remarks: string = '',
+      isCompensated: number = 0,
+      compensatedDate: string = '',
+      hasOverwrited: number = 0,
+
       biometricData: BiometricData[] = [],
       leave: Leave = new Leave(),
       od: OD = new OD(),
       selected: boolean = false
     ) {
+      this.statusId = statusId;
       this.status = status;
-      this.shift = shift;
+      this.workingShift = shift;
+      this.workingShiftCount = workingShiftCount;
+      this.workingHour = workingHour;
+      this.holidayFlag = holidayFlag;
+      this.holidayName = holidayName;
+
+      this.remarks = remarks;
+      this.isCompensated = isCompensated;
+      this.compensatedDate = compensatedDate;
+      this.hasOverwrited = hasOverwrited;
+
       this.biometricData = biometricData;
       this.leave = leave;
       this.od = od;

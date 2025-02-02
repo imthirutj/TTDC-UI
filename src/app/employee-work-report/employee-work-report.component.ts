@@ -61,18 +61,21 @@ export class EmployeeWorkReportComponent {
   };
 
 
+
   status: { key: string; value: string, color: string }[] = [
     { key: 'PRESENT', value: 'Present', color: 'rgb(63 107 51)' },
     { key: 'ABSENT', value: 'Absent', color: 'rgb(203 72 72)' },
+    { key: 'ABSENT-LWT', value: 'Absent', color: 'rgb(203 72 72)' },//LWT-Less Working Hours
     { key: 'HOLIDAY', value: 'Holiday', color: 'rgb(97 114 219)' },
     { key: 'WEEKOFF', value: 'Weekly Off', color: 'rgb(121 4 81)' },
   ];
 
   shiftStatus: { key: string; value: string, color: string }[] = [
     { key: 'MORNING', value: 'Morning', color: 'rgb(50 173 241)' },
-    { key: 'AFTERNOON', value: 'Evening', color: 'rgb(165 56 46)' },
+    { key: 'AFTERNOON', value: 'Afternoon', color: 'rgb(165 56 46)' },
     { key: 'NIGHT', value: 'Night', color: 'rgb(50 46 85)' },
     { key: 'GENERAL', value: 'General', color: 'rgb(135 109 55)' },
+    { key: 'UNKNOWN', value: 'Unknown', color: 'rgb(107 101 89)' },
   ];
 
   otherStatus: { key: string; value: string, color: string }[] = [
@@ -117,7 +120,7 @@ export class EmployeeWorkReportComponent {
   //#region Filter
   filters: any = {
     selectedMonth: {
-      value: Number(new Date().getMonth()) + 1, // Default to current month
+      value: this.getPreviousMonth(Number(new Date().getMonth()) + 1), // Default to current month
       show: true,
       key: 'month',
       includeInSearchParams: true
@@ -286,9 +289,9 @@ export class EmployeeWorkReportComponent {
         this.pageAttributes.totalPages = response.totalPages;
         // this.addMissingDates();
         // Iterate over each employee to call GetBiometricLogs API for each date
-        this.employees.forEach(employee => {
-          this.addBiometricDataToEmployee(employee);
-        });
+        // this.employees.forEach(employee => {
+        //   this.addBiometricDataToEmployee(employee);
+        // });
       }
     });
   }
@@ -332,6 +335,10 @@ export class EmployeeWorkReportComponent {
             if (employee.dates[logDate]) {
               employee.dates[logDate].biometricData = biometricData[logDate].biometricData;
             }
+            else {
+              // Optionally, log or handle missing dates
+              console.warn(`Date entry for ${logDate} is missing in employee data.`);
+            }
           });
         }
         resolve();
@@ -353,25 +360,7 @@ export class EmployeeWorkReportComponent {
       datesRange.forEach((date) => {
         if (!employee.dates[date]) {
           // Add default values for the missing date
-          employee.dates[date] = {
-            status: '', // Default status
-            shift: '', // Default shift
-            statusChanged: false, // Default statusChanged
-            selected: false, // Default selected
-            biometricData: [], // Default empty array
-            leave: {
-              leaveRequestID: 0,
-              requested: false,
-              status: '-',
-              reason: '-'
-            },
-            od: {
-              odRequestID: 0,
-              requested: false,
-              status: '-',
-              reason: '-'
-            }
-          };
+          employee.dates[date] = new DateDetails();
         }
       });
     });
@@ -481,6 +470,11 @@ export class EmployeeWorkReportComponent {
   //#region  Calender
 
   // Function to get the previous previous month
+
+  getPreviousMonth(month: number): number {
+    return month === 1 ? 12 : month - 1;
+  }
+
   getPreviousPreviousMonth(month: number): number {
     return month === 1 ? 11 : month === 2 ? 12 : month - 2;
   }
@@ -722,18 +716,8 @@ export class EmployeeWorkReportComponent {
 
     Object.entries(employee.dates).forEach(([date, details]) => {
       const record = details as DateDetails; // Use your defined class
-      if (['ABSENT', 'HOLIDAY'].includes(record.status)) {
-        this.absentWeekOffHolidayData.push({
-          empId: employee.empId,
-          employeeName: employee.employeeName,
-          date,
-          totalWorkedHours:'1 hr',
-          reason:'',
-          status: record.status,
-          newStatus: '',
-          isCompensated: 'No',
-          compensateDate: ''
-        });
+      if (['ABSENT', 'ABSENT-LWT', 'HOLIDAY', 'WEEKOFF'].includes(record.status)) {
+        this.absentWeekOffHolidayData.push({...record, newStatus: '', date: date});
       }
     });
 
@@ -746,4 +730,45 @@ export class EmployeeWorkReportComponent {
     this.modalAttrAdjust.show = false;
     this.modalAttrAdjust.employeeStatus = new EmployeeStatus(); // Reset the employeeDateDetails objec
   }
+
+  submitAdjust() {
+    // Filter the data to only include entries where newStatus is not 'None'
+    const filteredData = this.absentWeekOffHolidayData.filter(entry => entry.newStatus !== '');
+
+    // Create the payload for the API
+    const payload = filteredData.map(entry => ({
+      employeeId: entry.employeeId,
+      status: entry.newStatus,
+      date: entry.date,
+      isCompensated: entry.isCompensated === 'YES' ? 1 : 0,
+      compensatedDate: entry.isCompensated === 'YES' ? entry.compensateDate : null,
+      remarks: entry.remarks
+    }));
+
+    // Call  API here to submit the data
+    this.employeeWorkReportService.updateAttendance(payload).subscribe(
+      response => {
+        if(response.success){
+          this.dataService.showSnackBar('Attendance updated successfully.');
+          this.closeAdjustModal();
+          this.fetchEmployeeStatus();
+        }
+      }
+    )
+  }
+
+
+  isAdjustable(): boolean {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;  // getMonth() is 0-based, so we add 1
+    const currentDay = currentDate.getDate();
+    const currentYear = currentDate.getFullYear();
+
+    // Check if the selected date is in the past and if current day is after the 25th
+    var val = (currentYear > this.filters.selectedYear.value ||
+      (currentYear === this.filters.selectedYear.value && currentMonth > this.filters.selectedMonth.value) ||
+      (currentYear === this.filters.selectedYear.value && currentMonth === this.filters.selectedMonth.value && currentDay > 25));
+    return val;
+  }
+
 }
