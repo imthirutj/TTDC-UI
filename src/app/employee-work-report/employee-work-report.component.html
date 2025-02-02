@@ -120,7 +120,7 @@
 
 
                         <!-- Leave and OD Details -->
-                        <div  class="mt-2">
+                        <div class="mt-2">
                             <div *ngIf="employee.dates[date]?.leaveRequested">
                                 <b>Leave: {{ reqStatus[employee.dates[date].leaveRequestStatus] }}</b>
                                 <button [routerLink]="['/Leaveapprovalview']"
@@ -321,7 +321,7 @@
                         <th>Day</th>
 
                         <th>Status</th>
-                       
+
                         <th>Biometric</th>
 
                         <th>Action</th>
@@ -340,10 +340,9 @@
                         </td>
 
                         <td>{{ entry.status }}</td>
-                        
+
                         <td>
-                            <div class="time-card"  style="text-align: left;"
-                                *ngIf="entry?.biometricData?.length">
+                            <div class="time-card" style="text-align: left;" *ngIf="entry?.biometricData?.length">
                                 <!-- Show the first biometric log -->
                                 <p *ngIf="entry.biometricData[0]?.type" class="mb-1">
                                     <b>{{ entry.biometricData[0]?.type }}</b>: {{
@@ -427,79 +426,75 @@
 
             </table>
         </div>
+        
         <div class="container">
-            <h3>Leave Requested</h3>
-            <table lass="table table-bordered">
-                <thead class="sticky-header">
-                    <tr>
-                        <th>Day</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let entry of leaveRequestedDays">
-                        
-                        <td>
-                            <span>
-                                {{ entry.date }}
-                            </span>
-                         </td>
-
-                        <td>
-                            <span>
-                                {{ entry.leaveRequestStatus == 0 ? 'Pending' : entry.leaveRequestStatus == 1 ? 'Approved' : 'Rejected' }}
-                            </span>
-                         </td>
-
-                        <td>
-                            <button class="btn btn-primary"
-                            *ngIf="entry.leaveRequestStatus == 0"
-                            [routerLink]="['/Leaveapprovalview']"
-                            [queryParams]="{leaveRequest_Id: entry.leaveRequestedId}">
-                            Approve</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <div class="row ">
+                <div class="col-md-6 col-12">
+                    <h3>Leave Requested</h3>
+                    <table class="table table-bordered">
+                        <thead class="sticky-header">
+                            <tr>
+                                <th>Day</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="leaveRequestedDays.length > 0">
+                            <tr *ngFor="let entry of leaveRequestedDays">
+                                <td>{{ entry.date }}</td>
+                                <td>
+                                    {{ entry.leaveRequestStatus == 0 ? 'Pending' : entry.leaveRequestStatus == 1 ? 'Approved' : 'Rejected' }}
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" *ngIf="entry.leaveRequestStatus == 0"
+                                        [routerLink]="['/Leaveapprovalview']"
+                                        [queryParams]="{leaveRequest_Id: entry.leaveRequestedId}">
+                                        Approve
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot *ngIf="leaveRequestedDays.length == 0">
+                            <tr>
+                                <td colspan="3">No Leave Requested</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+        
+                <div class="col-md-6 col-12">
+                    <h3>OD Requested</h3>
+                    <table class="table table-bordered">
+                        <thead class="sticky-header">
+                            <tr>
+                                <th>Day</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="odRequestedDays.length > 0">
+                            <tr *ngFor="let entry of odRequestedDays">
+                                <td>{{ entry.date }}</td>
+                                <td>
+                                    {{ entry.odRequestStatus == 0 ? 'Pending' : entry.odRequestStatus == 1 ? 'Approved' : 'Rejected' }}
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" *ngIf="entry.odRequestStatus == 0"
+                                        [routerLink]="['/odslipapprovalview']" [queryParams]="{odslip_id: entry.odRequestId}">
+                                        Approve
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot *ngIf="odRequestedDays.length == 0">
+                            <tr>
+                                <td colspan="3">No OD Requested</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="container">
-            <h3>OD Requested</h3>
-            <table lass="table table-bordered">
-                <thead class="sticky-header">
-                    <tr>
-                        <th>Day</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let entry of odRequestedDays">
-                        <td>
-                            <span>
-                                {{ entry.date }}
-                            </span>
-                        </td>
-
-                        <td>
-                            <span>
-                                {{ entry.leaveRequestStatus == 0 ? 'Pending' : entry.leaveRequestStatus == 1 ? 'Approved' : 'Rejected' }}
-                            </span>
-                         </td>
-
-                        <td>
-                            <button class="btn btn-primary"
-                            *ngIf="entry.odRequestStatus == 0"
-                            [routerLink]="['/odslipapprovalview']"
-                            [queryParams]="{odslip_id: entry.odRequestId}">
-                                Approve</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-
+        
     </app-common-dialog>
 </div>
