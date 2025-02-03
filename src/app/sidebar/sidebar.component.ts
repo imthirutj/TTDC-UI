@@ -179,7 +179,7 @@ export class SidebarComponent {
       //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       // },
       { 
-        label: 'My Profile', 
+        label: 'My Employee Profile', 
         icon: 'fa-solid fa-id-badge', 
         route: '/my-profile', 
         allowedUserTypes: [UserType.EMPLOYEE] 
