@@ -74,13 +74,13 @@ export class SidebarComponent {
         label: 'State List', 
         icon: 'fa-solid fa-map-marked-alt', 
         route: '/state', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       },
       { 
         label: 'City List', 
         icon: 'fa-solid fa-city', 
         route: '/city', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       },
       // { 
       //   label: 'Category List', 
@@ -98,19 +98,19 @@ export class SidebarComponent {
         label: 'Department', 
         icon: 'fa-solid fa-sitemap', 
         route: '/department', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       },
       { 
         label: 'Company/Unit List', 
         icon: 'fa-solid fa-building', 
         route: '/company', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]  
       },
       { 
         label: 'Designation List', 
         icon: 'fa-solid fa-id-badge', 
         route: '/designation', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       },
       // { 
       //   label: 'Degree List', 

@@ -47,7 +47,7 @@ export class VendorService {
   }
   preViewVendorInvoiceDetails(payload: any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(payload);
-    const url = `${this.apiUrl}Invoice/ViewInvoice?${queryParams}`;
+    const url = `${this.apiUrl}Invoice/PreViewInvoice?${queryParams}`;
     return this.http.get(url);
   }
 
