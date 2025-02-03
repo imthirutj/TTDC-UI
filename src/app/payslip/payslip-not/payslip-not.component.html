@@ -15,7 +15,7 @@
     </div>
     <div  class="col-md-4">
         <div class="form-group">
-          <button *ngIf="userAccessLevel == UserType.VENDOR" style="float: left;" class="btn btn-success" (click)="submit_vendor_wise()">Generate Payslip All</button>
+          <button style="float: left;" class="btn btn-success" (click)="submit_vendor_wise()">Generate Payslip All</button>
         </div>
       
     </div>
@@ -53,7 +53,7 @@
             <td>{{ obj.categoryFName }} </td>
            
             <td >
-              <button *ngIf="userAccessLevel == UserType.VENDOR" class="btn btn-primary" type="button" (click)="generate_payslip(obj)">
+              <button  class="btn btn-primary" type="button" (click)="generate_payslip(obj)">
                Generate Slip
             </button></td>
           </tr>          

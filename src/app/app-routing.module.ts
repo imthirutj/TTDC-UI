@@ -206,7 +206,7 @@ const routes: Routes = [
     path:'employee-work-report',
     component:EmployeeWorkReportComponent,
     canActivate: [AuthGuard],
-    data: { roles: [UserType.STATE_ADMIN ,UserType.MANAGER] },
+    data: { roles: [UserType.STATE_ADMIN ,UserType.MANAGER, UserType.EMPLOYEE] },
   },
   {
     path: 'vendor-payment-details',

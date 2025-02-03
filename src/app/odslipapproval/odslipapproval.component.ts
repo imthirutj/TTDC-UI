@@ -46,10 +46,10 @@ export class OdslipapprovalComponent {
       key: 'designationId',
       includeInSearchParams: true
     },
-    employeeId: {
+    employeeCode: {
       value: '',
       show: true,
-      key: 'employeeId',
+      key: 'employeeCode',
       includeInSearchParams: true
     },
     vendorId: {

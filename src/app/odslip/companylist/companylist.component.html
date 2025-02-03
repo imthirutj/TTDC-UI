@@ -88,7 +88,10 @@
           </div>
           <div class="mb-3">
             <label for="How_Many_Days" class="form-label">No of Days</label>
-            <input type="number" class="form-control" [(ngModel)]="odslip.how_Many_Days" id="How_Many_Days" name="how_Many_Days" placeholder="Enter No of Days" required>
+            <input type="number" class="form-control" 
+            [(ngModel)]="odslip.how_Many_Days"
+            [disabled]="true"
+             id="How_Many_Days" name="how_Many_Days" placeholder="No of Days" required>
           </div>
 
           

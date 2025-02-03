@@ -9,28 +9,41 @@
 <div class="container mt-4">
   <!-- Employee Section -->
 
-  <div *ngIf="false && userAccessLevel == UserType.EMPLOYEE" class="row">
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Pay Generated Amount</h3>
-          <h2 class="card-text"></h2>
-        </div>
-      </div>
-    </div>
+  <div *ngIf="userAccessLevel == UserType.EMPLOYEE" class="row">
+   
     <div class="col-md-4 mb-4">
       <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
-          <h3 class="card-title">Working Days</h3>
-          <h2 class="card-text"></h2>
+          <h3 class="card-title">Total Working Days</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.totalPresentDays}}</h2>
         </div>
       </div>
     </div>
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Leave</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.leaveApprovedDays}}</h2>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total OD</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.odApprovedDays}}</h2>
+        </div>
+      </div>
+    </div>
+
     <div class="col-md-4 mb-4">
       <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
-          <h3 class="card-title">Day Wise Status</h3>
-         
+          <h3 class="card-title">Today Status</h3>
+          <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays==1? "Present" : "Absent"}}</h2>
         </div>
       </div>
     </div>
@@ -55,7 +68,44 @@
         </div>
       </div>
     </div>
-  =
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #4590c2; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Vendors</h3>
+          <h2 class="card-text">{{dashboardData.totalVendor}}</h2>
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Leave</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.leaveApprovedDays}}</h2>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total OD</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.odApprovedDays}}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Today Present Count</h3>
+          <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays}}</h2>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Vendor Section -->

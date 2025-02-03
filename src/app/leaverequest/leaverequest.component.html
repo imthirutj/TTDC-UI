@@ -77,7 +77,9 @@
             </div>
             <div class="mb-3">
               <label for="No_Of_Days" class="form-label">No of Days</label>
-              <input type="number" class="form-control" [(ngModel)]="leaverequset.No_Of_Days" id="No_Of_Days" name="No_Of_Days" placeholder="Enter No of Days" required>
+              <input type="number" class="form-control" [(ngModel)]="leaverequset.No_Of_Days" 
+              [disabled]="true"
+              id="No_Of_Days" name="No_Of_Days" placeholder="No of Days" required>
             </div>
   
             

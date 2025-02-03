@@ -163,12 +163,6 @@ export class EmployeeWorkReportComponent {
       key: 'deptId',
       includeInSearchParams: true
     },
-    catId: {
-      value: '',
-      show: true,
-      key: 'catId',
-      includeInSearchParams: true
-    },
     employeeCode: {
       value: '',
       show: true,

@@ -25,6 +25,7 @@ export class DashboardComponent {
   dashboardData: DashboardData = new DashboardData();
 
   attendanceSummaryDashboard: AttendanceSummaryDashboard = new AttendanceSummaryDashboard();
+  todayAttendanceSummaryDashboard: AttendanceSummaryDashboard = new AttendanceSummaryDashboard();
   paymentGeneratedList: any[] = [];
 
   filters: any = {
@@ -126,6 +127,7 @@ export class DashboardComponent {
       if (response.success) {
        this.dashboardData = response.data.dashboardObj;
        this.attendanceSummaryDashboard = response.data.attendanceSummary;
+       this.todayAttendanceSummaryDashboard = response.data.todayattendanceSummary;
       }
     })
   }

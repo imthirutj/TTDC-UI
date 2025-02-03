@@ -38,7 +38,7 @@ export class FiltersComponent implements OnInit {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
       this.userAccessLevel = user.role;
-      console.log('User Access Level:', this.userAccessLevel);
+      console.log('User Access Level:', this.userAccessLevel, this.user);
       this.activate();
       this.triggerParentFunction.emit();
     });
@@ -49,28 +49,29 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.filters) {
-      this.filters.role = this.filters.role || { value: '', show: false, key: 'role' };
-      this.filters.selectedMonth = this.filters.selectedMonth || { value: Number(new Date().getMonth()) + 1, show: false, key: 'selectedMonth', includeInSearchParams: true };
-      this.filters.selectedYear = this.filters.selectedYear || { value: new Date().getFullYear(), show: false, key: 'selectedYear', includeInSearchParams: true };
-      this.filters.cityId = this.filters.cityId || { value: '', show: false, key: 'cityId' };
-      this.filters.companyId = this.filters.companyId || { value: '', show: false, key: 'companyId' };
-      this.filters.designationId = this.filters.designationId || { value: '', show: false, key: 'designationId' };
-      this.filters.deptId = this.filters.deptId || { value: '', show: false, key: 'deptId' };
-      this.filters.catId = this.filters.catId || { value: '', show: false, key: 'catId' };
-      this.filters.employeeId = this.filters.employeeId || { value: '', show: false, key: 'employeeId' };
-      this.filters.employeeName = this.filters.employeeName || { value: '', show: false, key: 'employeeName' };
-      this.filters.employeeCode = this.filters.employeeCode || { value: '', show: false, key: 'employeeCode' };
-      this.filters.vendorId = this.filters.vendorId || { value: '', show: false, key: 'vendorId' };
-      this.filters.vendorName = this.filters.vendorName || { value: '', show: false, key: 'vendorName' };
+      this.filters.role = this.filters.role || { value: '', show: false, includeInSearchParams:false, key: 'role' };
+      this.filters.selectedMonth = this.filters.selectedMonth || { value: Number(new Date().getMonth()) + 1, show: false,  includeInSearchParams:true,key: 'selectedMonth',  };
+      this.filters.selectedYear = this.filters.selectedYear || { value: new Date().getFullYear(), show: false, includeInSearchParams:true, key: 'selectedYear' };
+      this.filters.cityId = this.filters.cityId || { value: '', show: false, includeInSearchParams:false, key: 'cityId' };
+      this.filters.companyId = this.filters.companyId || { value: '', show: false, includeInSearchParams:false, key: 'companyId' };
+      this.filters.designationId = this.filters.designationId || { value: '', show: false, includeInSearchParams:false, key: 'designationId' };
+      this.filters.deptId = this.filters.deptId || { value: '', show: false, includeInSearchParams:false, key: 'deptId' };
+      this.filters.catId = this.filters.catId || { value: '', show: false, includeInSearchParams:false, key: 'catId' };
+      this.filters.employeeId = this.filters.employeeId || { value: '', show: false, includeInSearchParams:false, key: 'employeeId' };
+      this.filters.employeeName = this.filters.employeeName || { value: '', show: false, includeInSearchParams:false, key: 'employeeName' };
+      this.filters.employeeCode = this.filters.employeeCode || { value: '', show: false, includeInSearchParams:false, key: 'employeeCode' };
+      this.filters.vendorId = this.filters.vendorId || { value: '', show: false, includeInSearchParams:false, key: 'vendorId' };
+      this.filters.vendorName = this.filters.vendorName || { value: '', show: false,  includeInSearchParams:false,key: 'vendorName' };
 
-      this.filters.managerId = this.filters.managerId || { value: '', show: false, key: 'managerId' };
-      this.filters.managerName = this.filters.managerName || { value: '', show: false, key: 'managerName' };
+      this.filters.managerId = this.filters.managerId || { value: '', show: false, includeInSearchParams:false, key: 'managerId' };
+      this.filters.managerName = this.filters.managerName || { value: '', show: false, includeInSearchParams:false, key: 'managerName' };
     }
 
     // Ensure all filters have a `show` property set to false if missing
     Object.keys(this.filters).forEach((key) => {
       if (this.filters[key] && this.filters[key].show === undefined) {
         this.filters[key].show = false; 
+        this.filters[key].includeInSearchParams = false; 
       }
     });
 
@@ -111,7 +112,16 @@ export class FiltersComponent implements OnInit {
       this.filters.catId.show = false;
 
       this.filters.employeeId.show = false;
+      this.filters.employeeId.includeInSearchParams = true;
       this.filters.employeeId.value = this.user.employeeId;
+
+      this.filters.employeeCode.show = false;
+      this.filters.employeeCode.includeInSearchParams = false;
+      this.filters.employeeCode.value = this.user.employeeCode;
+
+      this.filters.employeeName.show = false;
+      this.filters.employeeName.includeInSearchParams = false;
+      this.filters.employeeName.value = this.user.employeeName;
 
       this.filters.managerId.show = false;
       this.filters.managerId.value = this.user.managerId;
