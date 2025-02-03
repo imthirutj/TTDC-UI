@@ -118,12 +118,12 @@ export class SidebarComponent {
       //   route: '/degree', 
       //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
       // },
-      { 
-        label: 'Designation Qualification', 
-        icon: 'fa-solid fa-tasks', 
-        route: '/DesignationQualification', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
-      },
+      // { 
+      //   label: 'Designation Qualification', 
+      //   icon: 'fa-solid fa-tasks', 
+      //   route: '/DesignationQualification', 
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+      // },
       // {
       //   label: 'Shift Management',
       //   icon: 'fa-solid fa-clock',
@@ -164,7 +164,7 @@ export class SidebarComponent {
         label: 'OD Slip Approval',
         icon: 'fa-solid fa-check-circle',
         route: '/odslipapproval',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN,  UserType.MANAGER] 
+        allowedUserTypes: [ UserType.MANAGER] 
       },
       {
         label: 'Leave Request',
