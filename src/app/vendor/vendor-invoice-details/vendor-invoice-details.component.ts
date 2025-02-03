@@ -132,7 +132,7 @@ export class VendorInvoiceDetailsComponent {
         //rmoeve invoive object from response.data
         var vendorDetailsObj = { ...response.data };
         delete vendorDetailsObj.invoice;
-        this.vendorDetails = vendorDetailsObj;
+        this.vendorDetails = {...vendorDetailsObj.vendorDetails };
         
         this.calculateTotals();
       });
@@ -143,7 +143,7 @@ export class VendorInvoiceDetailsComponent {
         this.vendorInvoiceDetails = response.data.invoice;
         var vendorDetailsObj = { ...response.data };
         delete vendorDetailsObj.invoice;
-        this.vendorDetails = vendorDetailsObj;
+        this.vendorDetails = {...vendorDetailsObj.vendorDetails };
 
         this.calculateTotals();
       });

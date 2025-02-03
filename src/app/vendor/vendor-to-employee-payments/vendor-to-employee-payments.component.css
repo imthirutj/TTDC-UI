@@ -1,4 +1,9 @@
 .highlight-row {
-    background-color: #ffcccc; /* Light red background for highlighting */
-  }
-  
+  background-color: #ff0101;
+  /* Light red background for highlighting */
+
+}
+
+.highlight-row td {
+  color: white;
+}

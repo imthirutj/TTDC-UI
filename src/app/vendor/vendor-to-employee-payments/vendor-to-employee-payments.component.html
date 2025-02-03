@@ -1,6 +1,5 @@
 <div class="container">
-    <h2>Employee Work Details</h2>
-  
+ 
     <div class="cards-filter">
       <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
         (triggerParentFunction)="fetchVendorEmployeePaymentDetails()">
@@ -26,15 +25,16 @@
             <th scope="col">Gross Salary</th>
             <th scope="col">Net Salary</th>
             <th scope="col">Paid To Employee</th>
-            <th scope="col">Payment Type</th>
             <th scope="col">Difference</th>
+            <th scope="col">Payment Type</th>
+            
             
           </tr>
         </thead>
         <tbody>
           <tr 
           *ngFor="let vep of vendorEmployeePayments; let i = index" 
-          [ngClass]="{'highlight-row': (vep.netSalary - vep.paidToEmployee) > 0}"
+          [ngClass]="{'highlight-row': (vep.difference) > 0}"
         >
             <td>
               {{i+1}}
@@ -49,11 +49,26 @@
             <td>{{ vep.grossSalary | currency:'INR' }}</td>
             <td>{{ vep.netSalary | currency:'INR' }}</td>
             <td>{{ vep.paidToEmployee | currency:'INR' }}</td>
+            <td>{{ (vep.difference) | currency:'INR' }}</td>
             <td>{{ vep.paymentType }}</td>
            
-            <td>{{ (vep.netSalary - vep.paidToEmployee) | currency:'INR' }}</td>
+           
           </tr>
         </tbody>
+        <tfoot *ngIf="vendorEmployeePayments.length > 0">
+          <tr>
+            <td colspan="4" class="text-right"><strong>Total:</strong></td>
+            <td>{{ getTotal('totalEarnings') | currency:'INR' }}</td>
+            <td>{{ getTotal('totalDeductions') | currency:'INR' }}</td>
+            <td>{{ getTotal('totalEpf') | currency:'INR' }}</td>
+            <td>{{ getTotal('totalEsi') | currency:'INR' }}</td>
+            <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
+            <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
+            <td>{{ getTotal('paidToEmployee') | currency:'INR' }}</td>
+            <td>{{ getTotal('difference') | currency:'INR' }}</td>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   

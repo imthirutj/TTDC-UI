@@ -61,7 +61,7 @@
           <th>Unit Name</th>
           <th>Vendor Name</th>
           <th>Designation Name</th>
-          <th>Category Name</th>
+          <!-- <th>Category Name</th> -->
           <th>Basic Salary</th>
           <th>DA</th>
           <th>Special Wages</th>
@@ -83,7 +83,7 @@
           <td>LipiInterior</td>
           <td>{{ d.designationName }}</td>
           <!-- <td>{{ department.departmentFName }}</td> -->
-          <td>{{ d.categoryFName }} </td>
+          <!-- <td>{{ d.categoryFName }} </td> -->
           <td>{{ d.basicRate | currency:'INR' }}</td>
           <td>{{ d.da | currency:'INR' }}</td>
           <td>{{ d.specialWages | currency:'INR' }}</td>
@@ -95,7 +95,7 @@
       </tbody>
       <tfoot *ngIf="payRecords.length > 0">
         <tr>
-          <td colspan="7" class="text-right"><strong>Total:</strong></td>
+          <td colspan="6" class="text-right"><strong>Total:</strong></td>
           <td>{{ getTotal('basicRate') | currency:'INR' }}</td>
           <td>{{ getTotal('da') | currency:'INR' }}</td>
           <td>{{ getTotal('specialWages') | currency:'INR' }}</td>

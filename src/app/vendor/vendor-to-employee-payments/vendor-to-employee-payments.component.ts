@@ -106,12 +106,19 @@ export class VendorToEmployeePaymentsComponent {
     const payload = this.dataService.getPayloadValue(this.filters);
     this.vendorService.getVendorEmployeePaymentDetails(payload).subscribe((response: any) => {
       if (response.success) {
-        this.vendorEmployeePayments = response.data;
+        this.vendorEmployeePayments = response.data.map((vep: any) => ({
+          ...vep,
+          difference: vep.netSalary - vep.paidToEmployee
+        }));
       }
       else {
         this.vendorEmployeePayments = [];
       }
     })
+  }
+
+  getTotal(field: string): number {
+    return this.vendorEmployeePayments.reduce((sum, record) => sum + (record[field] || 0), 0);
   }
   
 
