@@ -388,7 +388,14 @@ export class EmployeeListComponent {
     this.masterDataService.getEmpPayDetails(payload).subscribe(
       (response: any) => {
         if (response.success) {
-          this.bankModal.bankDetails = response.data;
+          if(response.data !=null){
+            this.bankModal.bankDetails = response.data;
+          }
+          else{
+            this.bankModal.bankDetails = new BankDetails();
+            this.bankModal.bankDetails.employeeId = empId;
+          }
+          
         }
       }
     );
