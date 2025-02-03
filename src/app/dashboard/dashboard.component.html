@@ -106,6 +106,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <!-- Vendor Section -->
@@ -201,6 +202,37 @@
         </div>
       </div>
     </div>
+
+    
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Leave</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.leaveApprovedDays}}</h2>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total OD</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.odApprovedDays}}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Today Present Count</h3>
+          <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays}}</h2>
+        </div>
+      </div>
+    </div>
+    
     <div class="col-md-4 mb-4">
       <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
@@ -250,9 +282,9 @@
         <th>#</th>
         <th>Month</th>
         <th>Year</th>
-        <th>Total Employee</th>
-        <th>Payment Generated Count</th>
-        <th>Payment Not Generated Count</th>
+        <th *ngIf="userAccessLevel!= UserType.EMPLOYEE">Total Employee</th>
+        <th *ngIf="userAccessLevel!= UserType.EMPLOYEE">Payment Generated Count</th>
+        <th *ngIf="userAccessLevel!= UserType.EMPLOYEE">Payment Not Generated Count</th>
         <th>Payment Processed</th>
       </tr>
     </thead>
@@ -261,12 +293,21 @@
         <td>{{i+1}}</td>
         <td>{{ payment.month | monthName }}</td>
         <td>{{ payment.year }}</td>
-        <td>{{ payment.totalEmployee }}</td>
-        <td>{{ payment.paymentGeneratedCount }}</td>
-        <td>{{ payment.paymentNotGeneratedCount }}</td>
+        <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.totalEmployee }}</td>
+        <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.paymentGeneratedCount }}</td>
+        <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.paymentNotGeneratedCount }}</td>
         <td>{{ payment.totalAmount | currency:'INR' }}</td>
       </tr>
     </tbody>
+    <tfoot *ngIf="paymentGeneratedList.length > 0">
+      <tr>
+        <td [attr.colspan]="userAccessLevel != UserType.EMPLOYEE ? 6 : 3" class="text-right">
+          <strong>Total:</strong>
+        </td>
+
+        <td>{{ getTotal('totalAmount') | currency:'INR' }}</td>
+      </tr>
+    </tfoot>
   </table>
   
   
@@ -275,7 +316,7 @@
 
 <div class="container mt-4">
   <div class="row">
-    <div class="col-md-6">
+    <div  *ngIf="userAccessLevel!= UserType.EMPLOYEE"  class="col-md-6">
       <div *ngIf="paymentGeneratedList.length > 0; else noData">
         <app-chart
           [chartData]="chartData"

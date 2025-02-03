@@ -223,4 +223,8 @@ export class DashboardComponent {
     };
   }
 
+  getTotal(field: string): number {
+    return this.paymentGeneratedList.reduce((sum, record) => sum + (record[field] || 0), 0);
+  }
+
 }
