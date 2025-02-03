@@ -149,4 +149,9 @@ export class PayslipRecordsComponent {
     this.modalAttr.show = false;
     this.modalAttr.title = '';
   }
+
+
+  getTotal(field: string): number {
+    return this.Department.reduce((sum, record) => sum + (record[field] || 0), 0);
+  }
 }
