@@ -160,12 +160,12 @@ export class SidebarComponent {
         route: '/odslipcompanylist',
         allowedUserTypes: [ UserType.EMPLOYEE] 
       },
-      // {
-      //   label: 'OD Slip Approval',
-      //   icon: 'fa-solid fa-check-circle',
-      //   route: '/odslipapproval',
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
-      // },
+      {
+        label: 'OD Slip Approval',
+        icon: 'fa-solid fa-check-circle',
+        route: '/odslipapproval',
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN,  UserType.MANAGER] 
+      },
       {
         label: 'Leave Request',
         icon: 'fa-solid fa-envelope-open-text',

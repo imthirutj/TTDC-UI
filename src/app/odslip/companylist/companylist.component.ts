@@ -82,6 +82,12 @@ export class CompanylistComponent {
       key: 'vendorId',
       includeInSearchParams: false
     },
+    role:{
+      value: '',
+      show: false,
+      key: 'role',
+      includeInSearchParams: true
+    }
   };
 
   constructor(private masterDataService: MasterDataService, 
