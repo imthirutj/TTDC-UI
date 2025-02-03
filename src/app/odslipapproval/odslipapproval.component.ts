@@ -46,18 +46,6 @@ export class OdslipapprovalComponent {
       key: 'designationId',
       includeInSearchParams: true
     },
-    deptId: {
-      value: '',
-      show: true,
-      key: 'deptId',
-      includeInSearchParams: true
-    },
-    catId: {
-      value: '',
-      show: true,
-      key: 'catId',
-      includeInSearchParams: true
-    },
     employeeId: {
       value: '',
       show: true,
