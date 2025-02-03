@@ -50,7 +50,7 @@
                 <tr>
                     <th>S.NO</th>
                     <th>Employee</th>
-                    <th>#</th>
+                    <th style="width:200px">#</th>
                     <th *ngFor="let date of getCurrentDates()">
                         <input *ngIf="false" type="checkbox" [checked]="headerSelection[date] || false"
                             (change)="onHeaderCheckboxChange(date, $event)" />
