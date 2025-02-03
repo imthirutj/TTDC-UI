@@ -177,7 +177,13 @@ export class SidebarComponent {
       //   icon: 'fa-solid fa-thumbs-up',
       //   route: '/Leaveapproval',
       //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
-      // }
+      // },
+      { 
+        label: 'My Profile', 
+        icon: 'fa-solid fa-id-badge', 
+        route: '/my-profile', 
+        allowedUserTypes: [UserType.EMPLOYEE] 
+      },
     ];
     
 

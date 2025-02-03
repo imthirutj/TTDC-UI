@@ -73,6 +73,7 @@ import { NgChartsModule  } from 'ng2-charts';
 import { ChartComponent } from './utils/widgets/chart/chart/chart.component';
 import { ConfirmationDialogComponent } from './utils/widgets/confirmation-dialog/confirmation-dialog.component';
 import { EmployeeWorkReportComponent } from './employee-work-report/employee-work-report.component';
+import { MyProfileComponent } from './employee/my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { EmployeeWorkReportComponent } from './employee-work-report/employee-wor
     VendorToEmployeePaymentsComponent,
     ChartComponent,
     ConfirmationDialogComponent,
-    EmployeeWorkReportComponent
+    EmployeeWorkReportComponent,
+    MyProfileComponent
 
   ],
   imports: [

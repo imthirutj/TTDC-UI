@@ -8,10 +8,13 @@
       (triggerParentFunction)="getEmployeeList()">
     </app-filter>
     <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    <button (click)="this.dataService.downloadPDF('vendorPaymentTable')" class="btn btn-primary">
+      Download as PDF
+    </button>
   </div>
 
 
-  <table class="table table-bordered">
+  <table id="vendorPaymentTable" class="table table-bordered">
     <thead>
       <tr>
         <th>#</th>
