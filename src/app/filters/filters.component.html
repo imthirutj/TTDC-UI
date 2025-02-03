@@ -52,7 +52,7 @@
 
       <div *ngIf="filters.companyId.show" class="col-md-4">
         <div class="form-group">
-          <label for="company">Company</label>
+          <label for="company">Unit</label>
           <select [(ngModel)]="filters.companyId.value" (change)="onCompanyChange()" class="form-control" id="company">
             <option value="">Select Company</option>
             <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyFName }}</option>
@@ -107,9 +107,9 @@
 
       <div *ngIf="filters.catId.show" class="col-md-4">
         <div class="form-group">
-          <label for="category">Employment Type</label>
+          <label for="category">Category Type</label>
           <select [(ngModel)]="filters.catId.value" (change)="onCategoryChange()" class="form-control" id="category">
-            <option value="">Select Employment Type</option>
+            <option value="">Select Category Type</option>
             <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.categoryFName }}
             </option>
           </select>

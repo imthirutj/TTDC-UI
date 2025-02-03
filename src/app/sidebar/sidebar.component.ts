@@ -82,12 +82,12 @@ export class SidebarComponent {
         route: '/city', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
-      { 
-        label: 'Category List', 
-        icon: 'fa-solid fa-th-list', 
-        route: '/category', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
-      },
+      // { 
+      //   label: 'Category List', 
+      //   icon: 'fa-solid fa-th-list', 
+      //   route: '/category', 
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+      // },
       {
         label: 'Vendor Management',
         icon: 'fa-solid fa-store',
@@ -101,7 +101,7 @@ export class SidebarComponent {
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
       { 
-        label: 'Company List', 
+        label: 'Company/Unit List', 
         icon: 'fa-solid fa-building', 
         route: '/company', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
@@ -112,12 +112,12 @@ export class SidebarComponent {
         route: '/designation', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
-      { 
-        label: 'Degree List', 
-        icon: 'fa-solid fa-graduation-cap', 
-        route: '/degree', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
-      },
+      // { 
+      //   label: 'Degree List', 
+      //   icon: 'fa-solid fa-graduation-cap', 
+      //   route: '/degree', 
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
+      // },
       { 
         label: 'Designation Qualification', 
         icon: 'fa-solid fa-tasks', 

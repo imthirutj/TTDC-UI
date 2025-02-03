@@ -79,6 +79,10 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Master/GetCompanyList?${queryParams}`);
   }
 
+  saveCompany(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/InsertUpdateCompany`, payload);
+  }
+
   getCompanylist(): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/GetCompanyList`);
   }

@@ -19,7 +19,14 @@
         <th>Employee Code</th>
 
         <th>Contact Number</th>
-
+        
+        <th *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.VENDOR">
+          Unit Name
+        </th>
+        <th *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.MANAGER">
+          Vendor
+        </th>
+        
         <th>Department Name</th>
         <th>Designation Name</th>
 
@@ -51,6 +58,13 @@
 
 
         <td>{{ employee.contactNo }}</td>
+
+        <td *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.VENDOR">
+          {{ employee.companyFName }}
+        </td>
+        <td *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.MANAGER">
+          {{ employee.vendorName }}
+        </td>
 
         <td>{{ employee.departmentFName }}</td>
         <td>{{ employee.designationName }}</td>
@@ -310,6 +324,7 @@
 </app-common-dialog>
 
 
+<!-- Certificate Modal -->
 <app-common-dialog [showDialog]="modal.show && modal.module != ModuleType.EMPLOYEE " [dialogTitle]="modal.title "
   [showCloseIcon]="true" [showSubmitButton]="true" (submitDialog)="uploadCertificate()" (closeDialog)="closeModal()">
 

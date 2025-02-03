@@ -1,0 +1,15 @@
+/* Truncate text with ellipsis */
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;  /* Adjust based on your desired column width */
+  }
+  
+  /* Show full content on hover */
+  .ellipsis:hover {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    background-color: #f1f1f1;  /* Optional, just to highlight on hover */
+  }

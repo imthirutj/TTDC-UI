@@ -133,6 +133,11 @@ export class FiltersComponent implements OnInit {
       this.filters.vendorId.value = this.user.vendorId;
       this.filters.vendorId.show = false;
     }
+
+    //Set Def VAlue for all
+    this.filters.catId.show = false;
+    this.filters.catId.includeInSearchParams = false;
+    this.filters.catId.value = 0;
   }
 
   //#region Change Event

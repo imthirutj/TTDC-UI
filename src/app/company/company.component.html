@@ -7,7 +7,11 @@
     <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
   
-    <h3>Company List</h3>
+    <h3>Company/Unit List</h3>
+    <button  class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
+      Add Company/Unit
+    </button>
+
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -15,7 +19,8 @@
           <th>Company ID</th>
           <th>Company FName</th>
           <th>Company SName</th>  
-          <th>City</th>      
+          <th>City</th>   
+          <th>#</th>   
         </tr>
       </thead>
       <tbody>
@@ -25,8 +30,63 @@
             <td>{{ company.companyFName }}</td>
             <td>{{ company.companySName }}</td>
             <td>{{ company.cityName }}</td>
+            <td>
+              <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, company)">
+                Edit
+              </button>
+            </td>
           </tr>          
       </tbody>
     </table>
   </div>
   
+
+  <app-common-dialog [showDialog]="modal.show" 
+  [dialogTitle]="modal.title"
+  [showCloseIcon]="true"
+  [showSubmitButton]="true" 
+  (submitDialog)="saveCompany()"
+  (closeDialog)="closeModal()">
+
+  <!--Fields-->
+  <div class="container mt-4">
+    
+    <div class="row">
+      <div *ngIf="modal.action === 'VIEW' || modal.action === 'UPDATE'" class="col-md-6">
+        <div class="form-group">
+          <label for="companyId">Company ID</label>
+          <input type="text" class="form-control" id="companyId" [(ngModel)]="modal.company.companyId"
+            name="companyId" placeholder="Enter Company ID" [disabled]="true">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="companyFName">Company Fname</label>
+          <input type="text" class="form-control" id="companyFName" [(ngModel)]="modal.company.companyFName"  
+            name="companyFName" placeholder="Enter Company Fname" [disabled]="modal.action === 'VIEW'">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="companySName">Company Sname</label>
+          <input type="text" class="form-control" id="companySName" [(ngModel)]="modal.company.companySName" 
+            name="companySName" placeholder="Enter Company Sname" [disabled]="modal.action === 'VIEW'">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="cityId">City</label>
+          <select class="form-select" id="cityId" [(ngModel)]="modal.company.cityId" name="cityId">
+            <option value="">Select City</option>
+            <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</app-common-dialog>

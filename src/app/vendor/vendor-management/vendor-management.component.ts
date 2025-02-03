@@ -220,4 +220,8 @@ export class VendorManagementComponent {
     this.modal.show = false;
   }
   //#endregion
+
+
+
+  
 }
