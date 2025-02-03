@@ -70,6 +70,12 @@ export class OdslipapprovalComponent {
       key: 'vendorId',
       includeInSearchParams: false
     },
+    role:{
+      value: '',
+      show: false,
+      key: 'role',
+      includeInSearchParams: true
+    }
   };
 
   constructor(private masterDataService: MasterDataService, 
@@ -78,7 +84,7 @@ export class OdslipapprovalComponent {
 
   }
   ngOnInit(): void {
-    this.getODCompany();
+    //this.getODCompany();
 
 
   }
@@ -98,7 +104,7 @@ export class OdslipapprovalComponent {
     this.masterDataService.getODComapnyList(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
-        if (response.success && Array.isArray(response.data)) {
+        if (response.success) {
           this.odcompanylist = response.data;
           console.log('od company list:', this.odcompanylist);
         } else {
