@@ -160,12 +160,12 @@ export class SidebarComponent {
         route: '/odslipcompanylist',
         allowedUserTypes: [ UserType.EMPLOYEE] 
       },
-      {
-        label: 'OD Slip Approval',
-        icon: 'fa-solid fa-check-circle',
-        route: '/odslipapproval',
-        allowedUserTypes: [ UserType.MANAGER] 
-      },
+      // {
+      //   label: 'OD Slip Approval',
+      //   icon: 'fa-solid fa-check-circle',
+      //   route: '/odslipapproval',
+      //   allowedUserTypes: [ UserType.MANAGER] 
+      // },
       {
         label: 'Leave Request',
         icon: 'fa-solid fa-envelope-open-text',

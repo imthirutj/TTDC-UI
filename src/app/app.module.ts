@@ -75,6 +75,9 @@ import { ConfirmationDialogComponent } from './utils/widgets/confirmation-dialog
 import { EmployeeWorkReportComponent } from './employee-work-report/employee-work-report.component';
 import { MyProfileComponent } from './employee/my-profile/my-profile.component';
 
+import { TopSectionComponent } from './shared/top-section/top-section.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,7 +124,8 @@ import { MyProfileComponent } from './employee/my-profile/my-profile.component';
     ChartComponent,
     ConfirmationDialogComponent,
     EmployeeWorkReportComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    TopSectionComponent
 
   ],
   imports: [

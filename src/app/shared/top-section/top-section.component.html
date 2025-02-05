@@ -1,0 +1,16 @@
+<div class="warning-card-container" *ngIf="parentContext.showTopContainer">
+  <div class="warning-card">
+    <!-- Close icon -->
+    <i class="fa fa-close close-icon" (click)="parentContext.showTopContainer = false"></i>
+    <!-- Conditionally display institution name if user is an INSTITUTION_ADMIN -->
+    <div class="warning-content">
+      <!--Display Role-->
+      
+      <p>Role:<b>{{parentContext.user.role}}</b></p>
+
+      <p *ngIf="parentContext.user.role=='MANAGER'">
+        Unit:{{parentContext.user.companyName}}
+      </p>
+    </div>
+  </div>
+</div>
