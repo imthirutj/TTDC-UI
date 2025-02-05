@@ -112,7 +112,12 @@ export class PayslipRecordsComponent {
 
   getEmployeeList(): void {
     const payload = this.dataService.getPayloadValue(this.filters);
-    this.masterDataService.getpayslipList(payload).subscribe(
+
+    const fpayload = {
+      ...payload,
+      employeeCode: this.filters.employeeCode.value,
+    }
+    this.masterDataService.getpayslipList(fpayload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data.pendingRecords)) {

@@ -62,7 +62,7 @@ export class SidebarComponent {
         label: 'Pay Generated', 
         icon: 'fa-solid fa-file-invoice-dollar', 
         route: '/payslip-records', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER, UserType.VENDOR] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER, UserType.VENDOR,UserType.EMPLOYEE,] 
       },
       { 
         label: 'Pay Not Generated', 
