@@ -82,6 +82,13 @@ export class SidebarComponent {
         route: '/city', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       },
+      { 
+        label: 'Holiday Management', 
+        icon: 'fa-solid fa-city', 
+        route: '/holiday-mgmt', 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
+      },
+
       // { 
       //   label: 'Category List', 
       //   icon: 'fa-solid fa-th-list', 

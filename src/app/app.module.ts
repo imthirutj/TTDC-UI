@@ -76,6 +76,7 @@ import { EmployeeWorkReportComponent } from './employee-work-report/employee-wor
 import { MyProfileComponent } from './employee/my-profile/my-profile.component';
 
 import { TopSectionComponent } from './shared/top-section/top-section.component';
+import { HolidayManagementComponent } from './holiday-management/holiday-management.component';
 
 
 @NgModule({
@@ -125,7 +126,8 @@ import { TopSectionComponent } from './shared/top-section/top-section.component'
     ConfirmationDialogComponent,
     EmployeeWorkReportComponent,
     MyProfileComponent,
-    TopSectionComponent
+    TopSectionComponent,
+    HolidayManagementComponent
 
   ],
   imports: [

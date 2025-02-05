@@ -9,7 +9,16 @@
       <p>Role:<b>{{parentContext.user.role}}</b></p>
 
       <p *ngIf="parentContext.user.role=='MANAGER'">
-        Unit:{{parentContext.user.companyName}}
+        <b>Unit:
+          {{parentContext.user.companyName}}
+        </b>
+      </p>
+
+      <p *ngIf="parentContext.user.role=='VENDOR'">
+        Name:
+        <b>
+          {{parentContext.user.vendorName}}
+        </b>
       </p>
     </div>
   </div>

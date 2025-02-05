@@ -37,6 +37,7 @@ import { VendorManagementComponent } from './vendor/vendor-management/vendor-man
 import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-payments/vendor-to-employee-payments.component';
 import { EmployeeWorkReportComponent } from './employee-work-report/employee-work-report.component';
 import { MyProfileComponent } from './employee/my-profile/my-profile.component';
+import { HolidayManagementComponent } from './holiday-management/holiday-management.component';
 
 const routes: Routes = [
 
@@ -94,6 +95,12 @@ const routes: Routes = [
   {
     path: 'designation',
     component: DesignationComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path: 'holiday-mgmt',
+    component: HolidayManagementComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },

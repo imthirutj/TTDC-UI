@@ -1,0 +1,70 @@
+
+<div class="company-list-container">
+
+  
+    
+      <h3>Holiday Management</h3>
+      <button  class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
+        Add New Holiday
+      </button>
+  
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Holiday Name</th>
+            <th>Holiday Date</th>
+               
+            <th>#</th>   
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obj of Holidays; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ obj.holidayName  }}</td>
+              <td>{{ obj.holidayDate }}</td>
+              <td>
+                <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, obj)">
+                  Edit
+                </button>
+              </td>
+            </tr>          
+        </tbody>
+      </table>
+    </div>
+    
+  
+    <app-common-dialog 
+  [showDialog]="modal.show" 
+  [dialogTitle]="modal.title"
+  [showCloseIcon]="true"
+  [showSubmitButton]="true" 
+  (submitDialog)="saveHoliday()"
+  (closeDialog)="closeModal()">
+
+  <!-- Holiday Form -->
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="holidayName" class="form-label">Holiday Name</label>
+        <input id="holidayName" type="text" class="form-control" [(ngModel)]="modal.holiday.holidayName">
+      </div>
+
+      <div class="col-md-6">
+        <label for="holidayDate" class="form-label">Holiday Date</label>
+        <input id="holidayDate" type="date" class="form-control" [(ngModel)]="modal.holiday.holidayDate">
+      </div>
+
+      <!-- <div class="col-md-6">
+        <label for="companyId" class="form-label">Company ID</label>
+        <input id="companyId" type="number" class="form-control" [(ngModel)]="modal.holiday.companyId">
+      </div> -->
+
+      <div class="col-md-12">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" class="form-control" [(ngModel)]="modal.holiday.description"></textarea>
+      </div>
+    </div>
+
+  </div>
+</app-common-dialog>
