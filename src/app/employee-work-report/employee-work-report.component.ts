@@ -602,15 +602,35 @@ export class EmployeeWorkReportComponent {
 
   //#region  Update
 
+
+  cancel() {
+    this.isAssignWeekOff = false;
+    
+    // Reset header selection (uncheck all header checkboxes)
+    for (let date in this.headerSelection) {
+      this.headerSelection[date] = false;
+    }
+  
+    // Reset row selections (uncheck all row checkboxes for all employees)
+    this.employees.forEach(employee => {
+      for (let date in employee.dates) {
+        employee.dates[date].selected = false; // Deselect all rows
+      }
+    });
+  
+    // Optionally, fetch the employee status to refresh the data
+    this.fetchEmployeeStatus();
+  }
+  
   submit() {
     // Flatten the payload and include only changed statuses
     const payload = this.employees.flatMap(employee =>
       Object.keys(employee.dates)
-        .filter(date => employee.dates[date].statusChanged) // Only include changed statuses
+        .filter(date => employee.dates[date].selected) // Only include changed statuses
         .map(date => ({
           employeeId: employee.empId,           // Map employee ID
           date: date,                           // Map date
-          status: employee.dates[date].status   // Map updated status
+          status: 'WEEKOFF'   // Map updated status
         }))
     );
 
@@ -669,13 +689,15 @@ export class EmployeeWorkReportComponent {
     this.employees.forEach(employee => {
       if (employee.dates[date]) {
         employee.dates[date].selected = isChecked; // Update all rows based on header checkbox
+        employee.dates[date].statusChanged = true;
       }
     });
   }
 
 
-  onRowCheckboxChange(date: string): void {
+  onRowCheckboxChange(date: string, employee: EmployeeStatus): void {
     const allSelected = this.employees.every(employee => employee.dates[date]?.selected);
+    employee.dates[date].statusChanged = true;
     this.headerSelection[date] = allSelected;
   }
 
@@ -801,6 +823,12 @@ export class EmployeeWorkReportComponent {
       (currentYear === this.filters.selectedYear.value && currentMonth > this.filters.selectedMonth.value) ||
       (currentYear === this.filters.selectedYear.value && currentMonth === this.filters.selectedMonth.value && currentDay > 25));
     return val;
+  }
+
+  isAssignWeekOff: boolean = false;
+
+  assignWeekoff(){
+    this.isAssignWeekOff = true;
   }
 
 }

@@ -5,11 +5,12 @@
     <!-- Conditionally display institution name if user is an INSTITUTION_ADMIN -->
     <div class="warning-content">
       <!--Display Role-->
-      
+
       <p>Role:<b>{{parentContext.user.role}}</b></p>
 
       <p *ngIf="parentContext.user.role=='MANAGER'">
-        <b>Unit:
+        Unit:
+        <b>
           {{parentContext.user.companyName}}
         </b>
       </p>

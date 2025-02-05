@@ -28,7 +28,12 @@ export class HolidayManagementComponent {
 
 
   filters: any = {
-   
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: true,
+      key: 'year',
+      includeInSearchParams: true
+    },
   };
   constructor(private masterDataService: MasterDataService,
     private dataservice: DataService,
@@ -62,6 +67,16 @@ export class HolidayManagementComponent {
     );
   }
 
+  deleteHoliday(holidayId:number){
+    this.holidayManagementServiceService.deleteHoliday(holidayId).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.getHolidaysList();
+        }
+      }
+    );
+  }
 
   openModal(action: Action, holiday?: Holiday): void {
     this.modal.show = true;

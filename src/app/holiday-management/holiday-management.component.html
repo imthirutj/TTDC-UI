@@ -1,46 +1,51 @@
-
 <div class="company-list-container">
 
-  
-    
-      <h3>Holiday Management</h3>
-      <button  class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
-        Add New Holiday
-      </button>
-  
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Holiday Name</th>
-            <th>Holiday Date</th>
-               
-            <th>#</th>   
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let obj of Holidays; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ obj.holidayName  }}</td>
-              <td>{{ obj.holidayDate }}</td>
-              <td>
-                <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, obj)">
-                  Edit
-                </button>
-              </td>
-            </tr>          
-        </tbody>
-      </table>
-    </div>
-    
-  
-    <app-common-dialog 
-  [showDialog]="modal.show" 
-  [dialogTitle]="modal.title"
-  [showCloseIcon]="true"
-  [showSubmitButton]="true" 
-  (submitDialog)="saveHoliday()"
-  (closeDialog)="closeModal()">
+  <div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+      (triggerParentFunction)="getHolidaysList()">
+    </app-filter>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  </div>
+
+  <h3>Holiday Management</h3>
+  <button class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
+    Add New Holiday
+  </button>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Holiday Name</th>
+        <th>Holiday Date</th>
+
+        <th>#</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of Holidays; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ obj.holidayName }}</td>
+        <td>{{ obj.holidayDate | date:'yyyy-MM-dd (EEEE)' }}</td>
+        <td>
+          <!-- Edit Button with Icon -->
+          <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, obj)">
+            <i class="fa fa-edit"></i> 
+          </button>
+
+          <!-- Delete Button with Icon -->
+          <button class="btn btn-danger" type="button" (click)="deleteHoliday(obj.holidayId)">
+            <i class="fas fa-trash-alt"></i> 
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<app-common-dialog [showDialog]="modal.show" [dialogTitle]="modal.title" [showCloseIcon]="true"
+  [showSubmitButton]="true" (submitDialog)="saveHoliday()" (closeDialog)="closeModal()">
 
   <!-- Holiday Form -->
   <div class="container mt-4">
