@@ -32,7 +32,7 @@ export class HolidayManagementServiceService {
   }
 
   deleteHoliday(holidayId:any):Observable<any>{
-    return this.http.delete(`${this.apiUrl}"Master/holidays/delete/${holidayId}`);
+    return this.http.post(`${this.apiUrl}Master/holidays/delete/${holidayId}`,{});
   }
   
 }

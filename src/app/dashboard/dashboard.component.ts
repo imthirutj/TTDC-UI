@@ -23,6 +23,38 @@ export class DashboardComponent {
 
 
   dashboardData: DashboardData = new DashboardData();
+  columnWiseTableReport:any={};
+
+  columnNames = [
+    {
+      columnName: "ds.designationName",
+      label: "Designation",
+      key: "designation",
+      output: "designationName",
+      data:[] as any[]
+    },
+    {
+      columnName: "dp.departmentFName",
+      label: "Department",
+      key: "department",
+      output: "departmentFName",
+      data:[] as any[]
+    },
+    {
+      columnName: "e.Qualifications",
+      label: "Qualifications",
+      key: "qualifications",
+      output: "Qualifications",
+      data:[] as any[]
+    },
+    {
+      columnName: "e.Experience",
+      label: "Experience",
+      key: "experience",
+      output: "Experience",
+      data:[] as any[]
+    }
+  ];
 
   attendanceSummaryDashboard: AttendanceSummaryDashboard = new AttendanceSummaryDashboard();
   todayAttendanceSummaryDashboard: AttendanceSummaryDashboard = new AttendanceSummaryDashboard();
@@ -105,18 +137,18 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
-
+    
   }
 
   // Event handler for filter change
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
-    this.getDashboardCount();
-    this.getPaymentGeneratedList();
+    this.search();
   }
   search() {
     this.getDashboardCount();
     this.getPaymentGeneratedList();
+    this.getAllReports();
   }
 
   getDashboardCount() {
@@ -226,5 +258,38 @@ export class DashboardComponent {
   getTotal(field: string): number {
     return this.paymentGeneratedList.reduce((sum, record) => sum + (record[field] || 0), 0);
   }
+
+  getRepTotal(data: any[]): number {
+    return data.reduce((sum, row) => sum + (row.Total || 0), 0);
+  }
+  
+  getColumnWiseTableReport(obj: any) {
+    
+    const payload = this.dataService.getPayloadValue(this.filters);
+    const fpayload ={
+      ...payload,
+      columnName: obj.columnName
+    }
+    this.dashboardService.getColumnWiseTableReport(fpayload).subscribe((response: any) => {
+      if (response.success) {
+        obj.data = response.data;
+      }
+    })
+  }
+
+  getAllReports(){
+    
+    this.columnWiseTableReport = {};
+    this.columnNames.forEach((columnName:any) => {
+      this.getColumnWiseTableReport(columnName);
+
+    });
+    console.log('All Reports:', this.columnNames);
+  }
+
+  getReportKeys() {
+    return Object.keys(this.columnWiseTableReport);
+  }
+
 
 }

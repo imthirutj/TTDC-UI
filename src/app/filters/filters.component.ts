@@ -80,6 +80,7 @@ export class FiltersComponent implements OnInit {
     this.fetchDesignations();
     this.fetchCategories();
     this.fetchVendors();
+    this.fetchCompanies();
 
   }
 
@@ -138,6 +139,10 @@ export class FiltersComponent implements OnInit {
     this.filters.catId.show = false;
     this.filters.catId.includeInSearchParams = false;
     this.filters.catId.value = 0;
+
+    this.filters.cityId.show = false;
+    this.filters.cityId.includeInSearchParams = false;
+    this.filters.cityId.value = 0;
   }
 
   //#region Change Event

@@ -9,16 +9,51 @@
 <div class="container mt-4">
   <!-- Employee Section -->
 
-  <div *ngIf="userAccessLevel == UserType.EMPLOYEE" class="row">
-   
+  
+<div *ngIf="userAccessLevel == UserType.EMPLOYEE">
+ 
+  <div  class="row">
+    <p>
+      {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
+    </p>
+
     <div class="col-md-4 mb-4">
       <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
-          <h3 class="card-title">Total Working Days</h3>
+          <h3 class="card-title">Total Present Days</h3>
           <h2 class="card-text">{{attendanceSummaryDashboard.totalPresentDays}}</h2>
         </div>
       </div>
     </div>
+
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #2ebed1; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Absent Days</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.totalAbsentDays}}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #d8ab24; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total WeekOff</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.weekOff}}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #ad37af; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total holiday</h3>
+          <h2 class="card-text">{{attendanceSummaryDashboard.holiday}}</h2>
+        </div>
+      </div>
+    </div>
+
 
     <div class="col-md-4 mb-4">
       <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
@@ -40,18 +75,36 @@
     </div>
 
     <div class="col-md-4 mb-4">
+      <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Working Days</h3>
+          <h2 class="card-text">
+            {{attendanceSummaryDashboard.holiday
+            +attendanceSummaryDashboard.weekOff
+            +attendanceSummaryDashboard.leaveApprovedDays
+            +attendanceSummaryDashboard.odApprovedDays
+            +attendanceSummaryDashboard.totalPresentDays}}
+            
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-md-4 mb-4">
       <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Today Status</h3>
           <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays==1? "Present" : "Absent"}}</h2>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
+</div>
 
   <!-- Manager Section -->
 
-  <div *ngIf="userAccessLevel == UserType.MANAGER" class="row">
+ <div *ngIf="userAccessLevel == UserType.MANAGER">
+  <div  class="row">
     <div class="col-md-4 mb-4">
       <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
@@ -77,9 +130,13 @@
         </div>
       </div>
     </div>
-  
 
-    <div class="col-md-4 mb-4">
+  </div>
+  <p>
+    {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
+  </p>
+  <div class="row">
+     <div class="col-md-4 mb-4">
       <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Leave</h3>
@@ -98,54 +155,12 @@
       </div>
     </div>
 
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Today Present Count</h3>
-          <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays}}</h2>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Vendor Section -->
-
-  <div *ngIf="userAccessLevel == UserType.VENDOR" class="row">
     
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #00a9c8;" class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          
-          <h3 class="card-title">
-          
-            Total Company
-          </h3>
-          <h2 class="card-text">{{dashboardData.totalCompany}}</h2>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Total Designation</h3>
-          <h2 class="card-text">{{dashboardData.totalDesignationCount}}</h2>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Total Employee</h3>
-          <h2 class="card-text">{{dashboardData.totalEmployees}}</h2>
-        </div>
-      </div>
-    </div>
     <div class="col-md-4 mb-4">
       <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Payment Generated</h3>
-          <h2 class="card-text">{{dashboardData.paymentGeneratedCount}}</h2>
+          <h2 class="card-text">{{dashboardData.paymentGeneratedCount }}</h2>
         </div>
       </div>
     </div>
@@ -165,24 +180,101 @@
         </div>
       </div>
     </div>
+    <!-- <div class="col-md-4 mb-4">
+      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Today Present Count</h3>
+          <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays}}</h2>
+        </div>
+      </div>
+    </div> -->
+  </div>
+ </div>
+
+  <!-- Vendor Section -->
+
+  <div *ngIf="userAccessLevel == UserType.VENDOR">
+    <div  class="row">
+    
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #00a9c8;" class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            
+            <h3 class="card-title">
+            
+              Total Company
+            </h3>
+            <h2 class="card-text">{{dashboardData.totalCompany}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Total Designation</h3>
+            <h2 class="card-text">{{dashboardData.totalDesignationCount}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Total Employee</h3>
+            <h2 class="card-text">{{dashboardData.totalEmployees}}</h2>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <p>
+      {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
+    </p>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Payment Generated </h3>
+            <h2 class="card-text">{{dashboardData.paymentGeneratedCount}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Payment Not Generated</h3>
+            <h2 class="card-text">{{dashboardData.paymentNotGeneratedCount }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #cc293a; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Payment Processed </h3>
+            <h2 class="card-text">{{dashboardData.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- State Section -->
 
-  <div *ngIf="userAccessLevel == UserType.STATE_ADMIN" class="row">
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Total Vendor</h3>
-          <h3 class="card-text">{{dashboardData.totalVendor}}</h3>
-        </div>
-      </div>
-    </div>
+<div *ngIf="userAccessLevel == UserType.STATE_ADMIN">
+  <div  class="row">
+    
     <div class="col-md-4 mb-4">
       <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
           <h3 class="card-title">Total Company</h3>
           <h2 class="card-text">{{dashboardData.totalCompany}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Total Vendor</h3>
+          <h3 class="card-text">{{dashboardData.totalVendor}}</h3>
         </div>
       </div>
     </div>
@@ -205,6 +297,22 @@
 
     
 
+    
+
+    <!-- <div class="col-md-4 mb-4">
+      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
+        <div class="card-body">
+          <h3 class="card-title">Today Present Count</h3>
+          <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays}}</h2>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <p>
+    {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
+  </p>
+  <div class="row">
     <div class="col-md-4 mb-4">
       <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
@@ -224,15 +332,6 @@
       </div>
     </div>
 
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Today Present Count</h3>
-          <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays}}</h2>
-        </div>
-      </div>
-    </div>
-    
     <div class="col-md-4 mb-4">
       <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
         <div class="card-body">
@@ -259,6 +358,7 @@
     </div>
   </div>
 
+</div>
 
   <!-- <div class="row">
     <div class="col-md-4 mb-4">
@@ -275,7 +375,7 @@
 <button (click)="dataService.downloadPDF('paymentTable')" class="btn btn-primary">Download as PDF</button>
 <button (click)="dataService.downloadExcelTable('paymentTable', 'payment-report')" class="btn btn-success">Download as Excel</button>
 
-<div class="container mt-4">
+<div *ngIf="userAccessLevel!= UserType.EMPLOYEE" class="container mt-4">
   <table  id="paymentTable" class="table table-striped">
     <thead>
       <tr>
@@ -348,4 +448,41 @@
     </div>
     
   </div>
+</div>
+
+<div *ngIf="userAccessLevel!= UserType.EMPLOYEE" class="container mt-4">
+ <div class="row">
+  <div class="col-md-3" *ngFor="let column of columnNames">
+    <h3>{{ column.label }}</h3>
+  
+    <table *ngIf="column.data?.length; else loading">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ column.label }}</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of column.data; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ row[column.output] || 'N/A' }}</td>
+          <td>{{ row?.Total }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td [attr.colspan]="2"><strong>Total:</strong></td>
+          <td>{{ getRepTotal(column.data) }}</td>
+        </tr>
+      </tfoot>
+    </table>
+  
+    <!-- Loading message -->
+    <ng-template #loading>
+      <p>Loading...</p>
+    </ng-template>
+  </div>
+ </div>
+  
 </div>

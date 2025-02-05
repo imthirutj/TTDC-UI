@@ -34,4 +34,9 @@ export class DashboardService {
     return this.http.get(`${this.apiUrl}Dashboard/GetPayDetails?${queryParams}`);
   }
 
+  getColumnWiseTableReport(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Dashboard/GetColumnWiseTableReport?${queryParams}`);
+  }
+
 }
