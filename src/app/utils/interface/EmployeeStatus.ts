@@ -199,19 +199,22 @@ export class BiometricData {
     empCode: string;
     reports: Reports;
     dates: { [key: string]: DateDetails };
+    hasSalaryGenerated: boolean;
   
     constructor(
       empId: number = 0,
       employeeName: string = '',
       empCode: string = '',
       reports: Reports = new Reports(),
-      dates: { [key: string]: DateDetails } = {}
+      dates: { [key: string]: DateDetails } = {},
+      hasSalaryGenerated: boolean = false
     ) {
       this.empId = empId;
       this.employeeName = employeeName;
       this.empCode = empCode;
       this.reports = reports;
       this.dates = dates;
+      this.hasSalaryGenerated = hasSalaryGenerated;
     }
   }
   

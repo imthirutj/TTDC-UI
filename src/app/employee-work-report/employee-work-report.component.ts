@@ -96,7 +96,8 @@ export class EmployeeWorkReportComponent {
     show: false,
     title: '',
     employeeDateDetails: new DateDetails(),
-    employeeStatus: new EmployeeStatus()
+    employeeStatus: new EmployeeStatus(),
+    hasSalaryGenerated: false
   }
 
   modalAttrEmployeeReport: any = {
@@ -578,15 +579,17 @@ export class EmployeeWorkReportComponent {
 
   //#endregion
 
-  openModal(employeeDates: DateDetails) {
+  openModal(employeeDates: DateDetails, employee: EmployeeStatus) {
     this.modalAttr.show = true;
     this.modalAttr.employeeDateDetails = employeeDates;
     this.modalAttr.title = 'Employee Work Report';
+    this.modalAttr.hasSalaryGenerated = employee.hasSalaryGenerated;
   }
 
   closeModal() {
     this.modalAttr.show = false;
-    this.modalAttr.employeeDateDetails = new DateDetails(); // Reset the employeeDateDetails objec
+    this.modalAttr.employeeDateDetails = new DateDetails();
+    this.modalAttr.hasSalaryGenerated = false;
   }
 
   openEmployeeReportModal(employee: EmployeeStatus) {
@@ -812,7 +815,7 @@ export class EmployeeWorkReportComponent {
   }
 
 
-  isAdjustable(): boolean {
+  isAdjustable(employee: EmployeeStatus): boolean {
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth() + 1;  // getMonth() is 0-based, so we add 1
     const currentDay = currentDate.getDate();
@@ -822,7 +825,9 @@ export class EmployeeWorkReportComponent {
     var val = (currentYear > this.filters.selectedYear.value ||
       (currentYear === this.filters.selectedYear.value && currentMonth > this.filters.selectedMonth.value) ||
       (currentYear === this.filters.selectedYear.value && currentMonth === this.filters.selectedMonth.value && currentDay > 25));
-    return val;
+    
+    
+    return val ;
   }
 
   isAssignWeekOff: boolean = false;

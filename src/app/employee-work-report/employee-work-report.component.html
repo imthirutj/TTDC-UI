@@ -41,14 +41,14 @@
         </div>
 
         <!--Assign Weekoff button-->
-        <button *ngIf="!isAssignWeekOff"  class="btn btn-primary" (click)="assignWeekoff()">Assign
+        <button *ngIf="!isAssignWeekOff" class="btn btn-primary" (click)="assignWeekoff()">Assign
             Weekoff
         </button>
         <button *ngIf="isAssignWeekOff" class="btn btn-primary" (click)="submit()">
             Update Weekoff
         </button>
         <button *ngIf="isAssignWeekOff" class="btn btn-secondary" (click)="cancel()">
-           Cancel
+            Cancel
         </button>
 
         <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
@@ -79,14 +79,27 @@
                         {{ employee.employeeName }} ({{employee.empCode}})
 
                     </td>
-                    <td>
-                        <div>
-                            <p><b> Present Days</b> : {{ employee.reports.totalPresentDays }}</p>
-                            <p><b> Absent Days</b> : {{ employee.reports.totalAbsentDays }}</p>
+                    <td class="ellipsis">
+                        <p>
+                            <b>Present:</b> {{ employee.reports.totalPresentDays }},
+                            <b>Absent:</b> {{ employee.reports.totalAbsentDays }},
+                        </p>
+                        <p>
+                            <b>WeekOff:</b> {{ employee.reports.weekOff }},
+                            <b>Holiday:</b> {{ employee.reports.holiday }},
+                        </p>
+                        <p>
+                            <b>Leave:</b> {{ employee.reports.leaveApprovedDays }},
+                            <b>OD:</b> {{ employee.reports.odApprovedDays }}
+                        </p>
+                        
+                        <button *ngIf="isAdjustable(employee) && 
+                            userAccessLevel != UserType.EMPLOYEE &&
+                            !employee.hasSalaryGenerated"
+                            (click)="openAdjustModal(employee)" style="background-color: #a60015;"
+                            class="btn btn-secondary">Adjust</button>
 
-                        </div>
-                        <button *ngIf="isAdjustable() && userAccessLevel != UserType.EMPLOYEE" (click)="openAdjustModal(employee)"
-                            style="background-color: #a60015;" class="btn btn-secondary">Adjust</button>
+                        <p *ngIf="employee.hasSalaryGenerated">Salary Already generated</p>
                         <i class="fas fa-info-circle" (click)="openEmployeeReportModal(employee)"></i>
                     </td>
                     <td *ngFor="let date of getCurrentDates()">
@@ -103,7 +116,7 @@
                             {{(employee.dates[date].status)}}
                         </p>
 
-                        <div class="time-card" (click)="openModal(employee.dates[date])" style="text-align: left;"
+                        <div class="time-card" (click)="openModal(employee.dates[date], employee)" style="text-align: left;"
                             *ngIf="employee.dates[date]?.biometricData?.length">
                             <!-- Show the first biometric log -->
                             <p *ngIf="employee.dates[date].biometricData[0]?.type" class="mb-1">
@@ -136,20 +149,25 @@
                                 <b>Leave: {{ reqStatus[employee.dates[date].leaveRequestStatus] }}</b>
                                 <button [routerLink]="['/Leaveapprovalview']"
                                     [queryParams]="{leaveRequest_Id: employee.dates[date].leaveRequestedId}"
-                                    *ngIf="userAccessLevel != UserType.EMPLOYEE && employee.dates[date].leaveRequestStatus == 0"
+                                    *ngIf="userAccessLevel != UserType.EMPLOYEE 
+                                    && employee.dates[date].leaveRequestStatus == 0
+                                    && !employee.hasSalaryGenerated"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                             <div *ngIf="employee.dates[date]?.odRequested">
                                 <b>OD: {{ reqStatus[employee.dates[date].odRequestStatus] }}</b>
-                                <button *ngIf="userAccessLevel != UserType.EMPLOYEE  && employee.dates[date].odRequestStatus == 0"
+                                <button
+                                    *ngIf="userAccessLevel != UserType.EMPLOYEE  
+                                    && employee.dates[date].odRequestStatus == 0
+                                    && !employee.hasSalaryGenerated"
                                     [routerLink]="['/odslipapprovalview']"
                                     [queryParams]="{odslip_id: employee.dates[date].odRequestId}"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                         </div>
 
-                        <div >
-                            <div *ngIf="false" (click)="openModal(employee.dates[date])" class="triangle"></div>
+                        <div>
+                            <div *ngIf="false" (click)="openModal(employee.dates[date], employee)" class="triangle"></div>
                             <!-- <i class="fas fa-info-circle" (click)="openModal(employee.dates[date])"></i> -->
                             <input *ngIf="isAssignWeekOff" type="checkbox" [(ngModel)]="employee.dates[date].selected"
                                 (change)="onRowCheckboxChange(date, employee)" />
@@ -166,7 +184,7 @@
 
     <!--Submit-->
     <div class="d-flex justify-content-between">
-        <button *ngIf="false"  class="btn btn-primary" (click)="submit()">Update Attendance</button>
+        <button *ngIf="false" class="btn btn-primary" (click)="submit()">Update Attendance</button>
         <!-- Page Size Dropdown -->
         <div class="d-flex align-items-center">
             <label for="pageSize" class="me-2">Page Size:</label>
@@ -185,7 +203,7 @@
     <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="fetchEmployeeStatus()">
     </app-server-pagination>
 
-     <!--Biometric full card -->
+    <!--Biometric full card -->
     <app-common-dialog [showDialog]="modalAttr.show" [dialogTitle]="modalAttr.title" [showCloseIcon]="true"
         [showSubmitButton]="false" (closeDialog)="closeModal()">
 
@@ -219,7 +237,10 @@
                 <h5 class="card-title">Leave Details</h5>
                 <div *ngIf="modalAttr.employeeDateDetails.leaveRequested">
                     <p><b>Leave Requested: {{ reqStatus[modalAttr.employeeDateDetails.leaveRequestStatus] }}</b></p>
-                    <button *ngIf="userAccessLevel != UserType.EMPLOYEE  && modalAttr.employeeDateDetails.leaveRequestStatus == 0"
+                    <button
+                        *ngIf="userAccessLevel != UserType.EMPLOYEE  
+                        && modalAttr.employeeDateDetails.leaveRequestStatus == 0
+                         && !modalAttr.hasSalaryGenerated"
                         [routerLink]="['/Leaveapprovalview']"
                         [queryParams]="{leaveRequest_Id: modalAttr.employeeDateDetails.leaveRequestedId}"
                         class="btn btn-primary">Approve</button>
@@ -236,7 +257,10 @@
                 <h5 class="card-title">OD Details</h5>
                 <div *ngIf="modalAttr.employeeDateDetails.odRequested">
                     <b>OD Requested: {{ reqStatus[modalAttr.employeeDateDetails.odRequestStatus] }}</b>
-                    <button *ngIf="false && userAccessLevel != UserType.EMPLOYEE  && modalAttr.employeeDateDetails.odRequestStatus == '0'"
+                    <button
+                        *ngIf="false && userAccessLevel != UserType.EMPLOYEE 
+                         && modalAttr.employeeDateDetails.odRequestStatus == '0'
+                         && !modalAttr.hasSalaryGenerated"
                         [routerLink]="['/odslipapprovalview']"
                         [queryParams]="{odslip_id: modalAttr.employeeDateDetails.odRequestId}"
                         class="btn btn-primary">Approve</button>
@@ -269,6 +293,16 @@
                     <div class="item">
                         <span>Total Absent Days</span>
                         <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.totalAbsentDays
+                            }}</span>
+                    </div>
+                    <div class="item">
+                        <span>Total WeekOff</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.weekOff
+                            }}</span>
+                    </div>
+                    <div class="item">
+                        <span>Total Holidays</span>
+                        <span class="item-value">{{ modalAttrEmployeeReport.employeeStatus.reports.holiday
                             }}</span>
                     </div>
                 </div>
@@ -439,7 +473,7 @@
 
             </table>
         </div>
-        
+
         <div class="container">
             <div class="row ">
                 <div class="col-md-6 col-12">
@@ -456,10 +490,11 @@
                             <tr *ngFor="let entry of leaveRequestedDays">
                                 <td>{{ entry.date }}</td>
                                 <td>
-                                    {{ entry.leaveRequestStatus == 0 ? 'Pending' : entry.leaveRequestStatus == 1 ? 'Approved' : 'Rejected' }}
+                                    {{ entry.leaveRequestStatus == 0 ? 'Pending' : entry.leaveRequestStatus == 1 ?
+                                    'Approved' : 'Rejected' }}
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary" 
+                                    <button class="btn btn-primary"
                                         *ngIf="userAccessLevel != UserType.EMPLOYEE  && entry.leaveRequestStatus == 0"
                                         [routerLink]="['/Leaveapprovalview']"
                                         [queryParams]="{leaveRequest_Id: entry.leaveRequestedId}">
@@ -475,7 +510,7 @@
                         </tfoot>
                     </table>
                 </div>
-        
+
                 <div class="col-md-6 col-12">
                     <h3>OD Requested</h3>
                     <table class="table table-bordered">
@@ -490,12 +525,14 @@
                             <tr *ngFor="let entry of odRequestedDays">
                                 <td>{{ entry.date }}</td>
                                 <td>
-                                    {{ entry.odRequestStatus == 0 ? 'Pending' : entry.odRequestStatus == 1 ? 'Approved' : 'Rejected' }}
+                                    {{ entry.odRequestStatus == 0 ? 'Pending' : entry.odRequestStatus == 1 ? 'Approved'
+                                    : 'Rejected' }}
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary" 
+                                    <button class="btn btn-primary"
                                         *ngIf="userAccessLevel != UserType.EMPLOYEE  && entry.odRequestStatus == 0"
-                                        [routerLink]="['/odslipapprovalview']" [queryParams]="{odslip_id: entry.odRequestId}">
+                                        [routerLink]="['/odslipapprovalview']"
+                                        [queryParams]="{odslip_id: entry.odRequestId}">
                                         Approve
                                     </button>
                                 </td>
@@ -510,6 +547,6 @@
                 </div>
             </div>
         </div>
-        
+
     </app-common-dialog>
 </div>
