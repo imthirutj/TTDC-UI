@@ -103,6 +103,9 @@
             <button class="btn btn-success btn-sm" (click)="updateTotalWages(employee)">
               <i class="fas fa-save"></i> <!-- Save Icon -->
             </button>
+            <button class="btn btn-danger btn-sm" (click)="cancelEdit(employee)">
+              <i class="fas fa-times"></i> <!-- Close Icon -->
+            </button>
           </ng-container>
           <ng-container *ngIf="!employee.isEditing">
             {{ employee.totalWages | currency: 'INR' }}
@@ -111,6 +114,7 @@
             </button>
           </ng-container>
         </td>
+        
       </tr>
     </tbody>
   </table>

@@ -419,7 +419,12 @@ export class EmployeeListComponent {
   }
 
   toggleEditWages(employee: any) {
-    employee.isEditing = !employee.isEditing;
+    employee.isEditing = true;
+    employee.oldTotalWages = employee.totalWages; // Store old value for cancel functionality
+  }
+  cancelEdit(employee: any) {
+    employee.totalWages = employee.oldTotalWages; // Restore original value
+    employee.isEditing = false;
   }
 
   updateTotalWages(employee:any){
