@@ -418,4 +418,23 @@ export class EmployeeListComponent {
     );
   }
 
+  toggleEditWages(employee: any) {
+    employee.isEditing = !employee.isEditing;
+  }
+
+  updateTotalWages(employee:any){
+    var payload = {
+      employeeId: employee.employeeId,
+      totalWages: employee.totalWages
+    };
+    this.masterDataService.updateTotalWages(payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('Total Wages updated successfully.');
+          this.getEmployeeList();
+        }
+      }
+    );
+  }
 }

@@ -19,14 +19,14 @@
         <th>Employee Code</th>
 
         <th>Contact Number</th>
-        
+
         <th *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.VENDOR">
           Unit Name
         </th>
         <th *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.MANAGER">
           Vendor
         </th>
-        
+
         <th>Department Name</th>
         <th>Designation Name</th>
 
@@ -40,6 +40,7 @@
         <th>Education Certificate</th>
 
         <th>Bank Details</th>
+        <th>Total Wages</th>
       </tr>
     </thead>
     <tbody>
@@ -78,20 +79,37 @@
         <td>{{ employee.qualifications }}</td>
 
         <td>{{ employee.aadhaarNumber }}
-          <button type="button" class="btn btn-primary"
-            (click)="show_Certificate(employee, ModuleType.ADHAR)">View</button>
+          <button type="button" class="btn btn-primary" (click)="show_Certificate(employee, ModuleType.ADHAR)">
+            <i class="fas fa-eye"></i>
+          </button>
         </td>
 
         <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
             (click)="show_Certificate(employee, ModuleType.EDUCATION_CERT)">
-            View education certificate
+            <i class="fas fa-file-alt"></i>
           </button></td>
 
         <!--Update Bank Details Action-->
         <td>
           <button class="btn btn-primary" type="button" (click)="openBankModal(employee.employeeId)">
-            View/Update Bank Details
+            <i class="fas fa-university"></i>
           </button>
+        </td>
+
+        <!-- Total Wages Column (Editable) -->
+        <td>
+          <ng-container *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.totalWages" class="form-control" />
+            <button class="btn btn-success btn-sm" (click)="updateTotalWages(employee)">
+              <i class="fas fa-save"></i> <!-- Save Icon -->
+            </button>
+          </ng-container>
+          <ng-container *ngIf="!employee.isEditing">
+            {{ employee.totalWages | currency: 'INR' }}
+            <button class="btn btn-warning btn-sm" (click)="toggleEditWages(employee)">
+              <i class="fas fa-edit"></i> <!-- Edit Icon -->
+            </button>
+          </ng-container>
         </td>
       </tr>
     </tbody>
@@ -364,14 +382,12 @@
 
 
 <!-- Bank Details Modal -->
-<app-common-dialog [showDialog]="bankModal.show" [dialogTitle]="bankModal.title" 
-  [showCloseIcon]="true"
+<app-common-dialog [showDialog]="bankModal.show" [dialogTitle]="bankModal.title" [showCloseIcon]="true"
   [showSubmitButton]="true" (submitDialog)="submitBankDetails()" (closeDialog)="closeBankModal()">
 
   <div class="mb-3">
     <label for="bankName" class="form-label">Bank Name</label>
-    <input type="text" class="form-control disabled-bg" id="bankName" 
-    [(ngModel)]="bankModal.bankDetails.bankName"
+    <input type="text" class="form-control disabled-bg" id="bankName" [(ngModel)]="bankModal.bankDetails.bankName"
       name="bankName" placeholder="Enter Bank Name" [disabled]="modal.action === 'VIEW'">
   </div>
 
@@ -385,16 +401,14 @@
   <!--Isce Code-->
   <div class="mb-3">
     <label for="accountNumber" class="form-label">IFSC Code</label>
-    <input type="text" class="form-control disabled-bg" id="accountNumber" 
-    [(ngModel)]="bankModal.bankDetails.isceCode"
+    <input type="text" class="form-control disabled-bg" id="accountNumber" [(ngModel)]="bankModal.bankDetails.isceCode"
       name="accountNumber" placeholder="Enter IFSC Code" [disabled]="modal.action === 'VIEW'">
   </div>
 
   <!--pfNumber-->
   <div class="mb-3">
     <label for="accountNumber" class="form-label">Pf Number</label>
-    <input type="text" class="form-control disabled-bg" id="accountNumber" 
-    [(ngModel)]="bankModal.bankDetails.pfNumber"
+    <input type="text" class="form-control disabled-bg" id="accountNumber" [(ngModel)]="bankModal.bankDetails.pfNumber"
       name="accountNumber" placeholder="Enter PF Number" [disabled]="modal.action === 'VIEW'">
   </div>
 
@@ -403,16 +417,14 @@
   <div class="mb-3">
     <label for="accountNumber" class="form-label">Esic Number</label>
     <input type="text" class="form-control disabled-bg" id="accountNumber"
-      [(ngModel)]="bankModal.bankDetails.esicNumber" 
-      name="accountNumber" placeholder="Enter ESIC Number"
+      [(ngModel)]="bankModal.bankDetails.esicNumber" name="accountNumber" placeholder="Enter ESIC Number"
       [disabled]="modal.action === 'VIEW'">
   </div>
 
   <!--pfScheme-->
   <div class="mb-3">
     <label for="accountNumber" class="form-label">PF Scheme</label>
-    <input type="text" class="form-control disabled-bg" id="accountNumber" 
-    [(ngModel)]="bankModal.bankDetails.pfScheme"
+    <input type="text" class="form-control disabled-bg" id="accountNumber" [(ngModel)]="bankModal.bankDetails.pfScheme"
       name="accountNumber" placeholder="Enter PF Scheme" [disabled]="modal.action === 'VIEW'">
   </div>
 

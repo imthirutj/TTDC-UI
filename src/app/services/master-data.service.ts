@@ -219,6 +219,10 @@ export class MasterDataService {
   saveBankDetails(payload:any): Observable<any> {
     return this.http.post(`${this.apiUrl}Employee/InsertUpdateEmpPayDetail`, payload);
   }
+  updateTotalWages(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.post(`${this.apiUrl}Payroll/InsertSalaryStructure?${queryParams}`, {});
+  }
 
 
 }
