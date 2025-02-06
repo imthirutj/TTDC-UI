@@ -40,7 +40,7 @@ export class SidebarComponent {
   
 
   ngOnInit(): void {
-    
+    this.firstTimeScreen();
   }
 
   getMenuItemsBasedOnUserType(userAccessLevel: any): any[] {
@@ -210,6 +210,11 @@ export class SidebarComponent {
     } else {
       this.isCollapsed = false;
     }
+    this.sidebarToggled.emit(this.isCollapsed);
+  }
+
+  firstTimeScreen(){
+    this.isCollapsed = true;
     this.sidebarToggled.emit(this.isCollapsed);
   }
 }

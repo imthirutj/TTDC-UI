@@ -1,35 +1,36 @@
 /* Scoped styling using custom class */
 .profile-dialog .container {
-    font-family: Arial, sans-serif;
-  }
-  
-  .profile-dialog h2 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .profile-dialog .list-group-item {
-    font-size: 16px;
-    color: #555;
-  }
-  
-  .profile-dialog .list-group-item strong {
-    color: #000;
-  }
-  
-  .profile-dialog .img-fluid {
-    max-width: 120px;
-    height: 120px;
-    object-fit: cover;
-  }
-  
+  font-family: Arial, sans-serif;
+}
 
-  
+.profile-dialog h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-dialog .list-group-item {
+  font-size: 16px;
+  color: #555;
+}
+
+.profile-dialog .list-group-item strong {
+  color: #000;
+}
+
+.profile-dialog .img-fluid {
+  max-width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+
+
 /* Header Styling */
 .header {
   max-height: 110px;
-  min-height: 136px; /* Ensure the header doesn't shrink below this height */
+  min-height: 136px;
+  /* Ensure the header doesn't shrink below this height */
   position: fixed;
   top: 0;
   left: 0;
@@ -42,6 +43,13 @@
   align-items: center;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Ensure content that exceeds the max-height is hidden */
+  overflow: hidden;
+  /* Ensure content that exceeds the max-height is hidden */
 }
 
+@media (max-width: 768px) {
+  .icon-img {
+    width: 185px;
+    content: url('/assets/images/logo/logo_3_mob.png'); /* Change the image in mobile view */
+  }
+}

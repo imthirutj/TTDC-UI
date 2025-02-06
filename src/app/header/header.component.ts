@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, HostListener, NgZone } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MasterDataService } from '../services/master-data.service';
 import { LoginService } from '../login/login.service';
@@ -15,7 +15,7 @@ export class HeaderComponent {
   isEditMode = false;  // Flag for toggling between view and edit mode
   userData: any = {};
 
-
+  screenWidth: number = window.innerWidth; 
   groupedDepartments: any[] = [];
 
   constructor(private fb: FormBuilder,
@@ -28,6 +28,21 @@ export class HeaderComponent {
     this.getUserDetails();
   }
 
+  ngOnInit(): void {
+    this.updateScreenWidth();
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.updateScreenWidth();
+  }
+
+  private updateScreenWidth(): void {
+    this.screenWidth = window.innerWidth;
+  }
+
+  isMobile(): boolean {
+    return this.screenWidth < 768; // Define mobile view breakpoint
+  }
   getUserDetails() {
     this.userService.getUserDetails(this.dataService.getUserId()).subscribe(
       (response:any)=>{

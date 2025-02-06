@@ -9,7 +9,7 @@
     color: white;
     transition: width 0.3s ease;
     overflow-y: auto; /* Allow scrolling if content overflows */
-    z-index: 100; /* Ensure sidebar stays above other content */
+    z-index: 1000; /* Ensure sidebar stays above other content */
 }
 
 .sidebar.collapsed {
