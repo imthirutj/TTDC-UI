@@ -18,16 +18,13 @@
     <thead>
       <tr>
         <th>#</th>
-        <!-- <th>Employee ID</th> -->
         <th>Employee Name</th>
         <th>Employee Code</th>
         <th>Unit Name</th>
         <th>Vendor Name</th>
         <th>Designation Name</th>
-        <!-- <th>Category Name</th> -->
         <th>Basic Salary</th>
-        <th>DA</th>
-        <th>Special Wages</th>
+        <th>HRA</th>
         <th>EPF</th>
         <th>ESI</th>
         <th>Net Salary</th>
@@ -44,11 +41,8 @@
         <td>{{ d.companyFName }}</td>
         <td>LipiInterior</td>
         <td>{{ d.designationName }}</td>
-        <!-- <td>{{ department.departmentFName }}</td> -->
-        <!-- <td>{{ d.categoryFName }} </td> -->
         <td>{{ d.basicRate | currency:'INR' }}</td>
-        <td>{{ d.da | currency:'INR' }}</td>
-        <td>{{ d.specialWages | currency:'INR' }}</td>
+        <td>{{ d.hra | currency:'INR' }}</td>
         <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
         <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
         <td>{{ d.netSalary | currency:'INR' }}</td>
@@ -65,8 +59,8 @@
       <tr>
         <td colspan="6" class="text-right"><strong>Total:</strong></td>
         <td>{{ getTotal('basicRate') | currency:'INR' }}</td>
-        <td>{{ getTotal('da') | currency:'INR' }}</td>
-        <td>{{ getTotal('specialWages') | currency:'INR' }}</td>
+        <td>{{ getTotal('hra') | currency:'INR' }}</td>
+ 
         <td>{{ getTotal('epfEmployeeContribution') | currency:'INR' }}</td>
         <td>{{ getTotal('esiEmployeeContribution') | currency:'INR' }}</td>
         <td>{{ getTotal('netSalary') | currency:'INR' }}</td>

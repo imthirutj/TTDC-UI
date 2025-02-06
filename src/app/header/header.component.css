@@ -47,9 +47,3 @@
   /* Ensure content that exceeds the max-height is hidden */
 }
 
-@media (max-width: 768px) {
-  .icon-img {
-    width: 185px;
-    content: url('/assets/images/logo/logo_3_mob.png'); /* Change the image in mobile view */
-  }
-}

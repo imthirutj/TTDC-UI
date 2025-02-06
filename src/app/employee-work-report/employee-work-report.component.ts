@@ -68,6 +68,7 @@ export class EmployeeWorkReportComponent {
     { key: 'ABSENT-LWT', value: 'Absent', color: 'rgb(203 72 72)' },//LWT-Less Working Hours
     { key: 'HOLIDAY', value: 'Holiday', color: 'rgb(97 114 219)' },
     { key: 'HOLIDAY-PRESENT', value: 'Holiday Present', color: 'rgb(97 114 219)' },
+    { key: 'WEEKOFF-PRESENT', value: 'Holiday Present', color: 'rgb(97 114 219)' },
     { key: 'WEEKOFF', value: 'Weekly Off', color: 'rgb(121 4 81)' },
     { key: 'LEAVE', value: 'Leave', color: 'rgb(63 133 143)' },
     { key: 'OD', value: 'ODf', color: 'rgb(63 133 143)' },

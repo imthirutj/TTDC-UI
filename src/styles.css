@@ -336,3 +336,10 @@ td.highlight .triangle {
 .disabled-bg{
   background-color: #e9ecef;
 }
+
+@media (max-width: 768px) {
+  .icon-img {
+    width: 185px;
+    content: url('/assets/images/logo/logo_3_mob.png'); /* Change the image in mobile view */
+  }
+}

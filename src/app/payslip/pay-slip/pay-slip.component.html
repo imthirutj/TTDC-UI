@@ -44,18 +44,17 @@
             <th class="text-center">4</th>
             <td>Designation</td>
             <th class="text-center">{{payobj.designationName}}</th>
-            <td>Present Days</td>
+            <td>Working Days</td>
             <th class="text-center">{{payobj.presentDays}}</th>
-            <td>Normal Days</td>
-            <th class="text-center">{{payobj.normalDays}}</th>
+          
           </tr>
           <tr>
             <td>PF No</td>
             <th class="text-center">{{payobj.pfNumber}}</th>
             <td>ESI No</td>
             <th class="text-center">{{payobj.esiNumber}}</th>
-            <td>OD</td>
-            <th class="text-center">{{payobj.odDays}}</th>
+            <!-- <td>OD</td>
+            <th class="text-center">{{payobj.odDays}}</th> -->
             <!-- <td>Date of Joining</td>
             <th class="text-center">{{payobj.doj}}</th> -->
           </tr>
@@ -74,31 +73,13 @@
           <tbody>
             <tr>
               <td>Basic Salary</td>
-              <!-- <td class="text-end">{{payobj.basicRate}}</td> -->
               <td class="text-end">{{payobj.basicRate}}</td>
             </tr>
             <tr>
-              <td>DA</td>
-              <!-- <td class="text-end">{{payobj.da}}</td> -->
-              <td class="text-end">{{payobj.da}}</td>
+              <td>HRA</td>
+              <td class="text-end">{{payobj.hra}}</td>
             </tr>
-            <tr>
-              <td>Special Wages</td>
-              <!-- <td class="text-end">{{payobj.specialWages}}</td> -->
-              <td class="text-end">{{payobj.specialWages}}</td>
-            </tr>
-
-            <!-- <tr>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
-        <tr>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr> -->
-
+            
 
           </tbody>
           <tfoot>
@@ -122,7 +103,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>EPF</td>
+              <td>Employee PF cont.</td>
               <td class="text-end">{{payobj.epfEmployeeContribution}}</td>
             </tr>
             <!-- <tr>
@@ -130,7 +111,7 @@
               <td class="text-end">{{payobj.epfEmployerContribution}}</td>
             </tr> -->
             <tr>
-              <td>ESI</td>
+              <td>Employee ESI cont.</td>
               <td class="text-end">{{payobj.esiEmployeeContribution}}</td>
             </tr>
 
