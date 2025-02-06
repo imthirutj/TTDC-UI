@@ -51,6 +51,7 @@ export class VendorInvoiceDetailsComponent {
         designationName: string;
         employeeCount: number;
         totalGrossSalary: number;
+        totalWages:number;
         totalNetSalary: number;
       }>,
       subTotalSalary: 0,
@@ -62,7 +63,8 @@ export class VendorInvoiceDetailsComponent {
       totalAmount: 0,
       totalSalWithCharges: 0,
       serviceCharge: 0,
-      rupeesInWords: ''
+      rupeesInWords: '',
+      totalWages: 0
     },
     invoiceDetail: [] as Array<{
       designationId: number;

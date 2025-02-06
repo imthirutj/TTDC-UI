@@ -99,7 +99,7 @@ export class BiometricData {
       holidayName: string = '',
 
       remarks: string = '',
-      isCompensated: string = '',
+      isCompensated: string = 'NO',
       compensatedDate: string = '',
       hasOverwrited: number = 0,
 

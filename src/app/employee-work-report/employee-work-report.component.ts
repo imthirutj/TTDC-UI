@@ -124,9 +124,9 @@ export class EmployeeWorkReportComponent {
 
   compensateDates: string[] = [];
   absentWeekOffHolidayData: DateDetails[] = [];
-  leaveRequestedDays: DateDetails[]=[];
-  odRequestedDays: DateDetails[]=[];
-  
+  leaveRequestedDays: DateDetails[] = [];
+  odRequestedDays: DateDetails[] = [];
+
   //#region Filter
   filters: any = {
     selectedMonth: {
@@ -413,13 +413,13 @@ export class EmployeeWorkReportComponent {
   }
 
 
-  getAvailableCompensatedDates(employeeId:any){
+  getAvailableCompensatedDates(employeeId: any) {
     var payload = {
       employeeId: employeeId
     }
-    this.compensateDates =[];
+    this.compensateDates = [];
     this.employeeWorkReportService.getAvailableCompensatedDates(payload).subscribe((response) => {
-      if(response.success){
+      if (response.success) {
         this.compensateDates = response.data;
       }
     })
@@ -609,23 +609,23 @@ export class EmployeeWorkReportComponent {
 
   cancel() {
     this.isAssignWeekOff = false;
-    
+
     // Reset header selection (uncheck all header checkboxes)
     for (let date in this.headerSelection) {
       this.headerSelection[date] = false;
     }
-  
+
     // Reset row selections (uncheck all row checkboxes for all employees)
     this.employees.forEach(employee => {
       for (let date in employee.dates) {
         employee.dates[date].selected = false; // Deselect all rows
       }
     });
-  
+
     // Optionally, fetch the employee status to refresh the data
     this.fetchEmployeeStatus();
   }
-  
+
   submit() {
     // Flatten the payload and include only changed statuses
     const payload = this.employees.flatMap(employee =>
@@ -750,25 +750,25 @@ export class EmployeeWorkReportComponent {
 
   updateEmployeeAdjust() {
     this.absentWeekOffHolidayData = [];
-    this.leaveRequestedDays=[];
-    this.odRequestedDays=[];
+    this.leaveRequestedDays = [];
+    this.odRequestedDays = [];
 
     const employee = this.modalAttrAdjust.employeeStatus as EmployeeStatus; // Ensure correct type
     this.getAvailableCompensatedDates(employee.empId);
     Object.entries(employee.dates).forEach(([date, details]) => {
       const record = details as DateDetails; // Use your defined class
       if (['ABSENT', 'ABSENT-LWT', 'HOLIDAY', 'WEEKOFF'].includes(record.status)
-      || record.hasOverwrited ==1) {
-        this.absentWeekOffHolidayData.push({...record, newStatus: '', date: date});
+        || record.hasOverwrited == 1) {
+        this.absentWeekOffHolidayData.push({ ...record, newStatus: '', date: date, isCompensated: record.isCompensated == '1' ? 'YES' : 'NO' });
       }
 
-      if(record.leaveRequested == 1){
-        this.leaveRequestedDays.push({...record, newStatus: '', date: date});
+      if (record.leaveRequested == 1) {
+        this.leaveRequestedDays.push({ ...record, newStatus: '', date: date });
       }
-      if(record.odRequested == 1){
-        this.odRequestedDays.push({...record, newStatus: '', date: date});
+      if (record.odRequested == 1) {
+        this.odRequestedDays.push({ ...record, newStatus: '', date: date });
       }
-      
+
     });
 
     console.log('Holiday/WeekOff/Absent Data:', this.absentWeekOffHolidayData);
@@ -806,7 +806,7 @@ export class EmployeeWorkReportComponent {
     // Call  API here to submit the data
     this.employeeWorkReportService.updateAttendance(payload).subscribe(
       response => {
-        if(response.success){
+        if (response.success) {
           this.dataService.showSnackBar('Attendance updated successfully.');
           this.closeAdjustModal();
           this.fetchEmployeeStatus();
@@ -826,15 +826,50 @@ export class EmployeeWorkReportComponent {
     var val = (currentYear > this.filters.selectedYear.value ||
       (currentYear === this.filters.selectedYear.value && currentMonth > this.filters.selectedMonth.value) ||
       (currentYear === this.filters.selectedYear.value && currentMonth === this.filters.selectedMonth.value && currentDay > 25));
-    
-    
-    return val ;
+
+
+    return val;
   }
 
   isAssignWeekOff: boolean = false;
 
-  assignWeekoff(){
+  assignWeekoff() {
     this.isAssignWeekOff = true;
+  }
+
+
+  // Variables to keep track of sort state
+  sortBy: string = 'date';  // Default sorting by 'date'
+  sortOrder: string = 'asc'; // Default ascending order
+  // Sort the data based on column name and order
+  sortData(column: string): void {
+    // Toggle sorting order if the same column is clicked
+    if (this.sortBy === column) {
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortBy = column;
+      this.sortOrder = 'asc'; // Reset to ascending when changing column
+    }
+
+    // Perform sorting based on the selected column and order
+    this.absentWeekOffHolidayData.sort((a:any, b:any) => {
+      let valueA = a[column];
+      let valueB = b[column];
+
+      // Handle case for dates (sort Date objects)
+      if (column === 'date') {
+        valueA = new Date(valueA);
+        valueB = new Date(valueB);
+      }
+
+      if (valueA < valueB) {
+        return this.sortOrder === 'asc' ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return this.sortOrder === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
   }
 
 }

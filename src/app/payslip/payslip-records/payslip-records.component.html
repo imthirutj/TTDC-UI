@@ -23,10 +23,11 @@
         <th>Unit Name</th>
         <th>Vendor Name</th>
         <th>Designation Name</th>
+        <th>Total Working Days</th>
         <th>Basic Salary</th>
         <th>HRA</th>
-        <th>EPF</th>
-        <th>ESI</th>
+        <th>Employee PF cont.</th>
+        <th>Employee ESI cont.</th>
         <th>Net Salary</th>
         <th>Gross Salary</th>
         <th>View Slips</th>
@@ -41,6 +42,7 @@
         <td>{{ d.companyFName }}</td>
         <td>LipiInterior</td>
         <td>{{ d.designationName }}</td>
+        <td>{{ d.presentDays }}</td>
         <td>{{ d.basicRate | currency:'INR' }}</td>
         <td>{{ d.hra | currency:'INR' }}</td>
         <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
@@ -57,7 +59,7 @@
     </tbody>
     <tfoot *ngIf="Department.length > 0">
       <tr>
-        <td colspan="6" class="text-right"><strong>Total:</strong></td>
+        <td colspan="7" class="text-right"><strong>Total:</strong></td>
         <td>{{ getTotal('basicRate') | currency:'INR' }}</td>
         <td>{{ getTotal('hra') | currency:'INR' }}</td>
  

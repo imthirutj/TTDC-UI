@@ -61,15 +61,16 @@
           <th>Unit Name</th>
           <th>Vendor Name</th>
           <th>Designation Name</th>
+          <th>Total Working Days</th>
           <!-- <th>Category Name</th> -->
           <th>Basic Salary</th>
-          <th>DA</th>
-          <th>Special Wages</th>
-          <th>EPF</th>
-          <th>ESI</th>
+          <th>HRA</th>
+          
+          <th>Employer PF Cont.</th>
+          <th>Employer ESI Cont.</th>
           <th>Net Salary</th>
           <th>Gross Salary</th>
-
+          <th>Total Wages</th>
         </tr>
       </thead>
       <tbody>
@@ -82,27 +83,31 @@
           <td>{{ d.companyFName }}</td>
           <td>LipiInterior</td>
           <td>{{ d.designationName }}</td>
+          <td>{{ d.presentDays }}</td>
           <!-- <td>{{ department.departmentFName }}</td> -->
           <!-- <td>{{ d.categoryFName }} </td> -->
           <td>{{ d.basicRate | currency:'INR' }}</td>
-          <td>{{ d.da | currency:'INR' }}</td>
-          <td>{{ d.specialWages | currency:'INR' }}</td>
-          <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
-          <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
+          <td>{{ d.hra | currency:'INR' }}</td>
+          <!-- <td>{{ d.da | currency:'INR' }}</td>
+          <td>{{ d.specialWages | currency:'INR' }}</td> -->
+          <td>{{ d.epfEmployerContribution | currency:'INR' }}</td>
+          <td>{{ d.esiEmployerContribution | currency:'INR' }}</td>
           <td>{{ d.netSalary | currency:'INR' }}</td>
           <td>{{ d.grossSalary | currency:'INR' }}</td>
+          <td>{{ d.totalWages | currency:'INR' }}</td>
         </tr>
       </tbody>
       <tfoot *ngIf="payRecords.length > 0">
         <tr>
-          <td colspan="6" class="text-right"><strong>Total:</strong></td>
+          <td colspan="7" class="text-right"><strong>Total:</strong></td>
           <td>{{ getTotal('basicRate') | currency:'INR' }}</td>
-          <td>{{ getTotal('da') | currency:'INR' }}</td>
-          <td>{{ getTotal('specialWages') | currency:'INR' }}</td>
+          <td>{{ getTotal('hra') | currency:'INR' }}</td>
+         
           <td>{{ getTotal('epfEmployeeContribution') | currency:'INR' }}</td>
           <td>{{ getTotal('esiEmployeeContribution') | currency:'INR' }}</td>
           <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
           <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
+          <td>{{ getTotal('totalWages') | currency:'INR' }}</td>
         </tr>
       </tfoot>
     </table>

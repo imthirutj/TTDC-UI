@@ -364,24 +364,25 @@
             <h3>Absent/Holiday/WeekOff</h3>
             <table class="table table-bordered">
                 <thead class="sticky-header">
-                    <tr>
-                        <th>Day</th>
-
-                        <th>Status</th>
-
-                        <th>Biometric</th>
-
-                        <th>Action</th>
-                        <th>Is Compensated?</th>
-                        <th>Compensate Date</th>
-                        <th>Remarks</th>
+                    <tr style="cursor: pointer;">
+                        <th>#</th>
+                        <th (click)="sortData('date')">Day <span>{{ sortBy === 'date' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('status')">Status <span>{{ sortBy === 'status' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('biometricData')">Biometric <span>{{ sortBy === 'biometricData' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('action')">Action <span>{{ sortBy === 'action' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('isCompensated')">Is Compensated? <span>{{ sortBy === 'isCompensated' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('compensatedDate')">Compensate Date <span>{{ sortBy === 'compensatedDate' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('remarks')">Remarks <span>{{ sortBy === 'remarks' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
                     </tr>
                 </thead>
+                
                 <tbody>
-                    <tr *ngFor="let entry of absentWeekOffHolidayData">
+                    <tr *ngFor="let entry of absentWeekOffHolidayData; let i = index">
+                        <td>{{ i + 1 }}</td>
                         <td>
                             <span>
-                                {{ entry.date }}
+                                {{ entry.date | date: 'dd MMM yyyy' }} - {{ entry.date | date: 'EEE' }}
+                            
                             </span>
                             <p *ngIf="entry.workingHour>0">Total Hours: {{ entry.workingHour }}</p>
                         </td>
@@ -431,15 +432,15 @@
                             </span>
                             <br>
                             <span *ngIf="entry.newStatus === 'PRESENT'">
-
                                 <!-- Radio Buttons -->
                                 <label>
-                                    <input type="radio" [(ngModel)]="entry.isCompensated" value="NO" /> No
+                                  <input type="radio" name="compensated-{{entry.date}}" [(ngModel)]="entry.isCompensated" value="NO" /> No
                                 </label>
                                 <label>
-                                    <input type="radio" [(ngModel)]="entry.isCompensated" value="YES" /> Yes
+                                  <input type="radio" name="compensated-{{entry.date}}" [(ngModel)]="entry.isCompensated" value="YES" /> Yes
                                 </label>
-                            </span>
+                              </span>
+                              
 
                             <span *ngIf="entry.hasOverwrited !=1 && entry.newStatus!='PRESENT'">
                                 -
