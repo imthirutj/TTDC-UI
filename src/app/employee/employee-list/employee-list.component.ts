@@ -24,7 +24,7 @@ export class EmployeeListComponent {
   userAccessLevel: any;
 
   Employees: any[] = [];
-  allEmlpoyees: any[] = [];
+
 
 
   pageAttributes = {
@@ -237,6 +237,7 @@ export class EmployeeListComponent {
 
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
+    this.pageAttributes.currentPage = 1;
     this.getEmployeeList();
   }
 
@@ -250,11 +251,10 @@ export class EmployeeListComponent {
       ...payload,
       pageNumber: this.pageAttributes.currentPage,
     }
-    this.pageAttributes.currentPage = 1;
-    this.masterDataService.getEmployeeList(payload).subscribe(
+    this.masterDataService.getEmployeeList(fpayload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
-        if (response.success && Array.isArray(response.data)) {
+        if (response.success) {
           this.Employees = response.data;
           this.pageAttributes.totalPages = response.totalPages;
           // Loop through each employee and process their qualifications
