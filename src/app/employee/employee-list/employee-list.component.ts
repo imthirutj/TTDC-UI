@@ -266,7 +266,7 @@ export class EmployeeListComponent {
                 .map((qualification: any) => `${qualification.degreeName} - ${qualification.minimumYears} years(min)`)
                 .join(', ');  // Join them with commas if there are multiple qualifications
             } else {
-              employee.formattedQualifications = 'No qualifications available';
+              employee.formattedQualifications = '';
             }
 
             // Initialize the notMatchedQualification flag to false

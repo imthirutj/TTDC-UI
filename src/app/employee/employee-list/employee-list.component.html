@@ -76,7 +76,7 @@
         <td>
           {{employee.formattedQualifications}}
         </td>
-        <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : '#bcdbbc'}">
+        <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : ''}">
           <span *ngIf="employee.experience>0">
             {{ employee.degreeName}}-
             {{ employee.experience }} Years
