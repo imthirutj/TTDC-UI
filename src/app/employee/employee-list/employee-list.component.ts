@@ -34,6 +34,7 @@ export class EmployeeListComponent {
     vendors: [] as Vendor[],
     designation: [] as Designation[],
     category: [] as Category[],
+    degree: [] as any[]
   };
 
   educertificateimage: any[] = [];
@@ -151,6 +152,7 @@ export class EmployeeListComponent {
     this.fetchDepartments();
     this.fetchDesignations();
     this.fetchCategory();
+    this.fetchDegree();
   }
 
   setValues() {
@@ -222,6 +224,14 @@ export class EmployeeListComponent {
       if (response.success) this.dropdowns.category = response.data;
     });
   }
+
+  fetchDegree() {
+    this.masterDataService.getdegree("").subscribe((response) => {
+      if (response.success) {
+        this.dropdowns.degree = response.data;
+      }
+    });
+  }
   //#endregion
 
   onFilterChanged(event: any) {
@@ -241,8 +251,39 @@ export class EmployeeListComponent {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {
           this.allEmlpoyees = response.data;
+
+          // Loop through each employee and process their qualifications
+          this.allEmlpoyees.forEach((employee: any) => {
+
+            // Format qualifications if requiredQualifications is available
+            if (employee.requiredQualifications && Array.isArray(employee.requiredQualifications)) {
+              employee.formattedQualifications = employee.requiredQualifications
+                .map((qualification: any) => `${qualification.degreeName} - ${qualification.minimumYears} years(min)`)
+                .join(', ');  // Join them with commas if there are multiple qualifications
+            } else {
+              employee.formattedQualifications = 'No qualifications available';
+            }
+
+            // Initialize the notMatchedQualification flag to false
+            employee.notMatchedQualification = false;
+
+            // Loop through requiredQualifications to check match
+            if (employee.requiredQualifications && employee.requiredQualifications.length > 0) {
+              for (const qualification of employee.requiredQualifications) {
+                if (qualification.degreeId === employee.degreeId) {
+                  if (qualification.minimumYears > employee.experience) {
+                    employee.notMatchedQualification = true;
+                  }
+                  break;  // Break after finding the first match
+                }
+              }
+            }
+          });
+
+          // Calculate pagination based on the total number of employees
           this.pageAttributes.totalPages = Math.ceil(this.allEmlpoyees.length / this.pageAttributes.itemsPerPage);
           this.paginate();
+
         } else {
           this.allEmlpoyees = [];
           this.dataService.showSnackBar(response.message);
@@ -250,6 +291,7 @@ export class EmployeeListComponent {
       }
     );
   }
+
 
   paginate(): void {
     const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
@@ -388,14 +430,14 @@ export class EmployeeListComponent {
     this.masterDataService.getEmpPayDetails(payload).subscribe(
       (response: any) => {
         if (response.success) {
-          if(response.data !=null){
+          if (response.data != null) {
             this.bankModal.bankDetails = response.data;
           }
-          else{
+          else {
             this.bankModal.bankDetails = new BankDetails();
             this.bankModal.bankDetails.employeeId = empId;
           }
-          
+
         }
       }
     );
@@ -427,7 +469,7 @@ export class EmployeeListComponent {
     employee.isEditing = false;
   }
 
-  updateTotalWages(employee:any){
+  updateTotalWages(employee: any) {
     var payload = {
       employeeId: employee.employeeId,
       totalWages: employee.totalWages

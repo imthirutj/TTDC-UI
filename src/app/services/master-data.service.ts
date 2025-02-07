@@ -140,6 +140,10 @@ export class MasterDataService {
   }
   
   
+  deleteDesignationQualifications(id: any): Observable<any> {
+    const url = `${this.apiUrl}Master/Delete_Designation_Qualification/${id}`;
+    return this.http.delete(url);
+  }
 
   save_Designation_Qualification(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Master/Save_Designation_Qualification`, payload);

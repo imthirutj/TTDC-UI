@@ -32,10 +32,10 @@
 
         <th>Employment Type</th>
 
+        <th>Required Qualification & Experience</th>
+        <th>Actual Qualification & Experience</th>
 
-        <th>Experience</th>
-        <th>Educational Qualifications</th>
-
+       
         <th>Aadhaar</th>
         <th>Education Certificate</th>
 
@@ -73,10 +73,16 @@
 
         <td>{{ employee.employementType }}</td>
 
+        <td>
+          {{employee.formattedQualifications}}
+        </td>
+        <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : '#bcdbbc'}">
+          <span *ngIf="employee.experience>0">
+            {{ employee.degreeName}}-
+            {{ employee.experience }} Years
+          </span>
+        </td>
 
-        <td>{{ employee.experience }}</td>
-
-        <td>{{ employee.qualifications }}</td>
 
         <td>{{ employee.aadhaarNumber }}
           <button type="button" class="btn btn-primary" (click)="show_Certificate(employee, ModuleType.ADHAR)">
@@ -114,7 +120,7 @@
             </button>
           </ng-container>
         </td>
-        
+
       </tr>
     </tbody>
   </table>
@@ -217,13 +223,13 @@
 
           <!-- Company Name -->
           <div class="mb-3">
-            <label for="CompanyId" class="form-label">Company Name</label>
+            <label for="CompanyId" class="form-label">Unit Name</label>
             <input [disabled]="true" *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg"
               id="City" [(ngModel)]="modal.employee.companyFName" />
             <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE"
               (change)="onCompanyChange()" class="form-select" id="CompanyId" [(ngModel)]="modal.employee.companyId"
               name="companyId">
-              <option value="">Select Company</option>
+              <option value="">Select Unit</option>
               <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}
               </option>
             </select>
@@ -281,14 +287,19 @@
           <!-- Qualifications -->
           <div class="mb-3">
             <label for="Qualifications" class="form-label">Qualifications</label>
-            <input type="text" class="form-control" id="Qualifications" [(ngModel)]="modal.employee.qualifications"
-              name="Qualifications" placeholder="Enter Qualifications" [disabled]="modal.action === 'VIEW'">
+
+            <select class="form-select" id="Qualifications" [(ngModel)]="modal.employee.degreeId" name="Qualifications">
+              <option value="">Select Qualification</option>
+              <option *ngFor="let degree of dropdowns.degree" [value]="degree.degree_Id">
+                {{ degree.degree_Name }}
+              </option>
+            </select>
           </div>
 
           <!-- Experience -->
           <div class="mb-3">
-            <label for="experience" class="form-label">Experience</label>
-            <input type="text" class="form-control" id="experience" [(ngModel)]="modal.employee.experience"
+            <label for="experience" class="form-label">Experience(years)</label>
+            <input type="number" class="form-control" id="experience" [(ngModel)]="modal.employee.experience"
               name="experience" placeholder="Enter experience" [disabled]="modal.action === 'VIEW'">
           </div>
         </form>

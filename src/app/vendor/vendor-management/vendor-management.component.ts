@@ -92,7 +92,7 @@ export class VendorManagementComponent {
 
   addCompanyDepartment() {
     if (!this.modal.comp.id || !this.modal.dept.id) {
-      this.dataService.showSnackBar('Please select company and department');
+      this.dataService.showSnackBar('Please select Unit and department');
       return;
     }
 

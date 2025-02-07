@@ -76,7 +76,7 @@
           <div class="form-group">
             <label for="company">Company</label>
             <select (change)="onCompanyChange()" class="form-control" id="company" [(ngModel)]="modal.comp.id">
-              <option value="">Select Company</option>
+              <option value="">Select Unit</option>
               <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}
               </option>
             </select>

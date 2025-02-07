@@ -61,7 +61,7 @@
           <!-- <div class="mb-3">
             <label for="employeeId" class="form-label">Employee Name</label>
             <select class="form-select" id="CompanyId" [(ngModel)]="odslip.employeeId" name="employeeId" >
-              <option value="">Select Company</option>
+              <option value="">Select Unit</option>
               <option *ngFor="let employee of Employee" [value]="employee.employeeId">{{ employee.employeeName }}</option>
             </select>              
           </div>  -->
@@ -70,7 +70,7 @@
             <label for="CompanyId" class="form-label">visiting Comany Name</label>
             <select class="form-select" id="CompanyId" [(ngModel)]="odslip.visiting_Company_Id"
               name="visiting_Company_Id">
-              <option value="">Select Company</option>
+              <option value="">Select Unit</option>
               <option *ngFor="let company of Company" [value]="company.companyId">{{ company.companyFName }}</option>
             </select>
           </div>

@@ -54,7 +54,7 @@
         <div class="form-group">
           <label for="company">Unit</label>
           <select [(ngModel)]="filters.companyId.value" (change)="onCompanyChange()" class="form-control" id="company">
-            <option value="">Select Company</option>
+            <option value="">Select Unit</option>
             <option *ngFor="let company of companies" [value]="company.companyId">{{ company.companyFName }}</option>
           </select>
         </div>

@@ -24,7 +24,7 @@ export class Employee {
     stateId: string;
     cityId: string;
     cityName: string;
-    qualifications: string;
+    degreeId: string;
     experience: string;
     loginName: string;
     loginPassword: string;
@@ -58,7 +58,7 @@ export class Employee {
         this.stateId = '1';
         this.cityId = '';
         this.cityName = '';
-        this.qualifications = '';
+        this.degreeId = '';
         this.employementType = '';
         this.experience = '';
         this.loginName = 'qwerty';

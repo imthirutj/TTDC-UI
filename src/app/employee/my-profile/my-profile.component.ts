@@ -36,6 +36,7 @@ export class MyProfileComponent {
     vendors: [] as Vendor[],
     designation: [] as Designation[],
     category: [] as Category[],
+    degree:[] as any[]
   };
 
   educertificateimage: any[] = [];
@@ -153,6 +154,7 @@ export class MyProfileComponent {
     this.fetchDepartments();
     this.fetchDesignations();
     this.fetchCategory();
+    this.fetchDegree();
   }
 
   setValues() {
@@ -222,6 +224,12 @@ export class MyProfileComponent {
   fetchCategory() {
     this.masterDataService.getCategory().subscribe((response) => {
       if (response.success) this.dropdowns.category = response.data;
+    });
+  }
+
+  fetchDegree(){
+    this.masterDataService.getdegree("").subscribe((response) => {
+      if (response.success) this.dropdowns.degree = response.data;
     });
   }
   //#endregion

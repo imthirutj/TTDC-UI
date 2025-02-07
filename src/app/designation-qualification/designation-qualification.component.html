@@ -10,13 +10,25 @@
         <th>#</th>
         <th>Designation Name</th>
         <th>Degree Name</th>
+        <th>Minimum Years</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let Designation_Qualification of Designation_Qualification_list; let i = index">
-        <td>{{ i + 1 }}</td>
+        <td>
+          {{ i + 1 }}
+          <span>
+            <button class="btn btn-primary" (click)="openModal(Action.UPDATE, Designation_Qualification)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" (click)="deleteDesignationQualifications(Designation_Qualification.designationQualificationId)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </span>
+        </td>
         <td>{{ Designation_Qualification.designationName }}</td>
         <td>{{ Designation_Qualification.degreeName }}</td>
+        <td>{{ Designation_Qualification.minimumYears }}</td>
       </tr>
     </tbody>
   </table>
@@ -44,6 +56,12 @@
           <option value="">Select Designation</option>
           <option *ngFor="let degree of degreelist" [value]="degree.degree_Id">{{ degree.degree_Name }}</option>
         </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="minimumYears" class="form-label">Minimum Years</label>
+        <input type="number" class="form-control" id="minimumYears" [(ngModel)]="modal.obj.minimumYears"
+          name="minimumYears" placeholder="Enter Minimum Years">
       </div>
     </div>
   </div>

@@ -66,7 +66,7 @@
            <div class="mb-3">
              <label for="CompanyId" class="form-label">visiting Comany Name</label>
              <select class="form-select" id="CompanyId" [(ngModel)]="odslip.visiting_Company_Id" name="visiting_Company_Id" >
-               <option value="">Select Company</option>
+               <option value="">Select Unit</option>
                <option *ngFor="let company of Company" [value]="company.companyId">{{ company.companyFName }}</option>
              </select>              
            </div>

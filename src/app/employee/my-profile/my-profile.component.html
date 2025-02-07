@@ -113,10 +113,12 @@
           <!-- Qualifications -->
           <div class="mb-3">
             <label for="Qualifications" class="form-label">Qualifications</label>
-            <input type="text" class="form-control" id="Qualifications"
-             [(ngModel)]="modal.employee.qualifications"
-              name="Qualifications" placeholder=" Qualifications"
-            [disabled]="modal.action === 'VIEW'">
+           
+            <select class="form-select" id="Qualifications" [(ngModel)]="modal.employee.degreeId"
+             name="Qualifications">
+              <option value="">Select Qualification</option>
+              <option *ngFor="let degree of dropdowns.degree" [value]="degree.degree_Id">{{ degree.degree_Name }}</option>
+            </select>
           </div>
 
           <!-- Experience -->

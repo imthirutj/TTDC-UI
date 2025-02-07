@@ -28,7 +28,7 @@ export class DesignationQualificationComponent {
     title: ''
   };
 
-  constructor(private masterDataService: MasterDataService, 
+  constructor(private masterDataService: MasterDataService,
     private route: ActivatedRoute,
     private dataService: DataService
   ) { }
@@ -74,8 +74,8 @@ export class DesignationQualificationComponent {
   }
 
   saveDesignation_Qualification(): void {
-   
-    const payload ={
+
+    const payload = {
       ...this.modal.obj,
     }
     this.masterDataService.save_Designation_Qualification(payload).subscribe(
@@ -89,16 +89,39 @@ export class DesignationQualificationComponent {
     );
   }
 
-  openModal(action: Action){
+  deleteDesignationQualifications(id: any): void {
+    this.masterDataService.deleteDesignationQualifications(id).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('Designation Qualification deleted successfully.');
+          this.get_Designation_Qualification();
+        }
+      }
+    );
+  }
+
+  openModal(action: Action, obj?: DesignationQualification): void {
     this.modal.show = true;
     this.modal.action = action;
     this.modal.title = action == Action.UPDATE ? 'Edit Designation-Qualification' : action == Action.CREATE ? 'Add Designation-Qualification' : '';
-    this.modal.obj = new DesignationQualification();
+
+    if (action == Action.UPDATE || action == Action.VIEW) {
+      if (obj) {
+        this.modal.obj = { ...obj };
+      }
+      else {
+        this.dataService.showSnackBar('Not found');
+      }
+    }
+    else {
+      this.modal.obj = new DesignationQualification();
+    }
   }
-  closeModal(){
+  closeModal() {
     this.modal.show = false;
     this.modal.obj = {} as any;
-    this.modal.action = ''; 
+    this.modal.action = '';
     this.modal.title = '';
   }
 }
