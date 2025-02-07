@@ -37,7 +37,7 @@
 
        
         <th>Aadhaar</th>
-        <th>Education Certificate</th>
+    
 
         <th>Bank Details</th>
         <th>Total Wages</th>
@@ -46,7 +46,7 @@
     <tbody>
       <tr *ngFor="let employee of Employees; let i = index">
         <td>
-          {{ ((pageAttributes.currentPage - 1) * pageAttributes.itemsPerPage) + (i + 1) }}
+          {{ i + 1 }}
           <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, employee)">
             Edit
           </button>
@@ -81,6 +81,10 @@
             {{ employee.degreeName}}-
             {{ employee.experience }} Years
           </span>
+          <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            (click)="show_Certificate(employee, ModuleType.EDUCATION_CERT)">
+            <i class="fas fa-file-alt"></i>
+          </button>
         </td>
 
 
@@ -90,10 +94,6 @@
           </button>
         </td>
 
-        <td><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            (click)="show_Certificate(employee, ModuleType.EDUCATION_CERT)">
-            <i class="fas fa-file-alt"></i>
-          </button></td>
 
         <!--Update Bank Details Action-->
         <td>
@@ -125,7 +125,8 @@
     </tbody>
   </table>
 </div>
-<app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="paginate()">
+<app-server-pagination  [pageAttributes]="pageAttributes" 
+(triggerParentFunction)="getEmployeeList()">
 </app-server-pagination>
 
 

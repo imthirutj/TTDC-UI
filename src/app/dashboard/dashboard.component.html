@@ -452,7 +452,7 @@
 
 <div *ngIf="userAccessLevel!= UserType.EMPLOYEE" class="container mt-4">
  <div class="row">
-  <div class="col-md-3" *ngFor="let column of columnNames">
+  <div class="col-md-6" *ngFor="let column of columnNames">
     <h3>{{ column.label }}</h3>
   
     <table *ngIf="column.data?.length; else loading">
@@ -460,14 +460,22 @@
         <tr>
           <th>#</th>
           <th>{{ column.label }}</th>
+          <th>Unit</th>
           <th>Total</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of column.data; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ row[column.output] || 'N/A' }}</td>
-          <td>{{ row?.Total }}</td>
+          <td>
+            
+            {{ row[column.output] || 'N/A' }}
+            <span *ngIf="column.key=='experience' && row[column.output]!=0">Year(s)</span>
+          </td>
+          <td>{{ row['CompanyFName'] || 'N/A' }}</td>
+          <td>
+            <b>{{ row?.Total }}</b>
+          </td>
         </tr>
       </tbody>
       <tfoot>

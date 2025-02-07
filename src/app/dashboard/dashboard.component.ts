@@ -41,10 +41,10 @@ export class DashboardComponent {
       data:[] as any[]
     },
     {
-      columnName: "e.Qualifications",
+      columnName: "dg.degree_Name",
       label: "Qualifications",
-      key: "qualifications",
-      output: "Qualifications",
+      key: "degree_Name",
+      output: "degree_Name",
       data:[] as any[]
     },
     {

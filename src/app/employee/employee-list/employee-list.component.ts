@@ -27,6 +27,11 @@ export class EmployeeListComponent {
   allEmlpoyees: any[] = [];
 
 
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1
+  }
+
   dropdowns = {
     cities: [] as City[],
     companies: [] as Company[],
@@ -56,11 +61,7 @@ export class EmployeeListComponent {
 
   formData = new FormData();
 
-  pageAttributes = {
-    currentPage: 1,
-    totalPages: 1,
-    itemsPerPage: 10,
-  }
+
 
   filters: any = {
     selectedMonth: {
@@ -245,15 +246,19 @@ export class EmployeeListComponent {
 
   getEmployeeList(): void {
     const payload = this.dataService.getPayloadValue(this.filters);
+    const fpayload={
+      ...payload,
+      pageNumber: this.pageAttributes.currentPage,
+    }
     this.pageAttributes.currentPage = 1;
     this.masterDataService.getEmployeeList(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {
-          this.allEmlpoyees = response.data;
-
+          this.Employees = response.data;
+          this.pageAttributes.totalPages = response.totalPages;
           // Loop through each employee and process their qualifications
-          this.allEmlpoyees.forEach((employee: any) => {
+          this.Employees.forEach((employee: any) => {
 
             // Format qualifications if requiredQualifications is available
             if (employee.requiredQualifications && Array.isArray(employee.requiredQualifications)) {
@@ -280,12 +285,9 @@ export class EmployeeListComponent {
             }
           });
 
-          // Calculate pagination based on the total number of employees
-          this.pageAttributes.totalPages = Math.ceil(this.allEmlpoyees.length / this.pageAttributes.itemsPerPage);
-          this.paginate();
 
         } else {
-          this.allEmlpoyees = [];
+          this.Employees = [];
           this.dataService.showSnackBar(response.message);
         }
       }
@@ -293,11 +295,11 @@ export class EmployeeListComponent {
   }
 
 
-  paginate(): void {
-    const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
-    const endIndex = startIndex + this.pageAttributes.itemsPerPage;
-    this.Employees = this.allEmlpoyees.slice(startIndex, endIndex);
-  }
+  // paginate(): void {
+  //   const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
+  //   const endIndex = startIndex + this.pageAttributes.itemsPerPage;
+  //   this.Employees = this.allEmlpoyees.slice(startIndex, endIndex);
+  // }
 
 
 
