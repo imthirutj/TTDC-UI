@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MasterDataService } from 'src/app/services/master-data.service';
+import { Action } from '../common/action.enum';
+import { DataService } from '../data.Service';
+import { DesignationQualification } from '../utils/interface/DesignationQualification';
 
 @Component({
   selector: 'app-designation-qualification',
@@ -10,99 +13,94 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 
 
 export class DesignationQualificationComponent {
-  Designation_Qualification_list: any[] = []; 
-  Designation_Qualification: any;
+  Action = Action;
 
-  Designation: any[] = []; 
-  degreelist: any[] = []; 
+  Designation_Qualification_list: DesignationQualification[] = [];
 
-    constructor(private masterDataService: MasterDataService,private route: ActivatedRoute) {}
-    ngOnInit(): void {
-      this.get_Designation_Qualification(); 
-      this.getDesignationList();
-      this.getdegree(); 
-      
-      this.Designation_Qualification={
 
-        designationId: '',
-        degree_Id: '',       
-       
+  Designation: any[] = [];
+  degreelist: any[] = [];
+
+  modal = {
+    action: '',
+    obj: new DesignationQualification(),
+    show: false,
+    title: ''
+  };
+
+  constructor(private masterDataService: MasterDataService, 
+    private route: ActivatedRoute,
+    private dataService: DataService
+  ) { }
+  ngOnInit(): void {
+    this.get_Designation_Qualification();
+    this.getDesignationList();
+    this.getdegree();
+
+
+
+  }
+  get_Designation_Qualification(): void {
+    this.masterDataService.get_Designation_Qualification('').subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.Designation_Qualification_list = response.data;
+          console.log('od company list:', this.Designation_Qualification_list);
+        }
       }
-      
-    }
-    get_Designation_Qualification(): void {
-      // const query = '?comp_id=33'; 
-      this.masterDataService.get_Designation_Qualification('').subscribe(
-        (response: any) => {
-          console.log('API Response:', response);
-          if (response.success && Array.isArray(response.data)) {
-            this.Designation_Qualification_list = response.data; 
-            console.log('od company list:', this.Designation_Qualification_list);
-          } else {
-            alert(response.message || 'Failed to fetch od company list.');
-          }
-        },
-        (error) => {
-          console.error('Error fetching OD company list:', error);
-          alert('An error occurred while fetching the OD company list.');
-        }
-      );
-    }
+    );
+  }
 
-    getdegree(): void {
-      // const query = '?comp_id=33'; 
-      this.masterDataService.getdegree('').subscribe(
-        (response: any) => {
-          console.log('API Response:', response);
-          if (response.success && Array.isArray(response.data)) {
-            this.degreelist = response.data; 
-            console.log('od company list:', this.degreelist);
-          } else {
-            alert(response.message || 'Failed to fetch od company list.');
-          }
-        },
-        (error) => {
-          console.error('Error fetching OD company list:', error);
-          alert('An error occurred while fetching the OD company list.');
+  getdegree(): void {
+    // const query = '?comp_id=33'; 
+    this.masterDataService.getdegree('').subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.degreelist = response.data;
+          console.log('od company list:', this.degreelist);
         }
-      );
-    }
-
-    getDesignationList(): void {
-      this.masterDataService.getDesignation().subscribe((response: any) => {
-        if (response?.success && Array.isArray(response.data)) {
-          this.Designation = response.data;
-        } else {
-          alert(response?.message || 'Failed to fetch Designation list.');
-        }
-      });
-    } 
-
-    save_Designation_Qualification(Designation_Qualification: any): void {
-      console.log(Designation_Qualification)
-        // if (!this.employeeForm) {
-        //   console.error('Form not initialized.');
-        //   return;
-        // }
-      
-        this.masterDataService.save_Designation_Qualification(Designation_Qualification).subscribe(
-          (response: any) => {
-            console.log('API Response:', response);
-            if (response.success) {
-              alert('Designation Qualification updated successfully.');
-              this.get_Designation_Qualification();
-              location.reload(); // Refresh the list
-            } else {
-              alert(response.message || 'Failed to update Designation Qualification.');
-            }
-          },
-          (error: any) => {
-            console.error('Error updating Designation_Qualification:', error);
-            alert('An error occurred while updating the Designation_Qualification.');
-          }
-        );
       }
-    
+    );
+  }
+
+  getDesignationList(): void {
+    this.masterDataService.getDesignation().subscribe((response: any) => {
+      if (response?.success) {
+        this.Designation = response.data;
+      }
+    });
+  }
+
+  saveDesignation_Qualification(): void {
+   
+    const payload ={
+      ...this.modal.obj,
+    }
+    this.masterDataService.save_Designation_Qualification(payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('Designation Qualification updated successfully.');
+          this.get_Designation_Qualification();
+        }
+      }
+    );
+  }
+
+  openModal(action: Action){
+    this.modal.show = true;
+    this.modal.action = action;
+    this.modal.title = action == Action.UPDATE ? 'Edit Designation-Qualification' : action == Action.CREATE ? 'Add Designation-Qualification' : '';
+    this.modal.obj = new DesignationQualification();
+  }
+  closeModal(){
+    this.modal.show = false;
+    this.modal.obj = {} as any;
+    this.modal.action = ''; 
+    this.modal.title = '';
+  }
 }
 
 
