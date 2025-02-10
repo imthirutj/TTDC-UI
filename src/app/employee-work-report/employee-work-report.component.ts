@@ -7,6 +7,7 @@ import { myMonths, myYears } from '../utils/helpers/variables';
 import { ShiftService } from '../employee-shift-calendar/shift.service';
 import { EmployeeWorkReportService } from './employee-work-report.service';
 import { DateDetails, EmployeeStatus } from '../utils/interface/EmployeeStatus';
+import { CompensateRequest } from '../utils/interface/CompensateRequest';
 
 @Component({
   selector: 'app-employee-work-report',
@@ -126,6 +127,7 @@ export class EmployeeWorkReportComponent {
   absentWeekOffHolidayData: DateDetails[] = [];
   leaveRequestedDays: DateDetails[] = [];
   odRequestedDays: DateDetails[] = [];
+  compensatedRequestedDays: DateDetails[] = [];
 
   //#region Filter
   filters: any = {
@@ -752,6 +754,7 @@ export class EmployeeWorkReportComponent {
     this.absentWeekOffHolidayData = [];
     this.leaveRequestedDays = [];
     this.odRequestedDays = [];
+    this.compensatedRequestedDays=[];
 
     const employee = this.modalAttrAdjust.employeeStatus as EmployeeStatus; // Ensure correct type
     this.getAvailableCompensatedDates(employee.empId);
@@ -768,10 +771,34 @@ export class EmployeeWorkReportComponent {
       if (record.odRequested == 1) {
         this.odRequestedDays.push({ ...record, newStatus: '', date: date });
       }
+      if (record.compensateRequested == 1) {
+        this.compensatedRequestedDays.push({ ...record, newStatus: '', date: date });
+      }
 
     });
 
     console.log('Holiday/WeekOff/Absent Data:', this.absentWeekOffHolidayData);
+  }
+
+  updateCompensateRequest(obj: any, compensatedStatusId: number) {
+   var CompensateRequest = {
+    employeeId: obj.employeeId,
+    date: obj.date,
+    compensatedStatusId: compensatedStatusId,
+    compensateManagerRemarks: obj.compensateManagerRemarks
+   }
+
+   this.masterDataService.updateCompensationRequest(CompensateRequest).subscribe(
+    response => {
+      console.log('API Response:', response);
+      if (response.success) {
+        this.dataService.showSnackBar('CompensateRequest updated successfully');
+        this.search();
+        this.closeAdjustModal();
+      }
+    }
+   )
+
   }
 
 
@@ -828,7 +855,8 @@ export class EmployeeWorkReportComponent {
       (currentYear === this.filters.selectedYear.value && currentMonth === this.filters.selectedMonth.value && currentDay > 25));
 
 
-    return val;
+   // return val;
+    return true;
   }
 
   isAssignWeekOff: boolean = false;

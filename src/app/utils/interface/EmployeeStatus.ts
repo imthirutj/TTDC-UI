@@ -77,6 +77,11 @@ export class BiometricData {
     odRequestId: number;
     odRequestStatus: number;
 
+    compensateRequested: number;
+    compensatedStatus: number;
+    compensateEmployeeRemarks: string;
+    compensateManagerRemarks: string;
+
     leave: Leave;
     od: OD;
     statusChanged: boolean;
@@ -113,6 +118,11 @@ export class BiometricData {
       odRequestId: number = 0,
       odRequestStatus: number = 0,
 
+      compensateRequested: number = 0,
+      compensatedStatus: number = 0,
+      compensateEmployeeRemarks: string = '', 
+      compensateManagerRemarks : string = '',
+
       leave: Leave = new Leave(),
       od: OD = new OD(),
 
@@ -144,6 +154,11 @@ export class BiometricData {
       this.odRequested = odRequested;
       this.odRequestId = odRequestId;
       this.odRequestStatus = odRequestStatus;
+
+      this.compensateRequested = compensateRequested;
+      this.compensatedStatus = compensatedStatus;
+      this.compensateEmployeeRemarks = compensateEmployeeRemarks;
+      this.compensateManagerRemarks = compensateManagerRemarks;
 
       this.leave = leave;
       this.od = od;

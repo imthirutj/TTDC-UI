@@ -161,12 +161,18 @@ export class SidebarComponent {
         route: '/vendor-employee-payment-details',
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
       },
-      {
-        label: 'OD Request',
+       {
+        label: 'Compensation Request',
         icon: 'fa-solid fa-file-alt',
-        route: '/odslipcompanylist',
+        route: '/compensation-request',
         allowedUserTypes: [ UserType.EMPLOYEE] 
       },
+      // {
+      //   label: 'OD Request',
+      //   icon: 'fa-solid fa-file-alt',
+      //   route: '/odslipcompanylist',
+      //   allowedUserTypes: [ UserType.EMPLOYEE] 
+      // },
       // {
       //   label: 'OD Slip Approval',
       //   icon: 'fa-solid fa-check-circle',

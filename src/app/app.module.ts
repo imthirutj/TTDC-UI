@@ -77,6 +77,7 @@ import { MyProfileComponent } from './employee/my-profile/my-profile.component';
 
 import { TopSectionComponent } from './shared/top-section/top-section.component';
 import { HolidayManagementComponent } from './holiday-management/holiday-management.component';
+import { CompensateRequestComponent } from './compensate-request/compensate-request.component';
 
 
 @NgModule({
@@ -127,7 +128,8 @@ import { HolidayManagementComponent } from './holiday-management/holiday-managem
     EmployeeWorkReportComponent,
     MyProfileComponent,
     TopSectionComponent,
-    HolidayManagementComponent
+    HolidayManagementComponent,
+    CompensateRequestComponent
 
   ],
   imports: [

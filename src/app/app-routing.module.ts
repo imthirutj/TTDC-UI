@@ -38,6 +38,7 @@ import { VendorToEmployeePaymentsComponent } from './vendor/vendor-to-employee-p
 import { EmployeeWorkReportComponent } from './employee-work-report/employee-work-report.component';
 import { MyProfileComponent } from './employee/my-profile/my-profile.component';
 import { HolidayManagementComponent } from './holiday-management/holiday-management.component';
+import { CompensateRequestComponent } from './compensate-request/compensate-request.component';
 
 const routes: Routes = [
 
@@ -152,7 +153,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
-
+  {
+    path: 'compensation-request',
+    component: CompensateRequestComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
   {
     path: 'empleaverequest',
     component: LeaverequestComponent,

@@ -207,6 +207,19 @@ export class MasterDataService {
     const queryParams = this.dataService.buildQueryParams(query);
     return this.http.get(`${this.apiUrl}Master/LeaveRequest_View?${queryParams}`);
   }
+
+  getCompensationRequests(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Master/GetCompensationRequests?${queryParams}`);
+  }
+
+  saveCompensationRequest(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/CreateCompensateRequest`, payload);
+  }
+
+  updateCompensationRequest(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/ApproveCompensateRequest`, payload);
+  }
   
   approveODSlip(query: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Master/UpdateODSLIP`, query);

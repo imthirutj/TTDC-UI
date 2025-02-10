@@ -90,7 +90,10 @@
                         </p>
                         <p>
                             <b>Leave:</b> {{ employee.reports.leaveApprovedDays }},
-                            <b>OD:</b> {{ employee.reports.odApprovedDays }}
+                            <!--Hide OD-->
+                            <span >
+                                <b >OD:</b> {{ employee.reports.odApprovedDays }}
+                            </span>
                         </p>
                         
                         <button *ngIf="isAdjustable(employee) && 
@@ -154,7 +157,8 @@
                                     && !employee.hasSalaryGenerated"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
-                            <div *ngIf="employee.dates[date]?.odRequested">
+                            <!-- Hide OD -->
+                            <div *ngIf="false && employee.dates[date]?.odRequested">
                                 <b>OD: {{ reqStatus[employee.dates[date].odRequestStatus] }}</b>
                                 <button
                                     *ngIf="userAccessLevel != UserType.EMPLOYEE  
@@ -422,6 +426,7 @@
                                 <option value="ABSENT">Absent</option>
                                 <option value="WEEKOFF">WeekOff</option>
                                 <option value="HOLIDAY">Holiday</option>
+                                <option value="OD">OD</option>
                             </select>
                         </td>
                         <td>
@@ -512,7 +517,8 @@
                     </table>
                 </div>
 
-                <div class="col-md-6 col-12">
+                <!--Hide OD Requested-->
+                <div *ngIf="false" class="col-md-6 col-12">
                     <h3>OD Requested</h3>
                     <table class="table table-bordered">
                         <thead class="sticky-header">
@@ -536,6 +542,59 @@
                                         [queryParams]="{odslip_id: entry.odRequestId}">
                                         Approve
                                     </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot *ngIf="odRequestedDays.length == 0">
+                            <tr>
+                                <td colspan="3">No OD Requested</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!--Compensate Requested-->
+                <div class="col-12">
+                    <h3>Compensate Requested</h3>
+                    <table class="table table-bordered">
+                        <thead class="sticky-header">
+                            <tr>
+                                <th>Requested Date</th>
+                                <th>Compensated Date</th>
+                                <th>Status</th>
+                                <th>Employee Remarks</th>
+                                <th>Manager Remarks</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="compensatedRequestedDays.length > 0">
+                            <tr *ngFor="let entry of compensatedRequestedDays">
+                                <td>   {{ entry.date | date: 'dd MMM yyyy' }} - {{  entry.date | date: 'EEE' }}</td>
+                                <td>   {{ entry.compensatedDate| date: 'dd MMM yyyy' }} - {{  entry.compensatedDate | date: 'EEE' }}</td>
+                                <td>
+                                    {{ entry.compensatedStatus == 0 ? 'Pending' : entry.compensatedStatus == 1 ? 'Approved'
+                                    : 'Rejected' }}
+                                </td>
+                                <td>{{ entry.compensateEmployeeRemarks }}</td>
+                                <td>
+                                    <textarea
+                                    *ngIf="entry.compensatedStatus == 0"
+                                     [(ngModel)]="entry.compensateManagerRemarks" class="form-control">
+                                    </textarea>
+
+                                    <p></p>
+                                </td>
+                                <td >
+                                    <span *ngIf="entry.compensatedStatus == 0">
+                                        <button (click)="updateCompensateRequest(entry,1)" class="btn btn-primary" >
+                                            <!--Tick icon-->
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button (click)="updateCompensateRequest(entry,2)" class="btn btn-primary" >
+                                            <!--Cross icon-->
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>

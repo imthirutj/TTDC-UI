@@ -1,0 +1,103 @@
+
+
+<div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+        (triggerParentFunction)="search()">
+    </app-filter>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+</div>
+
+<button class="btn btn-success mb-3" type="button" 
+(click)="openModal()">
+    Add Compensation Request
+</button>
+<div class="Department-list-container">
+    <h3>Compensation Request List</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Employee Name</th>
+                <th>Requested Date</th>
+                <th>Compensated Date</th>
+                <th>Employee Remarks</th>
+                <th>Status</th>
+                <th>Manager Remarks</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let obj of compensateRequests; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ obj.employeeName }}</td>
+                <td>{{ obj.date | date:'yyyy-MM-dd (EEEE)' }}</td>
+                <td>{{ obj.compensatedDate | date:'yyyy-MM-dd (EEEE)' }}</td>
+                <td>{{ obj.compensateEmployeeRemarks }}</td>
+                <td>{{ obj.compensatedStatus }}</td>
+                <td>{{ obj.compensateManagerRemarks }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<app-common-dialog
+    [showDialog]="modal.show "
+    [dialogTitle]="modal.title "
+    [showCloseIcon]="true"
+    [showSubmitButton]="true"
+    (submitDialog)="saveCompensateRequest()"
+    (closeDialog)="closeModal()"
+>
+
+<div class="container">
+    <div  *ngIf="availableCompensatedDates.length==0"
+        style="color: red;">
+        No compensated dates available
+    </div>
+    <div class="row">
+
+        <!--date-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" class="form-control" id="date"
+                    [(ngModel)]="modal.data.date" name="date" placeholder="Enter Date">
+            </div>
+        </div>
+        <!--compensatedDate-->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="compensatedDate">
+                    Compensated Date
+                    <i class="fas fa-info-circle text-primary" 
+                       data-bs-toggle="tooltip" 
+                       data-bs-placement="top" 
+                       title="The compensation dates will only be available for work on week-offs or holidays, based on biometric data. Please contact the manager for adjustments.">
+                    </i>
+                </label>
+                <select class="form-select" id="compensatedDate" 
+                    [(ngModel)]="modal.data.compensatedDate" name="compensatedDate">
+                    <option value="">Select Compensated Date</option>
+                    <option *ngFor="let date of availableCompensatedDates" [value]="date">
+                        {{ date }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        
+
+        <!--compensateEmployeeRemarks-->
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="compensateEmployeeRemarks"> Employee Remarks</label>
+                <textarea type="text" class="form-control" id="compensateEmployeeRemarks"
+                    [(ngModel)]="modal.data.compensateEmployeeRemarks" name="compensateEmployeeRemarks"
+                    placeholder="Enter Compensate Employee Remarks">
+                </textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+</app-common-dialog>
