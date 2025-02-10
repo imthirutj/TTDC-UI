@@ -263,8 +263,10 @@ export class EmployeeListComponent {
             // Format qualifications if requiredQualifications is available
             if (employee.requiredQualifications && Array.isArray(employee.requiredQualifications)) {
               employee.formattedQualifications = employee.requiredQualifications
-                .map((qualification: any) => `${qualification.degreeName} - ${qualification.minimumYears} years(min)`)
-                .join(', ');  // Join them with commas if there are multiple qualifications
+                .map((qualification: any) => `${qualification.degreeName}`)
+                .join(', ');
+                var minimumExpYears = employee.minimumExpYears > 0 ?employee.minimumExpYears:'';
+              employee.formattedQualifications+=  ' & '+ minimumExpYears;
             } else {
               employee.formattedQualifications = '';
             }
@@ -276,14 +278,16 @@ export class EmployeeListComponent {
             if (employee.requiredQualifications && employee.requiredQualifications.length > 0) {
               for (const qualification of employee.requiredQualifications) {
                 if (qualification.degreeId === employee.degreeId) {
-                  if (qualification.minimumYears > employee.experience) {
+                  if (employee.minimumExpYears > employee.experience) {
                     employee.notMatchedQualification = true;
                   }
                   break;  // Break after finding the first match
                 }
               }
             }
+            console.log('Status', employee.notMatchedQualification);
           });
+          
 
 
         } else {

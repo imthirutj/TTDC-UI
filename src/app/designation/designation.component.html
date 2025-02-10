@@ -1,20 +1,59 @@
 <div class="designation-list-container">
-    <h3>designation List</h3>
+    <h3>Designation List</h3>
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>#</th>
           <th>Designation ID</th>
-          <th>Designation Name</th>          
+          <th>Designation Name</th>   
+          <th>Minimum Years</th>   
+          <th>#</th>       
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let designation of Designation; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ designation.designationId }}</td>
-          <td>{{ designation.designationName }}</td>          
+          <td>{{ designation.designationName }}</td> 
+          <td>{{ designation.minimumYears }}</td> 
+          <td>
+         
+            <span>
+              <button class="btn btn-primary"
+               (click)="openModal(Action.UPDATE, designation)">
+                <i class="fas fa-edit"></i>
+              </button>
+            
+            </span>
+          </td>         
         </tr>
       </tbody>
     </table>
   </div>
   
+  
+
+<app-common-dialog
+ [showDialog]="modal.show " 
+ [dialogTitle]="modal.title " 
+[showCloseIcon]="true"
+[showSubmitButton]="true" 
+(submitDialog)="saveDesignation()"
+ (closeDialog)="closeModal()">
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <label for="designationName" class="form-label">Designation Name</label>
+      <input type="text" class="form-control" id="designationName" [(ngModel)]="modal.obj.designationName"
+      name="designationName" placeholder="Designation">
+    </div>
+   
+
+    <div class="col-md-6">
+      <label for="minimumYears" class="form-label">Minimum Years</label>
+      <input type="number" class="form-control" id="minimumYears" [(ngModel)]="modal.obj.minimumYears"
+        name="minimumYears" placeholder="Enter Minimum Years">
+    </div>
+  </div>
+</div>
+</app-common-dialog>

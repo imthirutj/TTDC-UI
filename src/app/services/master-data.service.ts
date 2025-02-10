@@ -148,6 +148,11 @@ export class MasterDataService {
   save_Designation_Qualification(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Master/Save_Designation_Qualification`, payload);
   }
+
+  save_Designation(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/InsertUpdateDesignation`, payload);
+  }
+
   get_Designation_Qualification(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/Get_Designation_Qualification`+query);
   }
