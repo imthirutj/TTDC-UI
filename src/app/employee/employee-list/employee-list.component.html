@@ -452,4 +452,12 @@
       [disabled]="modal.action === 'VIEW'">
   </div>
 
+  <!--UAN number-->
+  <div class="mb-3">
+    <label for="uanNumber" class="form-label">UAN Number</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber"
+      [(ngModel)]="bankModal.bankDetails.uanNumber" name="uanNumber" placeholder="Enter UAN"
+      [disabled]="modal.action === 'VIEW'">
+  </div>
+
 </app-common-dialog>

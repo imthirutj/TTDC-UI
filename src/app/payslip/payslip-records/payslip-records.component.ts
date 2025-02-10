@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserType } from 'src/app/common/user-type.enum';
 import { DataService } from 'src/app/data.Service';
 import { MasterDataService } from 'src/app/services/master-data.service';
+import { EmployeePassbook } from 'src/app/utils/interface/EmployeePassbook';
 
 @Component({
   selector: 'app-payslip-records',
@@ -10,15 +12,29 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 })
 export class PayslipRecordsComponent {
   payId: any
-  Department: any[] = [];
+  EmpLists: any[] = [];
   payslips: any[] = []
   employee: any;
+
+  user:any ={};
+  userAccessLevel: any;
+  UserType=UserType;
+
+  passbookModal:any={
+    show:false,
+    title:'',
+    data: new EmployeePassbook(),
+    employeeId:'',
+  };
 
   modalAttr: any = {
     show: false,
     title:'',
     maxWidth: '90vw',
   }
+
+  formData = new FormData();
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -91,7 +107,11 @@ export class PayslipRecordsComponent {
   constructor(private masterDataService: MasterDataService,
      private route: ActivatedRoute,
      public dataService : DataService) { 
-      
+      this.dataService.asyncGetUser().then((user: any) => {
+      this.user = user;
+      this.userAccessLevel = user.role;
+      console.log('User Access Level:', this.userAccessLevel);
+    });
      }
 
     
@@ -121,7 +141,7 @@ export class PayslipRecordsComponent {
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data.pendingRecords)) {
-          this.Department = response.data.paidRecords;
+          this.EmpLists = response.data.paidRecords;
 
         } else {
           alert(response.message || 'Failed to fetch  list.');
@@ -157,6 +177,64 @@ export class PayslipRecordsComponent {
 
 
   getTotal(field: string): number {
-    return this.Department.reduce((sum, record) => sum + (record[field] || 0), 0);
+    return this.EmpLists.reduce((sum, record) => sum + (record[field] || 0), 0);
   }
+
+  passbookImage(event: any): void {
+    const file = event.target.files[0]; // Allow only one file
+    if (!file) {
+      alert('Please select a file to upload.');
+      return;
+    }
+  
+    this.formData = new FormData();
+    this.formData.append('file', file, file.name); // Ensure key is 'file' (matches .NET API)
+  }
+  
+
+  openPassbookModal(obj: any) {
+    this.passbookModal.show = true;
+    this.passbookModal.employeeId = obj.employeeId;
+    const selectedMonth = this.dataService.getMonthName(this.filters.selectedMonth.value);
+
+    this.passbookModal.title = `View Passbook - ${selectedMonth} - ${this.filters.selectedYear.value}`;
+    const payload ={
+      employeeId: obj.employeeId,
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value
+    }
+    this.masterDataService.getPassbooks(payload).subscribe(
+      (response:any)=>{
+        if(response.success){
+          this.passbookModal.data = response.data;
+        }
+      }
+    );
+  }
+  closePassbookModal(){
+    this.passbookModal.show = false;
+    this.passbookModal.data = new EmployeePassbook();
+    this.passbookModal.employeeId ='';
+  }
+
+  uploadPassbook(){
+    if(!this.formData){
+      this.dataService.showSnackBar('Please select a file to upload.');
+      return;
+    }
+    const payload = {
+      employeeID: this.passbookModal.employeeId,
+      month: this.filters.selectedMonth.value,
+      year:this.filters.selectedYear.value
+    };
+    this.masterDataService.uploadPassbook(this.formData, payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.closePassbookModal();
+        } 
+      });
+  }
+  
+
 }

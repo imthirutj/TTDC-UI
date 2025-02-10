@@ -30,6 +30,9 @@ export class DataService {
     { key: 'SFU', value: 'SFU' },
   ];
 
+  private monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
+    "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -274,6 +277,10 @@ export class DataService {
         })
       );
     }, Promise.resolve());
+  }
+
+  getMonthName(month: number): string {
+    return this.monthNames[month - 1] || '';
   }
 
 }

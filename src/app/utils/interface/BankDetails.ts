@@ -9,6 +9,7 @@ export class BankDetails {
     pfNumber: string = '';
     esicNumber: string = '';
     pfScheme: string = '';
+    uanNumber: string = '';
   
     constructor(init?: Partial<BankDetails>) {
       Object.assign(this, init); // Optionally initialize with partial data

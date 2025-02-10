@@ -49,6 +49,7 @@ export class HeaderComponent {
         if(response.success){
           this.userData = response.data;
           this.groupByCompany();
+          console.log('User Data:', this.userData);
         }
       }
     );

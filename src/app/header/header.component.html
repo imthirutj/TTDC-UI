@@ -1,12 +1,34 @@
 <div class="header" style="min-height: 110px;background-color:#a60015;">
   <span
-  *ngIf="userData.role=='STATE_ADMIN' && userData.role=='MANAGER'">
+  *ngIf="false">
     <img src="/assets/images/logo/logo_3.png" alt="Logo" class="icon-img" />
   <div style="padding: 10px;" class="header-text">
     <p class="left-align" style="font-size:25px">
       Tamilnadu Tourism Development Corporation - Dashboard
     </p>
   </div>
+  </span>
+
+  <span *ngIf="userData.role=='STATE_ADMIN'">
+    <div style="padding: 10px;" class="header-text">
+      <p class="left-align" style="font-size:25px">
+       STATE ADMIN
+      </p>
+    </div>
+  </span>
+  <span *ngIf="userData.role=='VENDOR'">
+    <div style="padding: 10px;" class="header-text">
+      <p class="left-align" style="font-size:25px">
+      VENDOR
+      </p>
+    </div>
+  </span>
+  <span *ngIf="userData.role=='EMPLOYEE' || userData.role=='MANAGER'">
+    <div style="padding: 10px;" class="header-text">
+      <p class="left-align" style="font-size:25px">
+        {{ userData.companyName }}
+      </p>
+    </div>
   </span>
   <!-- <img src="/assets/images/logo/logo_2.jpg" alt="Logo" /> -->
 
@@ -15,9 +37,9 @@
     <div style="color: white; margin-right: 10px; display: inline;" *ngIf="userData">
       <p>{{ userData.userName }}</p>
       <p>{{ userData.role }}</p>
-      <p *ngIf="userData.role=='EMPLOYEE' && userData.role=='MANAGER'">
+      <!-- <p *ngIf="userData.role=='EMPLOYEE' || userData.role=='MANAGER'">
         {{ userData.companyName }}
-      </p>
+      </p> -->
     </div>
     <i (click)="toggleProfileDialog()" class="fa fa-user-circle profile-icon" data-toggle="modal"
       data-target="#profileModal" style="cursor: pointer; font-size: 40px;"></i>

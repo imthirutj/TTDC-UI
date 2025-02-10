@@ -31,10 +31,11 @@
         <th>Net Salary</th>
         <th>Gross Salary</th>
         <th>View Slips</th>
+        <th>Passbook</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of Department; let i = index">
+      <tr *ngFor="let d of EmpLists; let i = index">
         <td>{{ i + 1 }}</td>
         <!-- <td>{{ department.employeeId  }}</td> -->
         <td>{{ d.employeeName }}</td>
@@ -55,9 +56,18 @@
             View Pay Slips
           </button>
         </td>
+        <td>
+          <button (click)="openPassbookModal(d)" class="btn btn-primary" type="button">
+            <span *ngIf="userAccessLevel== UserType.MANAGER ||
+                  userAccessLevel== UserType.VENDOR ||
+                   userAccessLevel== UserType.STATE_ADMIN"> 
+              View Passbook</span>
+           <span *ngIf="userAccessLevel== UserType.EMPLOYEE"> View/Upload Passbook</span>
+          </button>
+        </td>
       </tr>
     </tbody>
-    <tfoot *ngIf="Department.length > 0">
+    <tfoot *ngIf="EmpLists.length > 0">
       <tr>
         <td colspan="7" class="text-right"><strong>Total:</strong></td>
         <td>{{ getTotal('basicRate') | currency:'INR' }}</td>
@@ -68,10 +78,54 @@
         <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
         <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
         <td></td>
+        <td></td>
       </tr>
     </tfoot>
   </table>
 </div>
+
+
+<!-- Certificate Modal -->
+<app-common-dialog 
+[showDialog]="passbookModal.show "
+ [dialogTitle]="passbookModal.title  "
+  [showCloseIcon]="true" 
+  [showSubmitButton]="true"
+   (submitDialog)="uploadPassbook()" 
+   (closeDialog)="closePassbookModal()">
+
+  <div *ngIf="userAccessLevel== UserType.EMPLOYEE" class="mb-3">
+    <label for="certificateImage" class="form-label">Upload Passbook</label>
+    <input type="file" class="form-control" id="certificateImage" (change)="passbookImage($event)">
+
+  </div>
+
+  <table *ngIf="passbookModal.data.id" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Document Type</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr >
+        <td>
+          <span>1</span>
+        </td>
+        <td>PASSBOOK</td>
+        <td>
+          <span>
+            <a href="{{ passbookModal.data.filePath }}" target="_blank">View</a>
+          </span>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+</app-common-dialog>
+
 
 
 <app-common-dialog [showDialog]="modalAttr.show" [dialogTitle]="modalAttr.title" [showCloseIcon]="true"
