@@ -2,17 +2,18 @@
   <div class="cards-filter">
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="getVendors()">
     </app-filter>
-    <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
 
-  <button class="btn btn-success mb-3" type="button" (click)="openVendorModal(false, null)">Add Vendor</button>
+  <button *ngIf="userAccessLevel == UserType.STATE_ADMIN" class="btn btn-success mb-3" type="button"
+    (click)="openVendorModal(false, null)">Add Vendor</button>
   <div class="table-container">
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>#</th>
           <th>Vendor Name</th>
-          <th>Company & Department</th>
+          <th>Unit & Department</th>
           <th>Address</th>
           <th>Phone Number</th>
           <th>Email</th>
@@ -35,12 +36,18 @@
           <td class="ellipsis">
             <!-- Displaying company name and department name -->
             <span *ngFor="let item of vendor.companyDepartmentList; let last = last; let i = index">
-             {{i+1}}.<b>{{ item.companyName }}</b> - {{ item.departmentName }}
+              {{i+1}}.<b>{{ item.companyName }}</b> - {{ item.departmentName }}
               <span *ngIf="!last">, </span> <!-- Adds a comma between the items except for the last one -->
             </span>
           </td>
           <td>{{ vendor.address }}</td>
-          <td>{{ vendor.contactNo }}</td>
+          <td class="ellipsis">
+            <!-- Displaying company name and department name -->
+            <span *ngFor="let item of vendor.vendorMobileNumbers; let last = last; let i = index">
+              {{i+1}}.<b>{{ item.role }}</b> - {{ item.mobile }}
+              <span *ngIf="!last">, </span> <!-- Adds a comma between the items except for the last one -->
+            </span>
+          </td>
           <td>{{ vendor.emailId }}</td>
           <td>{{ vendor.gstin }}</td>
           <td>{{ vendor.panNo }}</td>
@@ -71,35 +78,42 @@
         </select>
       </div>
       <br>
-      <div class="card">
-        <div class="card-body">
-          <div class="form-group">
-            <label for="company">Company</label>
-            <select (change)="onCompanyChange()" class="form-control" id="company" [(ngModel)]="modal.comp.id">
-              <option value="">Select Unit</option>
-              <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}
-              </option>
-            </select>
+
+      <div  class="form-group">
+        <label for="company">Unit</label>
+        <div *ngIf="userAccessLevel == UserType.STATE_ADMIN" class="card">
+          
+          <div class="card-body">
+            <div class="form-group">
+             
+              <select (change)="onCompanyChange()" class="form-control" id="company" [(ngModel)]="modal.comp.id">
+                <option value="">Select Unit</option>
+                <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="department">Department</label>
+              <select (change)="onDepartmentChange()" class="form-control" id="department" [(ngModel)]="modal.dept.id">
+                <option value="">Select Department</option>
+                <option *ngFor="let department of dropdowns.departments" [value]="department.departmentId">{{
+                  department.departmentFName }}</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="department">Department</label>
-            <select (change)="onDepartmentChange()" class="form-control" id="department" [(ngModel)]="modal.dept.id">
-              <option value="">Select Department</option>
-              <option *ngFor="let department of dropdowns.departments" [value]="department.departmentId">{{
-                department.departmentFName }}</option>
-            </select>
-          </div>
+          <button  style="width: 100px;" class="btn btn-primary"
+            (click)="addCompanyDepartment()">Add</button>
         </div>
-        <button style="width: 100px;" class="btn btn-primary" (click)="addCompanyDepartment()">Add</button>
       </div>
-      
+
       <div class="card">
         <div class="card-body">
           <div *ngFor="let compDept of modal.vendor.companyDepartmentList" class="card">
-            <p>Company:{{compDept.companyName}} </p>
-            <p>Department:{{compDept.departmentName}}</p>
+            <p><b>Unit</b>:{{compDept.companyName}} </p>
+            <p><b>Department</b>:{{compDept.departmentName}}</p>
 
-            <i (click)="deleteCompanyDepartment(compDept.companyId, compDept.departmentId)" class="fa fa-trash"></i>
+            <i *ngIf="userAccessLevel == UserType.STATE_ADMIN"
+             (click)="deleteCompanyDepartment(compDept.companyId, compDept.departmentId)" class="fa fa-trash"></i>
           </div>
           <br>
         </div>
@@ -110,10 +124,41 @@
         <label for="address">Address</label>
         <input type="text" class="form-control" id="address" [(ngModel)]="modal.vendor.address">
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="contactNo">Contact No.</label>
         <input type="text" [maxlength]="10" class="form-control" id="contactNo" [(ngModel)]="modal.vendor.contactNo">
+      </div> -->
+
+      <!-- Dynamic Fields for Vendor Mobile Numbers -->
+      <div class="form-group">
+        <label for="email">Contact No's</label>
+       <div>
+        <div  style="margin-left: 10px;"
+         *ngFor="let mobile of modal.vendor.vendorMobileNumbers; let i = index">
+          <div class="row">
+            <div class="col-md-5">
+              <label for="role{{i}}">Role</label>
+              <input type="text" class="form-control" [(ngModel)]="mobile.role" name="role{{i}}" id="role{{i}}">
+            </div>
+
+            <div class="col-md-5">
+              <label for="mobile{{i}}">Mobile</label>
+              <input type="number" class="form-control" [(ngModel)]="mobile.mobile" name="mobile{{i}}" id="mobile{{i}}">
+            </div>
+
+            <!-- Remove Button -->
+            <div class="col-md-2">
+              <button type="button" class="btn btn-danger" (click)="removeMobileField(i)">X</button>
+            </div>
+          </div>
+        </div>
+       </div>
+        <!-- Add Button -->
+        <button style="width: 100px;" type="button" class="btn btn-primary" (click)="addMobileField()">+</button>
+
       </div>
+
+
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" class="form-control" id="email" [(ngModel)]="modal.vendor.emailId">

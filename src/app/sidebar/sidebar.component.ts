@@ -99,7 +99,7 @@ export class SidebarComponent {
         label: 'Vendor Management',
         icon: 'fa-solid fa-store',
         route: '/vendor-management',
-        allowedUserTypes: [UserType.STATE_ADMIN]
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.VENDOR]
       },
       { 
         label: 'Department', 

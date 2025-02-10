@@ -90,6 +90,8 @@ export class FiltersComponent implements OnInit {
       this.filters.vendorId.value = this.user.vendorId;
       this.filters.vendorId.show = false;
 
+      this.filters.vendorName.show = false;
+
       this.filters.cityId.show = false;
       this.filters.companyId.show = false;
       this.filters.deptId.show = false;

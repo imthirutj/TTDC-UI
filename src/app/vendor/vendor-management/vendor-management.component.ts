@@ -5,6 +5,7 @@ import { DataService } from 'src/app/data.Service';
 import { Router } from '@angular/router';
 import { Vendor } from 'src/app/utils/interface/vendor';
 import { City, Company, Department } from 'src/app/utils/interface/masters';
+import { UserType } from 'src/app/common/user-type.enum';
 
 @Component({
   selector: 'app-vendor-management',
@@ -12,6 +13,10 @@ import { City, Company, Department } from 'src/app/utils/interface/masters';
   styleUrls: ['./vendor-management.component.css']
 })
 export class VendorManagementComponent {
+
+  UserType = UserType;
+  userAccessLevel: any;
+  user: any;
 
 
   filters: any = {
@@ -31,6 +36,12 @@ export class VendorManagementComponent {
       value: '',
       show: true,
       key: 'deptId',
+      includeInSearchParams: true
+    },
+    vendorId: {
+      value: '',
+      show: false,
+      key: 'vendorId',
       includeInSearchParams: true
     },
     vendorName: {
@@ -68,7 +79,13 @@ export class VendorManagementComponent {
     private router: Router,
     private dataService: DataService
   ) {
+    this.dataService.asyncGetUser().then((user: any) => {
+      this.user = user;
+      this.userAccessLevel = user.role;
+      console.log('User Access Level:', this.userAccessLevel);
 
+
+    });
   }
 
   ngAfterViewInit() {
@@ -181,6 +198,17 @@ export class VendorManagementComponent {
 
 
   //#region Modal
+
+  // Method to add a new row
+  addMobileField() {
+    this.modal.vendor.vendorMobileNumbers.push({ role: '', mobile: '' });
+  }
+
+  // Method to remove a row
+  removeMobileField(index: number) {
+    this.modal.vendor.vendorMobileNumbers.splice(index, 1);
+  }
+
   openVendorModal(isEdit: boolean = false, vendor: any) {
     this.modal.show = true;
     this.modal.isEdit = isEdit;
@@ -223,5 +251,5 @@ export class VendorManagementComponent {
 
 
 
-  
+
 }

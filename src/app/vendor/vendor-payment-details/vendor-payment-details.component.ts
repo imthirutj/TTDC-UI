@@ -45,6 +45,8 @@ export class VendorPaymentDetailsComponent implements OnInit {
   employeePayment: any = {};
   selectedFile: any;
 
+  vendorDetails:any ={};
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -212,11 +214,11 @@ export class VendorPaymentDetailsComponent implements OnInit {
     this.isVendorModalOpen = true;
 
     if (type === 'VIEW') {
-      this.vendorPayment.title = 'View Vendor Payment Details';
+      this.vendorPayment.title = 'View Vendor Payment Details - '+vendor.vendorName;
       this.vendorPayment.submit_disabled = true;
     }
     if (type === 'UPDATE') {
-      this.vendorPayment.title = 'Update Vendor Payment Details';
+      this.vendorPayment.title = 'Update Vendor Payment Details - '+vendor.vendorName;
       this.vendorPayment.submit_disabled = false;
     }
     const payload = {
@@ -236,8 +238,22 @@ export class VendorPaymentDetailsComponent implements OnInit {
       else{
         this.selectedVendor = vendor;
       }
+      this.getVendorById(vendor.vendorId);
     });
     
+  }
+
+  getVendorById(vendorId:any){
+    const payload ={
+      vendorId:vendorId
+    }
+    this.masterDataService.getVendors(payload).subscribe(
+      (response:any)=>{
+        if(response.success){
+          this.vendorDetails = response.data[0];
+        }
+      }
+    );
   }
 
   openEmployeePaymentModal(type: 'VIEW' | 'UPDATE', vendor: any) {

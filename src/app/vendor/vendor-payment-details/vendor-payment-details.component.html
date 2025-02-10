@@ -169,6 +169,29 @@
     </div>
 
     <br>
+    <!--Vendor Bank Details-->
+    <div *ngIf="selectedVendor.paymentStatus === 'PAID'" class="row">
+      <h4>Vendor Bank Details</h4>
+      <div class="col-md-6">
+        <label>Bank Name:</label>
+        <p class="form-control disabled-bg">{{vendorDetails.bankName}}</p>
+      </div>
+      <div class="col-md-6">
+        <label>Bank Branch:</label>
+        <p class="form-control disabled-bg">{{vendorDetails.bankBranch}}</p>
+      </div>
+      <div class="col-md-6">
+        <label>Bank IFSC:</label>
+        <p class="form-control disabled-bg">{{vendorDetails.bankIfsc}}</p>
+      </div>
+      <div class="col-md-6">
+        <label>Bank Account Number:</label>
+        <p class="form-control disabled-bg">{{vendorDetails.bankAccountNo}}</p>
+      </div>
+
+    </div>
+
+    <br>
     <div *ngIf="selectedVendor.paymentStatus === 'PAID'" class="row">
       <h4>Cheque Details</h4>
       <div class="col-md-6">
