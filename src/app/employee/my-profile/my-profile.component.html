@@ -1,289 +1,292 @@
 <div class="cards-filter">
-    <app-filter style="display: none;" [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="getEmployeeList()">
-    </app-filter>
-    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
-  </div>
-  
-  <div class="container mt-4">
-    <!-- Card 1: Personal Details -->
-    <div class="card mb-3">
-      <div class="card-header bg-secondary text-white">
-        Personal Details
+  <app-filter style="display: none;" [filters]="filters" (filterChanged)="onFilterChanged($event)"
+    (triggerParentFunction)="getEmployeeList()">
+  </app-filter>
+  <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+</div>
+
+<div class="container mt-4">
+  <!-- Card 1: Personal Details -->
+  <div class="card mb-3">
+    <div class="card-header bg-secondary text-white">
+      Personal Details
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label for="employeeName" class="form-label">Employee Name</label>
+        <input type="text" class="form-control" [(ngModel)]="modal.employee.employeeName" id="employeeName"
+          name="employeeName" placeholder=" Employee Name" required [disabled]="modal.action === 'VIEW'">
       </div>
-      <div class="card-body">
+      <div class="mb-3">
+        <label for="EmployeeCode" class="form-label">Employee Code</label>
+        <input type="text" class="form-control" id="EmployeeCode" [(ngModel)]="modal.employee.employeeCode"
+          name="EmployeeCode" placeholder=" Employee Code" required [disabled]="true">
+      </div>
+
+
+      <!-- Gender -->
+      <div class="mb-3">
+        <label for="Gender" class="form-label">Gender</label>
+        <select class="form-select" id="Gender" [(ngModel)]="modal.employee.gender" name="Gender" required
+          [disabled]="modal.action === 'VIEW'">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="dob" class="form-label">Date Of Birth</label>
+        <input type="date" class="form-control" id="dob" [(ngModel)]="modal.employee.dob" name="dob"
+          placeholder=" Date Of Birth" [disabled]="modal.action === 'VIEW'">
+      </div>
+
+      <!-- Aadhaar Number -->
+      <div class="mb-3">
+        <label for="AadhaarNumber" class="form-label">Aadhar Number</label>
+        <input type="text" class="form-control" id="AadhaarNumber" [(ngModel)]="modal.employee.aadhaarNumber"
+          name="AadhaarNumber" placeholder=" AadhaarNumber" [disabled]="modal.action === 'VIEW'">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Card 2: Contact Details -->
+  <div class="card mb-3">
+    <div class="card-header bg-secondary text-white">
+      Employee Details
+    </div>
+    <div class="card-body">
+      <form>
+
+        <!-- Employment Type -->
         <div class="mb-3">
-          <label for="employeeName" class="form-label">Employee Name</label>
-          <input type="text" class="form-control" [(ngModel)]="modal.employee.employeeName" id="employeeName"
-            name="employeeName" placeholder=" Employee Name" required [disabled]="modal.action === 'VIEW'">
+          <label for="employementType" class="form-label">Employement Type</label>
+          <p class="form-control disabled-bg">{{modal.employee.employementType}}</p>
+
         </div>
+
+        <!-- Date of Joining -->
         <div class="mb-3">
-          <label for="EmployeeCode" class="form-label">Employee Code</label>
-          <input type="text" class="form-control" id="EmployeeCode" [(ngModel)]="modal.employee.employeeCode"
-            name="EmployeeCode" placeholder=" Employee Code" required [disabled]="true">
+          <label for="doj" class="form-label">Date OF Joining</label>
+          <input type="date" class="form-control" id="doj" [(ngModel)]="modal.employee.doj" name="doj"
+            placeholder=" Date OF Joining" [disabled]="true">
         </div>
 
 
-        <!-- Gender -->
+
+        <!-- Company Name -->
         <div class="mb-3">
-          <label for="Gender" class="form-label">Gender</label>
-          <select class="form-select" id="Gender" [(ngModel)]="modal.employee.gender" name="Gender" required
-            [disabled]="modal.action === 'VIEW'">
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+          <label for="CompanyId" class="form-label">Company Name</label>
+
+          <p class="form-control disabled-bg">{{modal.employee.companyFName}}</p>
+        </div>
+
+        <!-- Vendor -->
+        <div class="mb-3">
+          <label for="vendorId" class="form-label">Vendor</label>
+          <p class="form-control disabled-bg">{{modal.employee.vendorName}}</p>
+        </div>
+
+
+        <!-- Department Name -->
+        <div class="mb-3">
+          <label for="DepartmentId" class="form-label">Department Name</label>
+          <p class="form-control disabled-bg">{{modal.employee.departmentFName}}</p>
+
+
+        </div>
+
+        <!-- Designation Name -->
+        <div class="mb-3">
+          <label for="DesignationId" class="form-label">Designation Name</label>
+          <p class="form-control disabled-bg">{{modal.employee.designationName}}</p>
+
+        </div>
+
+
+        <!-- Passed Out Year -->
+        <div class="mb-3">
+          <label for="passedOutYear" class="form-label">Passed Out Year</label>
+          <p class="form-control disabled-bg">{{modal.employee.passedOutYear}}</p>
+
+        </div>
+        <!-- Qualifications -->
+        <div class="mb-3">
+          <label for="Qualifications" class="form-label">Qualifications</label>
+
+          <select class="form-select" id="Qualifications" [(ngModel)]="modal.employee.degreeId" name="Qualifications">
+            <option value="">Select Qualification</option>
+            <option *ngFor="let degree of dropdowns.degree" [value]="degree.degree_Id">{{ degree.degree_Name }}</option>
           </select>
         </div>
 
+        <!-- Experience -->
         <div class="mb-3">
-          <label for="dob" class="form-label">Date Of Birth</label>
-          <input type="date" class="form-control" id="dob" [(ngModel)]="modal.employee.dob" name="dob"
-            placeholder=" Date Of Birth" [disabled]="modal.action === 'VIEW'">
+          <label for="experience" class="form-label">Experience</label>
+          <input type="text" class="form-control" id="experience" [(ngModel)]="modal.employee.experience"
+            name="experience" placeholder=" experience" [disabled]="true">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Card 3: Contact Details -->
+  <div class="card mb-3">
+    <div class="card-header bg-secondary text-white">
+      Contact Details
+    </div>
+    <div class="card-body">
+      <form>
+        <!-- Contact Number -->
+        <div class="mb-3">
+          <label for="contactNo" class="form-label">Contact Number</label>
+          <input type="text" class="form-control" id="contactNo" [(ngModel)]="modal.employee.contactNo" name="contactNo"
+            placeholder=" Contact Number" [disabled]="modal.action === 'VIEW'">
         </div>
 
-        <!-- Aadhaar Number -->
+      </form>
+    </div>
+  </div>
+
+  <!-- Card 4: Certificate Details -->
+  <div class="card mb-3">
+    <div class="card-header bg-secondary text-white">
+      Certificate Details
+    </div>
+    <div class="card-body">
+      <form>
         <div class="mb-3">
-          <label for="AadhaarNumber" class="form-label">Aadhar Number</label>
-          <input type="text" class="form-control" id="AadhaarNumber" [(ngModel)]="modal.employee.aadhaarNumber"
-            name="AadhaarNumber" placeholder=" AadhaarNumber" [disabled]="modal.action === 'VIEW'">
+          <label>Education Certificate</label>
+          <div class="form-control">
+            <button type="button" class="btn btn-primary"
+              (click)="show_Certificate(modal.employee, ModuleType.EDUCATION_CERT)">View/Update</button>
+
+          </div>
         </div>
 
-      </div>
+        <div class="mb-3">
+          <label>Adhar</label>
+          <div class="form-control">
+            <button type="button" class="btn btn-primary"
+              (click)="show_Certificate(modal.employee, ModuleType.ADHAR)">View/Update</button>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
+  <button class="btn btn-primary" type="button" (click)="openBankModal(modal.employee.employeeId)">
+    Update Bank Details
+  </button>
 
-    <!-- Card 2: Contact Details -->
-    <div class="card mb-3">
-      <div class="card-header bg-secondary text-white">
-        Employee Details
-      </div>
-      <div class="card-body">
-        <form>
+</div>
+<br>
 
-          <!-- Employment Type -->
-          <div class="mb-3">
-            <label for="employementType" class="form-label">Employement Type</label>
-            <p class="form-control disabled-bg">{{modal.employee.employementType}}</p>
-            
-          </div>
-
-          <!-- Date of Joining -->
-          <div class="mb-3">
-            <label for="doj" class="form-label">Date OF Joining</label>
-            <input type="date" class="form-control" id="doj" [(ngModel)]="modal.employee.doj" name="doj"
-              placeholder=" Date OF Joining" [disabled]="true">
-          </div>
+<button *ngIf="modal.action === Action.UPDATE" class="btn btn-primary" (click)="saveEmployee()">SUBMIT</button>
+<button *ngIf="modal.action === Action.VIEW" class="btn btn-primary" (click)="openModal(Action.UPDATE)">EDIT</button>
+<button *ngIf="modal.action === Action.UPDATE" class="btn btn-primary" (click)="getEmployeeList()">Cancel</button>
 
 
+<!-- Certificate Modal -->
+<app-common-dialog [showDialog]="modal.show && modal.module != ModuleType.EMPLOYEE " [dialogTitle]="modal.title "
+  [showCloseIcon]="true" [showSubmitButton]="true" (submitDialog)="uploadCertificate()" (closeDialog)="closeModal()">
 
-          <!-- Company Name -->
-          <div class="mb-3">
-            <label for="CompanyId" class="form-label">Company Name</label>
-           
-              <p class="form-control disabled-bg">{{modal.employee.companyFName}}</p>
-          </div>
-
-          <!-- Vendor -->
-          <div class="mb-3">
-            <label for="vendorId" class="form-label">Vendor</label>
-            <p class="form-control disabled-bg">{{modal.employee.vendorName}}</p>
-          </div>
-
-
-          <!-- Department Name -->
-          <div class="mb-3">
-            <label for="DepartmentId" class="form-label">Department Name</label>
-            <p class="form-control disabled-bg">{{modal.employee.departmentFName}}</p>
-        
-          
-          </div>
-
-          <!-- Designation Name -->
-          <div class="mb-3">
-            <label for="DesignationId" class="form-label">Designation Name</label>
-            <p class="form-control disabled-bg">{{modal.employee.designationName}}</p>
-            
-          </div>
-
-
-          <!-- Passed Out Year -->
-          <div class="mb-3">
-            <label for="passedOutYear" class="form-label">Passed Out Year</label>
-            <p class="form-control disabled-bg">{{modal.employee.passedOutYear}}</p>
-          
-          </div>
-          <!-- Qualifications -->
-          <div class="mb-3">
-            <label for="Qualifications" class="form-label">Qualifications</label>
-           
-            <select class="form-select" id="Qualifications" [(ngModel)]="modal.employee.degreeId"
-             name="Qualifications">
-              <option value="">Select Qualification</option>
-              <option *ngFor="let degree of dropdowns.degree" [value]="degree.degree_Id">{{ degree.degree_Name }}</option>
-            </select>
-          </div>
-
-          <!-- Experience -->
-          <div class="mb-3">
-            <label for="experience" class="form-label">Experience</label>
-            <input type="text" class="form-control" id="experience"
-             [(ngModel)]="modal.employee.experience"
-              name="experience" placeholder=" experience" 
-              [disabled]="true">
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Card 3: Contact Details -->
-    <div class="card mb-3">
-      <div class="card-header bg-secondary text-white">
-        Contact Details
-      </div>
-      <div class="card-body">
-        <form>
-          <!-- Contact Number -->
-          <div class="mb-3">
-            <label for="contactNo" class="form-label">Contact Number</label>
-            <input type="text" class="form-control" id="contactNo" [(ngModel)]="modal.employee.contactNo"
-              name="contactNo" placeholder=" Contact Number" 
-              [disabled]="modal.action === 'VIEW'">
-          </div>
-
-        </form>
-      </div>
-    </div>
-
-    <!-- Card 4: Certificate Details -->
-    <div class="card mb-3">
-      <div class="card-header bg-secondary text-white">
-        Certificate Details
-      </div>
-      <div class="card-body">
-        <form>
-          <div class="mb-3">
-            <label>Education Certificate</label>
-            <div class="form-control">
-              <button type="button" class="btn btn-primary"
-                (click)="show_Certificate(modal.employee, ModuleType.EDUCATION_CERT)">View/Update</button>
-
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label>Adhar</label>
-            <div class="form-control">
-              <button type="button" class="btn btn-primary"
-                (click)="show_Certificate(modal.employee, ModuleType.ADHAR)">View/Update</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+  <div class="mb-3">
+    <label for="certificateImage" class="form-label">Upload Certificate</label>
+    <input type="file" class="form-control" id="certificateImage" (change)="educationCertificateImage($event)" multiple>
 
   </div>
- 
-  <button *ngIf="modal.action === Action.UPDATE" class="btn btn-primary" (click)="saveEmployee()">SUBMIT</button>
-  <button *ngIf="modal.action === Action.VIEW" class="btn btn-primary" (click)="openModal(Action.UPDATE)">EDIT</button>
-  <button *ngIf="modal.action === Action.UPDATE" class="btn btn-primary" (click)="getEmployeeList()">Cancel</button>
-  
 
-  <!-- Certificate Modal -->
-  <app-common-dialog [showDialog]="modal.show && modal.module != ModuleType.EMPLOYEE " [dialogTitle]="modal.title "
-    [showCloseIcon]="true" [showSubmitButton]="true" (submitDialog)="uploadCertificate()" (closeDialog)="closeModal()">
-  
-    <div class="mb-3">
-      <label for="certificateImage" class="form-label">Upload Certificate</label>
-      <input type="file" class="form-control" id="certificateImage" (change)="educationCertificateImage($event)" multiple>
-  
-    </div>
-  
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Document Type</th>
-          <th>File</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let obj of educertificateimage; let i = index">
-          <td>
-            <span>{{ i + 1 }}</span>
-  
-          </td>
-          <td>{{ obj.docType }}</td>
-          <td>
-            <span>
-              <a href="{{ obj.certificateImage }}" target="_blank">View</a>
-              <i class="fa fa-trash" (click)="deleteEmpDoc(obj)"></i>
-            </span>
-          </td>
-  
-        </tr>
-      </tbody>
-    </table>
-  
-  </app-common-dialog>
-  
-  
-  <!-- Bank Details Modal -->
-  <app-common-dialog [showDialog]="bankModal.show" [dialogTitle]="bankModal.title" 
-    [showCloseIcon]="true"
-    [showSubmitButton]="true" (submitDialog)="submitBankDetails()" (closeDialog)="closeBankModal()">
-  
-    <div class="mb-3">
-      <label for="bankName" class="form-label">Bank Name</label>
-      <input type="text" class="form-control disabled-bg" id="bankName" 
-      [(ngModel)]="bankModal.bankDetails.bankName"
-        name="bankName" placeholder="Enter Bank Name" [disabled]="modal.action === 'VIEW'">
-    </div>
-  
-    <div class="mb-3">
-      <label for="accountNumber" class="form-label">Account Number</label>
-      <input type="text" class="form-control disabled-bg" id="accountNumber"
-        [(ngModel)]="bankModal.bankDetails.bankAccountNumber" name="accountNumber" placeholder="Enter Account Number"
-        [disabled]="modal.action === 'VIEW'">
-    </div>
-  
-    <!--Isce Code-->
-    <div class="mb-3">
-      <label for="accountNumber" class="form-label">IFSC Code</label>
-      <input type="text" class="form-control disabled-bg" id="accountNumber" 
-      [(ngModel)]="bankModal.bankDetails.isceCode"
-        name="accountNumber" placeholder="Enter IFSC Code" [disabled]="modal.action === 'VIEW'">
-    </div>
-  
-    <!--pfNumber-->
-    <div class="mb-3">
-      <label for="accountNumber" class="form-label">Pf Number</label>
-      <input type="text" class="form-control disabled-bg" id="accountNumber" 
-      [(ngModel)]="bankModal.bankDetails.pfNumber"
-        name="accountNumber" placeholder="Enter PF Number" [disabled]="modal.action === 'VIEW'">
-    </div>
-  
-  
-    <!--esicNumber-->
-    <div class="mb-3">
-      <label for="accountNumber" class="form-label">Esic Number</label>
-      <input type="text" class="form-control disabled-bg" id="accountNumber"
-        [(ngModel)]="bankModal.bankDetails.esicNumber" 
-        name="accountNumber" placeholder="Enter ESIC Number"
-        [disabled]="modal.action === 'VIEW'">
-    </div>
-  
-    <!--pfScheme-->
-    <div class="mb-3">
-      <label for="accountNumber" class="form-label">PF Scheme</label>
-      <input type="text" class="form-control disabled-bg" id="accountNumber" 
-      [(ngModel)]="bankModal.bankDetails.pfScheme"
-        name="accountNumber" placeholder="Enter PF Scheme" [disabled]="modal.action === 'VIEW'">
-    </div>
-  
-    <!--paymentType-->
-    <div class="mb-3">
-      <label for="accountNumber" class="form-label">Payment Type</label>
-      <input type="text" class="form-control disabled-bg" id="accountNumber"
-        [(ngModel)]="bankModal.bankDetails.paymentType" name="accountNumber" placeholder="Enter Payment Type"
-        [disabled]="modal.action === 'VIEW'">
-    </div>
-  
-  </app-common-dialog>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Document Type</th>
+        <th>File</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of educertificateimage; let i = index">
+        <td>
+          <span>{{ i + 1 }}</span>
+
+        </td>
+        <td>{{ obj.docType }}</td>
+        <td>
+          <span>
+            <a href="{{ obj.certificateImage }}" target="_blank">View</a>
+            <i class="fa fa-trash" (click)="deleteEmpDoc(obj)"></i>
+          </span>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+</app-common-dialog>
+
+
+<!-- Bank Details Modal -->
+<app-common-dialog [showDialog]="bankModal.show" [dialogTitle]="bankModal.title" [showCloseIcon]="true"
+  [showSubmitButton]="modal.action != 'VIEW'" 
+  (submitDialog)="submitBankDetails()" (closeDialog)="closeBankModal()">
+
+  <div class="mb-3">
+    <label for="bankName" class="form-label">Bank Name</label>
+    <input type="text" class="form-control disabled-bg" id="bankName" [(ngModel)]="bankModal.bankDetails.bankName"
+      name="bankName" placeholder="Enter Bank Name" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">Account Number</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber"
+      [(ngModel)]="bankModal.bankDetails.bankAccountNumber" name="accountNumber" placeholder="Enter Account Number"
+      [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--Isce Code-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">IFSC Code</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber" [(ngModel)]="bankModal.bankDetails.isceCode"
+      name="accountNumber" placeholder="Enter IFSC Code" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--pfNumber-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">Pf Number</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber" [(ngModel)]="bankModal.bankDetails.pfNumber"
+      name="accountNumber" placeholder="Enter PF Number" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+
+  <!--esicNumber-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">Esic Number</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber"
+      [(ngModel)]="bankModal.bankDetails.esicNumber" name="accountNumber" placeholder="Enter ESIC Number"
+      [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--pfScheme-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">PF Scheme</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber" [(ngModel)]="bankModal.bankDetails.pfScheme"
+      name="accountNumber" placeholder="Enter PF Scheme" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--paymentType-->
+  <div class="mb-3">
+    <label for="accountNumber" class="form-label">Payment Type</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber"
+      [(ngModel)]="bankModal.bankDetails.paymentType" name="accountNumber" placeholder="Enter Payment Type"
+      [disabled]="modal.action === 'VIEW'">
+  </div>
+
+  <!--UAN number-->
+  <div class="mb-3">
+    <label for="uanNumber" class="form-label">UAN Number</label>
+    <input type="text" class="form-control disabled-bg" id="accountNumber" [(ngModel)]="bankModal.bankDetails.uanNumber"
+      name="uanNumber" placeholder="Enter UAN" [disabled]="modal.action === 'VIEW'">
+  </div>
+
+</app-common-dialog>
