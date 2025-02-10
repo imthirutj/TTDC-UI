@@ -130,6 +130,9 @@ export class PayslipNotComponent {
         if (response.success) {
           this.dataService.openConfirmationDialog(response.message);
         }
+        else{
+          this.dataService.openConfirmationDialog(response.message);
+        }
       });
   }
 
@@ -163,15 +166,9 @@ export class PayslipNotComponent {
     this.masterDataService.payslips('?Month=' + this.filters.selectedMonth.value + '&Year=' + this.filters.selectedYear.value + '&EmpId=' + obj_clicked.employeeId + '').subscribe(
       (response: any) => {
         console.log('API Response:', response);
-        if (response.success && Array.isArray(response.data.pendingRecords)) {
+        if (response.success ) {
           this.payslips = response.data.pendingRecords;
-        } else {
-          alert(response.message || 'Failed to fetch Department list.');
         }
-      },
-      (error) => {
-        console.error('Error fetching Department list:', error);
-        alert('An error occurred while fetching the Department list.');
       }
     );
   }
@@ -186,15 +183,11 @@ export class PayslipNotComponent {
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
-          alert(response.message + ' for employee ' + objec.employeeName);
+          this.dataService.openConfirmationDialog(response.message);
           this.router.navigate(['/payslip-records']);
         } else {
-          alert(response.message + ' for employee ' + objec.employeeName);
+          this.dataService.openConfirmationDialog(response.message);
         }
-      },
-      (error) => {
-        console.error('Error fetching Department list:', error);
-        alert('An error occurred while fetching the Department list.');
       }
     );
   }
