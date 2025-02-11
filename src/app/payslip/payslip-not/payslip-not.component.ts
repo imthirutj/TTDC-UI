@@ -113,10 +113,12 @@ export class PayslipNotComponent {
 
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
+    this.pageAttributes.currentPage = 1;
     this.getEmployeeList();
   }
 
   search() {
+    this.pageAttributes.currentPage = 1;
     this.getEmployeeList();
   }
   loop_id: number = 0
@@ -138,28 +140,32 @@ export class PayslipNotComponent {
 
 
   getEmployeeList(): void {
-    this.pageAttributes.currentPage = 1;
+   
     const payload = this.dataService.getPayloadValue(this.filters);
-    console.log(this.filters)
-    this.masterDataService.getpayslipList(payload).subscribe(
+    console.log(this.filters);
+
+    const fpaylod={
+      ...payload,
+      pageNumber: this.pageAttributes.currentPage,
+      type:2
+    }
+    this.Employees =[];
+    this.masterDataService.getpayslipList(fpaylod).subscribe(
       (response: any) => {
         console.log('API Response:', response);
-        if (response.success && Array.isArray(response.data.pendingRecords)) {
-          this.allEmployees = response.data.pendingRecords;
-          this.pageAttributes.totalPages = Math.ceil(this.allEmployees.length / this.pageAttributes.itemsPerPage);
-          this.paginate();
-        } else {
-          alert(response.message || 'Failed to fetch  list.');
+        if (response.success ) {
+          this.Employees = response.data.pendingRecords;
+         
         }
       }
     );
   }
 
-  paginate(): void {
-    const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
-    const endIndex = startIndex + this.pageAttributes.itemsPerPage;
-    this.Employees = this.allEmployees.slice(startIndex, endIndex);
-  }
+  // paginate(): void {
+  //   const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
+  //   const endIndex = startIndex + this.pageAttributes.itemsPerPage;
+  //   this.Employees = this.allEmployees.slice(startIndex, endIndex);
+  // }
 
   show_list_slip(obj_clicked: any) {
     this.employee = obj_clicked

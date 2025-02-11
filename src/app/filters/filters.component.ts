@@ -227,7 +227,8 @@ export class FiltersComponent implements OnInit {
     const payload = {
       cityId: this.filters.cityId.value,
       compId: this.filters.companyId.value,
-      deptId: this.filters.deptId.value
+      deptId: this.filters.deptId.value,
+      skipMapping:true
     }
     this.masterDataService.getVendors(payload).subscribe((response) => {
       if (response.success) this.vendors = response.data;

@@ -34,7 +34,10 @@ export class PayslipRecordsComponent {
   }
 
   formData = new FormData();
-
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1
+  }
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -122,11 +125,13 @@ export class PayslipRecordsComponent {
   }
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
+    this.pageAttributes.currentPage=1;
     this.getEmployeeList();
   }
 
   search(){
     this.getEmployeeList();
+    this.pageAttributes.currentPage=1;
   }
 
 
@@ -136,16 +141,17 @@ export class PayslipRecordsComponent {
     const fpayload = {
       ...payload,
       employeeCode: this.filters.employeeCode.value,
+      pageNumber: this.pageAttributes.currentPage,
     }
+    this.EmpLists =[];
     this.masterDataService.getpayslipList(fpayload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
-        if (response.success && Array.isArray(response.data.pendingRecords)) {
+        if (response.success ) {
           this.EmpLists = response.data.paidRecords;
+          this.pageAttributes.totalPages = response.totalPages;
 
-        } else {
-          alert(response.message || 'Failed to fetch  list.');
-        }
+        } 
       }
     );
   }
@@ -157,15 +163,9 @@ export class PayslipRecordsComponent {
     this.masterDataService.payslips('?EffPeriod=Nov-2024&EmpId=' + obj_clicked.employeeId + '').subscribe(
       (response: any) => {
         console.log('API Response:', response);
-        if (response.success && Array.isArray(response.data.payslipRecords)) {
+        if (response.success) {
           this.payslips = response.data.payslipRecords;
-        } else {
-          alert(response.message || 'Failed to fetch Department list.');
         }
-      },
-      (error) => {
-        console.error('Error fetching Department list:', error);
-        alert('An error occurred while fetching the Department list.');
       }
     );
   }

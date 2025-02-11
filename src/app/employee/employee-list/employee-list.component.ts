@@ -259,34 +259,28 @@ export class EmployeeListComponent {
           this.pageAttributes.totalPages = response.totalPages;
           // Loop through each employee and process their qualifications
           this.Employees.forEach((employee: any) => {
-
-            // Format qualifications if requiredQualifications is available
-            if (employee.requiredQualifications && Array.isArray(employee.requiredQualifications)) {
-              employee.formattedQualifications = employee.requiredQualifications
-                .map((qualification: any) => `${qualification.degreeName}`)
+            // Format qualifications if requiredQualifications exist
+            if (Array.isArray(employee.requiredQualifications)) {
+              const degrees = employee.requiredQualifications
+                .map((q: any) => q.degreeName)
+                .filter((name: string) => name) // Remove empty degree names
                 .join(', ');
-                var minimumExpYears = employee.minimumExpYears > 0 ?employee.minimumExpYears:'';
-              employee.formattedQualifications+=  ' & '+ minimumExpYears;
+          
+              const experience = employee.minimumExpYears > 0 ? ` & ${employee.minimumExpYears} Years` : '';
+          
+              employee.formattedQualifications = degrees ? `${degrees}${experience}` : '';
             } else {
               employee.formattedQualifications = '';
             }
-
-            // Initialize the notMatchedQualification flag to false
-            employee.notMatchedQualification = false;
-
-            // Loop through requiredQualifications to check match
-            if (employee.requiredQualifications && employee.requiredQualifications.length > 0) {
-              for (const qualification of employee.requiredQualifications) {
-                if (qualification.degreeId === employee.degreeId) {
-                  if (employee.minimumExpYears > employee.experience) {
-                    employee.notMatchedQualification = true;
-                  }
-                  break;  // Break after finding the first match
-                }
-              }
-            }
+          
+            // Check qualification match
+            employee.notMatchedQualification = employee.requiredQualifications?.some(
+              (q: any) => q.degreeId === employee.degreeId && employee.minimumExpYears > employee.experience
+            ) || false;
+          
             console.log('Status', employee.notMatchedQualification);
           });
+          
           
 
 

@@ -1,27 +1,28 @@
 <div class="Department-list-container">
-    <h3>Payslip Not Generated Employees:
-      {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
-    </h3>
+  <h3>Payslip Not Generated Employees:
+    {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
+  </h3>
 
-    <div class="cards-filter">
-      <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-       (triggerParentFunction)="getEmployeeList()">
-      </app-filter>
-      <div class="row">
-      <div  class="col-md-4">
+  <div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+      (triggerParentFunction)="getEmployeeList()">
+    </app-filter>
+    <div class="row">
+      <div class="col-md-4">
         <div class="form-group">
-          <button *ngIf="false"  style="float:left" class="btn btn-primary" (click)="search()">Search</button>
-        </div>      
-    </div>
-    <div  class="col-md-4">
-        <div class="form-group">
-          <button style="float: left;" class="btn btn-success" (click)="submit_vendor_wise()">Generate Payslip All</button>
+          <button *ngIf="false" style="float:left" class="btn btn-primary" (click)="search()">Search</button>
         </div>
-      
-    </div>
-  </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <button style="float: left;" class="btn btn-success" (click)="submit_vendor_wise()">Generate Payslip
+            All</button>
+        </div>
 
-    
+      </div>
+    </div>
+
+
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -29,13 +30,13 @@
           <!-- <th>Employee ID</th> -->
           <th>Employee Name</th>
           <th>Employee Code</th>
-          <th>Designation Name</th>  
-          <th>Unit Name</th>  
-          <th>Vendor Name</th>    
-          <th>Department Name</th>      
+          <th>Designation Name</th>
+          <th>Unit Name</th>
+          <th>Vendor Name</th>
+          <th>Department Name</th>
           <!-- <th>Category Name</th>       -->
-        
-          <th>Generate</th>    
+
+          <th>Generate</th>
         </tr>
       </thead>
       <tbody>
@@ -43,84 +44,73 @@
           <td>
             {{ ((pageAttributes.currentPage - 1) * pageAttributes.itemsPerPage) + (i + 1) }}
           </td>
-            <!-- <td>{{ department.employeeId  }}</td> -->
-            <td>{{ obj.employeeName }}</td>
-            <td>{{ obj.employeeCode }}</td>
-            <td>{{ obj.designationName }}</td>
-            <td>{{ obj.companyFName }}</td>
-            <td>LipiInterior</td>
-            <td>{{ obj.departmentFName }}</td>
-            <!-- <td>{{ obj.categoryFName }} </td> -->
-           
-            <td >
-              <button  class="btn btn-primary" type="button" (click)="generate_payslip(obj)">
-               Generate Slip
-            </button></td>
-          </tr>          
+          <!-- <td>{{ department.employeeId  }}</td> -->
+          <td>{{ obj.employeeName }}</td>
+          <td>{{ obj.employeeCode }}</td>
+          <td>{{ obj.designationName }}</td>
+          <td>{{ obj.companyFName }}</td>
+          <td>LipiInterior</td>
+          <td>{{ obj.departmentFName }}</td>
+          <!-- <td>{{ obj.categoryFName }} </td> -->
+
+          <td>
+            <button class="btn btn-primary" type="button" (click)="generate_payslip(obj)">
+              Generate Slip
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
-    <app-server-pagination  [pageAttributes]="pageAttributes" 
-    (triggerParentFunction)="paginate()">
-  </app-server-pagination>
+    <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getEmployeeList()">
+    </app-server-pagination>
   </div>
   <div class="container mt-4">
-   
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Employee Pay Slips</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Pay Record Id</th>
-                    <th>Generated Date</th>
-                    <th>Effective Period</th>  
-                    <th>Total Earinings</th>      
-                    <th>Total Deductions</th>      
-                    <th>Gross Salary</th>      
-                    <th>Net Salary</th>  
-                    <th>View Slip</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let department of payslips; let i = index">
-                      <td>{{ i + 1 }}</td>
-                      <td>{{ department.payslipRecordId  }}</td>
-                      <td>{{ department.payslipDate }}</td>
-                      <td>{{ department.effectivePeriod }}</td>
-                      <td>{{ department.totalEarnings }}</td>
-                      <td>{{ department.totalDeductions }}</td>
-                      <td>{{ department.grossSalary }} </td>
-                      <td>{{ department.netSalary }} </td>
-                      <td><a class="btn btn-primary"  data-bs-dismiss="modal"  type="button" [routerLink]="['/payslip', department.payslipRecordId]" [queryParams]="{ empId: employee.employeeId }">
-                          View Slip
-                      </a></td>
-                    </tr>          
-                </tbody>
-              </table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Pay Record Id</th>
+                  <th>Generated Date</th>
+                  <th>Effective Period</th>
+                  <th>Total Earinings</th>
+                  <th>Total Deductions</th>
+                  <th>Gross Salary</th>
+                  <th>Net Salary</th>
+                  <th>View Slip</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let department of payslips; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ department.payslipRecordId }}</td>
+                  <td>{{ department.payslipDate }}</td>
+                  <td>{{ department.effectivePeriod }}</td>
+                  <td>{{ department.totalEarnings }}</td>
+                  <td>{{ department.totalDeductions }}</td>
+                  <td>{{ department.grossSalary }} </td>
+                  <td>{{ department.netSalary }} </td>
+                  <td><a class="btn btn-primary" data-bs-dismiss="modal" type="button"
+                      [routerLink]="['/payslip', department.payslipRecordId]"
+                      [queryParams]="{ empId: employee.employeeId }">
+                      View Slip
+                    </a></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>            
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
-  

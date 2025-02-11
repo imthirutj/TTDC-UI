@@ -60,9 +60,9 @@
           <button (click)="openPassbookModal(d)" class="btn btn-primary" type="button">
             <span *ngIf="userAccessLevel== UserType.MANAGER ||
                   userAccessLevel== UserType.VENDOR ||
-                   userAccessLevel== UserType.STATE_ADMIN"> 
+                   userAccessLevel== UserType.STATE_ADMIN">
               View Passbook</span>
-           <span *ngIf="userAccessLevel== UserType.EMPLOYEE"> View/Upload Passbook</span>
+            <span *ngIf="userAccessLevel== UserType.EMPLOYEE"> View/Upload Passbook</span>
           </button>
         </td>
       </tr>
@@ -72,7 +72,7 @@
         <td colspan="7" class="text-right"><strong>Total:</strong></td>
         <td>{{ getTotal('basicRate') | currency:'INR' }}</td>
         <td>{{ getTotal('hra') | currency:'INR' }}</td>
- 
+
         <td>{{ getTotal('epfEmployeeContribution') | currency:'INR' }}</td>
         <td>{{ getTotal('esiEmployeeContribution') | currency:'INR' }}</td>
         <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
@@ -82,17 +82,15 @@
       </tr>
     </tfoot>
   </table>
+  <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getEmployeeList()">
+  </app-server-pagination>
+
 </div>
 
 
 <!-- Certificate Modal -->
-<app-common-dialog 
-[showDialog]="passbookModal.show "
- [dialogTitle]="passbookModal.title  "
-  [showCloseIcon]="true" 
-  [showSubmitButton]="true"
-   (submitDialog)="uploadPassbook()" 
-   (closeDialog)="closePassbookModal()">
+<app-common-dialog [showDialog]="passbookModal.show " [dialogTitle]="passbookModal.title  " [showCloseIcon]="true"
+  [showSubmitButton]="true" (submitDialog)="uploadPassbook()" (closeDialog)="closePassbookModal()">
 
   <div *ngIf="userAccessLevel== UserType.EMPLOYEE" class="mb-3">
     <label for="certificateImage" class="form-label">Upload Passbook</label>
@@ -109,7 +107,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr >
+      <tr>
         <td>
           <span>1</span>
         </td>
@@ -123,6 +121,7 @@
       </tr>
     </tbody>
   </table>
+
 
 </app-common-dialog>
 
