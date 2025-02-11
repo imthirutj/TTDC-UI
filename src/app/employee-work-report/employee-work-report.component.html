@@ -41,7 +41,7 @@
         </div>
 
         <!--Assign Weekoff button-->
-        <button *ngIf="!isAssignWeekOff" class="btn btn-primary" (click)="assignWeekoff()">Assign
+        <button *ngIf="!isAssignWeekOff && userAccessLevel != UserType.EMPLOYEE" class="btn btn-primary" (click)="assignWeekoff()">Assign
             Weekoff
         </button>
         <button *ngIf="isAssignWeekOff" class="btn btn-primary" (click)="submit()">
