@@ -186,8 +186,9 @@
 
     </div>
 
-    <!--Submit-->
-    <div class="d-flex justify-content-between">
+   <div *ngIf="userAccessLevel != UserType.EMPLOYEE">
+     <!--Submit-->
+     <div class="d-flex justify-content-between">
         <button *ngIf="false" class="btn btn-primary" (click)="submit()">Update Attendance</button>
         <!-- Page Size Dropdown -->
         <div class="d-flex align-items-center">
@@ -206,6 +207,7 @@
 
     <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="fetchEmployeeStatus()">
     </app-server-pagination>
+   </div>
 
     <!--Biometric full card -->
     <app-common-dialog [showDialog]="modalAttr.show" [dialogTitle]="modalAttr.title" [showCloseIcon]="true"
