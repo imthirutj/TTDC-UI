@@ -41,7 +41,8 @@
         </div>
 
         <!--Assign Weekoff button-->
-        <button *ngIf="!isAssignWeekOff && userAccessLevel != UserType.EMPLOYEE" class="btn btn-primary" (click)="assignWeekoff()">Assign
+        <button *ngIf="!isAssignWeekOff && userAccessLevel != UserType.EMPLOYEE" class="btn btn-primary"
+            (click)="assignWeekoff()">Assign
             Weekoff
         </button>
         <button *ngIf="isAssignWeekOff" class="btn btn-primary" (click)="submit()">
@@ -91,16 +92,15 @@
                         <p>
                             <b>Leave:</b> {{ employee.reports.leaveApprovedDays }},
                             <!--Hide OD-->
-                            <span >
-                                <b >OD:</b> {{ employee.reports.odApprovedDays }}
+                            <span>
+                                <b>OD:</b> {{ employee.reports.odApprovedDays }}
                             </span>
                         </p>
-                        
+
                         <button *ngIf="isAdjustable(employee) && 
                             userAccessLevel != UserType.EMPLOYEE &&
-                            !employee.hasSalaryGenerated"
-                            (click)="openAdjustModal(employee)" style="background-color: #a60015;"
-                            class="btn btn-secondary">Adjust</button>
+                            !employee.hasSalaryGenerated" (click)="openAdjustModal(employee)"
+                            style="background-color: #a60015;" class="btn btn-secondary">Adjust</button>
 
                         <p *ngIf="employee.hasSalaryGenerated">Salary Already generated</p>
                         <i class="fas fa-info-circle" (click)="openEmployeeReportModal(employee)"></i>
@@ -119,8 +119,8 @@
                             {{(employee.dates[date].status)}}
                         </p>
 
-                        <div class="time-card" (click)="openModal(employee.dates[date], employee)" style="text-align: left;"
-                            *ngIf="employee.dates[date]?.biometricData?.length">
+                        <div class="time-card" (click)="openModal(employee.dates[date], employee)"
+                            style="text-align: left;" *ngIf="employee.dates[date]?.biometricData?.length">
                             <!-- Show the first biometric log -->
                             <p *ngIf="employee.dates[date].biometricData[0]?.type" class="mb-1">
                                 <b>{{ employee.dates[date].biometricData[0]?.type }}</b>: {{
@@ -151,8 +151,7 @@
                             <div *ngIf="employee.dates[date]?.leaveRequested">
                                 <b>Leave: {{ reqStatus[employee.dates[date].leaveRequestStatus] }}</b>
                                 <button [routerLink]="['/Leaveapprovalview']"
-                                    [queryParams]="{leaveRequest_Id: employee.dates[date].leaveRequestedId}"
-                                    *ngIf="userAccessLevel != UserType.EMPLOYEE 
+                                    [queryParams]="{leaveRequest_Id: employee.dates[date].leaveRequestedId}" *ngIf="userAccessLevel != UserType.EMPLOYEE 
                                     && employee.dates[date].leaveRequestStatus == 0
                                     && !employee.hasSalaryGenerated"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
@@ -160,18 +159,17 @@
                             <!-- Hide OD -->
                             <div *ngIf="false && employee.dates[date]?.odRequested">
                                 <b>OD: {{ reqStatus[employee.dates[date].odRequestStatus] }}</b>
-                                <button
-                                    *ngIf="userAccessLevel != UserType.EMPLOYEE  
+                                <button *ngIf="userAccessLevel != UserType.EMPLOYEE  
                                     && employee.dates[date].odRequestStatus == 0
-                                    && !employee.hasSalaryGenerated"
-                                    [routerLink]="['/odslipapprovalview']"
+                                    && !employee.hasSalaryGenerated" [routerLink]="['/odslipapprovalview']"
                                     [queryParams]="{odslip_id: employee.dates[date].odRequestId}"
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                         </div>
 
                         <div>
-                            <div *ngIf="false" (click)="openModal(employee.dates[date], employee)" class="triangle"></div>
+                            <div *ngIf="false" (click)="openModal(employee.dates[date], employee)" class="triangle">
+                            </div>
                             <!-- <i class="fas fa-info-circle" (click)="openModal(employee.dates[date])"></i> -->
                             <input *ngIf="isAssignWeekOff" type="checkbox" [(ngModel)]="employee.dates[date].selected"
                                 (change)="onRowCheckboxChange(date, employee)" />
@@ -186,28 +184,28 @@
 
     </div>
 
-   <div *ngIf="userAccessLevel != UserType.EMPLOYEE">
-     <!--Submit-->
-     <div class="d-flex justify-content-between">
-        <button *ngIf="false" class="btn btn-primary" (click)="submit()">Update Attendance</button>
-        <!-- Page Size Dropdown -->
-        <div class="d-flex align-items-center">
-            <label for="pageSize" class="me-2">Page Size:</label>
-            <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize">
-                <option [value]="10">10</option>
-                <option [value]="20">20</option>
-                <option [value]="30">30</option>
-                <option [value]="50">50</option>
-                <option [value]="100">100</option>
-                <option [value]="120">120</option>
-            </select>
+    <div *ngIf="userAccessLevel != UserType.EMPLOYEE">
+        <!--Submit-->
+        <div class="d-flex justify-content-between">
+            <button *ngIf="false" class="btn btn-primary" (click)="submit()">Update Attendance</button>
+            <!-- Page Size Dropdown -->
+            <div class="d-flex align-items-center">
+                <label for="pageSize" class="me-2">Page Size:</label>
+                <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize">
+                    <option [value]="10">10</option>
+                    <option [value]="20">20</option>
+                    <option [value]="30">30</option>
+                    <option [value]="50">50</option>
+                    <option [value]="100">100</option>
+                    <option [value]="120">120</option>
+                </select>
+            </div>
         </div>
+
+
+        <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="fetchEmployeeStatus()">
+        </app-server-pagination>
     </div>
-
-
-    <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="fetchEmployeeStatus()">
-    </app-server-pagination>
-   </div>
 
     <!--Biometric full card -->
     <app-common-dialog [showDialog]="modalAttr.show" [dialogTitle]="modalAttr.title" [showCloseIcon]="true"
@@ -243,11 +241,9 @@
                 <h5 class="card-title">Leave Details</h5>
                 <div *ngIf="modalAttr.employeeDateDetails.leaveRequested">
                     <p><b>Leave Requested: {{ reqStatus[modalAttr.employeeDateDetails.leaveRequestStatus] }}</b></p>
-                    <button
-                        *ngIf="userAccessLevel != UserType.EMPLOYEE  
+                    <button *ngIf="userAccessLevel != UserType.EMPLOYEE  
                         && modalAttr.employeeDateDetails.leaveRequestStatus == 0
-                         && !modalAttr.hasSalaryGenerated"
-                        [routerLink]="['/Leaveapprovalview']"
+                         && !modalAttr.hasSalaryGenerated" [routerLink]="['/Leaveapprovalview']"
                         [queryParams]="{leaveRequest_Id: modalAttr.employeeDateDetails.leaveRequestedId}"
                         class="btn btn-primary">Approve</button>
                 </div>
@@ -263,11 +259,9 @@
                 <h5 class="card-title">OD Details</h5>
                 <div *ngIf="modalAttr.employeeDateDetails.odRequested">
                     <b>OD Requested: {{ reqStatus[modalAttr.employeeDateDetails.odRequestStatus] }}</b>
-                    <button
-                        *ngIf="false && userAccessLevel != UserType.EMPLOYEE 
+                    <button *ngIf="false && userAccessLevel != UserType.EMPLOYEE 
                          && modalAttr.employeeDateDetails.odRequestStatus == '0'
-                         && !modalAttr.hasSalaryGenerated"
-                        [routerLink]="['/odslipapprovalview']"
+                         && !modalAttr.hasSalaryGenerated" [routerLink]="['/odslipapprovalview']"
                         [queryParams]="{odslip_id: modalAttr.employeeDateDetails.odRequestId}"
                         class="btn btn-primary">Approve</button>
                 </div>
@@ -372,23 +366,30 @@
                 <thead class="sticky-header">
                     <tr style="cursor: pointer;">
                         <th>#</th>
-                        <th (click)="sortData('date')">Day <span>{{ sortBy === 'date' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
-                        <th (click)="sortData('status')">Status <span>{{ sortBy === 'status' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
-                        <th (click)="sortData('biometricData')">Biometric <span>{{ sortBy === 'biometricData' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
-                        <th (click)="sortData('action')">Action <span>{{ sortBy === 'action' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
-                        <th (click)="sortData('isCompensated')">Is Compensated? <span>{{ sortBy === 'isCompensated' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
-                        <th (click)="sortData('compensatedDate')">Compensate Date <span>{{ sortBy === 'compensatedDate' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
-                        <th (click)="sortData('remarks')">Remarks <span>{{ sortBy === 'remarks' ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('date')">Day <span>{{ sortBy === 'date' ? (sortOrder === 'asc' ? '↑' :
+                                '↓') : '' }}</span></th>
+                        <th (click)="sortData('status')">Status <span>{{ sortBy === 'status' ? (sortOrder === 'asc' ?
+                                '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('biometricData')">Biometric <span>{{ sortBy === 'biometricData' ?
+                                (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('action')">Action <span>{{ sortBy === 'action' ? (sortOrder === 'asc' ?
+                                '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('isCompensated')">Is Compensated? <span>{{ sortBy === 'isCompensated' ?
+                                (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('compensatedDate')">Compensate Date <span>{{ sortBy === 'compensatedDate'
+                                ? (sortOrder === 'asc' ? '↑' : '↓') : '' }}</span></th>
+                        <th (click)="sortData('remarks')">Remarks <span>{{ sortBy === 'remarks' ? (sortOrder === 'asc' ?
+                                '↑' : '↓') : '' }}</span></th>
                     </tr>
                 </thead>
-                
+
                 <tbody>
                     <tr *ngFor="let entry of absentWeekOffHolidayData; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>
                             <span>
                                 {{ entry.date | date: 'dd MMM yyyy' }} - {{ entry.date | date: 'EEE' }}
-                            
+
                             </span>
                             <p *ngIf="entry.workingHour>0">Total Hours: {{ entry.workingHour }}</p>
                         </td>
@@ -441,13 +442,15 @@
                             <span *ngIf="entry.newStatus === 'PRESENT'">
                                 <!-- Radio Buttons -->
                                 <label>
-                                  <input type="radio" name="compensated-{{entry.date}}" [(ngModel)]="entry.isCompensated" value="NO" /> No
+                                    <input type="radio" name="compensated-{{entry.date}}"
+                                        [(ngModel)]="entry.isCompensated" value="NO" /> No
                                 </label>
                                 <label>
-                                  <input type="radio" name="compensated-{{entry.date}}" [(ngModel)]="entry.isCompensated" value="YES" /> Yes
+                                    <input type="radio" name="compensated-{{entry.date}}"
+                                        [(ngModel)]="entry.isCompensated" value="YES" /> Yes
                                 </label>
-                              </span>
-                              
+                            </span>
+
 
                             <span *ngIf="entry.hasOverwrited !=1 && entry.newStatus!='PRESENT'">
                                 -
@@ -571,28 +574,29 @@
                         </thead>
                         <tbody *ngIf="compensatedRequestedDays.length > 0">
                             <tr *ngFor="let entry of compensatedRequestedDays">
-                                <td>   {{ entry.date | date: 'dd MMM yyyy' }} - {{  entry.date | date: 'EEE' }}</td>
-                                <td>   {{ entry.compensatedDate| date: 'dd MMM yyyy' }} - {{  entry.compensatedDate | date: 'EEE' }}</td>
+                                <td> {{ entry.date | date: 'dd MMM yyyy' }} - {{ entry.date | date: 'EEE' }}</td>
+                                <td> {{ entry.compensatedDate| date: 'dd MMM yyyy' }} - {{ entry.compensatedDate | date:
+                                    'EEE' }}</td>
                                 <td>
-                                    {{ entry.compensatedStatus == 0 ? 'Pending' : entry.compensatedStatus == 1 ? 'Approved'
+                                    {{ entry.compensatedStatus == 0 ? 'Pending' : entry.compensatedStatus == 1 ?
+                                    'Approved'
                                     : 'Rejected' }}
                                 </td>
                                 <td>{{ entry.compensateEmployeeRemarks }}</td>
                                 <td>
-                                    <textarea
-                                    *ngIf="entry.compensatedStatus == 0"
-                                     [(ngModel)]="entry.compensateManagerRemarks" class="form-control">
+                                    <textarea *ngIf="entry.compensatedStatus == 0"
+                                        [(ngModel)]="entry.compensateManagerRemarks" class="form-control">
                                     </textarea>
 
                                     <p></p>
                                 </td>
-                                <td >
+                                <td>
                                     <span *ngIf="entry.compensatedStatus == 0">
-                                        <button (click)="updateCompensateRequest(entry,1)" class="btn btn-primary" >
+                                        <button (click)="updateCompensateRequest(entry,1)" class="btn btn-primary">
                                             <!--Tick icon-->
                                             <i class="fas fa-check"></i>
                                         </button>
-                                        <button (click)="updateCompensateRequest(entry,2)" class="btn btn-primary" >
+                                        <button (click)="updateCompensateRequest(entry,2)" class="btn btn-primary">
                                             <!--Cross icon-->
                                             <i class="fas fa-times"></i>
                                         </button>
