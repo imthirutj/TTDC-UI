@@ -137,6 +137,20 @@
 
   <div class="container mt-4">
     <!-- Card 1: Personal Details -->
+
+    <div>
+      <label>
+        Active:
+      </label>
+      <label class="switch">
+        
+        <input type="checkbox" [checked]="modal.employee.recordStatus == 1" (change)="toggleRecordStatus(modal.employee)">
+        <span class="slider round"></span>
+      </label>
+      
+      
+      
+    </div>
     <div class="card mb-3">
       <div class="card-header bg-secondary text-white">
         Personal Details

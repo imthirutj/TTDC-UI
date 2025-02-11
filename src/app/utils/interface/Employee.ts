@@ -31,6 +31,7 @@ export class Employee {
     employementType: any;
     totalExperience: any;
     requiredExperience: any;
+    recordStatus:number;
 
     constructor() {
         this.employeeId = 0;
@@ -65,5 +66,6 @@ export class Employee {
         this.loginPassword = '12345';
         this.totalExperience = '';
         this.requiredExperience = '';
+        this.recordStatus = 1;
     }
 }

@@ -490,4 +490,10 @@ export class EmployeeListComponent {
       }
     );
   }
+
+  toggleRecordStatus(employee:any) {
+    // Toggle the value between 1 and 0
+    employee.recordStatus = employee.recordStatus === 1 ? 0 : 1;
+  }
+  
 }
