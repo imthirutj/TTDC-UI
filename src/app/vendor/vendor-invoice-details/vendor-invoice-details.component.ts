@@ -44,6 +44,8 @@ export class VendorInvoiceDetailsComponent {
       totalNetAmount: 0
     };
 
+  totServiceCharges:number =0;
+
   vendorDetails: any={};
   vendorInvoiceDetails = {
     cumulativeInvoice: {
@@ -53,6 +55,7 @@ export class VendorInvoiceDetailsComponent {
         totalGrossSalary: number;
         totalWages:number;
         totalNetSalary: number;
+        totalServiceCharges:number;
       }>,
       subTotalSalary: 0,
       subTotalEmpcount: 0,
@@ -149,22 +152,6 @@ export class VendorInvoiceDetailsComponent {
 
         this.calculateTotals();
       });
-      // this.vendorService.viewVendorInvoiceDetails(payload).subscribe((response) => {
-      //   console.log('Vendor Invoice Details:', response);
-      //   this.vendorInvoiceDetails = response.data.invoice;
-      //   this.vendorDetails = {
-      //     vendorName: response.data.vendorName,
-      //     vendorId: response.data.vendorId,
-      //     gstin : response.data.gstin,
-      //     panNo: response.data.panNo,
-      //     emailId: response.data.emailId,
-      //     address: response.data.address,
-      //     contactNo: response.data.contactNo,
-      //     updateDate: response.data.updateDate,
-      //     vendorInvoiceID: response.data.vendorInvoiceID
-      //   }
-      //   this.calculateTotals();
-      // });
     }
     else{
       this.dataService.showSnackBar('Invalid URL');

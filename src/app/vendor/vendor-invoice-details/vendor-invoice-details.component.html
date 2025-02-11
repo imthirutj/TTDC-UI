@@ -89,13 +89,19 @@
                         <td>{{i+1}}</td>
                         <td>{{invoiceRecords.designationName}}</td>
                         <td>{{invoiceRecords.employeeCount}}</td>
-                        <td>{{invoiceRecords.totalWages | currency:'INR'}}</td>
+                        <td>{{(invoiceRecords.totalWages -invoiceRecords.totalServiceCharges) | currency:'INR'}}</td>
                     </tr>
 
                     <tr>
                         <td colspan="2">Sub Total</td>
                         <td>{{vendorInvoiceDetails.cumulativeInvoice.subTotalEmpcount}}</td>
-                        <td>{{vendorInvoiceDetails.cumulativeInvoice.totalWages | currency:'INR'}}</td>
+                        <td>{{vendorInvoiceDetails.cumulativeInvoice.totalWages-
+                                vendorInvoiceDetails.cumulativeInvoice.serviceCharge  | currency:'INR'}}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="text-end">Service Charges</td>
+                        <td>{{vendorInvoiceDetails.cumulativeInvoice.serviceCharge  | currency:'INR'}}</td>
                     </tr>
 
                     

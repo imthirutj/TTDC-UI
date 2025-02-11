@@ -49,6 +49,16 @@
         {{ companyVendors.invoiceGenerated ? 'Invoice Generated' : 'Invoice Not Generated' }}
       </p>
      
+      <p *ngIf="companyVendors.invoiceGenerated" [ngClass]="{
+        'invoice-generated': companyVendors.invoiceGenerated && 
+        companyVendors.paymentStatus =='PAID',
+        'invoice-not-generated': !(companyVendors.invoiceGenerated && 
+        companyVendors.paymentStatus =='PAID')
+    }" class="invoice-label">
+            {{ companyVendors.invoiceGenerated && 
+            companyVendors.paymentStatus =='PAID'
+            ? 'Payment Paid To Vendor' : 'Payment Not Paid To Vendor' }}
+          </p>
 
     </div>
 
@@ -114,12 +124,12 @@
     <div class="row">
       <div class="col-md-6">
         <b for="totalPayableAmount">Total:</b>
-        <span>{{selectedVendor.totalPayableAmount}}</span>
+        <span>{{selectedVendor.totalWages | currency:'INR'}}</span>
 
       </div>
       <div class="col-md-6">
         <b for="gst">GST:</b>
-        <span>{{selectedVendor.gst}}</span>
+        <span>{{selectedVendor.gst | currency:'INR'}}</span>
 
       </div>
     </div>
@@ -127,12 +137,12 @@
     <div class="row">
       <div class="col-md-6">
         <b for="serviceCharge">Service Charge:</b>
-        <span>{{selectedVendor.serviceCharge}}</span>
+        <span>{{selectedVendor.serviceCharge | currency:'INR'}}</span>
 
       </div>
       <div class="col-md-6">
         <b for="tds">TDS:</b>
-        <span>{{selectedVendor.tds}}</span>
+        <span>{{selectedVendor.tds | currency:'INR'}}</span>
 
       </div>
     </div>
@@ -140,7 +150,7 @@
     <div class="row">
       <div class="col-md-6">
         <b for="netAmount">Total Amount:</b>
-        <span>{{selectedVendor.netAmount}}</span>
+        <span>{{selectedVendor.netAmount  | currency:'INR'}}</span>
 
       </div>
     </div>
