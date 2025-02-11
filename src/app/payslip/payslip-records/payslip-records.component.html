@@ -23,13 +23,17 @@
         <th>Unit Name</th>
         <th>Vendor Name</th>
         <th>Designation Name</th>
-        <th>Total Working Days</th>
-        <th>Basic Salary</th>
-        <th>HRA</th>
-        <th>Employee PF cont.</th>
-        <th>Employee ESI cont.</th>
-        <th>Net Salary</th>
+
+        <th>No.Of Days Worked</th>
+        <th>Payable Wages per person per month</th>
+
         <th>Gross Salary</th>
+  
+        <th>Employee PF 12% on 70%</th>
+        <th>Employee ESI 0.75% </th>
+
+        <th>Salary Paid</th>
+
         <th>View Slips</th>
         <th>Passbook</th>
       </tr>
@@ -41,15 +45,17 @@
         <td>{{ d.employeeName }}</td>
         <td>{{ d.employeeCode }}</td>
         <td>{{ d.companyFName }}</td>
-        <td>LipiInterior</td>
+        <td>{{d.vendorName}}</td>
         <td>{{ d.designationName }}</td>
         <td>{{ d.presentDays }}</td>
-        <td>{{ d.basicRate | currency:'INR' }}</td>
-        <td>{{ d.hra | currency:'INR' }}</td>
+        <td>{{ d.totalEmpCost | currency:'INR'}}</td>
+
+        <td>{{ d.grossSalary | currency:'INR' }}</td>
+
         <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
         <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
+
         <td>{{ d.netSalary | currency:'INR' }}</td>
-        <td>{{ d.grossSalary | currency:'INR' }}</td>
         <td>
           <button class="btn btn-primary" type="button" [routerLink]="['/payslip', d.payslipRecordId]"
             [queryParams]="{ empId: d.employeeId }">
@@ -70,13 +76,14 @@
     <tfoot *ngIf="EmpLists.length > 0">
       <tr>
         <td colspan="7" class="text-right"><strong>Total:</strong></td>
-        <td>{{ getTotal('basicRate') | currency:'INR' }}</td>
-        <td>{{ getTotal('hra') | currency:'INR' }}</td>
+        <td>{{ getTotal('totalEmpCost') | currency:'INR' }}</td>
+
+        <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
 
         <td>{{ getTotal('epfEmployeeContribution') | currency:'INR' }}</td>
         <td>{{ getTotal('esiEmployeeContribution') | currency:'INR' }}</td>
+
         <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
-        <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
         <td></td>
         <td></td>
       </tr>
