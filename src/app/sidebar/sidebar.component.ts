@@ -117,19 +117,19 @@ export class SidebarComponent {
         label: 'Designation List', 
         icon: 'fa-solid fa-id-badge', 
         route: '/designation', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER] 
       },
       { 
         label: 'Degree List', 
         icon: 'fa-solid fa-graduation-cap', 
         route: '/degree', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR]  
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       },
       { 
         label: 'Designation Qualification', 
         icon: 'fa-solid fa-tasks', 
         route: '/DesignationQualification', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
       },
       // {
       //   label: 'Shift Management',
