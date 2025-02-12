@@ -247,7 +247,7 @@ export class EmployeeListComponent {
 
   getEmployeeList(): void {
     const payload = this.dataService.getPayloadValue(this.filters);
-    const fpayload={
+    const fpayload = {
       ...payload,
       pageNumber: this.pageAttributes.currentPage,
     }
@@ -265,23 +265,37 @@ export class EmployeeListComponent {
                 .map((q: any) => q.degreeName)
                 .filter((name: string) => name) // Remove empty degree names
                 .join(', ');
-          
+
               const experience = employee.minimumExpYears > 0 ? ` & ${employee.minimumExpYears} Years` : '';
-          
+
               employee.formattedQualifications = degrees ? `${degrees}${experience}` : '';
             } else {
               employee.formattedQualifications = '';
             }
-          
-            // Check qualification match
-            employee.notMatchedQualification = employee.requiredQualifications?.some(
-              (q: any) => q.degreeId === employee.degreeId && employee.minimumExpYears > employee.experience
-            ) || false;
-          
+
+            // Check if the employee's qualifications do not match the required qualifications
+            if (employee.requiredQualifications && employee.requiredQualifications.length > 0
+              && employee.degreeId && employee.experience
+            ) {
+              employee.notMatchedQualification = true;
+              // Check if employee.degreeId exists in the requiredQualifications list
+              const hasMatchingDegree = employee.requiredQualifications.some(
+                (q: any) => q.degreeId === employee.degreeId
+              );
+
+              // If there is a matching degree and experience is sufficient, set notMatchedQualification to false
+              if (hasMatchingDegree && employee.experience >= employee.minimumExpYears) {
+                employee.notMatchedQualification = false;
+              }
+            } else {
+              employee.notMatchedQualification = true;
+            }
+
+
             console.log('Status', employee.notMatchedQualification);
           });
-          
-          
+
+
 
 
         } else {
@@ -485,9 +499,9 @@ export class EmployeeListComponent {
     );
   }
 
-  toggleRecordStatus(employee:any) {
+  toggleRecordStatus(employee: any) {
     // Toggle the value between 1 and 0
     employee.recordStatus = employee.recordStatus === 1 ? 0 : 1;
   }
-  
+
 }
