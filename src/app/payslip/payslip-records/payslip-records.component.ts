@@ -235,6 +235,34 @@ export class PayslipRecordsComponent {
         } 
       });
   }
+
+
+  
+  toggleOtherDeductions(d: any) {
+    d.isEditing = true;
+    d.oldOtherDeductions = d.otherDeductions; // Store old value for cancel functionality
+  }
+  cancelOtherDeductionsEdit(d: any) {
+    d.otherDeductions = d.oldOtherDeductions; // Restore original value
+    d.isEditing = false;
+  }
+
+  updateOtherDeductions(employee: any) {
+    var payload = {
+      PayslipRecordId: employee.payslipRecordId,
+      OtherDeductions: employee.otherDeductions
+    };
+    this.masterDataService.updateOtherDeductions(payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('Other Deductionsupdated successfully.');
+          this.getEmployeeList();
+        }
+      }
+    );
+  }
+
   
 
 }

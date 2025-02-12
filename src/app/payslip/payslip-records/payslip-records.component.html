@@ -28,6 +28,8 @@
         <th>Payable Wages per person per month</th>
 
         <th>Gross Salary</th>
+
+        <th>Other Deductions</th>
   
         <th>Employee PF 12% on 70%</th>
         <th>Employee ESI 0.75% </th>
@@ -51,6 +53,24 @@
         <td>{{ d.totalEmpCost | currency:'INR'}}</td>
 
         <td>{{ d.grossSalary | currency:'INR' }}</td>
+
+        <td>
+          <ng-container *ngIf="d.isEditing">
+            <input type="number" [(ngModel)]="d.otherDeductions" class="form-control" />
+            <button class="btn btn-success btn-sm" (click)="updateOtherDeductions(d)">
+              <i class="fas fa-save"></i> <!-- Save Icon -->
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="cancelOtherDeductionsEdit(d)">
+              <i class="fas fa-times"></i> <!-- Close Icon -->
+            </button>
+          </ng-container>
+          <ng-container *ngIf="!d.isEditing">
+            {{ d.otherDeductions | currency: 'INR' }}
+            <button class="btn btn-warning btn-sm" (click)="toggleOtherDeductions(d)">
+              <i class="fas fa-edit"></i> <!-- Edit Icon -->
+            </button>
+          </ng-container>
+        </td>
 
         <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
         <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>

@@ -246,6 +246,11 @@ export class MasterDataService {
     return this.http.post(`${this.apiUrl}Payroll/InsertSalaryStructure?${queryParams}`, {});
   }
 
+  updateOtherDeductions(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.post(`${this.apiUrl}Payroll/UpdateOtherDeductions?${queryParams}`, {});
+  }
+
   getPassbooks(payload:any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(payload);
     return this.http.get(`${this.apiUrl}Employee/GetUploadedPassbook?${queryParams}`);
