@@ -3,7 +3,7 @@
 
   <div class="cards-filter">
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-      (triggerParentFunction)="fetchPayRecordsbyComp()">
+      (triggerParentFunction)="search()">
     </app-filter>
     <button (click)="this.dataService.downloadPDF('vendorPaymentTable')" class="btn btn-primary">
       Download as PDF
@@ -83,7 +83,9 @@
       <tbody>
         <tr *ngFor="let d of payRecords; let i = index">
 
-          <td>{{ i + 1 }}</td>
+          <td>
+            {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
+          </td>
           <!-- <td>{{ department.employeeId  }}</td> -->
           <td>{{ d.employeeName }}</td>
           <td>{{ d.employeeCode }}</td>
@@ -115,6 +117,26 @@
         </tr>
       </tfoot>
     </table>
+
+    <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="fetchPayRecords()">
+    </app-server-pagination>
+  
+    <div class="d-flex justify-content-between">
+      <!-- Page Size Dropdown -->
+      <div class="d-flex align-items-center">
+        <label for="pageSize" class="me-2">Page Size:</label>
+        <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize">
+          <option [value]="10">10</option>
+          <option [value]="20">20</option>
+          <option [value]="30">30</option>
+          <option [value]="50">50</option>
+          <option [value]="100">100</option>
+          <option [value]="120">120</option>
+          <option [value]="120">150</option>
+        </select>
+      </div>
+    </div>
+    
   </div>
 
   <app-common-dialog [showDialog]="isVendorModalOpen" [showCloseIcon]="true" [dialogTitle]="vendorPayment.title"

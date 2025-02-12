@@ -47,6 +47,12 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   vendorDetails:any ={};
 
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1,
+    pageSize:10
+  }
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -101,11 +107,13 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
+    this.pageAttributes.currentPage=1;
     this.search();
   }
 
   search() {
     this.fetchPayRecordsbyComp();
+    this.pageAttributes.currentPage=1;
     this.fetchPayRecords();
   }
 
@@ -161,9 +169,15 @@ export class VendorPaymentDetailsComponent implements OnInit {
       return;
     }
     const payload = this.dataService.getPayloadValue(this.filters);
-    this.masterDataService.getpayslipList(payload).subscribe((response: any) => {
+    const fpayload={
+      ...payload,
+      ...this.pageAttributes
+    }
+    this.payRecords = [];
+    this.masterDataService.getpayslipList(fpayload).subscribe((response: any) => {
       if (response.success) {
         this.payRecords = response.data.paidRecords;
+         this.pageAttributes.totalPages = response.totalPages;
       }
       else {
         this.payRecords = [];

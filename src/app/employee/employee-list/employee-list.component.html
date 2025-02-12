@@ -46,7 +46,7 @@
     <tbody>
       <tr *ngFor="let employee of Employees; let i = index">
         <td>
-          {{ i + 1 }}
+          {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
           <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, employee)">
             Edit
           </button>

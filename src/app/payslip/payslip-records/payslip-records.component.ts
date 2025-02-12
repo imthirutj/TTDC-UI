@@ -36,7 +36,8 @@ export class PayslipRecordsComponent {
   formData = new FormData();
   pageAttributes = {
     currentPage: 1,
-    totalPages: 1
+    totalPages: 1,
+    pageSize:10
   }
   filters: any = {
     selectedMonth: {
@@ -141,7 +142,7 @@ export class PayslipRecordsComponent {
     const fpayload = {
       ...payload,
       employeeCode: this.filters.employeeCode.value,
-      pageNumber: this.pageAttributes.currentPage,
+      ...this.pageAttributes
     }
     this.EmpLists =[];
     this.masterDataService.getpayslipList(fpayload).subscribe(

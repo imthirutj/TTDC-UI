@@ -23,7 +23,7 @@ export class PayslipNotComponent {
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    itemsPerPage: 10,
+    pageSize: 10,
   }
 
   filters: any = {
@@ -146,7 +146,7 @@ export class PayslipNotComponent {
 
     const fpaylod={
       ...payload,
-      pageNumber: this.pageAttributes.currentPage,
+      ...this.pageAttributes,
       type:2
     }
     this.Employees =[];
@@ -155,7 +155,7 @@ export class PayslipNotComponent {
         console.log('API Response:', response);
         if (response.success ) {
           this.Employees = response.data.pendingRecords;
-         
+          this.pageAttributes.totalPages = response.totalPages;
         }
       }
     );
