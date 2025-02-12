@@ -20,7 +20,7 @@
         <th>#</th>
         <th>Employee Name</th>
         <th>Employee Code</th>
-        <th>Unit Name</th>
+        <th *ngIf="userAccessLevel != UserType.EMPLOYEE">Unit Name</th>
         <th>Vendor Name</th>
         <th>Designation Name</th>
 
@@ -48,7 +48,7 @@
         <!-- <td>{{ department.employeeId  }}</td> -->
         <td>{{ d.employeeName }}</td>
         <td>{{ d.employeeCode }}</td>
-        <td>{{ d.companyFName }}</td>
+        <td *ngIf="userAccessLevel != UserType.EMPLOYEE">{{ d.companyFName }}</td>
         <td>{{d.vendorName}}</td>
         <td>{{ d.designationName }}</td>
         <td>{{ d.presentDays }}</td>
@@ -68,7 +68,10 @@
           </ng-container>
           <ng-container *ngIf="!d.isEditing ">
             {{ d.otherDeductions | currency: 'INR' }}
-            <button *ngIf="d.otherDeductions == 0 && userAccessLevel== UserType.MANAGER" class="btn btn-warning btn-sm"
+            <button *ngIf="d.otherDeductions == 0 && 
+                          userAccessLevel== UserType.MANAGER &&
+                          d.invoiceGenerated ==0" 
+                          class="btn btn-warning btn-sm"
               (click)="toggleOtherDeductions(d)">
               <i class="fas fa-edit"></i> <!-- Edit Icon -->
             </button>

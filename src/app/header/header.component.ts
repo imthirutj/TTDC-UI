@@ -4,6 +4,7 @@ import { MasterDataService } from '../services/master-data.service';
 import { LoginService } from '../login/login.service';
 import { DataService } from '../data.Service';
 import { UserService } from '../users/user.service';
+import { UserType } from '../common/user-type.enum';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,11 @@ import { UserService } from '../users/user.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+
+   UserType = UserType;
+    user: any;
+    userAccessLevel: any;
+
   showProfileDialog = false;
   isEditMode = false;  // Flag for toggling between view and edit mode
   userData: any = {};

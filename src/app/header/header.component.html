@@ -23,7 +23,7 @@
       </p>
     </div>
   </span>
-  <span *ngIf="userData.role=='EMPLOYEE' || userData.role=='MANAGER'">
+  <span *ngIf=" userData.role=='MANAGER'">
     <div style="padding: 10px;" class="header-text">
       <p class="left-align" style="font-size:25px">
         {{ userData.companyName }}
@@ -90,8 +90,8 @@
             </div>
 
             <div *ngIf="userData.role == 'EMPLOYEE'">
-              <div class="list-group-item">
-                <strong>Company:</strong>
+              <div *ngIf="false" class="list-group-item">
+                <strong>Unit:</strong>
                 <span *ngIf="!isEditMode">{{ userData.companyName }}</span>
                 <input *ngIf="isEditMode" [(ngModel)]="userData.companyId" class="form-control" />
               </div>
