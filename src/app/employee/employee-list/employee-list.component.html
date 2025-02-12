@@ -77,9 +77,11 @@
           {{employee.formattedQualifications}}
         </td>
         <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : ''}">
-          <span *ngIf="employee.experience>0">
-            {{ employee.degreeName}} & 
-            {{ employee.experience }} Years
+          <span>
+            {{ employee.degreeName}} 
+          </span>
+          <span >
+            & {{ employee.experience }} Years
           </span>
           <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
             (click)="show_Certificate(employee, ModuleType.EDUCATION_CERT)">
