@@ -78,7 +78,7 @@
         </td>
         <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : ''}">
           <span>
-            {{ employee.degreeName}} 
+            {{ employee.degreeName != '' ? employee.degreeName : 'NA' }} 
           </span>
           <span >
             & {{ employee.experience }} Years
