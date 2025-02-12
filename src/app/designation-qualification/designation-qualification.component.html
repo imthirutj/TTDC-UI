@@ -7,9 +7,17 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Designation Name</th>
-        <th>Degree Name</th>
+        <th >#</th>
+        <th (click)="sortData('designationName')">Designation Name
+          <span>{{ sortBy === 'designationName' ?
+            (sortOrder === 'asc' ? '↑' :'↓') : '' }}
+        </span>
+        </th>
+        <th (click)="sortData('degreeName')">Degree Name
+          <span>{{ sortBy === 'degreeName' ?
+            (sortOrder === 'asc' ? '↑' :'↓') : '' }}
+        </span>
+        </th>
         <!-- <th>Minimum Years</th> -->
       </tr>
     </thead>

@@ -124,6 +124,42 @@ export class DesignationQualificationComponent {
     this.modal.action = '';
     this.modal.title = '';
   }
+
+  
+  // Variables to keep track of sort state
+  sortBy: string = 'date';  // Default sorting by 'date'
+  sortOrder: string = 'asc'; // Default ascending order
+  // Sort the data based on column name and order
+  sortData(column: string): void {
+    // Toggle sorting order if the same column is clicked
+    if (this.sortBy === column) {
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortBy = column;
+      this.sortOrder = 'asc'; // Reset to ascending when changing column
+    }
+
+    // Perform sorting based on the selected column and order
+    this.Designation_Qualification_list.sort((a:any, b:any) => {
+      let valueA = a[column];
+      let valueB = b[column];
+
+      // Handle case for dates (sort Date objects)
+      if (column === 'date') {
+        valueA = new Date(valueA);
+        valueB = new Date(valueB);
+      }
+
+      if (valueA < valueB) {
+        return this.sortOrder === 'asc' ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return this.sortOrder === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
 }
 
 

@@ -366,8 +366,11 @@
                 <thead class="sticky-header">
                     <tr style="cursor: pointer;">
                         <th>#</th>
-                        <th (click)="sortData('date')">Day <span>{{ sortBy === 'date' ? (sortOrder === 'asc' ? '↑' :
-                                '↓') : '' }}</span></th>
+                        <th (click)="sortData('date')">Day
+                            <span>{{ sortBy === 'date' ?
+                                (sortOrder === 'asc' ? '↑' :'↓') : '' }}
+                            </span>
+                        </th>
                         <th (click)="sortData('status')">Status <span>{{ sortBy === 'status' ? (sortOrder === 'asc' ?
                                 '↑' : '↓') : '' }}</span></th>
                         <th (click)="sortData('biometricData')">Biometric <span>{{ sortBy === 'biometricData' ?
