@@ -107,6 +107,10 @@
               <td>Employee ESI cont.</td>
               <td class="text-end">{{payobj.esiEmployeeContribution}}</td>
             </tr>
+            <tr *ngIf="payobj.otherDeductions!=0">
+              <td>Other Deductions</td>
+              <td class="text-end">{{payobj.otherDeductions}}</td>
+            </tr>
 
             <!-- <tr>
               <td>ESI Employer Contribution</td>

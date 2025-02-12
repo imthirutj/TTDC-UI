@@ -64,9 +64,9 @@
               <i class="fas fa-times"></i> <!-- Close Icon -->
             </button>
           </ng-container>
-          <ng-container *ngIf="!d.isEditing">
+          <ng-container *ngIf="!d.isEditing ">
             {{ d.otherDeductions | currency: 'INR' }}
-            <button class="btn btn-warning btn-sm" (click)="toggleOtherDeductions(d)">
+            <button *ngIf="d.otherDeductions == 0" class="btn btn-warning btn-sm" (click)="toggleOtherDeductions(d)">
               <i class="fas fa-edit"></i> <!-- Edit Icon -->
             </button>
           </ng-container>
