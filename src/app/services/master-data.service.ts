@@ -145,6 +145,11 @@ export class MasterDataService {
     return this.http.delete(url);
   }
 
+  deleteDegree(degreeId:any): Observable<any>{
+    const url = `${this.apiUrl}Master/DeleteDegree/${degreeId}`;
+    return this.http.post(url,{});
+  }
+
   save_Designation_Qualification(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}Master/Save_Designation_Qualification`, payload);
   }

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MasterDataService } from 'src/app/services/master-data.service';
+import { Degree } from '../utils/interface/Degree';
+import { Action } from '../common/action.enum';
+import { DataService } from '../data.Service';
 
 @Component({
   selector: 'app-degree',
@@ -9,10 +12,23 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 })
 
 export class DegreeComponent {
-  degreelist: any[] = [];
+  degreelist: Degree[] = [];
   degree: any;
 
-  constructor(private masterDataService: MasterDataService, private route: ActivatedRoute) { }
+  Action = Action;
+
+
+  
+    modal = {
+      action: '',
+      obj: new Degree(),
+      show: false,
+      title: ''
+    };
+
+  constructor(private masterDataService: MasterDataService, 
+    private route: ActivatedRoute,
+    private dataService: DataService) { }
   ngOnInit(): void {
     this.getdegree();
 
@@ -44,32 +60,60 @@ export class DegreeComponent {
 
 
 
-  savedegree(degree: any): void {
-    console.log(degree)
-    // if (!this.employeeForm) {
-    //   console.error('Form not initialized.');
-    //   return;
-    // }
+  savedegree(): void {
+    const payload = {
+      ...this.modal.obj,
+    }
 
-    this.masterDataService.savedegree(degree).subscribe(
+    this.masterDataService.savedegree(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
-          alert('degree updated successfully.');
+          this.dataService.showSnackBar('degree updated successfully.');
           this.getdegree();
-          location.reload(); // Refresh the list
-        } else {
-          alert(response.message || 'Failed to update degree.');
         }
-      },
-      (error: any) => {
-        console.error('Error updating degree:', error);
-        alert('An error occurred while updating the degree.');
+      }
+    );
+  }
+
+  deleteDegree(id: any): void {
+    this.masterDataService.deleteDegree(id).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('Degree deleted successfully.');
+          this.getdegree();
+        }
       }
     );
   }
 
 
+  
+    openModal(action: Action, obj?: Degree): void {
+      this.modal.show = true;
+      this.modal.action = action;
+      this.modal.title = action == Action.UPDATE ? 'Edit Degree' : action == Action.CREATE ? 'Add Degree' : '';
+  
+      if (action == Action.UPDATE || action == Action.VIEW) {
+        if (obj) {
+          this.modal.obj = { ...obj };
+        }
+        else {
+          this.dataService.showSnackBar('Not found');
+        }
+      }
+      else {
+        this.modal.obj = new Degree();
+      }
+    }
+
+    closeModal() {
+      this.modal.show = false;
+      this.modal.obj = {} as any;
+      this.modal.action = '';
+      this.modal.title = '';
+    }
 
 
   // Variables to keep track of sort state
