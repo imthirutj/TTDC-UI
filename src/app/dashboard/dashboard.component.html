@@ -443,7 +443,7 @@
 </div>
 
 
-<div *ngIf="userAccessLevel!= UserType.EMPLOYEE" class="container mt-4">
+<div *ngIf="userAccessLevel== UserType.STATE_ADMIN" class="container mt-4">
   <h3>Unit Wise Count</h3>
   
   <table class="table table-bordered" *ngIf="unitWiseReport?.length; else noData">
