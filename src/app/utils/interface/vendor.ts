@@ -1,5 +1,6 @@
 export class Vendor {
     vendorId: number;
+    EmployeeCount : number;
     vendorName: string;
     contactNo: string;
     emailId: string;
@@ -16,6 +17,7 @@ export class Vendor {
     vendorMobileNumbers : {role:'',mobile:''}[];
     constructor(vendor: any = {}) {
         this.vendorId = vendor.vendorId || 0;
+        this.EmployeeCount = vendor.EmployeeCount || 0;
         this.vendorName = vendor.vendorName || '';
         this.contactNo = vendor.contactNo || '';
         this.emailId = vendor.emailId || '';
