@@ -48,3 +48,6 @@
     transform: translateX(26px);
   }
   
+  .emp-table{
+    white-space: break-spaces !important;
+  }

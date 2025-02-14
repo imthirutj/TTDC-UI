@@ -292,4 +292,10 @@ export class DashboardComponent {
   }
 
 
+  showFullTable:boolean =  false;
+
+  toggleTable() {
+    this.showFullTable=!this.showFullTable;
+  }
+
 }
