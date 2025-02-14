@@ -13,7 +13,6 @@
         <tr>
           <th>#</th>
           <th>Vendor Name</th>
-          <th>Employees Count</th>
           <th>Unit & Department</th>
           <th>Address</th>
           <th>Phone Number</th>
@@ -34,7 +33,6 @@
             </button>
           </td>
           <td>{{ vendor.vendorName }}</td>
-          <td>{{ vendor.employeeCount }}</td>
           <td class="ellipsis">
             <!-- Displaying company name and department name -->
             <span *ngFor="let item of vendor.companyDepartmentList; let last = last; let i = index">
