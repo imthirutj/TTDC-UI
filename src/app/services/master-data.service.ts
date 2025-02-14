@@ -270,5 +270,11 @@ export class MasterDataService {
       headers: new HttpHeaders()
     });
   }
+
+
+  getUnitWiseReport(){
+    const url = `${this.apiUrl}Dashboard/GetUnitWiseReport`;
+    return this.http.get(url);
+  }
   
 }

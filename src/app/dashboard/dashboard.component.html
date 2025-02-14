@@ -443,6 +443,39 @@
 </div>
 
 
+<div class="container mt-4">
+  <h3>Unit Wise Count</h3>
+  
+  <table class="table table-bordered" *ngIf="unitWiseReport?.length; else noData">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Unit</th>
+        <th>Total Employees</th>
+        <th>Total Designations</th>
+        <th>Total Vendors</th>
+        <th>Total Departments</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of unitWiseReport; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ row.Unit || 'N/A' }}</td>
+        <td>{{ row.TotalEmployees || 0 }}</td>
+        <td>{{ row.TotalDesignations || 0 }}</td>
+        <td>{{ row.TotalVendors || 0 }}</td>
+        <td>{{ row.TotalDepartments || 0 }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- No Data Message -->
+  <ng-template #noData>
+    <p>No records found.</p>
+  </ng-template>
+</div>
+
+
 
 
 <button class="btn btn-primary mt-2" (click)="toggleTable()">

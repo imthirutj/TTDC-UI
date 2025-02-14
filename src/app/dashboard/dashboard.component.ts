@@ -120,6 +120,7 @@ export class DashboardComponent {
   chartDataForPaymentAmount: any;  // Data to pass to the chart component
   chartOptionsForPaymentAmount: any;  // Options for customization
 
+  unitWiseReport:any[]=[];
 
   constructor(
 
@@ -137,9 +138,16 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
-    
+    this.getUnitWiseReport();
   }
 
+  getUnitWiseReport(){
+    this.masterDataService.getUnitWiseReport().subscribe(
+      (response:any)=>{
+        this.unitWiseReport = response.data;
+      }
+    );
+  }
   // Event handler for filter change
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
@@ -149,6 +157,7 @@ export class DashboardComponent {
     this.getDashboardCount();
     this.getPaymentGeneratedList();
     this.getAllReports();
+
   }
 
   getDashboardCount() {
