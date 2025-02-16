@@ -277,4 +277,14 @@ export class MasterDataService {
     return this.http.get(url);
   }
   
+
+  getEmployeePayment(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Payroll/EmployeePayment?${queryParams}`);
+  }
+
+  updateEmployeePayment(payload:any): Observable<any>{
+    const url = `${this.apiUrl}Payroll/UpdateEmployeePayment`;
+    return this.http.post(url,payload);
+  }
 }

@@ -78,6 +78,7 @@ import { MyProfileComponent } from './employee/my-profile/my-profile.component';
 import { TopSectionComponent } from './shared/top-section/top-section.component';
 import { HolidayManagementComponent } from './holiday-management/holiday-management.component';
 import { CompensateRequestComponent } from './compensate-request/compensate-request.component';
+import { ManagerEmployeePaymentEntryComponent } from './manager-employee-payment-entry/manager-employee-payment-entry.component';
 
 
 @NgModule({
@@ -129,7 +130,8 @@ import { CompensateRequestComponent } from './compensate-request/compensate-requ
     MyProfileComponent,
     TopSectionComponent,
     HolidayManagementComponent,
-    CompensateRequestComponent
+    CompensateRequestComponent,
+    ManagerEmployeePaymentEntryComponent
 
   ],
   imports: [

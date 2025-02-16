@@ -39,6 +39,7 @@ import { EmployeeWorkReportComponent } from './employee-work-report/employee-wor
 import { MyProfileComponent } from './employee/my-profile/my-profile.component';
 import { HolidayManagementComponent } from './holiday-management/holiday-management.component';
 import { CompensateRequestComponent } from './compensate-request/compensate-request.component';
+import { ManagerEmployeePaymentEntryComponent } from './manager-employee-payment-entry/manager-employee-payment-entry.component';
 
 const routes: Routes = [
 
@@ -233,6 +234,12 @@ const routes: Routes = [
     component:VendorToEmployeePaymentsComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
+  },
+  {
+    path:'manager-employee-payment',
+    component:ManagerEmployeePaymentEntryComponent,
+    canActivate:[AuthGuard],
+    data:{roles:['ALL']}
   },
   {
     path:'my-profile',

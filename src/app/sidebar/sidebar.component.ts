@@ -144,6 +144,12 @@ export class SidebarComponent {
       //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
       // },
       {
+        label:'Employee Payment Entry',
+        icon: 'fa-solid fa-receipt',
+        route: '/manager-employee-payment',
+        allowedUserTypes: [UserType.STATE_ADMIN,  UserType.MANAGER] 
+      },
+      {
         label: 'Employee Work Report',
         icon: 'fa-solid fa-chart-line',
         route: '/employee-work-report',
