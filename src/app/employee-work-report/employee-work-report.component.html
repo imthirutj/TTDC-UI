@@ -41,7 +41,7 @@
         </div>
 
         <!--Assign Weekoff button-->
-        <button *ngIf="!isAssignWeekOff && userAccessLevel != UserType.EMPLOYEE" class="btn btn-primary"
+        <button *ngIf="false && !isAssignWeekOff && userAccessLevel != UserType.EMPLOYEE" class="btn btn-primary"
             (click)="assignWeekoff()">Assign
             Weekoff
         </button>
@@ -139,9 +139,13 @@
                                 }}
                             </p>
 
-                            <p *ngIf="employee.dates[date].workingShift != 'UNKNOWN'"
+                            <!-- <p *ngIf="employee.dates[date].workingShift != 'UNKNOWN'"
                                 [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].workingShift), 'color': 'white' }">
-                                {{ employee.dates[date].workingShift | titlecase }} Shift</p>
+                                {{ employee.dates[date].workingShift | titlecase }} Shift</p> -->
+
+                            <p *ngIf="employee.dates[date].shift"
+                                [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].shift), 'color': 'white' }">
+                                {{ employee.dates[date].shift | titlecase }} Shift</p>
                         </div>
 
 
@@ -371,6 +375,9 @@
                                 (sortOrder === 'asc' ? '↑' :'↓') : '' }}
                             </span>
                         </th>
+                        <th>
+                            Assigned Shift
+                        </th>
                         <th (click)="sortData('status')">Status <span>{{ sortBy === 'status' ? (sortOrder === 'asc' ?
                                 '↑' : '↓') : '' }}</span></th>
                         <th (click)="sortData('biometricData')">Biometric <span>{{ sortBy === 'biometricData' ?
@@ -396,6 +403,7 @@
                             </span>
                             <p *ngIf="entry.workingHour>0">Total Hours: {{ entry.workingHour }}</p>
                         </td>
+                        <td>{{entry.shift}}</td>
 
                         <td>{{ entry.status }}</td>
 

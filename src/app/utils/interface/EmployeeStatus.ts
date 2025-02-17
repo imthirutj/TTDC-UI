@@ -57,6 +57,7 @@ export class BiometricData {
     statusId: number;
 
     workingShift: string;
+    shift:string;
     workingShiftCount: number;
     workingHour: number;
     holidayFlag: boolean;
@@ -98,6 +99,7 @@ export class BiometricData {
       newStatus: string ='',
 
       shift: string = '',
+      workingShift : string='',
       workingShiftCount: number = 0,
       workingHour: number = 0,
       holidayFlag: boolean = false,
@@ -135,6 +137,7 @@ export class BiometricData {
       this.newStatus ='';
 
       this.workingShift = shift;
+      this.shift = shift;
       this.workingShiftCount = workingShiftCount;
       this.workingHour = workingHour;
       this.holidayFlag = holidayFlag;

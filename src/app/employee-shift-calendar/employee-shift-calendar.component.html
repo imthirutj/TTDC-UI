@@ -31,9 +31,9 @@
             (click)="assignShift()">Assign
             Shift
         </button>
-        <button *ngIf="isAssign" class="btn btn-primary" (click)="submitShift()">
+        <!-- <button *ngIf="isAssign" class="btn btn-primary" (click)="submitShift()">
             Update Shift
-        </button>
+        </button> -->
         <button *ngIf="isAssign" class="btn btn-secondary" (click)="cancelShift()">
             Cancel
         </button>
@@ -49,7 +49,7 @@
               <tr>
                 <th>Employee</th>
                 <th *ngFor="let date of getCurrentDates()">
-                  <input *ngIf="isAssign" type="checkbox" [checked]="headerSelection[date] || false"
+                  <input *ngIf="isAssign && isPastDate(date)" type="checkbox" [checked]="headerSelection[date] || false"
                          (change)="onHeaderCheckboxChange(date, $event)" />
                   <!-- Show date as MM-DD -->
                   {{ date | date: 'dd MMM yyyy' }} - {{ date | date: 'EEE' }}
@@ -62,14 +62,14 @@
                 <td *ngFor="let date of getCurrentDates()"
                     [ngStyle]="{ 'background-color': getShiftColor(getShift(employee, date)) }">
                   <!-- Dropdown for shift selection -->
-                  <select style="width: 150px;" class="form-select"
+                  <select *ngIf="  !isPastDate(date)" style="width: 150px;" class="form-select"
                    [(ngModel)]="employee.dates[date].shift"
                           (change)="setShift(employee, date, employee.dates[date].shift)">
                     <option *ngFor="let shift of shiftTypes" [value]="shift">{{ shift }}</option>
                   </select>
           
                   <!-- Checkbox for selecting the shift -->
-                  <input *ngIf="isAssign" type="checkbox" [(ngModel)]="employee.dates[date].selected"
+                  <input *ngIf="isAssign  && !isPastDate(date)" type="checkbox" [(ngModel)]="employee.dates[date].selected"
                          (change)="setShiftSelected(employee, date, employee.dates[date].selected)">
                 </td>
               </tr>

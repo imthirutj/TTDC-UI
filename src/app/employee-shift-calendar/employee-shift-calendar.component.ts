@@ -39,7 +39,12 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   // Shift types
   shifts: any[] = [];
   shiftTypes: string[] = [
-    'WEEKOFF', 'HOLIDAY', 'MORNING', 'AFTERNOON', 'NIGHT', 'GENERAL'
+    'WEEKOFF', 
+    // 'HOLIDAY', 
+    'MORNING', 
+    'AFTERNOON', 
+    'NIGHT', 
+    'GENERAL'
   ];
   selectedStatus: string = ''; // Stores the selected status
 
@@ -52,7 +57,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   // Generated date range (26th of the selected month to the 25th of the next month)
   dateRange: string[] = [];
   currentPage: number = 0;
-  daysPerPage: number = 31;  // Show 7 days per page
+  daysPerPage: number = 7;  // Show 7 days per page
 
   // In your component
   shiftColors: any = {
@@ -474,5 +479,13 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     employee.dates[date].selected = value;
   }
 
+   // Method to check if a date is in the past
+   isPastDate(date: string): boolean {
+    const currentDate = new Date();
+    const inputDate = new Date(date); // Assuming the 'date' is in string format 'yyyy-MM-dd'
+
+    // Compare if the input date is earlier than the current date
+    return inputDate < currentDate;
+  }
 
 }
