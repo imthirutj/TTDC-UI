@@ -5,6 +5,7 @@ import { ShiftService } from './shift.service';
 import { DataService } from '../data.Service';
 import { UserType } from '../common/user-type.enum';
 import { myMonths, myYears } from '../utils/helpers/variables';
+import { EmployeeShift } from '../utils/interface/EmployeeShift';
 
 @Component({
   selector: 'app-employee-shift-calendar',
@@ -28,7 +29,8 @@ export class EmployeeShiftCalendarComponent implements OnInit {
 
 
   // List of employees
-  employees: any[] = [];
+  employees: EmployeeShift[] = [];
+
 
   months = myMonths;
   years = myYears;
@@ -36,7 +38,11 @@ export class EmployeeShiftCalendarComponent implements OnInit {
 
   // Shift types
   shifts: any[] = [];
-  shiftTypes: string[] = [];
+  shiftTypes: string[] = [
+    'WEEKOFF', 'HOLIDAY', 'MORNING', 'AFTERNOON', 'NIGHT', 'GENERAL'
+  ];
+  selectedStatus: string = ''; // Stores the selected status
+
   shiftMap: any = {};
 
   // Selected month and year for the calendar
@@ -46,23 +52,23 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   // Generated date range (26th of the selected month to the 25th of the next month)
   dateRange: string[] = [];
   currentPage: number = 0;
-  daysPerPage: number = 7;  // Show 7 days per page
+  daysPerPage: number = 31;  // Show 7 days per page
 
   // In your component
   shiftColors: any = {
-    "Weekly Off": "#F5A623", // Example color
-    "Fixed Shift": "#50E3C2",
-    "NoShift": "#D0021B",
-    "Holiday": "#4A90E2",
-    "General": "#B8E986",
-    "Sample Calendar": "#9013FE",
-    "Night Shift": "#F8E71C"
+
+    "MORNING": "#D0021B",
+    "AFTERNOON": "#4A90E2",
+    "NIGHT": "#B8E986",
+    "GENERAL": "#9013FE",
+    "WEEKOFF": "#F5A623",
+    "HOLIDAY": "#50E3C2",
   };
 
-
+  //#region Filter
   filters: any = {
     selectedMonth: {
-      value: Number(new Date().getMonth()) + 1, // Default to current month
+      value: this.getPreviousMonth(Number(new Date().getMonth()) + 1), // Default to current month
       show: true,
       key: 'month',
       includeInSearchParams: true
@@ -97,16 +103,16 @@ export class EmployeeShiftCalendarComponent implements OnInit {
       key: 'deptId',
       includeInSearchParams: true
     },
-    catId: {
+    employeeCode: {
       value: '',
       show: true,
-      key: 'catId',
+      key: 'employeeCode',
       includeInSearchParams: true
     },
-    employeeId: {
+    employeeName: {
       value: '',
       show: true,
-      key: 'employeeId',
+      key: 'employeeName',
       includeInSearchParams: true
     },
     vendorId: {
@@ -116,7 +122,6 @@ export class EmployeeShiftCalendarComponent implements OnInit {
       includeInSearchParams: true
     },
   };
-
 
 
   constructor(
@@ -142,9 +147,11 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   }
 
 
+
+
   ngOnInit() {
     this.fetchStates();
-    this.fetchShifts();
+    // this.fetchShifts();
     this.generateDateRange();
   }
 
@@ -153,7 +160,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     this.fetchEmployeeShifts();
   }
 
-  search(){
+  search() {
     this.fetchEmployeeShifts();
   }
 
@@ -161,21 +168,22 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     return this.shiftColors[shift] || '#FFFFFF'; // Default color if shift is not found
   }
 
+ 
   //#region  Fetch
 
-  fetchShifts() {
-    this.masterDataService.getShifts().subscribe((response) => {
-      if (response.success) {
-        this.shifts = response.data;
-        // Create a map of shiftFName to shiftId for quick lookup
-        this.shiftMap = this.shifts.reduce((acc: any, shift: any) => {
-          acc[shift.shiftFName] = shift.shiftId;
-          return acc;
-        }, {});
-        this.shiftTypes = this.shifts.map((shift: any) => shift.shiftFName);
-      }
-    });
-  }
+  // fetchShifts() {
+  //   this.masterDataService.getShifts().subscribe((response) => {
+  //     if (response.success) {
+  //       this.shifts = response.data;
+  //       // Create a map of shiftFName to shiftId for quick lookup
+  //       this.shiftMap = this.shifts.reduce((acc: any, shift: any) => {
+  //         acc[shift.shiftFName] = shift.shiftId;
+  //         return acc;
+  //       }, {});
+  //       this.shiftTypes = this.shifts.map((shift: any) => shift.shiftFName);
+  //     }
+  //   });
+  // }
   fetchStates() {
     this.masterDataService.getStates().subscribe((response) => {
       if (response.success) this.states = response.data;
@@ -204,9 +212,12 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   }
 
   fetchEmployeeShifts() {
+    this.employees = [];
     const payload = this.dataService.getPayloadValue(this.filters);
     this.shiftService.getEmployeeShifts(payload).subscribe((response) => {
-      if (response.success) this.employees = response.data;
+      if (response.success) {
+        this.employees = response.data as EmployeeShift[];
+      };
     });
   }
   //#endregion
@@ -238,7 +249,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
 
   // Update shifts on change
   onShiftChange(employee: any, date: string): void {
-    console.log(`${employee.name}'s shift on ${date} changed to ${employee.shifts[date]}`);
+    console.log(`${employee.name}'s shift on ${date} changed to ${employee.dates[date]}`);
   }
 
 
@@ -246,69 +257,63 @@ export class EmployeeShiftCalendarComponent implements OnInit {
 
   //#region  Calender
 
-  // Function to get the next month (wrap around from December to January)
-  getNextMonth(month: any): number {
-    // Ensure the parameter is a number
-    const currentMonth = Number(month);
-
-    // Check if the input is a valid month number (0-11)
-    if (isNaN(currentMonth) || currentMonth < 0 || currentMonth > 11) {
-      throw new Error('Invalid month number. Month should be between 0 and 11.');
-    }
-
-    // Return the next month, with wrap-around from December (11) to January (0)
-    return (currentMonth + 1) % 12;
+  getPreviousMonth(month: number): number {
+    return month === 1 ? 12 : month - 1;
   }
 
-  // Function to get the next year
-  getNextYear(year: any, month: any): number {
-    // Ensure the year is a number
-    const currentYear = Number(year);
+  getPreviousPreviousMonth(month: number): number {
+    return month === 1 ? 11 : month === 2 ? 12 : month - 2;
+  }
 
-    // Check if the input is a valid year
-    if (isNaN(currentYear)) {
-      throw new Error('Invalid year. Year should be a number.');
-    }
+  // Function to get the next month
+  getNextMonth(month: number): number {
+    return month === 12 ? 1 : month + 1; // If December (11), return January (0)
+  }
 
-    // If the month is December (11), we need to increment the year
-    if (Number(month) === 11) {
-      return currentYear + 1;
-    }
-
-    // Otherwise, return the current year
-    return currentYear;
+  // Function to get the next year when going to the next month
+  getNextYear(year: number, month: number): number {
+    return month === 1 ? year - 1 : year;
   }
 
 
   generateDateRange(): void {
-    const year = this.filters.selectedYear.value;
-    const month = this.filters.selectedMonth.value;
-    // Ensure that the start date is the 26th of the selected month
-    const startDate = new Date(year, (month - 1), 26 + 1);
+    const selectedYear = Number(this.filters.selectedYear.value);
+    const selectedMonth = Number(this.filters.selectedMonth.value);
 
-    // Get the next month using the getNextMonth function
-    const endMonth = this.getNextMonth(month - 1);
+    // Calculate the previous month and adjust the year if needed
+    let previousMonth = selectedMonth - 1;
+    let previousYear = selectedYear;
 
-    // Get the next year using the getNextYear function
-    const endYear = this.getNextYear(year, month - 1);
+    if (previousMonth < 1) {
+      previousMonth = 12; // Set to December
+      previousYear -= 1;  // Decrease the year
+    }
 
-    // Ensure that the end date is the 25th of the next month
-    const endDate = new Date(endYear, endMonth, 25 + 1);
+    // Start date: 26th of the previous month
+    const startDate = new Date(previousYear, previousMonth - 1, 26);
+
+    // End date: 25th of the current month
+    const endDate = new Date(selectedYear, selectedMonth - 1, 25);
+
+    // Function to format date as 'YYYY-MM-DD'
+    const formatDate = (date: Date): string => {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Add leading zero if month < 10
+      const day = date.getDate().toString().padStart(2, '0'); // Add leading zero if day < 10
+      return `${year}-${month}-${day}`;
+    };
 
     // Initialize the dateRange array
     this.dateRange = [];
-    let currentDate = startDate;
 
-    // Loop to populate the date range from 26th to 25th
+    // Loop through each date between startDate and endDate
+    let currentDate = new Date(startDate);
     while (currentDate <= endDate) {
-      // Add the date in YYYY-MM-DD format to the dateRange
-      this.dateRange.push(currentDate.toISOString().split('T')[0]);  // Only takes the date, not time
-      // Increment the date by one day
-      currentDate.setDate(currentDate.getDate() + 1);
+      this.dateRange.push(formatDate(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1); // Increment the date by 1
     }
 
-    // Debugging: Log the generated date range to ensure correctness
-   // console.log(this.dateRange);
+    // console.log('Date Range:', this.dateRange);  // Output for debugging
   }
 
 
@@ -341,28 +346,90 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     return Math.ceil(this.dateRange.length / this.daysPerPage);
   }
 
-  //#endregion
-  saveShifts() {
-    // Create a deep copy of the payload to prevent modifying the original employees
-    const payloadCopy = JSON.parse(JSON.stringify(this.employees));
+  isAssign: boolean = false;
+  headerSelection: { [key: string]: boolean } = {};
 
-    // Iterate through each employee in the deep copy
-    payloadCopy.forEach((employee: any) => {
-      for (const date in employee.shifts) {
-        const shiftName = employee.shifts[date];
+  onHeaderCheckboxChange(date: string, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked; // Typecast here
+    this.headerSelection[date] = isChecked; // Update header selection state
+    this.employees.forEach(employee => {
+      if (employee.dates[date]) {
+        employee.dates[date].selected = isChecked; // Update all rows based on header checkbox
+        employee.dates[date].statusChanged = true;
+      }
+    });
+  }
 
-        // Replace the shift name with the shiftId from shiftMap
-        const shiftId = this.shiftMap[shiftName];
+  applyStatus() {
 
-        if (shiftId) {
-          employee.shifts[date] = shiftId; // Update shift to shiftId
-        } else {
-          console.warn(`Shift name "${shiftName}" not found in shiftMap.`);
+
+    this.employees.forEach(employee => {
+      Object.keys(employee.dates).forEach(date => {
+        if (employee.dates[date]?.selected) {
+          // Update the status for selected dates
+          employee.dates[date].shift = this.selectedStatus;
+          employee.dates[date].statusChanged = true; // Mark as changed
         }
+      });
+    });
+
+    // Clear selection after applying status
+    this.employees.forEach(employee => {
+      Object.keys(employee.dates).forEach(date => {
+        employee.dates[date].selected = false;
+      });
+    });
+
+    this.headerSelection = {}; // Clear the header selection
+    this.selectedStatus = ''; // Reset selected status
+  }
+  assignShift() {
+    this.isAssign = true;
+    console.log('Employee Shift', this.employees)
+  }
+  submitShift() {
+
+  }
+  cancelShift() {
+    this.isAssign = false;
+
+    // Reset header selection (uncheck all header checkboxes)
+    for (let date in this.headerSelection) {
+      this.headerSelection[date] = false;
+    }
+
+    // Reset row selections (uncheck all row checkboxes for all employees)
+    this.employees.forEach(employee => {
+      for (let date in employee.dates) {
+        employee.dates[date].selected = false; // Deselect all rows
       }
     });
 
-   // console.log(payloadCopy);
+    // Optionally, fetch the employee status to refresh the data
+    this.fetchEmployeeShifts();
+  }
+  //#endregion
+  saveShifts() {
+    // Create a deep copy of the payload to prevent modifying the original employees
+    const payloadCopy = this.employees.map((employee: any) => {
+      const shiftData: any = {
+        name: employee.name,
+        id: employee.id,
+        shifts: {} // Initialize an empty object for shifts
+      };
+
+      // Iterate through each date and add shifts to the shifts object
+      for (const date in employee.dates) {
+        const shiftName = employee.dates[date].shift;
+        if (shiftName && shiftName.trim() !== '') {
+          shiftData.shifts[date] = shiftName; // Add date-shift pair to the shifts object
+        }
+      }
+
+      return shiftData; // Return the transformed employee data
+    });
+
+    // Send the transformed payload to the backend
     this.shiftService.updateEmployeeShifts(payloadCopy).subscribe((response) => {
       if (response.success) {
         this.dataService.showSnackBar('Shifts updated successfully');
@@ -370,9 +437,42 @@ export class EmployeeShiftCalendarComponent implements OnInit {
       } else {
         this.dataService.showSnackBar('Failed to update shifts');
       }
-    }
-    );
-
+    });
   }
+
+
+  onRowCheckboxChange(date: string, employee: EmployeeShift): void {
+    const allSelected = this.employees.every(employee => employee.dates[date]?.selected);
+    employee.dates[date].statusChanged = true;
+    this.headerSelection[date] = allSelected;
+  }
+
+  private ensureDateInitialized(employee: EmployeeShift, date: string): void {
+    if (!employee.dates[date]) {
+      employee.dates[date] = { shift: '', selected: false, statusChanged: false }; // Default values
+    }
+  }
+
+  // Call this method before accessing shift or selected for a date
+  getShift(employee: EmployeeShift, date: string): string {
+    this.ensureDateInitialized(employee, date); // Ensure date is initialized
+    return employee.dates[date].shift || ''; // Default to empty string if no shift is assigned
+  }
+
+  getShiftSelected(employee: EmployeeShift, date: string): boolean {
+    this.ensureDateInitialized(employee, date); // Ensure date is initialized
+    return employee.dates[date].selected || false; // Default to false if no selection is made
+  }
+
+  setShift(employee: EmployeeShift, date: string, newShift: string): void {
+    this.ensureDateInitialized(employee, date); // Ensure date is initialized
+    employee.dates[date].shift = newShift;
+  }
+
+  setShiftSelected(employee: EmployeeShift, date: string, value: boolean): void {
+    this.ensureDateInitialized(employee, date); // Ensure date is initialized
+    employee.dates[date].selected = value;
+  }
+
 
 }

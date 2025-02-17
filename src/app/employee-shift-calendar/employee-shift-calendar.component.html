@@ -6,49 +6,81 @@
         <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
             (triggerParentFunction)="fetchEmployeeShifts()">
         </app-filter>
-        <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+        <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
     </div>
 
     <br>
 
+    <!-- Employee Shifts Table -->
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">
+            &#8592; <!-- Left Arrow -->
+        </button>
+        <!-- Dropdown -->
+        <div *ngIf="isAssign">
+            <select (change)="applyStatus()" class="form-select" [(ngModel)]="selectedStatus">
+                <option value="">Select Status</option>
+                <option *ngFor="let shift of shiftTypes" [value]="shift">
+                    {{ shift }}
+                </option>
+            </select>
+        </div>
 
+        <!--Assign Weekoff button-->
+        <button *ngIf="!isAssign && userAccessLevel != UserType.EMPLOYEE" class="btn btn-primary"
+            (click)="assignShift()">Assign
+            Shift
+        </button>
+        <button *ngIf="isAssign" class="btn btn-primary" (click)="submitShift()">
+            Update Shift
+        </button>
+        <button *ngIf="isAssign" class="btn btn-secondary" (click)="cancelShift()">
+            Cancel
+        </button>
+
+        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+            &#8594; <!-- Right Arrow -->
+        </button>
+    </div>
     <!-- Employee Shifts Table -->
     <div style="overflow-y: auto; max-height: 500px;">
-        <table class="table table-bordered">
+        <table id="shift-table" class="table table-bordered">
             <thead class="sticky-header">
-                <tr>
-                    <th>Employee</th>
-                    <th *ngFor="let date of getCurrentDates()">
-                        <!-- Show date as MM-DD -->
-                        {{ date | date: 'MMM dd' }}
-                    </th>
-                </tr>
+              <tr>
+                <th>Employee</th>
+                <th *ngFor="let date of getCurrentDates()">
+                  <input *ngIf="isAssign" type="checkbox" [checked]="headerSelection[date] || false"
+                         (change)="onHeaderCheckboxChange(date, $event)" />
+                  <!-- Show date as MM-DD -->
+                  {{ date | date: 'dd MMM yyyy' }} - {{ date | date: 'EEE' }}
+                </th>
+              </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let employee of employees">
-                    <td>{{ employee.name }}</td>
-                    <td *ngFor="let date of getCurrentDates()"
-                        [ngStyle]="{ 'background-color': getShiftColor(employee.shifts[date]) }">
-                        <select class="form-control shift-select" [(ngModel)]="employee.shifts[date]"
-                            (change)="onShiftChange(employee, date)">
-                            <option *ngFor="let shift of shiftTypes" [value]="shift">
-                                {{ shift }}
-                            </option>
-                        </select>
-                    </td>
-                </tr>
+              <tr *ngFor="let employee of employees">
+                <td>{{ employee.name }}</td>
+                <td *ngFor="let date of getCurrentDates()"
+                    [ngStyle]="{ 'background-color': getShiftColor(getShift(employee, date)) }">
+                  <!-- Dropdown for shift selection -->
+                  <select style="width: 150px;" class="form-select"
+                   [(ngModel)]="employee.dates[date].shift"
+                          (change)="setShift(employee, date, employee.dates[date].shift)">
+                    <option *ngFor="let shift of shiftTypes" [value]="shift">{{ shift }}</option>
+                  </select>
+          
+                  <!-- Checkbox for selecting the shift -->
+                  <input *ngIf="isAssign" type="checkbox" [(ngModel)]="employee.dates[date].selected"
+                         (change)="setShiftSelected(employee, date, employee.dates[date].selected)">
+                </td>
+              </tr>
             </tbody>
-        </table>
+          </table>
+          
     </div>
 
 
 
-    <!-- Pagination Controls -->
-    <!-- Pagination Controls -->
-    <div class="d-flex justify-content-between">
-        <button class="btn btn-secondary" (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
-        <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Next</button>
-    </div>
+
 
     <button class="btn btn-primary" (click)="saveShifts()">Save Shifts</button>
 </div>
