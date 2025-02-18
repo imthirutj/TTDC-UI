@@ -23,7 +23,7 @@
         <th [rowSpan]="2">Total Wages</th>
       </tr>
       <tr>
-       
+
         <th>Employee Name</th>
         <th>Employee Code</th>
 
@@ -32,7 +32,7 @@
         <th>
           Unit Name
         </th>
-        <th >
+        <th>
           Vendor
         </th>
 
@@ -44,8 +44,8 @@
         <th>Actual</th>
         <th>Upload</th>
         <th>Required</th>
-        <th>Actual</th>              
-      
+        <th>Actual</th>
+
       </tr>
     </thead>
     <tbody>
@@ -65,10 +65,10 @@
 
         <td>{{ employee.contactNo }}</td>
 
-        <td >
+        <td>
           {{ employee.companyFName }}
         </td>
-        <td >
+        <td>
           {{ employee.vendorName }}
         </td>
 
@@ -89,8 +89,8 @@
         </td> -->
         <td>
           <span>
-            {{ employee.degreeName != '' ? employee.degreeName : 'NA' }} 
-          </span>                   
+            {{ employee.degreeName != '' ? employee.degreeName : 'NA' }}
+          </span>
         </td>
         <td>
           <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -99,16 +99,16 @@
           </button>
         </td>
         <td>
-         <span *ngIf="employee.minimumExpYears">
-          {{employee.minimumExpYears }} Years
-         </span>
+          <span *ngIf="employee.minimumExpYears">
+            {{employee.minimumExpYears }} Years
+          </span>
 
-         <span *ngIf="!employee.minimumExpYears">
-          NA
-         </span>
+          <span *ngIf="!employee.minimumExpYears">
+            NA
+          </span>
         </td>
         <td>
-          <span >
+          <span>
             {{ employee.experience }} Years
           </span>
         </td>
@@ -141,6 +141,8 @@
           </ng-container>
           <ng-container *ngIf="!employee.isEditing">
             {{ employee.totalWages | currency: 'INR' }}
+            <!-- i Icon-->
+            <i (click)="openSalStructModal(employee.employeeId)" class="fas fa-info-circle"></i>
             <button class="btn btn-warning btn-sm" (click)="toggleEditWages(employee)">
               <i class="fas fa-edit"></i> <!-- Edit Icon -->
             </button>
@@ -151,11 +153,46 @@
     </tbody>
   </table>
 </div>
-<app-server-pagination  [pageAttributes]="pageAttributes" 
-(triggerParentFunction)="getEmployeeList()">
+<app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getEmployeeList()">
 </app-server-pagination>
 
 
+<!--Salary Structure Modal-->
+<app-common-dialog [showDialog]="modalSalStruct.show" [dialogTitle]="modalSalStruct.title" 
+[showCloseIcon]="true" (closeDialog)="closeSalStructModal()"
+  [showSubmitButton]="false">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <label for="basicSalary" class="form-label">Basic Salary:</label><br>
+        <b>{{ modalSalStruct.obj.basicRate | currency: 'INR' }}</b>
+      </div>
+      <!--DA-->
+      <div class="col-md-6">
+        <label for="hra" class="form-label">DA:</label><br>
+        <b>{{ modalSalStruct.obj.hra | currency: 'INR' }}</b>
+      </div>
+      <!--EPF Employee Cont-->
+      <div class="col-md-6">
+        <label for="epf" class="form-label">Employee PF Cont. :</label><br>
+        <b>{{ modalSalStruct.obj.epfEmployeeContribution | currency: 'INR' }}</b>
+      </div>
+      <!--ESI Employee Cont-->
+      <div class="col-md-6">
+        <label for="esi" class="form-label">Employee ESI Cont. :</label><br>
+        <b>{{ modalSalStruct.obj.esiEmployeeContribution | currency: 'INR' }}</b>
+      </div>
+
+      <!--Total Monthly Wages-->
+      <div class="col-md-6">
+        <label for="payableWages" class="form-label">Monthly Wages :</label><br>
+        <b>{{ modalSalStruct.obj.payableWages | currency: 'INR' }}</b>
+      </div>
+
+    </div>
+  </div>
+</app-common-dialog>
 
 <app-common-dialog [showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" [dialogTitle]="modal.title"
   [showCloseIcon]="true" [showSubmitButton]="modal.action==Action.UPDATE" (submitDialog)="saveEmployee()"
@@ -169,13 +206,14 @@
         Active:
       </label>
       <label class="switch">
-        
-        <input type="checkbox" [checked]="modal.employee.recordStatus == 1" (change)="toggleRecordStatus(modal.employee)">
+
+        <input type="checkbox" [checked]="modal.employee.recordStatus == 1"
+          (change)="toggleRecordStatus(modal.employee)">
         <span class="slider round"></span>
       </label>
-      
-      
-      
+
+
+
     </div>
     <div class="card mb-3">
       <div class="card-header bg-secondary text-white">
@@ -495,9 +533,8 @@
   <!--UAN number-->
   <div class="mb-3">
     <label for="uanNumber" class="form-label">UAN Number</label>
-    <input type="text" class="form-control disabled-bg" id="accountNumber"
-      [(ngModel)]="bankModal.bankDetails.uanNumber" name="uanNumber" placeholder="Enter UAN"
-      [disabled]="modal.action === 'VIEW'">
+    <input type="text" class="form-control disabled-bg" id="accountNumber" [(ngModel)]="bankModal.bankDetails.uanNumber"
+      name="uanNumber" placeholder="Enter UAN" [disabled]="modal.action === 'VIEW'">
   </div>
 
 </app-common-dialog>

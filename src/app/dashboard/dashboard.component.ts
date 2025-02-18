@@ -124,6 +124,8 @@ export class DashboardComponent {
 
   mismatchQualification: any= {} ;
 
+  loggedInCounts:any ={};
+
   constructor(
 
     private masterDataService: MasterDataService,
@@ -160,6 +162,7 @@ export class DashboardComponent {
     this.getPaymentGeneratedList();
     this.getAllReports();
     this.getExpQualMismatchCount();
+    this.getLoggedInCounts();
 
   }
 
@@ -169,6 +172,16 @@ export class DashboardComponent {
     this.dashboardService.getExpQualMismatchCount(payload).subscribe((response: any) => {
       if (response.success) {
         this.mismatchQualification = response.data;
+      }
+    });
+  }
+
+  getLoggedInCounts(){
+    const payload = this.dataService.getPayloadValue(this.filters);
+
+    this.dashboardService.getLoggedInCounts(payload).subscribe((response: any) => {
+      if (response.success) {
+        this.loggedInCounts = response.data;
       }
     });
   }

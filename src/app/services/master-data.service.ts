@@ -287,4 +287,9 @@ export class MasterDataService {
     const url = `${this.apiUrl}Payroll/UpdateEmployeePayment`;
     return this.http.post(url,payload);
   }
+
+  fetchSalaryStructure(empId:any) : Observable<any>{
+    const url = `${this.apiUrl}Payroll/GetSalStructByEmpId?empId=${empId}`;
+    return this.http.get(url);
+  }
 }

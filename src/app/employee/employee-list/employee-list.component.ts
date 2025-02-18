@@ -8,6 +8,7 @@ import { UserType } from 'src/app/common/user-type.enum';
 import { Action, ModuleType } from 'src/app/common/action.enum';
 import { ModuleTypeLabels } from 'src/app/common/labels';
 import { BankDetails } from 'src/app/utils/interface/BankDetails';
+import { WageDetails } from 'src/app/utils/interface/WageDetails';
 
 @Component({
   selector: 'app-employee-list',
@@ -239,6 +240,29 @@ export class EmployeeListComponent {
         this.dropdowns.degree = response.data;
       }
     });
+  }
+
+  modalSalStruct = {
+    show:false,
+    title:'Salary Structure',
+    obj: new WageDetails()
+  }
+
+  openSalStructModal(empId:any){
+    this.modalSalStruct.show = true;
+    this.modalSalStruct.obj = new WageDetails();
+    this.fetchSalaryStructure(empId);
+  }
+  closeSalStructModal(){
+    this.modalSalStruct.show = false;
+    this.modalSalStruct.obj = new WageDetails();
+  }
+  fetchSalaryStructure(empId:any){
+    this.masterDataService.fetchSalaryStructure(empId).subscribe((response) => {
+      if (response.success) {
+        this.modalSalStruct.obj = response.data[0];
+      }
+    })
   }
   //#endregion
 

@@ -15,7 +15,9 @@
       <th>#</th>
       <th>Employee Code</th>
       <th>Employee Name</th>
+      <th>Generated Amount</th>
       <th>Amount</th>
+      <th>Difference</th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +27,7 @@
       </td>
       <td>{{ employee.employeeCode }}</td>
       <td>{{ employee.employeeName }}</td>
+      <td>{{ employee.NetSalary | currency: 'INR'}}</td>
       <td>
         <ng-container *ngIf="employee.isEditing">
           <input type="number" [(ngModel)]="employee.amount" class="form-control" />
@@ -42,13 +45,17 @@
           </button>
         </ng-container>
       </td>
+      <td>{{ (employee.NetSalary - employee.amount) | currency: 'INR' }}</td>
 
     </tr>
   </tbody>
   <tfoot *ngIf="this.EmployeesData.employees.length > 0">
     <tr>
-      <td colspan="2">Total</td>
+      <td colspan="3">Total</td>
+      <td>{{this.EmployeesData.totalAmount.totalPayslipAmount | currency:'INR' }}</td>
       <td>{{this.EmployeesData.totalAmount.totalAmount | currency:'INR' }}</td>
+      <td> {{ (this.EmployeesData.totalAmount.totalPayslipAmount - 
+        this.EmployeesData.totalAmount.totalAmount) | currency: 'INR' }} </td>
     </tr>
 
   </tfoot>

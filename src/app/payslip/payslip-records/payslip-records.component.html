@@ -32,7 +32,7 @@
 
         <th [colSpan]="2">Payable to the EPF</th>
         <th [colSpan]="2">Payable to the ESI</th>
-        <th [rowSpan]="2">Health Insurance</th>
+        <!-- <th [rowSpan]="2">Health Insurance</th> -->
 
         <!-- <th [rowSpan]="2">Employee PF 12% on 70%</th> -->
         <!-- <th [rowSpan]="2">Employee ESI 0.75% </th> -->
@@ -81,7 +81,7 @@
         <td>{{ d.epfEmployerContribution  | currency:'INR' }}</td>
         <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
         <td>{{ d.esiEmployerContribution | currency:'INR' }}</td>
-        <td></td>
+        <!-- <td></td> -->
 
         <td>
           <ng-container *ngIf="d.isEditing">
