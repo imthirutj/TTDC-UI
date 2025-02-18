@@ -17,27 +17,37 @@
   <table id="vendorPaymentTable" class="table table-bordered">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Employee Name</th>
-        <th>Employee Code</th>
-        <th *ngIf="userAccessLevel != UserType.EMPLOYEE">Unit Name</th>
-        <th>Vendor Name</th>
-        <th>Designation Name</th>
+        <th [rowSpan]="2">#</th>
+        <th [rowSpan]="2">Employee Name</th>
+        <th [rowSpan]="2">Employee Code</th>
+        <th *ngIf="userAccessLevel != UserType.EMPLOYEE" [rowSpan]="2">Unit Name</th>
+        <th [rowSpan]="2">Vendor Name</th>
+        <th [rowSpan]="2">Designation Name</th>
 
-        <th>No.Of Days Worked</th>
-        <th>Payable Wages per person per month</th>
+        <th [rowSpan]="2">No.Of Days Worked</th>
+        <th [rowSpan]="2">Payable Wages per person per month</th>
 
-        <th>Gross Salary</th>
+        <th [rowSpan]="2">Gross Salary</th>
+        <th [colSpan]="2">Payable to the Employee</th>
 
-        <th>Other Deductions</th>
+        <th [colSpan]="2">Payable to the EPF</th>
+        <th [colSpan]="2">Payable to the ESI</th>
+        <th [rowSpan]="2">Health Insurance</th>
 
-        <th>Employee PF 12% on 70%</th>
-        <th>Employee ESI 0.75% </th>
+        <!-- <th [rowSpan]="2">Employee PF 12% on 70%</th> -->
+        <!-- <th [rowSpan]="2">Employee ESI 0.75% </th> -->
 
-        <th>Salary Paid</th>
+        <th [rowSpan]="2">Other Deductions</th>
 
-        <th>View Slips</th>
+        <th [rowSpan]="2">View Slips</th>       
+      </tr>
+      <tr>
+        <th>Amount</th>
         <th>Passbook</th>
+        <th>Employee Share</th>
+        <th>Employeer Share</th>
+        <th>Employee Share</th>
+        <th>Employeer Share</th>
       </tr>
     </thead>
     <tbody>
@@ -55,6 +65,23 @@
         <td>{{ d.totalEmpCost | currency:'INR'}}</td>
 
         <td>{{ d.grossSalary | currency:'INR' }}</td>
+        <td>{{ d.netSalary | currency:'INR' }}</td>
+        <td>
+          <button (click)="openPassbookModal(d)" class="btn btn-primary" type="button">
+            <span *ngIf="userAccessLevel== UserType.MANAGER ||
+                  userAccessLevel== UserType.VENDOR ||
+                   userAccessLevel== UserType.STATE_ADMIN">
+              View Passbook</span>
+            <span *ngIf="userAccessLevel== UserType.EMPLOYEE"> View/Upload Passbook</span>
+          </button>
+        </td>
+       
+
+        <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
+        <td>{{ d.epfEmployerContribution  | currency:'INR' }}</td>
+        <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
+        <td>{{ d.esiEmployerContribution | currency:'INR' }}</td>
+        <td></td>
 
         <td>
           <ng-container *ngIf="d.isEditing">
@@ -77,26 +104,13 @@
             </button>
           </ng-container>
         </td>
-
-        <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
-        <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
-
-        <td>{{ d.netSalary | currency:'INR' }}</td>
         <td>
           <button class="btn btn-primary" type="button" [routerLink]="['/payslip', d.payslipRecordId]"
             [queryParams]="{ empId: d.employeeId }">
             View Pay Slips
           </button>
         </td>
-        <td>
-          <button (click)="openPassbookModal(d)" class="btn btn-primary" type="button">
-            <span *ngIf="userAccessLevel== UserType.MANAGER ||
-                  userAccessLevel== UserType.VENDOR ||
-                   userAccessLevel== UserType.STATE_ADMIN">
-              View Passbook</span>
-            <span *ngIf="userAccessLevel== UserType.EMPLOYEE"> View/Upload Passbook</span>
-          </button>
-        </td>
+       
       </tr>
     </tbody>
     <tfoot *ngIf="EmpLists.length > 0">
@@ -105,12 +119,16 @@
         <td>{{ getTotal('totalEmpCost') | currency:'INR' }}</td>
 
         <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
-        <td>{{ getTotal('otherDeductions') | currency:'INR' }}</td>
-        <td>{{ getTotal('epfEmployeeContribution') | currency:'INR' }}</td>
-        <td>{{ getTotal('esiEmployeeContribution') | currency:'INR' }}</td>
-
         <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
         <td></td>
+        
+        <td>{{ getTotal('epfEmployeeContribution') | currency:'INR' }}</td>
+        <td>{{ getTotal('epfEmployerContribution') | currency:'INR' }}</td>
+        <td>{{ getTotal('esiEmployeeContribution') | currency:'INR' }}</td>
+        <td>{{ getTotal('esiEmployerContribution') | currency:'INR' }}</td>
+        <td></td>
+        <td>{{ getTotal('otherDeductions') | currency:'INR' }}</td>
+               
         <td></td>
       </tr>
     </tfoot>

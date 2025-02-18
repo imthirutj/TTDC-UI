@@ -14,7 +14,16 @@
   <table style="white-space: break-spaces !important;" id="emp-table" class="table table-bordered">
     <thead>
       <tr>
-        <th>#</th>
+        <th [rowSpan]="2">#</th>
+        <th [colSpan]="7" style="text-align: center;">Personal Info</th>
+        <th [colSpan]="3" style="text-align: center;">Qualification</th>
+        <th [colSpan]="2" style="text-align: center;">Experience</th>
+        <th [rowSpan]="2">Aadhaar</th>
+        <th [rowSpan]="2">Bank Details</th>
+        <th [rowSpan]="2">Total Wages</th>
+      </tr>
+      <tr>
+       
         <th>Employee Name</th>
         <th>Employee Code</th>
 
@@ -31,16 +40,12 @@
         <th>Designation Name</th>
 
         <th>Employment Type</th>
-
-        <th>Required Qualification & Experience</th>
-        <th>Actual Qualification & Experience</th>
-
-       
-        <th>Aadhaar</th>
-    
-
-        <th>Bank Details</th>
-        <th>Total Wages</th>
+        <th>Required</th>
+        <th>Actual</th>
+        <th>Upload</th>
+        <th>Required</th>
+        <th>Actual</th>              
+      
       </tr>
     </thead>
     <tbody>
@@ -79,14 +84,21 @@
         <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : ''}">
           <span>
             {{ employee.degreeName != '' ? employee.degreeName : 'NA' }} 
-          </span>
-          <span >
-            & {{ employee.experience }} Years
-          </span>
+          </span>                   
+        </td>
+        <td>
           <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
             (click)="show_Certificate(employee, ModuleType.EDUCATION_CERT)">
             <i class="fas fa-file-alt"></i>
           </button>
+        </td>
+        <td>
+          {{employee.formattedQualifications}}
+        </td>
+        <td>
+          <span >
+            {{ employee.experience }} Years
+          </span>
         </td>
 
 
