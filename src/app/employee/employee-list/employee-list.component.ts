@@ -131,6 +131,12 @@ export class EmployeeListComponent {
       key: 'vendorId',
       includeInSearchParams: true
     },
+    qualificationMismatched:{
+      value: '0',
+      show: true,
+      key: 'qualificationMismatched',
+      includeInSearchParams: true
+    }
   };
 
   constructor(

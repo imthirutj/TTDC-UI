@@ -65,6 +65,8 @@ export class FiltersComponent implements OnInit {
 
       this.filters.managerId = this.filters.managerId || { value: '', show: false, includeInSearchParams:false, key: 'managerId' };
       this.filters.managerName = this.filters.managerName || { value: '', show: false, includeInSearchParams:false, key: 'managerName' };
+
+      this.filters.qualificationMismatched = this.filters.qualificationMismatched || { value: '0', show: false,  includeInSearchParams:false,key: 'qualificationMismatched' };
     }
 
     // Ensure all filters have a `show` property set to false if missing
@@ -184,6 +186,10 @@ export class FiltersComponent implements OnInit {
   }
 
   onVendorChange() {
+    this.onFilterChange();
+  }
+
+  onQualificationMismatchChange(){
     this.onFilterChange();
   }
   //#endregion

@@ -15,7 +15,7 @@
     <thead>
       <tr>
         <th [rowSpan]="2">#</th>
-        <th [colSpan]="7" style="text-align: center;">Personal Info</th>
+        <th [colSpan]="8" style="text-align: center;">Personal Info</th>
         <th [colSpan]="3" style="text-align: center;">Qualification</th>
         <th [colSpan]="2" style="text-align: center;">Experience</th>
         <th [rowSpan]="2">Aadhaar</th>
@@ -29,10 +29,10 @@
 
         <th>Contact Number</th>
 
-        <th *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.VENDOR">
+        <th>
           Unit Name
         </th>
-        <th *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.MANAGER">
+        <th >
           Vendor
         </th>
 
@@ -65,10 +65,10 @@
 
         <td>{{ employee.contactNo }}</td>
 
-        <td *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.VENDOR">
+        <td >
           {{ employee.companyFName }}
         </td>
-        <td *ngIf="userAccessLevel  == UserType.STATE_ADMIN || userAccessLevel  == UserType.MANAGER">
+        <td >
           {{ employee.vendorName }}
         </td>
 

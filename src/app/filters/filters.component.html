@@ -140,6 +140,18 @@
         </div>
       </div>
 
+      <!--Filter Qualification Mismatch: qualificationMismatched-->
+      <div *ngIf="filters.qualificationMismatched.show" class="col-md-4">
+        <div class="form-group">
+          <label for="qualificationMismatched">Qualification Mismatch</label>
+          <select [(ngModel)]="filters.qualificationMismatched.value" (change)="onQualificationMismatchChange()"
+            class="form-control" id="qualificationMismatched">
+            <option value="0">All</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
+      </div>
+
     </div>
   </div>
 </app-common-dialog>

@@ -122,6 +122,8 @@ export class DashboardComponent {
 
   unitWiseReport:any[]=[];
 
+  mismatchQualification: any= {} ;
+
   constructor(
 
     private masterDataService: MasterDataService,
@@ -157,7 +159,18 @@ export class DashboardComponent {
     this.getDashboardCount();
     this.getPaymentGeneratedList();
     this.getAllReports();
+    this.getExpQualMismatchCount();
 
+  }
+
+  getExpQualMismatchCount(){
+    const payload = this.dataService.getPayloadValue(this.filters);
+
+    this.dashboardService.getExpQualMismatchCount(payload).subscribe((response: any) => {
+      if (response.success) {
+        this.mismatchQualification = response.data;
+      }
+    });
   }
 
   getDashboardCount() {
