@@ -505,4 +505,11 @@ export class EmployeeListComponent {
     employee.recordStatus = employee.recordStatus === 1 ? 0 : 1;
   }
 
+  getDegreeNames(employee: any): string {
+    return employee.requiredQualifications
+      .map((q:any) => q.degreeName)
+      .filter((name:any) => name) // Remove null or undefined values
+      .join(', ');
+  }
+  
 }

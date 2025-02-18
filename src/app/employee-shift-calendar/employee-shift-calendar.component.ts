@@ -57,7 +57,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   // Generated date range (26th of the selected month to the 25th of the next month)
   dateRange: string[] = [];
   currentPage: number = 0;
-  daysPerPage: number = 7;  // Show 7 days per page
+  daysPerPage: number = 31;  // Show 7 days per page
 
   // In your component
   shiftColors: any = {
@@ -132,7 +132,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private masterDataService: MasterDataService,
-    private dataService: DataService,
+    public dataService: DataService,
 
     private shiftService: ShiftService) {
     this.selectedMonth = new Date().getMonth() + 1;

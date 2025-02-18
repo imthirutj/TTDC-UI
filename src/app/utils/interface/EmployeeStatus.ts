@@ -53,6 +53,7 @@ export class BiometricData {
   export class DateDetails {
     employeeId: number;
     status: string;
+    oldStatus:string;
     newStatus: string;
     statusId: number;
 
@@ -97,6 +98,7 @@ export class BiometricData {
       statusId: number = 0,
       status: string = '',
       newStatus: string ='',
+      oldStatus: string ='',
 
       shift: string = '',
       workingShift : string='',
@@ -135,6 +137,7 @@ export class BiometricData {
       this.statusId = statusId;
       this.status = status;
       this.newStatus ='';
+      this.oldStatus ='';
 
       this.workingShift = shift;
       this.shift = shift;

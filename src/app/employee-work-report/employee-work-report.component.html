@@ -405,7 +405,12 @@
                         </td>
                         <td>{{entry.shift}}</td>
 
-                        <td>{{ entry.status }}</td>
+                        <td>
+                            <p *ngIf="entry.oldStatus && entry.oldStatus!=  entry.status">
+                                <b>Previous Status:{{ entry.oldStatus }}</b>
+                            </p>
+                            {{ entry.status }}
+                        </td>
 
                         <td>
                             <div class="time-card" style="text-align: left;" *ngIf="entry?.biometricData?.length">

@@ -79,9 +79,15 @@
         <td>{{ employee.employementType }}</td>
 
         <td>
-          {{employee.formattedQualifications}}
+          {{ getDegreeNames(employee) }}
+
         </td>
-        <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : ''}">
+        <!-- <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : ''}">
+          <span>
+            {{ employee.degreeName != '' ? employee.degreeName : 'NA' }} 
+          </span>                   
+        </td> -->
+        <td>
           <span>
             {{ employee.degreeName != '' ? employee.degreeName : 'NA' }} 
           </span>                   
@@ -93,7 +99,13 @@
           </button>
         </td>
         <td>
-          {{employee.formattedQualifications}}
+         <span *ngIf="employee.minimumExpYears">
+          {{employee.minimumExpYears }} Years
+         </span>
+
+         <span *ngIf="!employee.minimumExpYears">
+          NA
+         </span>
         </td>
         <td>
           <span >

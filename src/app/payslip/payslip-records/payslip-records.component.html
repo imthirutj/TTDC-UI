@@ -162,7 +162,7 @@
 <app-common-dialog [showDialog]="passbookModal.show " [dialogTitle]="passbookModal.title  " [showCloseIcon]="true"
   [showSubmitButton]="true" (submitDialog)="uploadPassbook()" (closeDialog)="closePassbookModal()">
 
-  <div *ngIf="userAccessLevel== UserType.EMPLOYEE" class="mb-3">
+  <div *ngIf="userAccessLevel== UserType.EMPLOYEE || userAccessLevel== UserType.MANAGER" class="mb-3">
     <label for="certificateImage" class="form-label">Upload Passbook</label>
     <input type="file" class="form-control" id="certificateImage" (change)="passbookImage($event)">
 
@@ -191,8 +191,6 @@
       </tr>
     </tbody>
   </table>
-
-
 </app-common-dialog>
 
 
