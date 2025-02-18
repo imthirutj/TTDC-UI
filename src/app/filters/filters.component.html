@@ -1,6 +1,21 @@
+<!-- Filter Button -->
 <button type="button" class="btn btn-primary" (click)="openFilterModal()">
   <i class="fas fa-filter"></i> Filter
 </button>
+<!-- <button type="button" class="btn btn-primary" (click)="resetFilters()">
+  <i class="fas fa-reset"></i> Reset
+</button> -->
+
+<!-- <div class="card">
+  <div *ngIf="getFilteredFields().length > 0" class="mt-3">
+    <div *ngFor="let field of getFilteredFields()">
+      <p><strong>{{ field.label }}:</strong> {{ field.value }}</p>
+    </div>
+  </div>
+</div> -->
+
+
+
 <app-common-dialog [showDialog]="showDialog" [dialogTitle]="'Filters'" [showCloseIcon]="true" [showSubmitButton]="true"
   (closeDialog)="showDialog = false" (submitDialog)="search()">
   <div class="container">
@@ -156,8 +171,7 @@
       <div *ngIf="filters.loggedInType.show" class="col-md-4">
         <div class="form-group">
           <label for="loggedInType">Today Login Status</label>
-          <select [(ngModel)]="filters.loggedInType.value" 
-            (change)="onLoginTypeChange()" class="form-control"
+          <select [(ngModel)]="filters.loggedInType.value" (change)="onLoginTypeChange()" class="form-control"
             id="loggedInType">
             <option value="0">All</option>
             <option value="1">Logged In</option>

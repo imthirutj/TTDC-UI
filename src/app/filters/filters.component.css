@@ -1,0 +1,15 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .mt-3 {
+    margin-top: 1rem; /* Adjust based on your design */
+  }
+  
+  .card p, .card span {
+    display: inline-block;
+    margin-right: 10px; /* Adjust spacing between fields */
+  }
+  

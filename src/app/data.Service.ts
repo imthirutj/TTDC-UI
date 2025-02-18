@@ -30,7 +30,7 @@ export class DataService {
     { key: 'SFU', value: 'SFU' },
   ];
 
-  private monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
+  public monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
     "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
   constructor(
