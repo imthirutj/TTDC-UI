@@ -54,7 +54,7 @@
                 <tr>
                     <th>Employee</th>
                     <th *ngFor="let date of getCurrentDates()">
-                        <input *ngIf="isAssign && isPastDate(date)" type="checkbox"
+                        <input *ngIf="isAssign && !isPastDate(date)" type="checkbox"
                             [checked]="headerSelection[date] || false"
                             (change)="onHeaderCheckboxChange(date, $event)" />
                         <!-- Show date as MM-DD -->
