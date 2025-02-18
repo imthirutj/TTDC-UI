@@ -67,6 +67,7 @@ export class FiltersComponent implements OnInit {
       this.filters.managerName = this.filters.managerName || { value: '', show: false, includeInSearchParams:false, key: 'managerName' };
 
       this.filters.qualificationMismatched = this.filters.qualificationMismatched || { value: '0', show: false,  includeInSearchParams:false,key: 'qualificationMismatched' };
+      this.filters.loggedInType = this.filters.loggedInType || { value: '0', show: false,  includeInSearchParams:false,key: 'loggedInType' };
     }
 
     // Ensure all filters have a `show` property set to false if missing
@@ -137,6 +138,9 @@ export class FiltersComponent implements OnInit {
 
       this.filters.vendorId.value = this.user.vendorId;
       this.filters.vendorId.show = false;
+
+      this.filters.loggedInType.value = '0';
+      this.filters.loggedInType.show = false;
     }
 
     //Set Def VAlue for all
@@ -190,6 +194,9 @@ export class FiltersComponent implements OnInit {
   }
 
   onQualificationMismatchChange(){
+    this.onFilterChange();
+  }
+  onLoginTypeChange(){
     this.onFilterChange();
   }
   //#endregion

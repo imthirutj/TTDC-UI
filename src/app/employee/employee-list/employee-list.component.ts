@@ -137,6 +137,12 @@ export class EmployeeListComponent {
       show: true,
       key: 'qualificationMismatched',
       includeInSearchParams: true
+    },
+    loggedInType:{
+      value: '0',
+      show: false,
+      key: 'loggedInType',
+      includeInSearchParams: true
     }
   };
 

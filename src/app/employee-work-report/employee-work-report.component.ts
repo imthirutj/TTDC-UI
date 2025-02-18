@@ -185,6 +185,12 @@ export class EmployeeWorkReportComponent {
       key: 'vendorId',
       includeInSearchParams: true
     },
+    loggedInType:{
+      value: '0',
+      show: true,
+      key: 'loggedInType',
+      includeInSearchParams: true
+    }
   };
 
 
