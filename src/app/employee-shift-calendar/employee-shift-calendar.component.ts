@@ -39,11 +39,11 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   // Shift types
   shifts: any[] = [];
   shiftTypes: string[] = [
-    'WEEKOFF', 
+    'WEEKOFF',
     // 'HOLIDAY', 
-    'MORNING', 
-    'AFTERNOON', 
-    'NIGHT', 
+    'MORNING',
+    'AFTERNOON',
+    'NIGHT',
     'GENERAL',
     'BREAK'
   ];
@@ -174,7 +174,7 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     return this.shiftColors[shift] || '#FFFFFF'; // Default color if shift is not found
   }
 
- 
+
   //#region  Fetch
 
   // fetchShifts() {
@@ -218,6 +218,11 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   }
 
   fetchEmployeeShifts() {
+    if ((this.filters.role.value =='CITY_ADMIN' || this.filters.role.value =='STATE_ADMIN') &&
+      this.filters.companyId.value == '') {
+      this.dataService.showSnackBar('Please select Unit to view shifts');
+      return;
+    }
     this.employees = [];
     const payload = this.dataService.getPayloadValue(this.filters);
     this.shiftService.getEmployeeShifts(payload).subscribe((response) => {
@@ -483,13 +488,13 @@ export class EmployeeShiftCalendarComponent implements OnInit {
   isPastDate(date: string): boolean {
     const currentDate = new Date();
     const inputDate = new Date(date);
-  
+
     // Reset time components to midnight (00:00:00) for an accurate date-only comparison
     currentDate.setHours(0, 0, 0, 0);
     inputDate.setHours(0, 0, 0, 0);
-  
+
     return inputDate < currentDate; // Now it only considers past dates
   }
-  
+
 
 }

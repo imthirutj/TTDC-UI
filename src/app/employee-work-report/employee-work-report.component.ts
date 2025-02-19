@@ -289,6 +289,12 @@ export class EmployeeWorkReportComponent {
   }
 
   fetchEmployeeStatus() {
+    if ((this.filters.role.value =='CITY_ADMIN' || this.filters.role.value =='STATE_ADMIN') &&
+      this.filters.companyId.value == '') {
+      this.dataService.showSnackBar('Please select Unit to view report');
+      return;
+    }
+
     const payload = this.dataService.getPayloadValue(this.filters);
     const fpayload = {
       pageNumber: this.pageAttributes.currentPage,
