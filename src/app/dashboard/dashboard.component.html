@@ -295,7 +295,8 @@
 
   <!-- State Section -->
 
-  <div *ngIf="userAccessLevel == UserType.STATE_ADMIN">
+  <div *ngIf="userAccessLevel == UserType.STATE_ADMIN
+  || userAccessLevel == UserType.CITY_ADMIN">
     <div class="row">
 
       <div class="col-md-4 mb-4">
@@ -517,7 +518,8 @@
 </div>
 
 
-<div *ngIf="userAccessLevel== UserType.STATE_ADMIN" class="container mt-4">
+<div *ngIf="userAccessLevel== UserType.STATE_ADMIN ||
+userAccessLevel== UserType.CITY_ADMIN" class="container mt-4">
   <h3>Unit Wise Count</h3>
   
   <table class="table table-bordered" *ngIf="unitWiseReport?.length; else noData">

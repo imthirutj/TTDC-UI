@@ -70,7 +70,8 @@
           <button (click)="openPassbookModal(d)" class="btn btn-primary" type="button">
             <span *ngIf="userAccessLevel== UserType.MANAGER ||
                   userAccessLevel== UserType.VENDOR ||
-                   userAccessLevel== UserType.STATE_ADMIN">
+                   userAccessLevel== UserType.STATE_ADMIN ||
+                   userAccessLevel== UserType.CITY_ADMIN">
               View Passbook</span>
             <span *ngIf="userAccessLevel== UserType.EMPLOYEE"> View/Upload Passbook</span>
           </button>

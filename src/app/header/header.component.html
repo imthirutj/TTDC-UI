@@ -30,13 +30,20 @@
       </p>
     </div>
   </span>
+  <span *ngIf=" userData.role=='CITY_ADMIN'">
+    <div style="padding: 10px;" class="header-text">
+      <p class="left-align" style="font-size:25px">
+        REGION MANAGER
+      </p>
+    </div>
+  </span>
   <!-- <img src="/assets/images/logo/logo_2.jpg" alt="Logo" /> -->
 
   <!-- Profile icon and logout modal trigger -->
   <div class="profile-container d-flex align-items-center" style="margin-left: auto;">
     <div style="color: white; margin-right: 10px; display: inline;" *ngIf="userData">
       <p>{{ userData.userName }}</p>
-      <p>{{ userData.role }}</p>
+      <!-- <p>{{ userData.role }}</p> -->
       <!-- <p *ngIf="userData.role=='EMPLOYEE' || userData.role=='MANAGER'">
         {{ userData.companyName }}
       </p> -->

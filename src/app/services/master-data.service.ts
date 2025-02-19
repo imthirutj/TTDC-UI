@@ -272,8 +272,9 @@ export class MasterDataService {
   }
 
 
-  getUnitWiseReport(){
-    const url = `${this.apiUrl}Dashboard/GetUnitWiseReport`;
+  getUnitWiseReport(payload:any){
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Dashboard/GetUnitWiseReport?${queryParams}`;
     return this.http.get(url);
   }
   

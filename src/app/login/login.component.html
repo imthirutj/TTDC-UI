@@ -19,13 +19,14 @@
               <option value="2">Manager</option>
               <option value="3">Vendor</option>
               <option value="4">Employee</option>
+              <option value="5">Region Admin</option>
               
             </select>
           </div>
 
           <!--For Admin Login Form-->
           <form *ngIf="selectedRoleId=='1' || selectedRoleId=='2'
-          || selectedRoleId=='3'" 
+          || selectedRoleId=='3'  || selectedRoleId=='5'" 
           [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="mb-3">
               <label for="username" class="form-label">Enter Username</label>

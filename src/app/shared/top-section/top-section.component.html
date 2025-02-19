@@ -6,21 +6,34 @@
     <div class="warning-content">
       <!--Display Role-->
 
-      <p>Role:<b>{{parentContext.user.role}}</b></p>
-
-      <p *ngIf="parentContext.user.role=='MANAGER'">
+      <div *ngIf="parentContext.user.role=='MANAGER'">
+        <p>Role:<b>{{parentContext.user.role}}</b></p>
         Unit:
         <b>
           {{parentContext.user.companyName}}
         </b>
-      </p>
+      </div>
 
-      <p *ngIf="parentContext.user.role=='VENDOR'">
-        Name:
+      <div *ngIf="parentContext.user.role=='VENDOR'">
+        <p>Vendor:<b>{{parentContext.user.role}}</b></p>
+        Unit:
         <b>
           {{parentContext.user.vendorName}}
         </b>
-      </p>
+      </div>
+
+      <div *ngIf="parentContext.user.role=='STATE_ADMIN'">
+        <p>Role:<b>{{parentContext.user.role}}</b></p>
+       
+      </div>
+
+      <div *ngIf="parentContext.user.role=='CITY_ADMIN'">
+        <p>Role:<b>REGION MANAGER</b></p>
+        <p>Region:<b>{{parentContext.user.cityName}}</b></p>
+       
+      </div>
+
+
     </div>
   </div>
 </div>

@@ -133,6 +133,15 @@ export class FiltersComponent implements OnInit {
 
   activate() {
     this.filters.role.value = this.userAccessLevel;
+
+    if(this.userAccessLevel == UserType.CITY_ADMIN){
+      this.filters.cityId.value = this.user.cityId;
+      this.filters.cityId.show = false;
+      this.filters.cityId.includeInSearchParams = true;
+
+      this.fetchCompanies();
+
+    }
     if (this.userAccessLevel == UserType.VENDOR) {
       this.filters.vendorId.value = this.user.vendorId;
       this.filters.vendorId.show = false;
@@ -145,6 +154,9 @@ export class FiltersComponent implements OnInit {
     }
     if (this.userAccessLevel == UserType.MANAGER) {
       this.filters.cityId.show = false;
+      this.filters.cityId.includeInSearchParams = false;
+      this.filters.cityId.value = 0;
+      
       this.filters.companyId.show = false;
       this.filters.companyId.value = this.user.companyId;
 
@@ -156,6 +168,10 @@ export class FiltersComponent implements OnInit {
       
       this.filters.companyId.show = false;
       this.filters.companyId.value = this.user.companyId;
+
+      this.filters.cityId.show = false;
+      this.filters.cityId.includeInSearchParams = false;
+      this.filters.cityId.value = 0;
 
       this.filters.designationId.show = false;
       this.filters.deptId.show = false;
@@ -192,9 +208,7 @@ export class FiltersComponent implements OnInit {
     this.filters.catId.includeInSearchParams = false;
     this.filters.catId.value = 0;
 
-    this.filters.cityId.show = false;
-    this.filters.cityId.includeInSearchParams = false;
-    this.filters.cityId.value = 0;
+    
   }
 
   //#region Change Event

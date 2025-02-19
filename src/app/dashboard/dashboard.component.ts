@@ -142,11 +142,13 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
-    this.getUnitWiseReport();
+   
   }
 
   getUnitWiseReport(){
-    this.masterDataService.getUnitWiseReport().subscribe(
+    const payload = this.dataService.getPayloadValue(this.filters);
+
+    this.masterDataService.getUnitWiseReport(payload).subscribe(
       (response:any)=>{
         this.unitWiseReport = response.data;
       }
@@ -163,6 +165,7 @@ export class DashboardComponent {
     this.getAllReports();
     this.getExpQualMismatchCount();
     this.getLoggedInCounts();
+    this.getUnitWiseReport();
 
   }
 
