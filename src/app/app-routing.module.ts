@@ -207,7 +207,7 @@ const routes: Routes = [
     path: 'shift-management',
     component: EmployeeShiftCalendarComponent,
     canActivate: [AuthGuard],
-    data: { roles: [UserType.CITY_ADMIN , UserType.MANAGER] },
+    data: { roles: [UserType.STATE_ADMIN ,UserType.CITY_ADMIN , UserType.MANAGER] },
   },
 
   {
