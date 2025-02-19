@@ -162,8 +162,8 @@ export class ManagerEmployeePaymentEntryComponent {
   updateAmount(employee: any) {
     const payload = [{
       employeeId: employee.employeeId,
-      month: employee.month || new Date().getMonth() + 1,
-      year: employee.year || new Date().getFullYear(),     
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value,     
       amount: employee.amount || 0,  
     }];
   

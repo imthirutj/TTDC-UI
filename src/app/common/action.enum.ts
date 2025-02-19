@@ -11,4 +11,5 @@ export enum ModuleType{
     EMPLOYEE = 'EMPLOYEE',
     ADHAR = 'ADHAR',
     EDUCATION_CERT = 'EDUCATION_CERT',
+    EXPERIENCE_CERT = 'EXPERIENCE_CERT',
 }

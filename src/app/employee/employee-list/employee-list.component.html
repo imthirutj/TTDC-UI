@@ -15,10 +15,10 @@
     <thead>
       <tr>
         <th [rowSpan]="2">#</th>
-        <th [colSpan]="8" style="text-align: center;">Personal Info</th>
+        <th [colSpan]="9" style="text-align: center;">Personal Info</th>
         <th [colSpan]="3" style="text-align: center;">Qualification</th>
-        <th [colSpan]="2" style="text-align: center;">Experience</th>
-        <th [rowSpan]="2">Aadhaar</th>
+        <th [colSpan]="3" style="text-align: center;">Experience</th>
+   
         <th [rowSpan]="2">Bank Details</th>
         <th [rowSpan]="2">Total Wages</th>
       </tr>
@@ -40,11 +40,13 @@
         <th>Designation Name</th>
 
         <th>Employment Type</th>
+        <th >Aadhaar</th>
         <th>Required</th>
         <th>Actual</th>
         <th>Upload</th>
         <th>Required</th>
         <th>Actual</th>
+        <th>Upload</th>
 
       </tr>
     </thead>
@@ -77,7 +79,11 @@
 
 
         <td>{{ employee.employementType }}</td>
-
+        <td>{{ employee.aadhaarNumber }}
+          <button type="button" class="btn btn-primary" (click)="show_Certificate(employee, ModuleType.ADHAR)">
+            <i class="fas fa-eye"></i>
+          </button>
+        </td>
         <td>
           {{ getDegreeNames(employee) }}
 
@@ -112,13 +118,16 @@
             {{ employee.experience }} Years
           </span>
         </td>
-
-
-        <td>{{ employee.aadhaarNumber }}
-          <button type="button" class="btn btn-primary" (click)="show_Certificate(employee, ModuleType.ADHAR)">
-            <i class="fas fa-eye"></i>
+        <!--Experience Certificate-->
+        <td>
+          <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            (click)="show_Certificate(employee, ModuleType.EXPERIENCE_CERT)">
+            <i class="fas fa-file-alt"></i>
           </button>
         </td>
+
+
+       
 
 
         <!--Update Bank Details Action-->
@@ -131,7 +140,7 @@
         <!-- Total Wages Column (Editable) -->
         <td>
           <ng-container *ngIf="employee.isEditing">
-            <input type="number" [(ngModel)]="employee.totalWages" class="form-control" />
+            <input style="width:100px" type="number" [(ngModel)]="employee.totalWages" class="form-control" />
             <button class="btn btn-success btn-sm" (click)="updateTotalWages(employee)">
               <i class="fas fa-save"></i> <!-- Save Icon -->
             </button>

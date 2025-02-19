@@ -44,7 +44,8 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     'MORNING', 
     'AFTERNOON', 
     'NIGHT', 
-    'GENERAL'
+    'GENERAL',
+    'BREAK'
   ];
   selectedStatus: string = ''; // Stores the selected status
 
@@ -479,13 +480,16 @@ export class EmployeeShiftCalendarComponent implements OnInit {
     employee.dates[date].selected = value;
   }
 
-   // Method to check if a date is in the past
-   isPastDate(date: string): boolean {
+  isPastDate(date: string): boolean {
     const currentDate = new Date();
-    const inputDate = new Date(date); // Assuming the 'date' is in string format 'yyyy-MM-dd'
-
-    // Compare if the input date is earlier than the current date
-    return inputDate < currentDate;
+    const inputDate = new Date(date);
+  
+    // Reset time components to midnight (00:00:00) for an accurate date-only comparison
+    currentDate.setHours(0, 0, 0, 0);
+    inputDate.setHours(0, 0, 0, 0);
+  
+    return inputDate < currentDate; // Now it only considers past dates
   }
+  
 
 }

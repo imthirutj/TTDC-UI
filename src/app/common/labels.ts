@@ -6,4 +6,5 @@ export const ModuleTypeLabels: { [key in ModuleType]: string } = {
     [ModuleType.EMPLOYEE]: 'Employee',
     [ModuleType.ADHAR]: 'Aadhar Document',
     [ModuleType.EDUCATION_CERT]: 'Education Certificate',
+    [ModuleType.EXPERIENCE_CERT]: 'Experience Certificate',
 };

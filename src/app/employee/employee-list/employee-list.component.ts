@@ -542,10 +542,13 @@ export class EmployeeListComponent {
   }
 
   getDegreeNames(employee: any): string {
-    return employee.requiredQualifications
-      .map((q:any) => q.degreeName)
-      .filter((name:any) => name) // Remove null or undefined values
-      .join(', ');
+    return employee?.requiredQualifications
+      ? employee.requiredQualifications
+          .map((q: any) => q.degreeName)
+          .filter((name: any) => name) // Remove null or undefined values
+          .join(', ')
+      : 'N/A'; // Return 'N/A' if requiredQualifications is null/undefined
   }
+  
   
 }

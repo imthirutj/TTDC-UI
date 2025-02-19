@@ -73,7 +73,10 @@
                             (change)="setShift(employee, date, employee.dates[date].shift)">
                             <option *ngFor="let shift of shiftTypes" [value]="shift">{{ shift }}</option>
                         </select>
-
+                        
+                        <p style="color:white" *ngIf="isPastDate(date)" >
+                            {{ employee.dates[date].shift }}
+                        </p>
                         <!-- Checkbox for selecting the shift -->
                         <input *ngIf="isAssign  && !isPastDate(date)" type="checkbox"
                             [(ngModel)]="employee.dates[date].selected"
