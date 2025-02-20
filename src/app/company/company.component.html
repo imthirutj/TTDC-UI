@@ -7,18 +7,18 @@
     <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
   
-    <h3>Company/Unit List</h3>
+    <h3>Unit List</h3>
     <button  class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
-      Add Company/Unit
+      Add Unit
     </button>
 
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>#</th>
-          <th>Company ID</th>
-          <th>Company FName</th>
-          <th>Company SName</th>  
+          <th>Unit ID</th>
+          <th>Unit Name</th>
+          <!-- <th>Company SName</th>   -->
           <th>City</th>   
           <th>#</th>   
         </tr>
@@ -28,7 +28,7 @@
             <td>{{ i + 1 }}</td>
             <td>{{ company.companyId  }}</td>
             <td>{{ company.companyFName }}</td>
-            <td>{{ company.companySName }}</td>
+            <!-- <td>{{ company.companySName }}</td> -->
             <td>{{ company.cityName }}</td>
             <td>
               <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, company)">
@@ -54,14 +54,14 @@
     <div class="row">
       <div *ngIf="modal.action === 'VIEW' || modal.action === 'UPDATE'" class="col-md-6">
         <div class="form-group">
-          <label for="companyId">Company ID</label>
+          <label for="companyId">Unit ID</label>
           <input type="text" class="form-control" id="companyId" [(ngModel)]="modal.company.companyId"
             name="companyId" placeholder="Enter Company ID" [disabled]="true">
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="companyFName">Company Fname</label>
+          <label for="companyFName">Unit name</label>
           <input type="text" class="form-control" id="companyFName" [(ngModel)]="modal.company.companyFName"  
             name="companyFName" placeholder="Enter Company Fname" [disabled]="modal.action === 'VIEW'">
         </div>
@@ -69,13 +69,14 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <div class="form-group">
           <label for="companySName">Company Sname</label>
           <input type="text" class="form-control" id="companySName" [(ngModel)]="modal.company.companySName" 
             name="companySName" placeholder="Enter Company Sname" [disabled]="modal.action === 'VIEW'">
         </div>
-      </div>
+      </div> -->
+
       <div class="col-md-6">
         <div class="form-group">
           <label for="cityId">City</label>
