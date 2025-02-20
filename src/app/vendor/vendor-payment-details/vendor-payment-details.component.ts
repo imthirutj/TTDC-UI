@@ -50,7 +50,7 @@ export class VendorPaymentDetailsComponent implements OnInit {
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    pageSize:10
+    pageSize:100
   }
 
   filters: any = {
