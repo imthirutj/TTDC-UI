@@ -139,12 +139,13 @@ export class DataService {
     return payload;
   }
 
-  showSnackBar(message: string): void {
+  showSnackBar(message: string, errorType: 'Default' | 'Warn' | 'Error' = 'Default'): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
-      data: { message },
+      data: { message, errorType },
       duration: 5000,
     });
   }
+  
 
   openConfirmationDialog(message: string): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

@@ -384,8 +384,6 @@ export class EmployeeListComponent {
           this.dataService.showSnackBar('Employee updated successfully.');
           this.modal.show = false;
           this.getEmployeeList(); // Refresh the list
-        } else {
-          alert(response.message || 'Failed to update Employee.');
         }
       }
     );

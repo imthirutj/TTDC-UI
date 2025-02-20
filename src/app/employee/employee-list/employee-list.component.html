@@ -4,7 +4,10 @@
   <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 </div>
 
-<button *ngIf="false" class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
+<button *ngIf="userAccessLevel == UserType.STATE_ADMIN ||
+                userAccessLevel == UserType.CITY_ADMIN ||
+                userAccessLevel == UserType.MANAGER" 
+                class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
   Add Employee
 </button>
 
@@ -203,8 +206,11 @@
   </div>
 </app-common-dialog>
 
-<app-common-dialog [showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" [dialogTitle]="modal.title"
-  [showCloseIcon]="true" [showSubmitButton]="modal.action==Action.UPDATE" (submitDialog)="saveEmployee()"
+<app-common-dialog 
+[showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" 
+[dialogTitle]="modal.title"
+  [showCloseIcon]="true" [showSubmitButton]="modal.action==Action.UPDATE || modal.action==Action.CREATE"
+   (submitDialog)="saveEmployee()"
   (closeDialog)="closeModal()">
 
   <div class="container mt-4">
@@ -236,8 +242,10 @@
         </div>
         <div class="mb-3">
           <label for="EmployeeCode" class="form-label">Employee Code</label>
-          <input type="text" class="form-control" id="EmployeeCode" [(ngModel)]="modal.employee.employeeCode"
-            name="EmployeeCode" placeholder="Enter Employee Code" required [disabled]="true">
+          <input type="text" class="form-control" id="EmployeeCode" 
+            [(ngModel)]="modal.employee.employeeCode"
+            name="EmployeeCode" placeholder="Enter Employee Code" required
+             [disabled]="modal.action === 'VIEW'">
         </div>
 
 
@@ -413,7 +421,7 @@
     </div>
 
     <!-- Card 4: Certificate Details -->
-    <div class="card mb-3">
+    <div *ngIf="modal.action === Action.VIEW || modal.action === Action.UPDATE" class="card mb-3">
       <div class="card-header bg-secondary text-white">
         Certificate Details
       </div>

@@ -98,7 +98,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           const responseBody = event.body;
           if (responseBody && responseBody.success === false) {
-            this.dataService.showSnackBar(responseBody.message);
+            this.dataService.showSnackBar(responseBody.message, 'Error');
             console.log('Error message from response:', responseBody.message || 'Unknown error');
           }
         }
