@@ -323,7 +323,8 @@
             <input [disabled]="true" *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg"
               id="City" [(ngModel)]="modal.employee.companyFName" />
             <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE"
-              (change)="onCompanyChange()" class="form-select" id="CompanyId" [(ngModel)]="modal.employee.companyId"
+              (change)="onCompanyChange()" class="form-select" id="CompanyId" 
+              [(ngModel)]="modal.employee.companyId"
               name="companyId">
               <option value="">Select Unit</option>
               <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}
@@ -354,7 +355,8 @@
               (change)="onDepartmentChange()" class="form-select" id="DesignationId"
               [(ngModel)]="modal.employee.departmentId" name="departmentId">
               <option value="">Select Department</option>
-              <option *ngFor="let department of dropdowns.departments" [value]="department.departmentId">{{
+              <option *ngFor="let department of dropdowns.departments" 
+                  [value]="department.departmentId">{{
                 department.departmentFName }}</option>
             </select>
           </div>

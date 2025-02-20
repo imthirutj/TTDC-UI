@@ -31,7 +31,7 @@ export class EmployeeListComponent {
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    pageSize:10
+    pageSize: 10
   }
 
   dropdowns = {
@@ -132,13 +132,13 @@ export class EmployeeListComponent {
       key: 'vendorId',
       includeInSearchParams: true
     },
-    qualificationMismatched:{
+    qualificationMismatched: {
       value: '0',
       show: true,
       key: 'qualificationMismatched',
       includeInSearchParams: true
     },
-    loggedInType:{
+    loggedInType: {
       value: '0',
       show: false,
       key: 'loggedInType',
@@ -249,21 +249,21 @@ export class EmployeeListComponent {
   }
 
   modalSalStruct = {
-    show:false,
-    title:'Salary Structure',
+    show: false,
+    title: 'Salary Structure',
     obj: new WageDetails()
   }
 
-  openSalStructModal(empId:any){
+  openSalStructModal(empId: any) {
     this.modalSalStruct.show = true;
     this.modalSalStruct.obj = new WageDetails();
     this.fetchSalaryStructure(empId);
   }
-  closeSalStructModal(){
+  closeSalStructModal() {
     this.modalSalStruct.show = false;
     this.modalSalStruct.obj = new WageDetails();
   }
-  fetchSalaryStructure(empId:any){
+  fetchSalaryStructure(empId: any) {
     this.masterDataService.fetchSalaryStructure(empId).subscribe((response) => {
       if (response.success) {
         this.modalSalStruct.obj = response.data[0];
@@ -362,7 +362,16 @@ export class EmployeeListComponent {
         this.modal.employee = { ...employee, loginName: 'qwerty', loginPassword: '12345' };
 
         if (this.modal.employee.cityId) {
-          this.fetchCompanies(this.modal.employee.cityId);
+          const payload = {
+            cityId: this.modal.employee.cityId,
+          };
+          this.masterDataService.getCompany(payload).subscribe((response) => {
+            if (response.success) this.dropdowns.companies = response.data;
+            // Ensure the selected companyId is preserved
+            if (!this.modal.employee.companyId && this.dropdowns.companies.length > 0) {
+             
+            }
+          });
         }
         if (this.modal.employee.companyId) {
           this.fetchVendors(this.modal.employee.companyId, this.modal.employee.departmentId);
@@ -371,6 +380,23 @@ export class EmployeeListComponent {
     }
     else {
       this.modal.employee = new Employee();
+      // Ensure dropdowns are loaded first
+      setTimeout(() => {
+        this.modal.employee.cityId = this.user.cityId;
+        if (this.modal.employee.cityId) {
+          const payload = {
+            cityId: this.modal.employee.cityId,
+          };
+          this.masterDataService.getCompany(payload).subscribe((response) => {
+            if (response.success) this.dropdowns.companies = response.data;
+            // Ensure the selected companyId is preserved
+            if (!this.modal.employee.companyId && this.dropdowns.companies.length > 0) {
+              this.modal.employee.companyId = this.filters.companyId.value;
+            }
+          });
+        }
+       
+      }, 500);
       this.setValues();
     }
   }
@@ -542,11 +568,11 @@ export class EmployeeListComponent {
   getDegreeNames(employee: any): string {
     return employee?.requiredQualifications
       ? employee.requiredQualifications
-          .map((q: any) => q.degreeName)
-          .filter((name: any) => name) // Remove null or undefined values
-          .join(', ')
+        .map((q: any) => q.degreeName)
+        .filter((name: any) => name) // Remove null or undefined values
+        .join(', ')
       : 'N/A'; // Return 'N/A' if requiredQualifications is null/undefined
   }
-  
-  
+
+
 }
