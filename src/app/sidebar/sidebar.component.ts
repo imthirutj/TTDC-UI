@@ -70,12 +70,12 @@ export class SidebarComponent {
         route: '/payslip-records-waiting', 
         allowedUserTypes: [UserType.STATE_ADMIN,  UserType.COMPANY_ADMIN, UserType.MANAGER]  
       },
-      { 
-        label: 'State List', 
-        icon: 'fa-solid fa-map-marked-alt', 
-        route: '/state', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
-      },
+      // { 
+      //   label: 'State List', 
+      //   icon: 'fa-solid fa-map-marked-alt', 
+      //   route: '/state', 
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
+      // },
       { 
         label: 'City List', 
         icon: 'fa-solid fa-city', 
