@@ -180,6 +180,18 @@
         </div>
       </div>
 
+       <!-- Filte Attendance -->
+       <div *ngIf="filters.attnNotFilled.show" class="col-md-4">
+        <div class="form-group">
+          <label for="attnNotFilled">Month: Attendance Filled</label>
+          <select [(ngModel)]="filters.attnNotFilled.value" (change)="onAttnFilledChange()" class="form-control"
+            id="attnNotFilled">
+            <option value="0">All</option>
+            <option value="1">Not Filled</option>
+          </select>
+        </div>
+      </div>
+
     </div>
   </div>
 </app-common-dialog>

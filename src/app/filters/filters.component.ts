@@ -91,7 +91,8 @@ export class FiltersComponent implements OnInit {
           { key: 'managerId', label: 'Manager ID', defaultValue: '', show: false, includeInSearchParams: false },
           { key: 'managerName', label: 'Manager Name', defaultValue: '', show: false, includeInSearchParams: false },
           { key: 'qualificationMismatched', label: 'Qualification Mismatched', defaultValue: '0', show: false, includeInSearchParams: false },
-          { key: 'loggedInType', label: 'Logged In Type', defaultValue: '0', show: false, includeInSearchParams: false }
+          { key: 'loggedInType', label: 'Logged In Type', defaultValue: '0', show: false, includeInSearchParams: false },
+          { key: 'attnNotFilled', label: 'Attendance Filter', defaultValue: '0', show: false, includeInSearchParams: false }
         ];
     
         // Ensure filters are properly initialized
@@ -255,6 +256,9 @@ export class FiltersComponent implements OnInit {
     this.onFilterChange();
   }
   onLoginTypeChange(){
+    this.onFilterChange();
+  }
+  onAttnFilledChange(){
     this.onFilterChange();
   }
   //#endregion
