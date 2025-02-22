@@ -26,7 +26,7 @@
         Preview Invoice
       </button>
       <button *ngIf="!companyVendors.invoiceGenerated && userAccessLevel == UserType.VENDOR" class="btn btn-primary"
-        (click)="generateInvoice(companyVendors)">
+        (click)="openGenerateInvoiceModal(companyVendors)">
         Generate Invoice
       </button>
       <button *ngIf="companyVendors.invoiceGenerated" class="btn btn-primary"
@@ -141,6 +141,26 @@
     </div>
     
   </div>
+
+
+  <!--GEnerate Invoive Modal-->
+<app-common-dialog
+[showDialog]="modalGenerateInv.show"
+[showCloseIcon]="true"
+[dialogTitle]="modalGenerateInv.title"
+(closeDialog)="modalGenerateInv.show = false"
+[showSubmitButton]="true"
+(submitDialog)="generateInvoice()">
+
+<!--Input box Invoice No-->
+<div class="row">
+  <div class="col-md-6">
+    <label for="invoiceNo">Invoice No:</label>
+    <input type="text" class="form-control" id="invoiceNo"
+     [(ngModel)]="modalGenerateInv.invoiceNo">
+  </div>
+</div>
+</app-common-dialog>
 
   <app-common-dialog [showDialog]="isVendorModalOpen" [showCloseIcon]="true" [dialogTitle]="vendorPayment.title"
     (closeDialog)="isVendorModalOpen = false" [showSubmitButton]="true" (submitDialog)="updateVendorModal()"

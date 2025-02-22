@@ -11,8 +11,13 @@
   <div *ngIf="userAccessLevel == UserType.EMPLOYEE">
 
     <div class="row">
-      <p>
+      <p *ngIf="false">
         {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
+      </p>
+  
+      <p>
+        <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
+        <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
       </p>
 
       <div class="col-md-4 mb-4">
@@ -168,9 +173,15 @@
       </div>
 
     </div>
-    <p>
+    <p *ngIf="false">
       {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
     </p>
+
+    <p>
+      <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
+      <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
+    </p>
+    
     <div class="row">
       <div class="col-md-4 mb-4">
         <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
@@ -262,9 +273,15 @@
       </div>
 
     </div>
-    <p>
+    <p *ngIf="false">
       {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
     </p>
+
+    <p>
+      <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
+      <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
+    </p>
+
     <div class="row">
       <div class="col-md-4 mb-4">
         <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
@@ -382,8 +399,13 @@
     </div> -->
     </div>
 
-    <p>
+    <p *ngIf="false">
       {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
+    </p>
+
+    <p>
+      <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
+      <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
     </p>
     <div class="row">
       <div class="col-md-4 mb-4">

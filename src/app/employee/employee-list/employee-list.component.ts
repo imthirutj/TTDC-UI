@@ -143,6 +143,12 @@ export class EmployeeListComponent {
       show: false,
       key: 'loggedInType',
       includeInSearchParams: true
+    },
+    activeStatus:{
+      value: 'ACTIVE',
+      show: true,
+      key: 'activeStatus',
+      includeInSearchParams: true
     }
   };
 

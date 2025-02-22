@@ -35,6 +35,16 @@ export class FiltersComponent implements OnInit {
   oldFilters: any = {};
   originalFilters: any = {};
 
+  shiftTypes: string[] = [
+    'WEEKOFF',
+    // 'HOLIDAY', 
+    'MORNING',
+    'AFTERNOON',
+    'NIGHT',
+    'GENERAL',
+    'BREAK'
+  ];
+
   //#region Constructor
   constructor(private masterDataService: MasterDataService,
     private dataService: DataService
@@ -83,6 +93,14 @@ export class FiltersComponent implements OnInit {
         { objName: 'fromYear', key: 'fromYear', label: 'To Year', defaultValue: new Date().getFullYear(), show: false, includeInSearchParams: true },
         { objName: 'toMonth', key: 'toMonth', label: 'To Month', defaultValue: new Date().getMonth() + 1, show: false, includeInSearchParams: true },
         { objName: 'toYear', key: 'toYear', label: 'To Year', defaultValue: new Date().getFullYear(), show: false, includeInSearchParams: true },
+
+        { objName: 'shiftStatus', key: 'shiftStatus', label: 'Shift Status', defaultValue: '', show: false, includeInSearchParams: false },
+
+        { objName: 'activeStatus', key: 'activeStatus', label: 'Active Status', defaultValue: 'ACTIVE', show: false, includeInSearchParams: false },
+
+        { objName: 'fromDate', key: 'fromDate', label: 'From Date', defaultValue: new Date().toISOString().split('T')[0], show: false, includeInSearchParams: false },
+        { objName: 'toDate', key: 'toDate', label: 'To Date', defaultValue: new Date().toISOString().split('T')[0], show: false, includeInSearchParams: false },
+
       ];
 
       // Ensure filters are properly initialized
@@ -203,12 +221,18 @@ export class FiltersComponent implements OnInit {
 
       this.filters.loggedInType.value = '0';
       this.filters.loggedInType.show = false;
+
+      this.filters.shiftStatus.show = false;
+      this.filters.shiftStatus.includeInSearchParams = false;
+      this.filters.shiftStatus.value ='';
     }
 
     //Set Def VAlue for all
     this.filters.catId.show = false;
     this.filters.catId.includeInSearchParams = false;
     this.filters.catId.value = 0;
+
+    
 
 
   }
@@ -267,6 +291,19 @@ export class FiltersComponent implements OnInit {
   }
   onOtherDeductionshange() {
     this.onFilterChange();
+  }
+  onActiveStatusChange() {
+    this.onFilterChange();
+  }
+  onShiftStatuschange(){
+    this.onFilterChange(); 
+  }
+
+  onFromDateChange(){
+    this.onFilterChange(); 
+  }
+  onToDateChange(){
+    this.onFilterChange(); 
   }
   //#endregion
 

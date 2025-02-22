@@ -203,6 +203,30 @@ export class SidebarComponent {
         route: '/my-profile', 
         allowedUserTypes: [UserType.EMPLOYEE] 
       },
+      { 
+        label: 'Payroll Expenditure', 
+        icon: 'fa-solid fa-line-chart', 
+        route: '/payroll-expenditure', 
+        allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN] 
+      },
+      { 
+        label: 'Future Payroll Needs', 
+        icon: 'fa-solid fa-line-chart', 
+        route: '/future-payroll-needs', 
+        allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN] 
+      },
+      { 
+        label: 'Leave And OD Analysis', 
+        icon: 'fa-solid fa-line-chart', 
+        route: '/leave-and-od-analysis', 
+        allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN] 
+      },
+      { 
+        label: 'Employee Based Reports', 
+        icon: 'fa-solid fa-line-chart', 
+        route: '/employee-based-reports', 
+        allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN] 
+      },
     ];
     
 

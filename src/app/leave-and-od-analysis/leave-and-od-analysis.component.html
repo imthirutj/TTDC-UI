@@ -1,0 +1,39 @@
+<div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="search()">
+    </app-filter>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  </div>
+  
+  
+  <div class="container mt-4">
+    <h3>Leave And OD analysis</h3>
+  
+    <table class="table table-bordered" *ngIf="Units?.length; else noData">
+      <thead class="thead-dark">
+        <tr>
+          <th>#</th>
+          <th>Unit</th>
+          <th>Total Employees</th>
+          <th>Total Leave</th>
+          <th>Total OD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of Units; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.Unit || 'N/A' }}</td>
+          <td>{{ row.TotalEmployees || 0 }}</td>
+          <td>{{ row.LeaveCount || 0 }}</td>
+          <td>{{ row.ODCount || 0 }}</td>
+         
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- No Data Message -->
+    <ng-template #noData>
+      <p>No records found.</p>
+    </ng-template>
+  </div>
+  
+  

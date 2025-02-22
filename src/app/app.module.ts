@@ -81,6 +81,10 @@ import { CompensateRequestComponent } from './compensate-request/compensate-requ
 import { ManagerEmployeePaymentEntryComponent } from './manager-employee-payment-entry/manager-employee-payment-entry.component';
 
 import { MatSliderModule } from '@angular/material/slider';
+import { PayrollExpenditureComponent } from './payroll-expenditure/payroll-expenditure.component';
+import { FuturePayrollNeedsComponent } from './future-payroll-needs/future-payroll-needs.component';
+import { LeaveAndOdAnalysisComponent } from './leave-and-od-analysis/leave-and-od-analysis.component';
+import { EmployeeBasedReportsComponent } from './employee-based-reports/employee-based-reports.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +136,11 @@ import { MatSliderModule } from '@angular/material/slider';
     TopSectionComponent,
     HolidayManagementComponent,
     CompensateRequestComponent,
-    ManagerEmployeePaymentEntryComponent
+    ManagerEmployeePaymentEntryComponent,
+    PayrollExpenditureComponent,
+    FuturePayrollNeedsComponent,
+    LeaveAndOdAnalysisComponent,
+    EmployeeBasedReportsComponent
 
   ],
   imports: [

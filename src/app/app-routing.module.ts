@@ -40,6 +40,10 @@ import { MyProfileComponent } from './employee/my-profile/my-profile.component';
 import { HolidayManagementComponent } from './holiday-management/holiday-management.component';
 import { CompensateRequestComponent } from './compensate-request/compensate-request.component';
 import { ManagerEmployeePaymentEntryComponent } from './manager-employee-payment-entry/manager-employee-payment-entry.component';
+import { PayrollExpenditureComponent } from './payroll-expenditure/payroll-expenditure.component';
+import { FuturePayrollNeedsComponent } from './future-payroll-needs/future-payroll-needs.component';
+import { LeaveAndOdAnalysisComponent } from './leave-and-od-analysis/leave-and-od-analysis.component';
+import { EmployeeBasedReportsComponent } from './employee-based-reports/employee-based-reports.component';
 
 const routes: Routes = [
 
@@ -244,6 +248,30 @@ const routes: Routes = [
   {
     path:'my-profile',
     component:MyProfileComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'payroll-expenditure',
+    component:PayrollExpenditureComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'future-payroll-needs',
+    component:FuturePayrollNeedsComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'leave-and-od-analysis',
+    component:LeaveAndOdAnalysisComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'employee-based-reports',
+    component:EmployeeBasedReportsComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },

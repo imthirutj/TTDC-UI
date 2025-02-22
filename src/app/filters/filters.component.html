@@ -3,7 +3,7 @@
   <i class="fas fa-filter"></i> Filter
 </button>
 <button style="background-color: cadetblue;" type="button" class="btn btn-primary" (click)="onFilterChange()">
-   Refresh
+  Refresh
 </button>
 <!-- <button type="button" class="btn btn-primary" (click)="resetFilters()">
   <i class="fas fa-reset"></i> Reset
@@ -32,13 +32,13 @@
               <button type="button" class="btn btn-outline-primary me-2" (click)="changeMonth(-1)">
                 <i class="fas fa-chevron-left"></i>
               </button>
-  
+
               <!-- Month Dropdown -->
               <select [(ngModel)]="filters.selectedMonth.value" (change)="onFilterChange()"
                 class="form-control text-center" id="month">
                 <option *ngFor="let month of months" [value]="month.number">{{ month.name }}</option>
               </select>
-  
+
               <!-- Right Arrow -->
               <button type="button" class="btn btn-outline-primary ms-2" (click)="changeMonth(1)">
                 <i class="fas fa-chevron-right"></i>
@@ -46,8 +46,8 @@
             </div>
           </div>
         </div>
-  
-  
+
+
         <div *ngIf="filters.selectedYear.show" class="col-md-4">
           <div class="form-group">
             <label for="year">Year</label>
@@ -63,8 +63,8 @@
           <div class="form-group">
             <label for="month">From Month:</label>
             <div class="d-flex align-items-center">
-              <select [(ngModel)]="filters.fromMonth.value" (change)="onFilterChange()"
-                class="form-control text-center" id="month">
+              <select [(ngModel)]="filters.fromMonth.value" (change)="onFilterChange()" class="form-control text-center"
+                id="month">
                 <option *ngFor="let month of months" [value]="month.number">{{ month.name }}</option>
               </select>
             </div>
@@ -83,8 +83,8 @@
           <div class="form-group">
             <label for="month">To Month:</label>
             <div class="d-flex align-items-center">
-              <select [(ngModel)]="filters.toMonth.value" (change)="onFilterChange()"
-                class="form-control text-center" id="month">
+              <select [(ngModel)]="filters.toMonth.value" (change)="onFilterChange()" class="form-control text-center"
+                id="month">
                 <option *ngFor="let month of months" [value]="month.number">{{ month.name }}</option>
               </select>
             </div>
@@ -100,7 +100,7 @@
         </div>
 
       </ng-container>
-      
+
 
       <div *ngIf="filters.cityId.show" class="col-md-4">
         <div class="form-group">
@@ -229,8 +229,8 @@
         </div>
       </div>
 
-       <!-- Filte Attendance -->
-       <div *ngIf="filters.attnNotFilled.show" class="col-md-4">
+      <!-- Filte Attendance -->
+      <div *ngIf="filters.attnNotFilled.show" class="col-md-4">
         <div class="form-group">
           <label for="attnNotFilled">Month: Attendance Filled</label>
           <select [(ngModel)]="filters.attnNotFilled.value" (change)="onAttnFilledChange()" class="form-control"
@@ -245,13 +245,13 @@
         <div class="form-group">
           <label for="salaryRange">Salary Range</label>
           <div class="d-flex align-items-center">
-            <input [(ngModel)]="filters.salaryRangeMin.value" (change)="onSalaryRangeChange()" 
-              class="form-control me-2" type="number" placeholder="Min Salary">
-            
+            <input [(ngModel)]="filters.salaryRangeMin.value" (change)="onSalaryRangeChange()" class="form-control me-2"
+              type="number" placeholder="Min Salary">
+
             <span class="mx-2">-</span> <!-- Hyphen between inputs -->
-      
-            <input [(ngModel)]="filters.salaryRangeMax.value" (change)="onSalaryRangeChange()" 
-              class="form-control" type="number" placeholder="Max Salary">
+
+            <input [(ngModel)]="filters.salaryRangeMax.value" (change)="onSalaryRangeChange()" class="form-control"
+              type="number" placeholder="Max Salary">
           </div>
         </div>
       </div>
@@ -260,18 +260,65 @@
         <div class="form-group">
           <label for="salaryRange">Other Deductions Range</label>
           <div class="d-flex align-items-center">
-            <input [(ngModel)]="filters.otherDeductionsMin.value" (change)="onOtherDeductionshange()" 
+            <input [(ngModel)]="filters.otherDeductionsMin.value" (change)="onOtherDeductionshange()"
               class="form-control me-2" type="number" placeholder="Min Deductions">
-            
+
             <span class="mx-2">-</span> <!-- Hyphen between inputs -->
-      
-            <input [(ngModel)]="filters.otherDeductionsMin.value" (change)="onOtherDeductionshange()" 
+
+            <input [(ngModel)]="filters.otherDeductionsMax.value" (change)="onOtherDeductionshange()"
               class="form-control" type="number" placeholder="Max Deductions">
           </div>
         </div>
       </div>
-      
-      
+
+      <!-- activeStatus -->
+      <div *ngIf="filters.activeStatus.show" class="col-md-4">
+        <div class="form-group">
+          <label for="activeStatus">Active Status</label>
+          <select [(ngModel)]="filters.activeStatus.value" (change)="onActiveStatusChange()" class="form-control"
+            id="activeStatus">
+            <option value="ALL">All</option>
+            <option value="ACTIVE">Active</option>
+            <option value="INACTIVE">Inactive</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!--shiftStatus-->
+      <div *ngIf="filters.shiftStatus.show" class="col-md-4">
+        <div class="form-group">
+          <label for="shiftStatus">Today Shift Filter</label>
+          <select [(ngModel)]="filters.shiftStatus.value" (change)="onShiftStatuschange()" class="form-control"
+            id="shiftStatus">
+            <option value="">All</option>
+            <option *ngFor="let shift of shiftTypes" [value]="shift">
+              {{ shift }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!--fromDate-->
+      <div *ngIf="filters.fromDate.show" class="col-md-4">
+        <div class="form-group">
+          <label for="fromDate">From Date</label>
+          <input [(ngModel)]="filters.fromDate.value" 
+          (change)="onFromDateChange()" class="form-control" id="fromDate"
+            type="date">
+        </div>
+      </div>
+
+      <!--toDate-->
+      <div *ngIf="filters.toDate.show" class="col-md-4">
+        <div class="form-group">
+          <label for="toDate">To Date</label>
+          <input [(ngModel)]="filters.toDate.value" 
+          (change)="onToDateChange()" class="form-control" id="toDate"
+            type="date">
+        </div>
+      </div>
+
 
     </div>
   </div>

@@ -15,6 +15,8 @@ export class Vendor {
     cityName: string;
     companyDepartmentList: { companyId: number; companyName: string; departmentId: number; departmentName: string }[];
     vendorMobileNumbers : {role:'',mobile:''}[];
+    isPercent:number;
+    serviceCharge:number;
     constructor(vendor: any = {}) {
         this.vendorId = vendor.vendorId || 0;
         this.EmployeeCount = vendor.EmployeeCount || 0;
@@ -32,5 +34,7 @@ export class Vendor {
         this.cityName = vendor.cityName || '';
         this.companyDepartmentList = vendor.companyDepartmentList || [];
         this.vendorMobileNumbers = vendor.vendorMobileNumbers || [];
+        this.isPercent = vendor.isPercent || 0;
+        this.serviceCharge = vendor.serviceCharge || 0;
     }
 }

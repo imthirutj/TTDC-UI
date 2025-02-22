@@ -14,7 +14,7 @@ export class EmployeeWorkDetailsService {
 
 
   private user: any;
-   private apiUrl = environment.API_URL;
+   public apiUrl = environment.API_URL;
  
    constructor(private http: HttpClient,
      private router: Router,
@@ -37,6 +37,12 @@ export class EmployeeWorkDetailsService {
   getAttendanceDetails(payload: any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(payload);
     const url = `${this.apiUrl}Attendance/GetBiometricDetails?${queryParams}`;
+    return this.http.get(url);
+  }
+
+  getEmployeeBasedReports(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Reports/EmployeeBased?${queryParams}`;
     return this.http.get(url);
   }
 

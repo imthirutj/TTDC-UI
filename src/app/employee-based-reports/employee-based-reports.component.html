@@ -1,0 +1,87 @@
+<div class="cards-filter">
+  <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="search()">
+  </app-filter>
+  <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+</div>
+
+<!-- Download Excel -->
+<button class="btn btn-primary" (click)="downloadExcel()">Download Excel</button>
+
+<div class="container mt-4">
+  <h3>Employee Reports</h3>
+
+  <table id="emp-report" class="table table-bordered" *ngIf="Reports?.length; else noData">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Employee Name</th>
+        <th>Employee Code</th>
+        <th>Company</th>
+        <th>Vendor</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Present Days</th>
+        <th>Absent Days</th>
+        <th>Leave Days</th>
+        <th>Holiday Days</th>
+        <th>Week Off Days</th>
+        <!-- <th>Total Working Hours</th>
+        <th>Late Work Days</th>
+        <th>Comp Off Requested</th>
+        <th>Comp Off Approved</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of Reports; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ row.employeeName }}</td>
+        <td>{{ row.employeeCode }}</td>
+        <td>{{ row.companyFName }}</td>
+        <td>{{ row.vendorName }}</td>
+        <td>{{ row.departmentFName }}</td>
+        <td>{{ row.designationName }}</td>
+        <td>{{ row.presentDays }}</td>
+        <td>{{ row.absentDays }}</td>
+        <td>{{ row.leaveDays }}</td>
+        <td>{{ row.holidayDays }}</td>
+        <td>{{ row.weekOffDays }}</td>
+        <!-- <td>{{ row.totalWorkingHours }}</td>
+        <td>{{ row.lateWorkDays }}</td>
+        <td>{{ row.compOffRequested }}</td>
+        <td>{{ row.compOffApproved }}</td> -->
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noData>
+    <p>No records found.</p>
+  </ng-template>
+
+
+  <!-- No Data Message -->
+  <ng-template #noData>
+    <p>No records found.</p>
+  </ng-template>
+</div>
+
+
+<div>
+  <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="fetchEmployeeBasedReports()">
+  </app-server-pagination>
+
+  <div class="d-flex justify-content-between">
+    <!-- Page Size Dropdown -->
+    <div class="d-flex align-items-center">
+      <label for="pageSize" class="me-2">Page Size:</label>
+      <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize">
+        <option [value]="10">10</option>
+        <option [value]="20">20</option>
+        <option [value]="30">30</option>
+        <option [value]="50">50</option>
+        <option [value]="100">100</option>
+        <option [value]="120">120</option>
+        <option [value]="120">150</option>
+      </select>
+    </div>
+  </div>
+</div>

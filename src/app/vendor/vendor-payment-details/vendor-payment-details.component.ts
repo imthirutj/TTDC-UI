@@ -53,6 +53,13 @@ export class VendorPaymentDetailsComponent implements OnInit {
     pageSize:100
   }
 
+  modalGenerateInv={
+    show:false,
+    title:'Generate Invoice',
+    vendor:{},
+    invoiceNo:''
+  }
+
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -352,16 +359,31 @@ export class VendorPaymentDetailsComponent implements OnInit {
     this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId, type: type } });
   }
 
-  generateInvoice(vendor: any) {
+  openGenerateInvoiceModal(vendor:any){
+    this.modalGenerateInv.show=true;
+    this.modalGenerateInv.vendor=vendor;
+    this.modalGenerateInv.invoiceNo='';
+  }
+
+  closeGenerateInvoiceModal(){
+    this.modalGenerateInv.show=false;
+    this.modalGenerateInv.vendor={};
+    this.modalGenerateInv.invoiceNo='';
+  }
+
+
+  generateInvoice() {
+    var invoiceNo = this.modalGenerateInv.invoiceNo;
     var payload={
       month: this.filters.selectedMonth.value,
       year: this.filters.selectedYear.value,
-      vendorId: this.filters.vendorId.value
+      vendorId: this.filters.vendorId.value,
+      invoiceNo: invoiceNo
     }
     this.vendorService.generateVendeorInvoiceDetails(payload).subscribe((response) => {
       console.log('Vendor Invoice Details:', response);
       this.dataService.openConfirmationDialog(response.message);
-      this.navigateVendorInvoice(vendor, 'VIEW');
+      this.navigateVendorInvoice( this.modalGenerateInv.vendor, 'VIEW');
     });
   }
 
@@ -371,5 +393,6 @@ export class VendorPaymentDetailsComponent implements OnInit {
   }
 
 
+ 
 
 }

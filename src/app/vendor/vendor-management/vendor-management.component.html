@@ -28,6 +28,7 @@
           <th> Bank Branch</th>
           <th>Bank Account No</th>
           <th>Bank IFSC</th>
+          <th>Service Charge</th>
         </tr>
       </thead>
       <tbody>
@@ -61,7 +62,11 @@
           <td>{{ vendor.bankBranch }}</td>
           <td>{{ vendor.bankAccountNo }}</td>
           <td>{{ vendor.bankIfsc }}</td>
-
+          <td>
+            <span *ngIf="vendor.isPercent == 0">₹</span>
+            {{ vendor.serviceCharge }}
+            <span *ngIf="vendor.isPercent == 1">%</span>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -192,6 +197,22 @@
       <div class="form-group">
         <label for="bankIfsc">Bank IFSC</label>
         <input type="text" class="form-control" id="bankIfsc" [(ngModel)]="modal.vendor.bankIfsc">
+      </div>
+
+      <h2>Service Charge:</h2>
+      <!--Is Percent-->
+      <div class="form-group">
+        <label for="isPercent">Service Charge Type</label>
+        <select class="form-control" id="isPercent" [(ngModel)]="modal.vendor.isPercent">
+            <option [value]="0">Fixed Amount</option>
+            <option [value]="1">Percentage (%)</option>
+        </select>
+    </div>
+    
+
+      <div class="form-group">
+        <label for="serviceCharge">Service Charge</label>
+        <input type="number" class="form-control" id="serviceCharge" [(ngModel)]="modal.vendor.serviceCharge">
       </div>
 
     </div>

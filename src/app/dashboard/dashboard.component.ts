@@ -142,6 +142,12 @@ export class DashboardComponent {
       key: 'vendorId',
       includeInSearchParams: true
     },
+    shiftStatus: {
+      value: '',
+      show: true,
+      key: 'shiftStatus',
+      includeInSearchParams: true
+    },
   };
 
   chartData: any;  // Data to pass to the chart component
