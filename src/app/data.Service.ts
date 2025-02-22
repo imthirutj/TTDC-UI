@@ -284,4 +284,28 @@ export class DataService {
     return this.monthNames[month - 1] || '';
   }
 
+  getCurrentLocation(): Promise<{ lat: number; long: number }> {
+    return new Promise((resolve, reject) => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const long = position.coords.longitude;
+            console.log(`Latitude: ${lat}, Longitude: ${long}`);
+            resolve({ lat, long });
+          },
+          (error) => {
+            console.error('Error getting location:', error);
+            reject(error);
+          }
+        );
+      } else {
+        const errorMsg = 'Geolocation is not supported by this browser.';
+        console.error(errorMsg);
+        reject(new Error(errorMsg));
+      }
+    });
+  }
+  
+
 }

@@ -62,18 +62,50 @@ export class DashboardComponent {
 
   filters: any = {
     role: { value: '', show: true, key: 'role', includeInSearchParams: true },
+    filterRange:{
+      value:1,
+      show:false,
+      key:'filterRange',
+      includeInSearchParams: true
+    },
     selectedMonth: {
-      value: Number(new Date().getMonth()) + 1, // Default to current month
+      value:  Number(new Date().getMonth()) + 1,
       show: true,
       key: 'month',
       includeInSearchParams: true
     },
     selectedYear: {
-      value: new Date().getFullYear(), // Default to current year
+      value: new Date().getFullYear(),
       show: true,
       key: 'year',
       includeInSearchParams: true
     },
+
+    fromMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: true,
+      key: 'fromMonth',
+      includeInSearchParams: true
+    },
+    fromYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: true,
+      key: 'fromYear',
+      includeInSearchParams: true
+    },
+    toMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: true,
+      key: 'toMonth',
+      includeInSearchParams: true
+    },
+    toYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: true,
+      key: 'toYear',
+      includeInSearchParams: true
+    },
+
     cityId: {
       value: '',
       show: true,
@@ -100,9 +132,9 @@ export class DashboardComponent {
     },
     employeeId:{
       value: '',
-      show: true,
+      show: false,
       key: 'EmployeeId',
-      includeInSearchParams: true
+      includeInSearchParams: false
     },
     vendorId: {
       value: '',

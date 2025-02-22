@@ -24,6 +24,7 @@
    
         <th [rowSpan]="2">Bank Details</th>
         <th [rowSpan]="2">Total Wages</th>
+        <th [rowSpan]="2">Last Logged In</th>
       </tr>
       <tr>
 
@@ -50,6 +51,7 @@
         <th>Required</th>
         <th>Actual</th>
         <th>Upload</th>
+       
 
       </tr>
     </thead>
@@ -160,7 +162,15 @@
             </button>
           </ng-container>
         </td>
-
+        <td>
+          <a *ngIf="employee.locationCoordinates"
+            [href]="'https://www.google.com/maps?q=' + employee.locationCoordinates?.latitude + ',' + employee.locationCoordinates?.longitude" 
+            target="_blank"
+            class="btn btn-success">
+            View
+          </a>
+        </td>
+        
       </tr>
     </tbody>
   </table>

@@ -112,7 +112,7 @@
           </div>
         </div>
       </div>
-      <div [routerLink]="['/designation']" class="col-md-4 mb-4">
+      <div *ngIf="this.filters.designationId.value==0" [routerLink]="['/designation']" class="col-md-4 mb-4">
         <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Designation Count</h3>
@@ -121,7 +121,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 mb-4">
+      <div *ngIf="this.filters.vendorId.value==0" class="col-md-4 mb-4">
         <div style="background-color: #4590c2; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Vendors</h3>
@@ -153,7 +153,7 @@
         <div style="background-color: #176e2a; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Today : Logged In </h3>
-            <h2 class="card-text">{{loggedInCounts.presentCount}}</h2>
+            <h2 class="card-text">{{loggedInCounts.loggedInCount}}</h2>
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@
         <div style="background-color: #75264f; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Today :Not Logged In</h3>
-            <h2 class="card-text">{{loggedInCounts.absentCount}}</h2>
+            <h2 class="card-text">{{loggedInCounts.notLoggedInCount}}</h2>
           </div>
         </div>
       </div>
@@ -232,7 +232,7 @@
   <div *ngIf="userAccessLevel == UserType.VENDOR">
     <div class="row">
 
-      <div class="col-md-4 mb-4">
+      <div *ngIf="this.filters.companyId.value==0" class="col-md-4 mb-4">
         <div style="background-color: #00a9c8;" class="card shadow-sm dashboard-bg">
           <div class="card-body">
 
@@ -244,7 +244,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4">
+      <div *ngIf="this.filters.designationId.value==0" class="col-md-4 mb-4">
         <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Designation</h3>
@@ -252,7 +252,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4">
+      <div  class="col-md-4 mb-4">
         <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Employee</h3>
@@ -299,7 +299,7 @@
   || userAccessLevel == UserType.CITY_ADMIN">
     <div class="row">
 
-      <div class="col-md-4 mb-4">
+      <div *ngIf="this.filters.companyId.value==0" class="col-md-4 mb-4">
         <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Unit</h3>
@@ -308,7 +308,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 mb-4">
+      <div *ngIf="this.filters.vendorId.value==0"  class="col-md-4 mb-4">
         <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Vendor</h3>
@@ -317,7 +317,7 @@
         </div>
       </div>
 
-      <div [routerLink]="['/designation']"  class="col-md-4 mb-4">
+      <div *ngIf="this.filters.designationId.value==0" [routerLink]="['/designation']"  class="col-md-4 mb-4">
         <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Designation</h3>
@@ -326,7 +326,7 @@
         </div>
       </div>
 
-      <div [routerLink]="['/employee']"
+      <div *ngIf="this.filters.designationId.value==0" [routerLink]="['/employee']"
        class="col-md-4 mb-4">
         <div style="background-color: #3e9cd6; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
@@ -359,7 +359,7 @@
         <div style="background-color: #176e2a; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Today : Logged In </h3>
-            <h2 class="card-text">{{loggedInCounts.presentCount}}</h2>
+            <h2 class="card-text">{{loggedInCounts.loggedInCount}}</h2>
           </div>
         </div>
       </div>
@@ -368,7 +368,7 @@
         <div style="background-color: #75264f; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Today :Not Logged In</h3>
-            <h2 class="card-text">{{loggedInCounts.absentCount}}</h2>
+            <h2 class="card-text">{{loggedInCounts.notLoggedInCount}}</h2>
           </div>
         </div>
       </div>

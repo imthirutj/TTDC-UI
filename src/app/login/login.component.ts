@@ -200,7 +200,7 @@ export class LoginComponent implements OnInit {
 
           if (response.data.role == UserType.EMPLOYEE) {
             // Get current location
-            this.getLocationAndSend(response.data.EmployeeId);
+            this.getLocationAndSend(response.data.employeeId);
           }
 
         }
@@ -222,37 +222,31 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  getLocationAndSend(employeeId: number) {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lat = position.coords.latitude;
-          const long = position.coords.longitude;
-
-          console.log(`Latitude: ${lat}, Longitude: ${long}`);
-
-          const payload = {
-            employeeId: employeeId,
-            lat: lat,
-            long: long
-          }
-          this.loginService.updateEmployeeLocation(payload).subscribe(
-            (response) => {
-              console.log('Location updated successfully:', response);
-            },
-            (error) => {
-              console.error('Error updating location:', error);
-            }
-          );
+  getLocationAndSend(employeeId: number){
+    this.dataService.getCurrentLocation()
+    .then((location:any) => {
+      console.log('Location:', location);
+      const payload = {
+        employeeId: employeeId,
+        latitude: location.lat,
+        longitude: location.long
+      }
+      this.loginService.updateEmployeeLocation(payload).subscribe(
+        (response) => {
+          console.log('Location updated successfully:', response);
         },
         (error) => {
-          console.error('Error getting location:', error);
+          console.error('Error updating location:', error);
         }
       );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-    }
+    })
+    .catch((error) => {
+      console.error('Failed to get location:', error);
+    });
   }
+
+
+
 
 
 
