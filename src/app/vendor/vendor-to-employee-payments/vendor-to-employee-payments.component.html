@@ -5,13 +5,17 @@
         (triggerParentFunction)="fetchVendorEmployeePaymentDetails()">
       </app-filter>
       <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+      <button (click)="dataService.downloadExcelTable('vendor-employee-payment', 'Vendor-Employee-Payments')" class="btn btn-success">
+        Download as Excel
+    </button>
+   
     </div>
   
     <div class="container mt-4">
       <h3>Vendor To Employee Payment Details: 
         {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
       </h3>
-      <table class="table table-striped table-bordered">
+      <table id="vendor-employee-payment" class="table table-striped table-bordered">
         <thead>
           <tr>
             <th scope="col">#</th>

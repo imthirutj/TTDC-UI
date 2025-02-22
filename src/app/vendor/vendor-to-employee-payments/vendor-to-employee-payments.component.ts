@@ -77,7 +77,7 @@ export class VendorToEmployeePaymentsComponent {
   constructor(
     private router: Router,
     private masterDataService: MasterDataService,
-    private dataService: DataService,
+    public dataService: DataService,
     private vendorService: VendorService
   ) {
     this.dataService.asyncGetUser().then((user: any) => {

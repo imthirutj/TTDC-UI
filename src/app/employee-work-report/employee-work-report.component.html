@@ -12,11 +12,15 @@
             </app-filter>
 
             <!-- Reset Button -->
-            <button class="btn btn-primary d-flex align-items-center ms-3" (click)="reset()">
+            <!-- <button class="btn btn-primary d-flex align-items-center ms-3" (click)="reset()">
                 <i class="fa fa-refresh"></i>
                 Refresh
-            </button>
+            </button> -->
         </div>
+
+        <button (click)="downloadExcelTable('workshift', 'WorkReports')" class="btn btn-success">
+            Download as Excel
+        </button>
 
 
         <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
@@ -57,7 +61,7 @@
         </button>
     </div>
     <div style="overflow-y: auto; max-height: 500px;">
-        <table class="table table-bordered">
+        <table id="workshift" class="table table-bordered">
             <thead class="sticky-header">
                 <tr>
                     <th>S.NO</th>

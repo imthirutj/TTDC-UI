@@ -9,7 +9,7 @@
         <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
     </div>
     <button (click)="dataService.downloadPDF('shift-table')" class="btn btn-primary">Download as PDF</button>
-    <button (click)="dataService.downloadExcelTable('shift-table', 'shift-roaster')" class="btn btn-success">
+    <button (click)="downloadExcelTable('shift-table', 'shift-roaster')" class="btn btn-success">
         Download as Excel
     </button>
    
@@ -71,16 +71,17 @@
                     <td>{{ employee.name }}</td>
                     <td *ngFor="let date of getCurrentDates()"
                         [ngStyle]="{ 'background-color': getShiftColor(getShift(employee, date)) }">
+                        <p style="color:white">
+                            {{ employee.dates[date].shift || '-' }}
+                        </p>
                         <!-- Dropdown for shift selection -->
-                        <select *ngIf="  !isPastDate(date)" style="width: 150px;" class="form-select"
+                        <select *ngIf="!isDownload &&  !isPastDate(date)" style="width: 150px;" class="form-select"
                             [(ngModel)]="employee.dates[date].shift"
                             (change)="setShift(employee, date, employee.dates[date].shift)">
                             <option *ngFor="let shift of shiftTypes" [value]="shift">{{ shift }}</option>
                         </select>
 
-                        <p style="color:white">
-                            {{ employee.dates[date].shift }}
-                        </p>
+                       
                         <!-- Checkbox for selecting the shift -->
                         <input *ngIf="isAssign  && !isPastDate(date)" type="checkbox"
                             [(ngModel)]="employee.dates[date].selected"
