@@ -23,4 +23,8 @@ export class LoginService {
     return this.http.post(`${this.apiUrl}Login/GenerateOTP?${queryParams}&skipSetAuth=true`,{});
   }
 
+  updateEmployeeLocation(payload:any): Observable<any>{
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.post(`${this.apiUrl}Employee/UpdateEmpLoc?${queryParams}`, {});
+  }
 }

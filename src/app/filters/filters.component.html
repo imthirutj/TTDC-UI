@@ -192,6 +192,38 @@
         </div>
       </div>
 
+      <div *ngIf="filters.salaryRangeMin.show && filters.salaryRangeMax.show" class="col-md-8">
+        <div class="form-group">
+          <label for="salaryRange">Salary Range</label>
+          <div class="d-flex align-items-center">
+            <input [(ngModel)]="filters.salaryRangeMin.value" (change)="onSalaryRangeChange()" 
+              class="form-control me-2" type="number" placeholder="Min Salary">
+            
+            <span class="mx-2">-</span> <!-- Hyphen between inputs -->
+      
+            <input [(ngModel)]="filters.salaryRangeMax.value" (change)="onSalaryRangeChange()" 
+              class="form-control" type="number" placeholder="Max Salary">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="filters.otherDeductionsMin.show && filters.otherDeductionsMin.show" class="col-md-8">
+        <div class="form-group">
+          <label for="salaryRange">Other Deductions Range</label>
+          <div class="d-flex align-items-center">
+            <input [(ngModel)]="filters.otherDeductionsMin.value" (change)="onOtherDeductionshange()" 
+              class="form-control me-2" type="number" placeholder="Min Deductions">
+            
+            <span class="mx-2">-</span> <!-- Hyphen between inputs -->
+      
+            <input [(ngModel)]="filters.otherDeductionsMin.value" (change)="onOtherDeductionshange()" 
+              class="form-control" type="number" placeholder="Max Deductions">
+          </div>
+        </div>
+      </div>
+      
+      
+
     </div>
   </div>
 </app-common-dialog>

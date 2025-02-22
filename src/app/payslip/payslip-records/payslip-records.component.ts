@@ -106,6 +106,30 @@ export class PayslipRecordsComponent {
       key: 'vendorId',
       includeInSearchParams:true
     },
+    salaryRangeMin: {
+      value: '',
+      show: true,
+      key: 'salaryRangeMin',
+      includeInSearchParams:true
+    },
+    salaryRangeMax: {
+      value: '',
+      show: true,
+      key: 'salaryRangeMax',
+      includeInSearchParams:true
+    },
+    otherDeductionsMin: {
+      value: '',
+      show: true,
+      key: 'otherDeductionsMin',
+      includeInSearchParams:true
+    },
+    otherDeductionsMax: {
+      value: '',
+      show: true,
+      key: 'otherDeductionsMax',
+      includeInSearchParams:true
+    },
   };
   
   constructor(private masterDataService: MasterDataService,

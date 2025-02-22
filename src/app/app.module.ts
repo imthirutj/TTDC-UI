@@ -80,6 +80,7 @@ import { HolidayManagementComponent } from './holiday-management/holiday-managem
 import { CompensateRequestComponent } from './compensate-request/compensate-request.component';
 import { ManagerEmployeePaymentEntryComponent } from './manager-employee-payment-entry/manager-employee-payment-entry.component';
 
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -154,7 +155,8 @@ import { ManagerEmployeePaymentEntryComponent } from './manager-employee-payment
     NgSelectModule,
     SelectDropDownModule,
     FullCalendarModule ,
-    NgChartsModule 
+    NgChartsModule ,
+    MatSliderModule
     
   ],
   providers: [

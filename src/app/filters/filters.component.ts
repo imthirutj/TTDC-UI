@@ -92,7 +92,11 @@ export class FiltersComponent implements OnInit {
           { key: 'managerName', label: 'Manager Name', defaultValue: '', show: false, includeInSearchParams: false },
           { key: 'qualificationMismatched', label: 'Qualification Mismatched', defaultValue: '0', show: false, includeInSearchParams: false },
           { key: 'loggedInType', label: 'Logged In Type', defaultValue: '0', show: false, includeInSearchParams: false },
-          { key: 'attnNotFilled', label: 'Attendance Filter', defaultValue: '0', show: false, includeInSearchParams: false }
+          { key: 'attnNotFilled', label: 'Attendance Filter', defaultValue: '0', show: false, includeInSearchParams: false },
+          { key: 'salaryRangeMin', label: 'Salary Range :Min', defaultValue: '0', show: false, includeInSearchParams: false },
+          { key: 'salaryRangeMax', label: 'Salary Range :Max', defaultValue: '0', show: false, includeInSearchParams: false },
+          { key: 'otherDeductionsMin', label: 'Other Deductions Range :Min', defaultValue: '0', show: false, includeInSearchParams: false },
+          { key: 'otherDeductionsMax', label: 'Other Deductions Range :Max', defaultValue: '0', show: false, includeInSearchParams: false }
         ];
     
         // Ensure filters are properly initialized
@@ -259,6 +263,12 @@ export class FiltersComponent implements OnInit {
     this.onFilterChange();
   }
   onAttnFilledChange(){
+    this.onFilterChange();
+  }
+  onSalaryRangeChange(){
+    this.onFilterChange();
+  }
+  onOtherDeductionshange(){
     this.onFilterChange();
   }
   //#endregion

@@ -7,6 +7,7 @@ import { DataService } from '../data.Service';
 import { SnackBarComponent } from '../utils/widgets/snack-bar/snack-bar/snack-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserType } from '../common/user-type.enum';
 
 @Component({
   selector: 'app-login',
@@ -140,11 +141,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    var payload:any ={
+    var payload: any = {
       myRoleId: this.selectedRoleId
     };
-    if (this.selectedRoleId =='4') {
-      if(!this.otpForm.valid){
+    if (this.selectedRoleId == '4') {
+      if (!this.otpForm.valid) {
         this.dataService.showSnackBar('Please enter valid OTP');
         return;
       }
@@ -152,20 +153,20 @@ export class LoginComponent implements OnInit {
         this.dataService.showSnackBar('Please again enter the mobile number');
         return;
       }
-      payload.mobileNo= this.mobileLoginForm.get('MobileNo')?.value;
-      payload.otp= this.otpForm.get('OTP')?.value;
+      payload.mobileNo = this.mobileLoginForm.get('MobileNo')?.value;
+      payload.otp = this.otpForm.get('OTP')?.value;
     }
-    else{
-      payload.username= this.loginForm.get('username')?.value;
-      payload.password= this.loginForm.get('password')?.value;
+    else {
+      payload.username = this.loginForm.get('username')?.value;
+      payload.password = this.loginForm.get('password')?.value;
 
       if (!this.loginForm.valid) {
         this.dataService.showSnackBar('Please  enter username and password');
         return;
       }
     }
-    
-  
+
+
     console.log(payload)
     this.loginService.validate(payload).subscribe(
       (response: any) => {
@@ -176,13 +177,13 @@ export class LoginComponent implements OnInit {
           this.dataService.setAuthTokenAndUser(response.token, response.data, rememberMe);
 
           // Check if returnUrl is set to '/' and update to '/dashboard' if so
-          if (this.returnUrl === '/' ) {
+          if (this.returnUrl === '/') {
             this.returnUrl = '/dashboard'; // Default fallback
-          }else{
-            if(this.returnUrl.includes('/payslip/')){ 
-              
+          } else {
+            if (this.returnUrl.includes('/payslip/')) {
+
             }
-            else{
+            else {
               this.returnUrl = '/dashboard';
             }
           }
@@ -196,6 +197,12 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigate([path], { queryParams });
           }
+
+          if (response.data.role == UserType.EMPLOYEE) {
+            // Get current location
+            this.getLocationAndSend(response.data.EmployeeId);
+          }
+
         }
         else {
           this.snackBar.openFromComponent(SnackBarComponent, {
@@ -213,6 +220,38 @@ export class LoginComponent implements OnInit {
         });
       }
     );
+  }
+
+  getLocationAndSend(employeeId: number) {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const long = position.coords.longitude;
+
+          console.log(`Latitude: ${lat}, Longitude: ${long}`);
+
+          const payload = {
+            employeeId: employeeId,
+            lat: lat,
+            long: long
+          }
+          this.loginService.updateEmployeeLocation(payload).subscribe(
+            (response) => {
+              console.log('Location updated successfully:', response);
+            },
+            (error) => {
+              console.error('Error updating location:', error);
+            }
+          );
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
   }
 
 
