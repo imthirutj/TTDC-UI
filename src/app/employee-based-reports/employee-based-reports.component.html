@@ -9,6 +9,11 @@
 
 <div class="container mt-4">
   <h3>Employee Reports</h3>
+  <div>
+    <span> {{ this.filters.fromDate.value| date: 'dd-MMM-yyyy' }}</span>
+    to
+    <span>{{ this.filters.toDate.value | date: 'dd-MMM-yyyy' }}</span>
+  </div>
 
   <table id="emp-report" class="table table-bordered" *ngIf="Reports?.length; else noData">
     <thead class="thead-dark">

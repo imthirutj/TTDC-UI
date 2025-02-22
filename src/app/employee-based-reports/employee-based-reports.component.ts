@@ -87,6 +87,18 @@ export class EmployeeBasedReportsComponent {
         key: 'vendorId',
         includeInSearchParams: true
       },
+      employeeName: {
+        value: '',
+        show: true,
+        key: 'employeeName',
+        includeInSearchParams: true
+      },
+      employeeCode: {
+        value: '',
+        show: true,
+        key: 'employeeCode',
+        includeInSearchParams: true
+      },
      
     };
   
