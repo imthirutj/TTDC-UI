@@ -15,7 +15,7 @@ export class CompanyComponent implements OnInit {
   ModuleType = ModuleType;
   Company: Company[] = [];
 
-  cities:any[]=[];
+  cities: any[] = [];
   modal = {
     action: Action.NONE,
     module: ModuleType.NONE,
@@ -35,8 +35,10 @@ export class CompanyComponent implements OnInit {
     },
   };
   constructor(private masterDataService: MasterDataService,
-    private dataservice: DataService
-  ) { }
+    public dataservice: DataService
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.getCompanyList();
@@ -69,8 +71,8 @@ export class CompanyComponent implements OnInit {
     this.masterDataService.getCity({}).subscribe(
       (response: any) => {
         if (response.success) {
-          this.cities = response.data; 
-        } 
+          this.cities = response.data;
+        }
       }
     );
   }
@@ -84,11 +86,11 @@ export class CompanyComponent implements OnInit {
       if (company) {
         this.modal.company = { ...company };
       }
-      else{
+      else {
         this.dataservice.showSnackBar('Not found');
       }
     }
-    else{
+    else {
       this.modal.company = new Company();
     }
   }
@@ -102,8 +104,8 @@ export class CompanyComponent implements OnInit {
     this.modal.company = new Company();
   }
 
-  saveCompany(){
-    const payload = {... this.modal.company}
+  saveCompany() {
+    const payload = { ... this.modal.company }
     this.masterDataService.saveCompany(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);

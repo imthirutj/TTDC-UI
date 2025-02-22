@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MasterDataService } from 'src/app/services/master-data.service';
+import { DataService } from '../data.Service';
 
 @Component({
   selector: 'app-department',
@@ -10,7 +11,9 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 export class DepartmentComponent implements OnInit {
   Department: any[] = []; 
 
-  constructor(private masterDataService: MasterDataService) {}
+  constructor(private masterDataService: MasterDataService,
+    public dataService: DataService
+  ) {}
 
   ngOnInit(): void {
     this.getDepartmentList(); 

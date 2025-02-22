@@ -1,6 +1,10 @@
+
+<button (click)="dataService.downloadExcelTable('departments', 'Departments')" class="btn btn-success">Download as
+  Excel</button>
+
 <div class="Department-list-container">
     <h3>Department List</h3>
-    <table class="table table-bordered">
+    <table id="departments" class="table table-bordered">
       <thead>
         <tr>
           <th>#</th>

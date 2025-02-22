@@ -9,9 +9,18 @@
         <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
     </div>
     <button (click)="dataService.downloadPDF('shift-table')" class="btn btn-primary">Download as PDF</button>
-    <!-- <button (click)="dataService.downloadExcelTable('shift-table', 'shift-roaster')" class="btn btn-success">
+    <button (click)="dataService.downloadExcelTable('shift-table', 'shift-roaster')" class="btn btn-success">
         Download as Excel
-    </button> -->
+    </button>
+   
+    <!--Assign Weekoff button-->
+    <button *ngIf="!isAssign && userAccessLevel != UserType.EMPLOYEE" class="btn btn-primary" (click)="assignShift()">
+        Multiple Assign
+    </button>
+    <button *ngIf="isAssign" class="btn btn-secondary" (click)="cancelShift()">
+        Cancel
+    </button>
+   
 
 
     <br>
@@ -31,17 +40,12 @@
             </select>
         </div>
 
-        <!--Assign Weekoff button-->
-        <button *ngIf="!isAssign && userAccessLevel != UserType.EMPLOYEE" class="btn btn-primary"
-            (click)="assignShift()">Assign
-            Shift
-        </button>
+
+        <button class="btn btn-primary" (click)="saveShifts()">Save Shifts</button>
         <!-- <button *ngIf="isAssign" class="btn btn-primary" (click)="submitShift()">
             Update Shift
         </button> -->
-        <button *ngIf="isAssign" class="btn btn-secondary" (click)="cancelShift()">
-            Cancel
-        </button>
+
 
         <button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
             &#8594; <!-- Right Arrow -->
@@ -73,8 +77,8 @@
                             (change)="setShift(employee, date, employee.dates[date].shift)">
                             <option *ngFor="let shift of shiftTypes" [value]="shift">{{ shift }}</option>
                         </select>
-                        
-                        <p style="color:white" *ngIf="isPastDate(date)" >
+
+                        <p style="color:white">
                             {{ employee.dates[date].shift }}
                         </p>
                         <!-- Checkbox for selecting the shift -->
@@ -92,5 +96,4 @@
 
 
 
-    <button class="btn btn-primary" (click)="saveShifts()">Save Shifts</button>
 </div>

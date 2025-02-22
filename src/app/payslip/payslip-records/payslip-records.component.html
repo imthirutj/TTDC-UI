@@ -11,6 +11,8 @@
     <button (click)="this.dataService.downloadPDF('vendorPaymentTable')" class="btn btn-primary">
       Download as PDF
     </button>
+    <button (click)="dataService.downloadExcelTable('vendorPaymentTable', 'paygenerated-report')" class="btn btn-success">Download as
+      Excel</button>
   </div>
 
 

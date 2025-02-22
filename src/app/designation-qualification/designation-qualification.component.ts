@@ -30,7 +30,7 @@ export class DesignationQualificationComponent {
 
   constructor(private masterDataService: MasterDataService,
     private route: ActivatedRoute,
-    private dataService: DataService
+    public dataService: DataService
   ) { }
   ngOnInit(): void {
     this.get_Designation_Qualification();

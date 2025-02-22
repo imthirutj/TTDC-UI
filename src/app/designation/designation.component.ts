@@ -22,7 +22,7 @@ export class DesignationComponent implements OnInit {
   };
 
   constructor(private masterDataService: MasterDataService,
-    private dataService: DataService
+    public dataService: DataService
   ) {}
 
   ngOnInit(): void {

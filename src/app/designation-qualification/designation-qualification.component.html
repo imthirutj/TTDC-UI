@@ -2,9 +2,14 @@
   (click)="openModal(Action.CREATE)">
   Add Designation-Qualification
 </button>
+
+<button (click)="dataService.downloadExcelTable('designation-qualification', 'Designation-Qualification-Mapping')" class="btn btn-success">Download as
+  Excel</button>
+
+
 <div class="Department-list-container">
   <h3>Designation-Qualification List</h3>
-  <table class="table table-bordered">
+  <table id="designation-qualification" class="table table-bordered">
     <thead>
       <tr>
         <th >#</th>

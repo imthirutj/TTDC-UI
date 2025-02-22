@@ -2,6 +2,10 @@
   <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="getEmployeeList()">
   </app-filter>
   <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+
+  <button (click)="dataService.downloadExcelTable('emp-table', 'Employees')" class="btn btn-success">Download as
+    Excel</button>
+
 </div>
 
 <button *ngIf="userAccessLevel == UserType.STATE_ADMIN ||
@@ -175,8 +179,28 @@
     </tbody>
   </table>
 </div>
-<app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getEmployeeList()">
-</app-server-pagination>
+
+<div>
+  <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getEmployeeList()">
+  </app-server-pagination>
+  
+  <div class="d-flex justify-content-between">
+    <!-- Page Size Dropdown -->
+    <div class="d-flex align-items-center">
+      <label for="pageSize" class="me-2">Page Size:</label>
+      <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize">
+        <option [value]="10">10</option>
+        <option [value]="20">20</option>
+        <option [value]="30">30</option>
+        <option [value]="50">50</option>
+        <option [value]="100">100</option>
+        <option [value]="120">120</option>
+        <option [value]="120">150</option>
+      </select>
+    </div>
+  </div>
+</div>
+
 
 
 <!--Salary Structure Modal-->

@@ -30,7 +30,7 @@ export class DataService {
     { key: 'SFU', value: 'SFU' },
   ];
 
-  public monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", 
+  public monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
     "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
   constructor(
@@ -145,7 +145,7 @@ export class DataService {
       duration: 5000,
     });
   }
-  
+
 
   openConfirmationDialog(message: string): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -229,12 +229,62 @@ export class DataService {
 
 
   // Download Excel
-  downloadExcelTable(tableId: string, fileName: string) {
-    const table = document.getElementById(tableId);
+  // downloadExcelTable(tableId: string, fileName: string) {
+  //   const table = document.getElementById(tableId);
 
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table as HTMLTableElement);
+  //   const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table as HTMLTableElement);
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, 'Payments');
+  //   XLSX.writeFile(wb, `${fileName}.xlsx`);
+  // }
+
+
+  // Download Excel with column exclusion support
+  downloadExcelTable(tableId: string, fileName: string, excludeColumns: string[] = []) {
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) {
+      console.error("Table not found!");
+      return;
+    }
+
+    // Convert table to sheet
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table);
+
+    // Get column headers (A1, B1, C1, etc.)
+    const range = XLSX.utils.decode_range(ws["!ref"]!);
+    const headers: string[] = [];
+
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+      const cellAddress = { c: C, r: range.s.r }; // Get header cell (first row)
+      const cellRef = XLSX.utils.encode_cell(cellAddress);
+      const cellValue = ws[cellRef]?.v; // Read cell value
+
+      if (cellValue) headers.push(cellValue.toString());
+    }
+
+    // Find column indexes to exclude
+    const excludeIndexes = headers
+      .map((header, index) => (excludeColumns.includes(header) ? index : -1))
+      .filter(index => index !== -1);
+
+    // Remove excluded columns
+    excludeIndexes.reverse().forEach(colIdx => {
+      for (let R = range.s.r; R <= range.e.r; ++R) {
+        const cellRef = XLSX.utils.encode_cell({ c: colIdx, r: R });
+        delete ws[cellRef];
+      }
+    });
+
+    // Recalculate range after column removal
+    const newCols = headers.length - excludeIndexes.length;
+    ws["!ref"] = XLSX.utils.encode_range({
+      s: { c: 0, r: range.s.r },
+      e: { c: newCols - 1, r: range.e.r },
+    });
+
+    // Create workbook and export
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Payments');
+    XLSX.utils.book_append_sheet(wb, ws, "Payments");
     XLSX.writeFile(wb, `${fileName}.xlsx`);
   }
 
@@ -306,6 +356,6 @@ export class DataService {
       }
     });
   }
-  
+
 
 }

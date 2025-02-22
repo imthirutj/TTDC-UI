@@ -5,6 +5,11 @@
     (triggerParentFunction)="getCompanyList()">
     </app-filter>
     <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+  
+  
+<button (click)="dataservice.downloadExcelTable('companies', 'Companies')" class="btn btn-success">Download as
+  Excel</button>
+
   </div>
   
     <h3>Unit List</h3>
@@ -12,7 +17,7 @@
       Add Unit
     </button>
 
-    <table class="table table-bordered">
+    <table id="companies" class="table table-bordered">
       <thead>
         <tr>
           <th>#</th>

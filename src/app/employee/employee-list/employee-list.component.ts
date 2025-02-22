@@ -148,7 +148,7 @@ export class EmployeeListComponent {
 
   constructor(
     private masterDataService: MasterDataService,
-    private dataService: DataService
+    public dataService: DataService
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
@@ -287,7 +287,9 @@ export class EmployeeListComponent {
     const fpayload = {
       ...payload,
       pageNumber: this.pageAttributes.currentPage,
+      pageSize: this.pageAttributes.pageSize
     }
+    this.Employees=[];
     this.masterDataService.getEmployeeList(fpayload).subscribe(
       (response: any) => {
         console.log('API Response:', response);

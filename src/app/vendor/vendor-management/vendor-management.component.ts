@@ -77,7 +77,7 @@ export class VendorManagementComponent {
   constructor(private masterDataService: MasterDataService,
     private vendorService: VendorService,
     private router: Router,
-    private dataService: DataService
+    public dataService: DataService
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;

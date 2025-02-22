@@ -3,18 +3,22 @@
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="getVendors()">
     </app-filter>
     <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+   
+    <button (click)="dataService.downloadExcelTable('vendor-table', 'vendors',['Unit-Department'])" class="btn btn-success">Download as
+      Excel</button>
+  
   </div>
 
   <button *ngIf="userAccessLevel == UserType.STATE_ADMIN" class="btn btn-success mb-3" type="button"
     (click)="openVendorModal(false, null)">Add Vendor</button>
   <div class="table-container">
-    <table class="table table-bordered">
+    <table id="vendor-table" class="table table-bordered">
       <thead>
         <tr>
           <th>#</th>
           <th>Vendor Name</th>
           <th>EmployeeCount</th>
-          <th>Unit & Department</th>
+          <th>Unit-Department</th>
           <th>Address</th>
           <th>Phone Number</th>
           <th>Email</th>
