@@ -101,6 +101,7 @@ export class FiltersComponent implements OnInit {
         { objName: 'fromDate', key: 'fromDate', label: 'From Date', defaultValue: new Date().toISOString().split('T')[0], show: false, includeInSearchParams: false },
         { objName: 'toDate', key: 'toDate', label: 'To Date', defaultValue: new Date().toISOString().split('T')[0], show: false, includeInSearchParams: false },
 
+        { objName: 'leaveReqStatus', key: 'leaveReqStatus', label: 'Leave Request Status', defaultValue: 'ALL', show: false, includeInSearchParams: false },
       ];
 
       // Ensure filters are properly initialized
@@ -303,6 +304,9 @@ export class FiltersComponent implements OnInit {
     this.onFilterChange(); 
   }
   onToDateChange(){
+    this.onFilterChange(); 
+  }
+  onLeaveRequestStatusChange(){
     this.onFilterChange(); 
   }
   //#endregion

@@ -319,6 +319,18 @@
         </div>
       </div>
 
+      <!--LeaveRequestStatus-->
+      <div *ngIf="filters.leaveRequestStatus.show" class="col-md-4">
+        <div class="form-group">
+          <label for="leaveRequestStatus">Leave Request Status</label>
+          <select [(ngModel)]="filters.leaveRequestStatus.value" (change)="onLeaveRequestStatusChange()"
+            class="form-control" id="leaveRequestStatus">
+            <option value="ALL">All</option>
+            <option value="PENDING">Pending</option>
+          </select>
+        </div>
+      </div>
+
 
     </div>
   </div>

@@ -99,6 +99,14 @@ export class EmployeeBasedReportsComponent {
         key: 'employeeCode',
         includeInSearchParams: true
       },
+      leaveReqStatus: {
+        value: 'ALL',
+        show: true,
+        key: 'leaveReqStatus',
+        includeInSearchParams: true
+      },
+
+
      
     };
   
