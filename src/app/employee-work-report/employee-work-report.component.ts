@@ -206,6 +206,12 @@ export class EmployeeWorkReportComponent {
       key: 'leaveReqStatus',
       includeInSearchParams: true
     },
+    odReqStatus:{
+      value:'ALL',
+      show:true,
+      key:'odReqStatus',
+      includeInSearchParams:true
+    }
   };
 
 

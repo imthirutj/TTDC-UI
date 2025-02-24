@@ -303,8 +303,7 @@
       <div *ngIf="filters.fromDate.show" class="col-md-4">
         <div class="form-group">
           <label for="fromDate">From Date</label>
-          <input [(ngModel)]="filters.fromDate.value" 
-          (change)="onFromDateChange()" class="form-control" id="fromDate"
+          <input [(ngModel)]="filters.fromDate.value" (change)="onFromDateChange()" class="form-control" id="fromDate"
             type="date">
         </div>
       </div>
@@ -313,8 +312,7 @@
       <div *ngIf="filters.toDate.show" class="col-md-4">
         <div class="form-group">
           <label for="toDate">To Date</label>
-          <input [(ngModel)]="filters.toDate.value" 
-          (change)="onToDateChange()" class="form-control" id="toDate"
+          <input [(ngModel)]="filters.toDate.value" (change)="onToDateChange()" class="form-control" id="toDate"
             type="date">
         </div>
       </div>
@@ -331,6 +329,17 @@
         </div>
       </div>
 
+      <!--odReqStatus-->
+      <div *ngIf="filters.odReqStatus.show" class="col-md-4">
+        <div class="form-group">
+          <label for="odReqStatus">OD Request Status</label>
+          <select [(ngModel)]="filters.odReqStatus.value" (change)="onOdRequestStatusChange()" class="form-control"
+            id="odReqStatus">
+            <option value="ALL">All</option>
+            <option value="OD">OD</option>
+          </select>
+        </div>
+      </div>
 
     </div>
   </div>
