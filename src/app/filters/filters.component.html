@@ -319,12 +319,12 @@
         </div>
       </div>
 
-      <!--LeaveRequestStatus-->
-      <div *ngIf="filters.leaveRequestStatus.show" class="col-md-4">
+      <!--leaveReqStatus-->
+      <div *ngIf="filters.leaveReqStatus.show" class="col-md-4">
         <div class="form-group">
-          <label for="leaveRequestStatus">Leave Request Status</label>
-          <select [(ngModel)]="filters.leaveRequestStatus.value" (change)="onLeaveRequestStatusChange()"
-            class="form-control" id="leaveRequestStatus">
+          <label for="leaveReqStatus">Leave Request Status</label>
+          <select [(ngModel)]="filters.leaveReqStatus.value" (change)="onLeaveRequestStatusChange()"
+            class="form-control" id="leaveReqStatus">
             <option value="ALL">All</option>
             <option value="PENDING">Pending</option>
           </select>

@@ -199,7 +199,13 @@ export class EmployeeWorkReportComponent {
       show: true,
       key: 'attnNotFilled',
       includeInSearchParams: true
-    }
+    },
+    leaveReqStatus: {
+      value: 'ALL',
+      show: true,
+      key: 'leaveReqStatus',
+      includeInSearchParams: true
+    },
   };
 
 
