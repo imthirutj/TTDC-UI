@@ -22,6 +22,9 @@
             Download as Excel
         </button>
 
+        <button (click)="this.dataService.downloadPDF('workshift')" class="btn btn-primary">
+            Download as PDF
+          </button>
 
         <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 

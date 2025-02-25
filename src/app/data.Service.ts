@@ -188,7 +188,7 @@ export class DataService {
             heightLeft -= pageHeight;
           }
 
-          pdf.save('vendor-invoice.pdf');
+          pdf.save('data.pdf');
           this.loadingService.clearLoadingState();
         })
         .catch((error) => {

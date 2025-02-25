@@ -220,7 +220,7 @@ export class EmployeeWorkReportComponent {
   constructor(
     private fb: FormBuilder,
     private masterDataService: MasterDataService,
-    private dataService: DataService,
+    public dataService: DataService,
     private employeeWorkReportService: EmployeeWorkReportService,
     private shiftService: ShiftService) {
     this.selectedMonth = new Date().getMonth() + 1;
