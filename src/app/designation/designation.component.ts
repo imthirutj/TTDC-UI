@@ -3,6 +3,7 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 import { Action } from '../common/action.enum';
 import { DataService } from '../data.Service';
 import { Designation } from '../utils/interface/Designation';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-designation',
@@ -21,16 +22,59 @@ export class DesignationComponent implements OnInit {
     title: ''
   };
 
+  filters: any = {
+    cityId: {
+      value: '',
+      show: true,
+      key: 'cityId',
+      includeInSearchParams: true
+    },
+    companyId: {
+      value: '',
+      show: true,
+      key: 'compId',
+      includeInSearchParams: true
+    },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams: true
+    }
+  };
+
   constructor(private masterDataService: MasterDataService,
-    public dataService: DataService
+    public dataService: DataService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getDesignationList(); 
+   // this.getDesignationList(); 
   }
 
+  
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+  
+    this.route.queryParams.subscribe(params => {
+      if (params['passedFilter'] == '1') {
+        this.dataService.applyFilter(this.filters).then(() => {
+          this.search();
+        });
+      } else {
+        this.search();
+      }
+    });
+  }
+
+  search() {
+    this.getDesignationList();
+  }
+
+
   getDesignationList(): void {
-    this.masterDataService.getDesignation().subscribe(
+    const payload = this.dataService.getPayloadValue(this.filters);
+    this.masterDataService.getDesignationMasters(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success && Array.isArray(response.data)) {

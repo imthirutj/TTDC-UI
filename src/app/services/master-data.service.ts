@@ -87,6 +87,11 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}Master/GetCompanyList`);
   }
 
+  getDesignationMasters(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Master/GetDesignationsList?${queryParams}`);
+  }
+
   getDesignation(): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/GetDesignationsList`);
   }

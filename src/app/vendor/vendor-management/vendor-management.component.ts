@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MasterDataService } from 'src/app/services/master-data.service';
 import { VendorService } from '../vendor.service';
 import { DataService } from 'src/app/data.Service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Vendor } from 'src/app/utils/interface/vendor';
 import { City, Company, Department } from 'src/app/utils/interface/masters';
 import { UserType } from 'src/app/common/user-type.enum';
@@ -36,6 +36,12 @@ export class VendorManagementComponent {
       value: '',
       show: true,
       key: 'deptId',
+      includeInSearchParams: true
+    },
+    designationId: {
+      value: '',
+      show: true,
+      key: 'designationId',
       includeInSearchParams: true
     },
     vendorId: {
@@ -77,8 +83,8 @@ export class VendorManagementComponent {
   constructor(private masterDataService: MasterDataService,
     private vendorService: VendorService,
     private router: Router,
-    public dataService: DataService
-  ) {
+    public dataService: DataService,
+    private route: ActivatedRoute)  {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
       this.userAccessLevel = user.role;
@@ -91,6 +97,22 @@ export class VendorManagementComponent {
   ngAfterViewInit() {
     this.fetchCities();
     this.fetchDepartments();
+  }
+
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.route.queryParams.subscribe(params => {
+      if (params['passedFilter'] == '1') {
+        this.dataService.applyFilter(this.filters).then(() => {
+          this.search();
+        });
+      } else {
+        this.search();
+      }
+    });
+  }
+  search() {
+    this.getVendors();
   }
 
 
@@ -180,13 +202,7 @@ export class VendorManagementComponent {
   }
   //#endregion
 
-  onFilterChanged(event: any) {
-    console.log('Filters updated in parent component:', this.filters);
-    this.getVendors();
-  }
-  search() {
-    this.getVendors();
-  }
+ 
   getVendors() {
     const payload = this.dataService.getPayloadValue(this.filters);
     this.masterDataService.getVendors(payload).subscribe((response) => {

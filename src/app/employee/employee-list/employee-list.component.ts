@@ -9,6 +9,7 @@ import { Action, ModuleType } from 'src/app/common/action.enum';
 import { ModuleTypeLabels } from 'src/app/common/labels';
 import { BankDetails } from 'src/app/utils/interface/BankDetails';
 import { WageDetails } from 'src/app/utils/interface/WageDetails';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-employee-list',
@@ -64,7 +65,7 @@ export class EmployeeListComponent {
   formData = new FormData();
 
 
-
+  passedFilters: any = {};
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -144,7 +145,7 @@ export class EmployeeListComponent {
       key: 'loggedInType',
       includeInSearchParams: true
     },
-    activeStatus:{
+    activeStatus: {
       value: 'ACTIVE',
       show: true,
       key: 'activeStatus',
@@ -154,7 +155,8 @@ export class EmployeeListComponent {
 
   constructor(
     private masterDataService: MasterDataService,
-    public dataService: DataService
+    public dataService: DataService,
+    private route: ActivatedRoute
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
@@ -166,6 +168,26 @@ export class EmployeeListComponent {
   ngOnInit(): void {
 
   }
+
+  onFilterChanged(event: any) {
+    console.log('Filters updated in parent component:', this.filters);
+    this.pageAttributes.currentPage = 1;
+    this.route.queryParams.subscribe(params => {
+      if (params['passedFilter'] == '1') {
+        this.dataService.applyFilter(this.filters).then(() => {
+          this.search();
+        });
+      } else {
+        this.search();
+      }
+    });
+  }
+
+  search() {
+    this.pageAttributes.currentPage = 1;
+    this.getEmployeeList();
+  }
+
 
 
   ngAfterViewInit() {
@@ -278,15 +300,6 @@ export class EmployeeListComponent {
   }
   //#endregion
 
-  onFilterChanged(event: any) {
-    console.log('Filters updated in parent component:', this.filters);
-    this.pageAttributes.currentPage = 1;
-    this.getEmployeeList();
-  }
-
-  search() {
-    this.getEmployeeList();
-  }
 
   getEmployeeList(): void {
     const payload = this.dataService.getPayloadValue(this.filters);
@@ -295,7 +308,7 @@ export class EmployeeListComponent {
       pageNumber: this.pageAttributes.currentPage,
       pageSize: this.pageAttributes.pageSize
     }
-    this.Employees=[];
+    this.Employees = [];
     this.masterDataService.getEmployeeList(fpayload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
@@ -377,7 +390,7 @@ export class EmployeeListComponent {
             if (response.success) this.dropdowns.companies = response.data;
             // Ensure the selected companyId is preserved
             if (!this.modal.employee.companyId && this.dropdowns.companies.length > 0) {
-             
+
             }
           });
         }
@@ -403,7 +416,7 @@ export class EmployeeListComponent {
             }
           });
         }
-       
+
       }, 500);
       this.setValues();
     }

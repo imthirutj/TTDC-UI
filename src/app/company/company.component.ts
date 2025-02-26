@@ -3,6 +3,7 @@ import { MasterDataService } from 'src/app/services/master-data.service';
 import { DataService } from '../data.Service';
 import { Action, ModuleType } from '../common/action.enum';
 import { Company } from '../utils/interface/Company';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-company',
@@ -33,21 +34,48 @@ export class CompanyComponent implements OnInit {
       key: 'cityId',
       includeInSearchParams: true
     },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams: true
+    },
+    designationId: {
+      value: '',
+      show: true,
+      key: 'designationId',
+      includeInSearchParams: true
+    },
+    vendorId: {
+      value: '',
+      show: true,
+      key: 'vendorId',
+      includeInSearchParams: true
+    },
   };
   constructor(private masterDataService: MasterDataService,
-    public dataservice: DataService
+    public dataservice: DataService,
+        private route: ActivatedRoute
   ) {
 
   }
 
   ngOnInit(): void {
-    this.getCompanyList();
+   // this.getCompanyList();
     this.getcityList();
   }
 
   onFilterChanged(event: any) {
     console.log('Filters updated in parent component:', this.filters);
-    this.getCompanyList();
+    this.route.queryParams.subscribe(params => {
+      if (params['passedFilter'] == '1') {
+        this.dataservice.applyFilter(this.filters).then(() => {
+          this.search();
+        });
+      } else {
+        this.search();
+      }
+    });
   }
 
   search() {
@@ -56,6 +84,7 @@ export class CompanyComponent implements OnInit {
 
   getCompanyList(): void {
     const payload = this.dataservice.getPayloadValue(this.filters);
+    this.Company=[];
     this.masterDataService.getCompany(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);

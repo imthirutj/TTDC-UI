@@ -7,6 +7,7 @@ import { DataService } from '../data.Service';
 import { DashboardService } from './dashboard.service';
 import { AttendanceSummaryDashboard, DashboardData } from '../utils/interface/Dashboard';
 import { ChartType } from 'chart.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +24,7 @@ export class DashboardComponent {
 
 
   dashboardData: DashboardData = new DashboardData();
-  columnWiseTableReport:any={};
+  columnWiseTableReport: any = {};
 
   columnNames = [
     {
@@ -31,28 +32,28 @@ export class DashboardComponent {
       label: "Designation",
       key: "designation",
       output: "designationName",
-      data:[] as any[]
+      data: [] as any[]
     },
     {
       columnName: "dp.departmentFName",
       label: "Department",
       key: "department",
       output: "departmentFName",
-      data:[] as any[]
+      data: [] as any[]
     },
     {
       columnName: "dg.degree_Name",
       label: "Qualifications",
       key: "degree_Name",
       output: "degree_Name",
-      data:[] as any[]
+      data: [] as any[]
     },
     {
       columnName: "e.Experience",
       label: "Experience",
       key: "experience",
       output: "Experience",
-      data:[] as any[]
+      data: [] as any[]
     }
   ];
 
@@ -62,14 +63,14 @@ export class DashboardComponent {
 
   filters: any = {
     role: { value: '', show: true, key: 'role', includeInSearchParams: true },
-    filterRange:{
-      value:1,
-      show:false,
-      key:'filterRange',
+    filterRange: {
+      value: 1,
+      show: false,
+      key: 'filterRange',
       includeInSearchParams: true
     },
     selectedMonth: {
-      value:  Number(new Date().getMonth()) + 1,
+      value: Number(new Date().getMonth()) + 1,
       show: true,
       key: 'month',
       includeInSearchParams: true
@@ -130,7 +131,7 @@ export class DashboardComponent {
       key: 'deptId',
       includeInSearchParams: true
     },
-    employeeId:{
+    employeeId: {
       value: '',
       show: false,
       key: 'EmployeeId',
@@ -158,17 +159,18 @@ export class DashboardComponent {
   chartDataForPaymentAmount: any;  // Data to pass to the chart component
   chartOptionsForPaymentAmount: any;  // Options for customization
 
-  unitWiseReport:any[]=[];
+  unitWiseReport: any[] = [];
 
-  mismatchQualification: any= {} ;
+  mismatchQualification: any = {};
 
-  loggedInCounts:any ={};
+  loggedInCounts: any = {};
 
   constructor(
 
     private masterDataService: MasterDataService,
     public dataService: DataService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private router: Router
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
@@ -180,14 +182,14 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
-   
+
   }
 
-  getUnitWiseReport(){
+  getUnitWiseReport() {
     const payload = this.dataService.getPayloadValue(this.filters);
 
     this.masterDataService.getUnitWiseReport(payload).subscribe(
-      (response:any)=>{
+      (response: any) => {
         this.unitWiseReport = response.data;
       }
     );
@@ -207,7 +209,7 @@ export class DashboardComponent {
 
   }
 
-  getExpQualMismatchCount(){
+  getExpQualMismatchCount() {
     const payload = this.dataService.getPayloadValue(this.filters);
 
     this.dashboardService.getExpQualMismatchCount(payload).subscribe((response: any) => {
@@ -217,7 +219,7 @@ export class DashboardComponent {
     });
   }
 
-  getLoggedInCounts(){
+  getLoggedInCounts() {
     const payload = this.dataService.getPayloadValue(this.filters);
 
     this.dashboardService.getLoggedInCounts(payload).subscribe((response: any) => {
@@ -233,9 +235,9 @@ export class DashboardComponent {
 
     this.dashboardService.getDashboardData(payload).subscribe((response: any) => {
       if (response.success) {
-       this.dashboardData = response.data.dashboardObj;
-       this.attendanceSummaryDashboard = response.data.attendanceSummary;
-       this.todayAttendanceSummaryDashboard = response.data.todayattendanceSummary;
+        this.dashboardData = response.data.dashboardObj;
+        this.attendanceSummaryDashboard = response.data.attendanceSummary;
+        this.todayAttendanceSummaryDashboard = response.data.todayattendanceSummary;
       }
     })
   }
@@ -323,7 +325,7 @@ export class DashboardComponent {
           beginAtZero: true,
           ticks: {
             callback: function (value: number) {
-              return `₹ ${value.toLocaleString()}`; 
+              return `₹ ${value.toLocaleString()}`;
             }
           }
         }
@@ -338,11 +340,11 @@ export class DashboardComponent {
   getRepTotal(data: any[]): number {
     return data.reduce((sum, row) => sum + (row.Total || 0), 0);
   }
-  
+
   getColumnWiseTableReport(obj: any) {
-    
+
     const payload = this.dataService.getPayloadValue(this.filters);
-    const fpayload ={
+    const fpayload = {
       ...payload,
       columnName: obj.columnName
     }
@@ -353,10 +355,10 @@ export class DashboardComponent {
     })
   }
 
-  getAllReports(){
-    
+  getAllReports() {
+
     this.columnWiseTableReport = {};
-    this.columnNames.forEach((columnName:any) => {
+    this.columnNames.forEach((columnName: any) => {
       this.getColumnWiseTableReport(columnName);
 
     });
@@ -368,10 +370,52 @@ export class DashboardComponent {
   }
 
 
-  showFullTable:boolean =  false;
+  showFullTable: boolean = false;
 
   toggleTable() {
-    this.showFullTable=!this.showFullTable;
+    this.showFullTable = !this.showFullTable;
   }
+
+
+
+  //#region Navigation
+  //#region Navigation
+  applyFilterAndNavigate(url: string, applyFilter: string = '') {
+    const filters = Object.keys(this.filters).reduce((acc, key) => {
+      const filterKey = this.filters[key]?.key; // Get the key field value
+      if (filterKey) {
+        acc[filterKey] = this.filters[key]?.value ?? ''; // Store using key field value
+      }
+      return acc;
+    }, {} as any);
+
+
+    Object.assign(filters, {filterRange: 0});
+    if (applyFilter === 'LOGGED_IN' || applyFilter === 'NOT_LOGGED_IN') {
+      Object.assign(filters, {
+        month: this.dataService.getCurrentPayrollMonth(),
+        year: new Date().getFullYear(),
+        logType: applyFilter
+      });
+    }
+
+    if(applyFilter === 'PAYMENT_GENERATED') {
+      Object.assign(filters, {
+        month: this.dataService.getCurrentPayrollMonth(),
+        year: new Date().getFullYear(),
+      });
+    }
+  
+
+
+    // Ensure setFilters completes before navigation
+    Promise.resolve(this.dataService.setFilters(filters)).then(() => {
+      this.router.navigate([url], { queryParams: { passedFilter: 1 } });
+    });
+  }
+
+
+
+  //#endRegion
 
 }

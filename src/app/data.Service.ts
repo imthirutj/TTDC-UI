@@ -334,6 +334,23 @@ export class DataService {
     return this.monthNames[month - 1] || '';
   }
 
+
+  getCurrentPayrollMonth(): number {
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1; // JavaScript months are 0-based
+    const day = today.getDate();
+
+    // If today is on or after the 26th, payroll month is the next month
+    let payrollMonth = currentMonth + 1;
+
+    // If it's December, roll over to January
+    if (payrollMonth > 12) {
+      payrollMonth = 1;
+    }
+
+    return payrollMonth;
+  }
+
   getCurrentLocation(): Promise<{ lat: number; long: number }> {
     return new Promise((resolve, reject) => {
       if ('geolocation' in navigator) {
@@ -358,4 +375,31 @@ export class DataService {
   }
 
 
+
+  private passedFilters: any = {}; // Store filters globally
+
+  setFilters(filters: any) {
+    this.passedFilters = filters;
+  }
+
+  getFilters(): Promise<any> {
+    return Promise.resolve(this.passedFilters); // Ensure async behavior
+  }
+
+
+  applyFilter(myFilters: any): Promise<void> {
+    return this.getFilters().then((filters) => {
+      Object.keys(myFilters).forEach((key) => {
+        const filterKey = myFilters[key]?.key; // Get the filter key
+        if(filterKey == 'month') {
+          console.log('Debug');
+        }
+        if (filterKey && filters[filterKey] !== undefined && filters[filterKey] !== ''
+          && filters[filterKey] !== null && filters[filterKey] !== 0) {
+          myFilters[key].value = filters[filterKey]; // Apply filter
+        }
+      });
+    });
+  }
+  
 }

@@ -11,6 +11,7 @@ import { CompensateRequest } from '../utils/interface/CompensateRequest';
 
 import * as XLSX from 'xlsx'; // Import XLSX
 import 'jspdf-autotable';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-employee-work-report',
@@ -188,12 +189,7 @@ export class EmployeeWorkReportComponent {
       key: 'vendorId',
       includeInSearchParams: true
     },
-    loggedInType:{
-      value: '0',
-      show: true,
-      key: 'loggedInType',
-      includeInSearchParams: true
-    },
+    
     attnNotFilled:{
       value: '0',
       show: true,
@@ -211,6 +207,18 @@ export class EmployeeWorkReportComponent {
       show:true,
       key:'odReqStatus',
       includeInSearchParams:true
+    },
+    // loggedInType:{
+    //   value: '0',
+    //   show: true,
+    //   key: 'loggedInType',
+    //   includeInSearchParams: true
+    // },
+    logType:{
+      value:'ALL',
+      show:true,
+      key:'logType',
+      includeInSearchParams:true
     }
   };
 
@@ -222,7 +230,8 @@ export class EmployeeWorkReportComponent {
     private masterDataService: MasterDataService,
     public dataService: DataService,
     private employeeWorkReportService: EmployeeWorkReportService,
-    private shiftService: ShiftService) {
+    private shiftService: ShiftService,
+    private route: ActivatedRoute) {
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = new Date().getFullYear();
     this.dataService.asyncGetUser().then((user: any) => {
@@ -249,10 +258,20 @@ export class EmployeeWorkReportComponent {
   onFilterChanged(event: any) {
     this.pageAttributes.currentPage=1;
     console.log('Filters updated in parent component:', this.filters);
-    this.fetchEmployeeStatus();
+    this.route.queryParams.subscribe(params => {
+      if (params['passedFilter'] == '1') {
+        this.dataService.applyFilter(this.filters).then(() => {
+          console.log('Filters applied in parent component:', this.filters);
+          this.search();
+        });
+      } else {
+        this.search();
+      }
+    });
   }
 
   search() {
+    this.pageAttributes.currentPage=1;
     this.fetchEmployeeStatus();
   }
 

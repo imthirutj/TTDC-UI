@@ -84,7 +84,7 @@ const routes: Routes = [
     path: 'vendor-management',
     component: VendorManagementComponent,
     canActivate: [AuthGuard],
-    data: {  roles: [UserType.STATE_ADMIN, UserType.VENDOR]},
+    data: {  roles: [UserType.STATE_ADMIN, UserType.VENDOR, UserType.MANAGER]},
   },
   {
     path: 'department',

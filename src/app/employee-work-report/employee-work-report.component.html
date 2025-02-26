@@ -7,8 +7,8 @@
 
 
             <!-- Filter Component -->
-            <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-                (triggerParentFunction)="fetchEmployeeStatus()">
+            <app-filter [filters]="filters" (filterChanged)="search()"
+                (triggerParentFunction)="onFilterChanged($event)">
             </app-filter>
 
             <!-- Reset Button -->

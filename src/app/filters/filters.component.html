@@ -216,18 +216,7 @@
         </div>
       </div>
 
-      <!-- Filte loggedInType-->
-      <div *ngIf="filters.loggedInType.show" class="col-md-4">
-        <div class="form-group">
-          <label for="loggedInType">Today Login Status</label>
-          <select [(ngModel)]="filters.loggedInType.value" (change)="onLoginTypeChange()" class="form-control"
-            id="loggedInType">
-            <option value="0">All</option>
-            <option value="1">Logged In</option>
-            <option value="2">Not Logged In</option>
-          </select>
-        </div>
-      </div>
+    
 
       <!-- Filte Attendance -->
       <div *ngIf="filters.attnNotFilled.show" class="col-md-4">
@@ -336,7 +325,34 @@
           <select [(ngModel)]="filters.odReqStatus.value" (change)="onOdRequestStatusChange()" class="form-control"
             id="odReqStatus">
             <option value="ALL">All</option>
-            <option value="OD">OD</option>
+            <option value="LOGGED_IN">Logged In</option>
+            <option value="NOT_LOGGED_IN">Not Logged In</option>
+          </select>
+        </div>
+      </div>
+
+        <!-- Filte loggedInType-->
+        <!-- <div *ngIf="filters.loggedInType.show" class="col-md-4">
+          <div class="form-group">
+            <label for="loggedInType">Today Login Status</label>
+            <select [(ngModel)]="filters.loggedInType.value" (change)="onLoginTypeChange()" class="form-control"
+              id="loggedInType">
+              <option value="0">All</option>
+              <option value="1">Logged In</option>
+              <option value="2">Not Logged In</option>
+            </select>
+          </div>
+        </div> -->
+        
+      <!--logType-->
+      <div *ngIf="filters.logType.show" class="col-md-4">
+        <div class="form-group">
+          <label for="loggedInType">Today Login Status</label>
+          <select [(ngModel)]="filters.logType.value" (change)="onLogTypeChange()" class="form-control"
+            id="logType">
+            <option value="ALL">All</option>
+            <option value="LOGGED_IN">LOGGED IN</option>
+            <option value="NOT_LOGGED_IN">NOT LOGGED IN</option>
           </select>
         </div>
       </div>
