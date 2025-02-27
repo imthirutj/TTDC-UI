@@ -77,13 +77,13 @@ export class SidebarComponent {
       //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       // },
       { 
-        label: 'City List', 
+        label: 'Region Master', 
         icon: 'fa-solid fa-city', 
         route: '/city', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       },
       { 
-        label: 'Holiday Management', 
+        label: 'Holiday Master', 
         icon: 'fa-solid fa-city', 
         route: '/holiday-mgmt', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
@@ -102,7 +102,7 @@ export class SidebarComponent {
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.VENDOR]
       },
       { 
-        label: 'Department', 
+        label: 'Section Master', 
         icon: 'fa-solid fa-sitemap', 
         route: '/department', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
@@ -114,13 +114,13 @@ export class SidebarComponent {
       //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]  
       // },
       { 
-        label: 'Designation List', 
+        label: 'Designation Master', 
         icon: 'fa-solid fa-id-badge', 
         route: '/designation', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER] 
       },
       { 
-        label: 'Degree List', 
+        label: 'Degree Master', 
         icon: 'fa-solid fa-graduation-cap', 
         route: '/degree', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
