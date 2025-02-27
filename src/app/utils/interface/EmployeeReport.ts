@@ -8,6 +8,7 @@ export class EmployeeReport {
     designationName: string;
     presentDays: number;
     absentDays: number;
+    odDays: number;
     leaveDays: number;
     holidayDays: number;
     weekOffDays: number;
@@ -27,6 +28,7 @@ export class EmployeeReport {
       this.presentDays = data.presentDays ?? 0;
       this.absentDays = data.absentDays ?? 0;
       this.leaveDays = data.leaveDays ?? 0;
+      this.odDays = data.odDays ?? 0;
       this.holidayDays = data.holidayDays ?? 0;
       this.weekOffDays = data.weekOffDays ?? 0;
       this.totalWorkingHours = data.totalWorkingHours ?? 0;
