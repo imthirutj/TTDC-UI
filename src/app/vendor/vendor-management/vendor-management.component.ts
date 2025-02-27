@@ -207,10 +207,19 @@ export class VendorManagementComponent {
     const payload = this.dataService.getPayloadValue(this.filters);
     this.masterDataService.getVendors(payload).subscribe((response) => {
       if (response.success) {
-        this.vendors = response.data as Vendor[];
-      };
+        this.vendors = response.data.map((vendor: any) => {
+          return {
+            ...vendor,
+            companyDepartmentListWise: vendor.companyDepartmentListWise.map((company: any) => ({
+              ...company,
+              department: company.department ? JSON.parse(company.department) : [] // Convert string to JSON array
+            }))
+          };
+        }) as Vendor[];
+      }
     });
   }
+  
 
 
   //#region Modal

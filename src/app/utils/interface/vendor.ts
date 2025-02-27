@@ -13,7 +13,7 @@ export class Vendor {
     bankIfsc: string;
     cityId: string;
     cityName: string;
-    companyDepartmentList: { companyId: number; companyName: string;  department:{employeeCount: number;departmentId: number; departmentName: string}[] }[];
+    companyDepartmentListWise: { companyId: number; companyName: string;  department:{employeeCount: number;departmentId: number; departmentName: string}[] }[];
     vendorMobileNumbers : {role:'',mobile:''}[];
     isPercent:number;
     serviceCharge:number;
@@ -32,7 +32,7 @@ export class Vendor {
         this.bankIfsc = vendor.bankIfsc || '';
         this.cityId = vendor.cityId || '';
         this.cityName = vendor.cityName || '';
-        this.companyDepartmentList = vendor.companyDepartmentList || [];
+        this.companyDepartmentListWise = vendor.companyDepartmentListWise || [];
         this.vendorMobileNumbers = vendor.vendorMobileNumbers || [];
         this.isPercent = vendor.isPercent || 0;
         this.serviceCharge = vendor.serviceCharge || 0;

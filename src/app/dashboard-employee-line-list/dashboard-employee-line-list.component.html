@@ -1,0 +1,35 @@
+
+<table id="reports" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th *ngIf="this.filters.reqStatus.value == 'OD' ||
+                this.filters.reqStatus.value == 'LEAVE'" >Dates</th>
+            <th *ngIf="this.filters.reqStatus.value == 'OD' ||
+                this.filters.reqStatus.value == 'LEAVE'">
+                Total Days
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let obj of reports; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ obj.employeeId }}</td>
+            <td>{{ obj.employeeName }}</td>
+            <td *ngIf="this.filters.reqStatus.value == 'OD' || this.filters.reqStatus.value == 'LEAVE'">
+                {{ obj.dates.join(', ') }}
+            </td>
+            
+            <td *ngIf="this.filters.reqStatus.value == 'OD' ||
+                this.filters.reqStatus.value == 'LEAVE'">
+                {{ obj.dates.length }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<app-filter [filters]="filters" (filterChanged)="search()" 
+    (triggerParentFunction)="onFilterChanged($event)">
+
+    

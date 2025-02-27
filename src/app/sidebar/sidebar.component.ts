@@ -53,6 +53,12 @@ export class SidebarComponent {
          allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER, UserType.EMPLOYEE] 
       },
       { 
+        label: 'Employee Report Dashboard', 
+        icon: 'fa-solid fa-tachometer-alt', 
+        route: '/dashboard-employee-report', 
+         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER, UserType.EMPLOYEE] 
+      },
+      { 
         label: 'Employee List', 
         icon: 'fa-solid fa-users', 
         route: '/employee', 
@@ -77,7 +83,7 @@ export class SidebarComponent {
       //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       // },
       { 
-        label: 'City List', 
+        label: 'Region List', 
         icon: 'fa-solid fa-city', 
         route: '/city', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 

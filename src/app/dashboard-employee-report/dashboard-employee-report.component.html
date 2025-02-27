@@ -1,0 +1,246 @@
+<div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="search()">
+    </app-filter>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+</div>
+
+<div class="container mt-4">
+    <!-- Employee Section -->
+
+
+    <div *ngIf="userAccessLevel == UserType.EMPLOYEE">
+
+        <div class="row">
+            <p *ngIf="false">
+                {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
+            </p>
+
+            <p>
+                <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
+                <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
+            </p>
+
+            <div class="col-md-4 mb-4">
+                <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total Present Days</h3>
+                        <h2 class="card-text">{{attendanceSummaryDashboard.totalPresentDays}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4">
+                <div style="background-color: #2ebed1; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total Absent Days</h3>
+                        <h2 class="card-text">{{attendanceSummaryDashboard.totalAbsentDays}}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div style="background-color: #d8ab24; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total WeekOff</h3>
+                        <h2 class="card-text">{{attendanceSummaryDashboard.weekOff}}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div style="background-color: #ad37af; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total holiday</h3>
+                        <h2 class="card-text">{{attendanceSummaryDashboard.holiday}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4">
+                <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total Leave</h3>
+                        <h2 class="card-text">{{reports.leaveCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4">
+                <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Today: OD</h3>
+                        <h2 class="card-text">{{reports.odCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total Working Days</h3>
+                        <h2 class="card-text">
+                            {{attendanceSummaryDashboard.holiday
+                            +attendanceSummaryDashboard.weekOff
+                            +attendanceSummaryDashboard.leaveApprovedDays
+                            +attendanceSummaryDashboard.odApprovedDays
+                            +attendanceSummaryDashboard.totalPresentDays}}
+
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-4 mb-4">
+        <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Today Status</h3>
+            <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays==1? "Present" : "Absent"}}</h2>
+          </div>
+        </div>
+      </div> -->
+        </div>
+    </div>
+
+    <!-- Manager Section -->
+
+    <div *ngIf="userAccessLevel == UserType.MANAGER">
+        <div class="row">
+
+
+            <div class="col-md-4 mb-4" style="cursor: pointer;"
+                (click)="applyFilterAndNavigate('/employee-work-report','LEAVE')">
+                <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total Leave</h3>
+                        <h2 class="card-text">{{reports.leaveCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4" style="cursor: pointer;"
+                (click)="applyFilterAndNavigate('/employee-work-report','OD')">
+                <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total OD</h3>
+                        <h2 class="card-text">{{reports.odCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4" style="cursor: pointer;"
+                (click)="applyFilterAndNavigate('/employee-work-report','LOGGED_IN')">
+                <div style="background-color: #176e2a; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Today : Logged In </h3>
+                        <h2 class="card-text">{{loggedInCounts.loggedInCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4" style="cursor: pointer;"
+                (click)="applyFilterAndNavigate('/employee-work-report','NOT_LOGGED_IN')">
+                <div style="background-color: #75264f; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Today :Not Logged In</h3>
+                        <h2 class="card-text">{{loggedInCounts.notLoggedInCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+
+
+        </div>
+    </div>
+
+    <!-- Vendor Section -->
+
+    <div *ngIf="userAccessLevel == UserType.VENDOR">
+
+    </div>
+
+    <!-- State Section -->
+
+    <div *ngIf="userAccessLevel == UserType.STATE_ADMIN
+    || userAccessLevel == UserType.CITY_ADMIN">
+        <div class="row">
+
+
+
+            <div class="col-md-4 mb-4" style="cursor: pointer;"
+                (click)="applyFilterAndNavigate('/dashboard-employee-line-list','LEAVE')">
+                <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total Leave</h3>
+                        <h2 class="card-text">{{reports.leaveCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4" style="cursor: pointer;"
+                (click)="applyFilterAndNavigate('/dashboard-employee-line-list','OD')">
+                <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Total OD</h3>
+                        <h2 class="card-text">{{reports.odCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Card for Logged In Count -->
+            <div class="col-md-4 mb-4" style="cursor: pointer;" (click)="openDateModal('LOGGED_IN')">
+                <div style="background-color: #176e2a;" class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Today : Logged In</h3>
+                        <h2 class="card-text">{{loggedInCounts.loggedInCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4" style="cursor: pointer;"
+            (click)="openDateModal('NOT_LOGGED_IN')">
+                <div style="background-color: #75264f; " class="card shadow-sm dashboard-bg">
+                    <div class="card-body">
+                        <h3 class="card-title">Today :Not Logged In</h3>
+                        <h2 class="card-text">{{loggedInCounts.notLoggedInCount}}</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+<app-common-dialog 
+[showDialog]="modalDate.show"
+[showCloseIcon]="true"
+(submitDialog)="applyFilterAndNavigate('/dashboard-employee-line-list',applyFilterType)"
+[showSubmitButton]="true"
+(closeDialog)="closeDateModal()">
+    
+    <div class="modal-body">
+        <label for="dateInput">Choose Date:</label>
+        <input type="date" class="form-control" id="dateInput"
+         [(ngModel)]="this.filters.date.value">
+    </div>
+</app-common-dialog>

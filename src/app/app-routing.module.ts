@@ -44,6 +44,8 @@ import { PayrollExpenditureComponent } from './payroll-expenditure/payroll-expen
 import { FuturePayrollNeedsComponent } from './future-payroll-needs/future-payroll-needs.component';
 import { LeaveAndOdAnalysisComponent } from './leave-and-od-analysis/leave-and-od-analysis.component';
 import { EmployeeBasedReportsComponent } from './employee-based-reports/employee-based-reports.component';
+import { DashboardEmployeeReportComponent } from './dashboard-employee-report/dashboard-employee-report.component';
+import { DashboardEmployeeLineListComponent } from './dashboard-employee-line-list/dashboard-employee-line-list.component';
 
 const routes: Routes = [
 
@@ -55,7 +57,18 @@ const routes: Routes = [
      canActivate: [AuthGuard],
     data: {  roles: ['ALL'] }, 
   },
-
+  {
+    path: 'dashboard-employee-report',
+    component: DashboardEmployeeReportComponent,
+     canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] }, 
+  },
+  {
+    path: 'dashboard-employee-line-list',
+    component: DashboardEmployeeLineListComponent,
+     canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] }, 
+  },
   {
     path: 'savestate',
     component: StateComponent,

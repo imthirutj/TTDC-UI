@@ -22,7 +22,7 @@
 <!-- <app-common-dialog [showDialog]="showDialog" [dialogTitle]="'Filters'" [showCloseIcon]="true" [showSubmitButton]="true"
   (closeDialog)="showDialog = false" (submitDialog)="search()">
   -->
-  <div style="background:blanchedalmond;" class="container">
+  <div *ngIf="this.filters.display.value != 'NONE'" style="background:blanchedalmond;" class="container">
     <div class="row">
       <ng-container *ngIf="filters?.filterRange?.value == 0">
         <div *ngIf="filters.selectedMonth.show" class="col-md-4">
@@ -363,7 +363,7 @@
   </div>
 
 
-  <div class="d-flex justify-content-end">
+  <div *ngIf="this.filters.display.value != 'NONE'" class="d-flex justify-content-end">
     <button type="button" class="btn btn-primary" (click)="search()">
       <i class="fas fa-reset"></i> Submit
     </button>

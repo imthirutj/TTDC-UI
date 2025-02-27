@@ -54,5 +54,17 @@ export class DashboardService {
     const queryParams = this.dataService.buildQueryParams(payload);
     return this.http.get(`${this.apiUrl}Dashboard/GetMonthlyPresentAbsentCount?${queryParams}`);
   }
+
+
+  //Dashboard/GetDashboardReportCount
+  getDashboardReportCount(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Dashboard/GetDashboardReportCount?${queryParams}`);
+  }
+
+  getEmployeeLineListReports(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Dashboard/GetDashboardReportList?${queryParams}`);
+  }
   
 }

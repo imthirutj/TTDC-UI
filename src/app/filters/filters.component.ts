@@ -64,6 +64,11 @@ export class FiltersComponent implements OnInit {
   ngOnInit(): void {
     if (this.filters) {
       const filterDefaults = [
+        { objName: 'display', key: 'display', label: 'display', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'reqStatus', key: 'reqStatus', label: 'reqStatus', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'date', key: 'date', label: 'Date', defaultValue: new Date().toISOString().split('T')[0], show: false, includeInSearchParams: false },
+
+
         { objName: 'role', key: 'role', label: 'Role', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'selectedMonth', key: 'month', label: 'Month', defaultValue: new Date().getMonth() + 1, show: false, includeInSearchParams: true },
         { objName: 'selectedYear', key: 'year', label: 'Year', defaultValue: new Date().getFullYear(), show: false, includeInSearchParams: true },
