@@ -418,6 +418,21 @@ export class DashboardComponent {
         year: new Date().getFullYear(),
       });
     }
+    if(applyFilter === 'OD') {
+      Object.assign(filters, {
+        month: this.dataService.getCurrentPayrollMonth(),
+        year: new Date().getFullYear(),
+        logType:'OD'
+      });
+    }
+    if(applyFilter === 'LEAVE') {
+      Object.assign(filters, {
+        month: this.dataService.getCurrentPayrollMonth(),
+        year: new Date().getFullYear(),
+        logType:'LEAVE'
+      });
+    }
+
   
 
 
