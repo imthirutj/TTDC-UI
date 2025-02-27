@@ -14,7 +14,7 @@
       <p *ngIf="false">
         {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
       </p>
-  
+
       <p>
         <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
         <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
@@ -71,7 +71,7 @@
       <div class="col-md-4 mb-4">
         <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
-            <h3 class="card-title">Today OD</h3>
+            <h3 class="card-title">Today: OD</h3>
             <h2 class="card-text">{{loggedInCounts.odCount}}</h2>
           </div>
         </div>
@@ -109,10 +109,8 @@
   <div *ngIf="userAccessLevel == UserType.MANAGER">
     <div class="row">
 
-      <div [routerLink]="['/employee']" class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee')"
-      >
+      <div [routerLink]="['/employee']" class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/employee')">
         <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Employees</h3>
@@ -120,10 +118,8 @@
           </div>
         </div>
       </div>
-      <div *ngIf="this.filters.designationId.value==0" 
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/designation')"
-       class="col-md-4 mb-4">
+      <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/designation')" class="col-md-4 mb-4">
         <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Designation Count</h3>
@@ -132,10 +128,8 @@
         </div>
       </div>
 
-      <div *ngIf="this.filters.vendorId.value==0" class="col-md-4 mb-4"
-      style="cursor: pointer;" class="col-md-4 mb-4"
-      (click)="applyFilterAndNavigate('/vendor-management')"
-      >
+      <div *ngIf="this.filters.vendorId.value==0" class="col-md-4 mb-4" style="cursor: pointer;" class="col-md-4 mb-4"
+        (click)="applyFilterAndNavigate('/vendor-management')">
         <div style="background-color: #4590c2; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Vendors</h3>
@@ -144,28 +138,9 @@
         </div>
       </div>
 
-      <!-- <div [routerLink]="['/employee']" class="col-md-4 mb-4">
-        <div style="background-color: #a88734; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Qualification Matched Count</h3>
-            <h2 class="card-text">{{mismatchQualification.matchedEmployees}}</h2>
-          </div>
-        </div>
-      </div>
 
-      <div [routerLink]="['/employee']" class="col-md-4 mb-4">
-        <div style="background-color: #2b9773; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Qualification Mismatch Count</h3>
-            <h2 class="card-text">{{mismatchQualification.mismatchedEmployees}}</h2>
-          </div>
-        </div>
-      </div> -->
-
-
-      <div  class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee-work-report','LOGGED_IN')">
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/employee-work-report','LOGGED_IN')">
         <div style="background-color: #176e2a; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Today : Logged In </h3>
@@ -174,9 +149,8 @@
         </div>
       </div>
 
-      <div  class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee-work-report','NOT_LOGGED_IN')">
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/employee-work-report','NOT_LOGGED_IN')">
         <div style="background-color: #75264f; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Today :Not Logged In</h3>
@@ -185,21 +159,10 @@
         </div>
       </div>
 
-    </div>
-    <p *ngIf="false">
-      {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
-    </p>
-
-    <p>
-      <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
-      <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
-    </p>
-    
-    <div class="row">
       <div class="col-md-4 mb-4">
         <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
-            <h3 class="card-title">Today Leave</h3>
+            <h3 class="card-title">Today: Leave</h3>
             <h2 class="card-text">{{loggedInCounts.leaveCount}}</h2>
           </div>
         </div>
@@ -215,10 +178,39 @@
         </div>
       </div>
 
+    </div>
+    <p *ngIf="false">
+      {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
+    </p>
 
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
+    <p>
+      <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
+      <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
+    </p>
+
+    <div class="row">
+      
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Total Leave</h3>
+            <h2 class="card-text">{{monthlyCounts.leaveCount}}</h2>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Total OD</h3>
+            <h2 class="card-text">{{monthlyCounts.odCount}}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
         <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Payment Generated</h3>
@@ -226,9 +218,8 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/payslip-records-waiting','PAYMENT_GENERATED')">
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/payslip-records-waiting','PAYMENT_GENERATED')">
         <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Payment Not Generated</h3>
@@ -244,14 +235,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-4 mb-4">
-      <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Today Present Count</h3>
-          <h2 class="card-text">{{todayAttendanceSummaryDashboard.totalPresentDays}}</h2>
-        </div>
-      </div>
-    </div> -->
     </div>
   </div>
 
@@ -260,10 +243,8 @@
   <div *ngIf="userAccessLevel == UserType.VENDOR">
     <div class="row">
 
-      <div *ngIf="this.filters.companyId.value==0" class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/company')"
-      >
+      <div *ngIf="this.filters.companyId.value==0" class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/company')">
         <div style="background-color: #00a9c8;" class="card shadow-sm dashboard-bg">
           <div class="card-body">
 
@@ -275,10 +256,8 @@
           </div>
         </div>
       </div>
-      <div *ngIf="this.filters.designationId.value==0"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/designation')"
-       class="col-md-4 mb-4">
+      <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/designation')" class="col-md-4 mb-4">
         <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Designation</h3>
@@ -286,10 +265,7 @@
           </div>
         </div>
       </div>
-      <div  class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee')"
-      >
+      <div class="col-md-4 mb-4" style="cursor: pointer;" (click)="applyFilterAndNavigate('/employee')">
         <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Employee</h3>
@@ -309,9 +285,8 @@
     </p>
 
     <div class="row">
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
         <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Payment Generated </h3>
@@ -319,9 +294,8 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/payslip-records-waiting','PAYMENT_GENERATED')">
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/payslip-records-waiting','PAYMENT_GENERATED')">
         <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Payment Not Generated</h3>
@@ -346,10 +320,8 @@
   || userAccessLevel == UserType.CITY_ADMIN">
     <div class="row">
 
-      <div *ngIf="this.filters.companyId.value==0" 
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/company')"
-      class="col-md-4 mb-4">
+      <div *ngIf="this.filters.companyId.value==0" style="cursor: pointer;" (click)="applyFilterAndNavigate('/company')"
+        class="col-md-4 mb-4">
         <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Unit</h3>
@@ -358,9 +330,8 @@
         </div>
       </div>
 
-      <div *ngIf="this.filters.vendorId.value==0" 
-      style="cursor: pointer;" class="col-md-4 mb-4"
-      (click)="applyFilterAndNavigate('/vendor-management')">
+      <div *ngIf="this.filters.vendorId.value==0" style="cursor: pointer;" class="col-md-4 mb-4"
+        (click)="applyFilterAndNavigate('/vendor-management')">
         <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Vendors</h3>
@@ -369,10 +340,8 @@
         </div>
       </div>
 
-      <div *ngIf="this.filters.designationId.value==0"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/designation')"
-      class="col-md-4 mb-4">
+      <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/designation')" class="col-md-4 mb-4">
         <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Designation</h3>
@@ -381,10 +350,8 @@
         </div>
       </div>
 
-      <div *ngIf="this.filters.designationId.value==0"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee')"
-       class="col-md-4 mb-4">
+      <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/employee')" class="col-md-4 mb-4">
         <div style="background-color: #3e9cd6; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Employees</h3>
@@ -393,28 +360,8 @@
         </div>
       </div>
 
-      <!-- <div [routerLink]="['/employee']" class="col-md-4 mb-4">
-        <div style="background-color: #62b04e; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Qualification Matched Count</h3>
-            <h2 class="card-text">{{mismatchQualification.matchedEmployees}}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div [routerLink]="['/employee']" class="col-md-4 mb-4">
-        <div style="background-color: #3b8fd4; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Qualification Mismatch Count</h3>
-            <h2 class="card-text">{{mismatchQualification.mismatchedEmployees}}</h2>
-          </div>
-        </div>
-      </div> -->
-
-      
-      <div  class="col-md-4 mb-4" 
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee-work-report','LOGGED_IN')">
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/employee-work-report','LOGGED_IN')">
         <div style="background-color: #176e2a; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Today : Logged In </h3>
@@ -423,9 +370,8 @@
         </div>
       </div>
 
-      <div  class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee-work-report','NOT_LOGGED_IN')">
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/employee-work-report','NOT_LOGGED_IN')">
         <div style="background-color: #75264f; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Today :Not Logged In</h3>
@@ -433,7 +379,26 @@
           </div>
         </div>
       </div>
-      
+
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Today: Leave</h3>
+            <h2 class="card-text">{{loggedInCounts.leaveCount}}</h2>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-4 mb-4">
+        <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
+          <div class="card-body">
+            <h3 class="card-title">Today: OD</h3>
+            <h2 class="card-text">{{loggedInCounts.odCount}}</h2>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <p *ngIf="false">
@@ -445,11 +410,13 @@
       <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
     </p>
     <div class="row">
+      
+
       <div class="col-md-4 mb-4">
         <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
-            <h3 class="card-title">Today Leave</h3>
-            <h2 class="card-text">{{loggedInCounts.leaveCount}}</h2>
+            <h3 class="card-title">Total Leave</h3>
+            <h2 class="card-text">{{monthlyCounts.leaveCount}}</h2>
           </div>
         </div>
       </div>
@@ -458,15 +425,14 @@
       <div class="col-md-4 mb-4">
         <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
-            <h3 class="card-title">Today OD</h3>
-            <h2 class="card-text">{{loggedInCounts.odCount}}</h2>
+            <h3 class="card-title">Total OD</h3>
+            <h2 class="card-text">{{monthlyCounts.odCount}}</h2>
           </div>
         </div>
       </div>
-
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
+      
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
         <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Payment Generated</h3>
@@ -474,9 +440,8 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/payslip-records-waiting','PAYMENT_GENERATED')">
+      <div class="col-md-4 mb-4" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/payslip-records-waiting','PAYMENT_GENERATED')">
         <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Payment Not Generated</h3>
@@ -584,7 +549,7 @@
 <div *ngIf="userAccessLevel== UserType.STATE_ADMIN ||
 userAccessLevel== UserType.CITY_ADMIN" class="container mt-4">
   <h3>Unit Wise Count</h3>
-  
+
   <table class="table table-bordered" *ngIf="unitWiseReport?.length; else noData">
     <thead class="thead-dark">
       <tr>

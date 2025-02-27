@@ -165,6 +165,8 @@ export class DashboardComponent {
 
   loggedInCounts: any = {};
 
+  monthlyCounts: any = {};
+
   constructor(
 
     private masterDataService: MasterDataService,
@@ -205,6 +207,7 @@ export class DashboardComponent {
     this.getAllReports();
     this.getExpQualMismatchCount();
     this.getLoggedInCounts();
+    this.getMonthlyPresentAbsentCount();
     this.getUnitWiseReport();
 
   }
@@ -225,6 +228,16 @@ export class DashboardComponent {
     this.dashboardService.getLoggedInCounts(payload).subscribe((response: any) => {
       if (response.success) {
         this.loggedInCounts = response.data;
+      }
+    });
+  }
+
+  getMonthlyPresentAbsentCount() {
+    const payload = this.dataService.getPayloadValue(this.filters);
+
+    this.dashboardService.getMonthlyPresentAbsentCount(payload).subscribe((response: any) => {
+      if (response.success) {
+        this.monthlyCounts = response.data;
       }
     });
   }
