@@ -1,7 +1,7 @@
 <!-- Filter Button -->
-<button type="button" class="btn btn-primary" (click)="openFilterModal()">
+<!-- <button type="button" class="btn btn-primary" (click)="openFilterModal()">
   <i class="fas fa-filter"></i> Filter
-</button>
+</button> -->
 <button style="background-color: cadetblue;" type="button" class="btn btn-primary" (click)="onFilterChange()">
   Refresh
 </button>
@@ -19,9 +19,10 @@
 
 
 
-<app-common-dialog [showDialog]="showDialog" [dialogTitle]="'Filters'" [showCloseIcon]="true" [showSubmitButton]="true"
+<!-- <app-common-dialog [showDialog]="showDialog" [dialogTitle]="'Filters'" [showCloseIcon]="true" [showSubmitButton]="true"
   (closeDialog)="showDialog = false" (submitDialog)="search()">
-  <div class="container">
+  -->
+  <div style="background:blanchedalmond;" class="container">
     <div class="row">
       <ng-container *ngIf="filters?.filterRange?.value == 0">
         <div *ngIf="filters.selectedMonth.show" class="col-md-4">
@@ -104,9 +105,9 @@
 
       <div *ngIf="filters.cityId.show" class="col-md-4">
         <div class="form-group">
-          <label for="city">City</label>
+          <label for="city">Region</label>
           <select [(ngModel)]="filters.cityId.value" (change)="onCityChange()" class="form-control" id="city">
-            <option value="">Select City</option>
+            <option value="">Select Region</option>
             <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
           </select>
         </div>
@@ -360,4 +361,14 @@
 
     </div>
   </div>
-</app-common-dialog>
+
+
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-primary" (click)="search()">
+      <i class="fas fa-reset"></i> Submit
+    </button>
+  </div>
+  
+
+<br>
+<!-- </app-common-dialog> -->

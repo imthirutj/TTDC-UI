@@ -13,7 +13,7 @@ export class Vendor {
     bankIfsc: string;
     cityId: string;
     cityName: string;
-    companyDepartmentList: { companyId: number; companyName: string; departmentId: number; departmentName: string }[];
+    companyDepartmentList: { companyId: number; companyName: string;  department:{employeeCount: number;departmentId: number; departmentName: string}[] }[];
     vendorMobileNumbers : {role:'',mobile:''}[];
     isPercent:number;
     serviceCharge:number;

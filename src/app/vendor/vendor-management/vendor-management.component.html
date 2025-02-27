@@ -19,7 +19,7 @@
           <th>#</th>
           <th>Vendor Name</th>
           <th>EmployeeCount</th>
-          <th>Unit-Department</th>
+          <!-- <th>Unit-Department</th> -->
           <th>Address</th>
           <th>Phone Number</th>
           <th>Email</th>
@@ -44,19 +44,18 @@
           </td>
           <td>{{ vendor.vendorName }}</td>
           <td>{{ vendor.EmployeeCount }}</td>
-          <td class="ellipsis">
+          <td *ngIf="false" class="ellipsis">
             <!-- Displaying company name and department name -->
             <span *ngFor="let item of vendor.companyDepartmentList; let last = last; let i = index">
               {{i+1}}.<b>{{ item.companyName }}</b> - {{ item.departmentName }}
-              <span *ngIf="!last">, </span> <!-- Adds a comma between the items except for the last one -->
+              <span *ngIf="!last">, </span> 
             </span>
           </td>
           <td>{{ vendor.address }}</td>
           <td class="ellipsis">
-            <!-- Displaying company name and department name -->
             <span *ngFor="let item of vendor.vendorMobileNumbers; let last = last; let i = index">
               {{i+1}}.<b>{{ item.role }}</b> - {{ item.mobile }}
-              <span *ngIf="!last">, </span> <!-- Adds a comma between the items except for the last one -->
+              <span *ngIf="!last">, </span> 
             </span>
           </td>
           <td>{{ vendor.emailId }}</td>
@@ -86,19 +85,19 @@
         <input type="text" class="form-control" id="vendorName" [(ngModel)]="modal.vendor.vendorName">
       </div>
       <div class="form-group">
-        <label for="city">City</label>
+        <label for="city">Region</label>
         <select (change)="onCityChange()" class="form-control" id="city" [(ngModel)]="modal.vendor.cityId">
-          <option value="">Select City</option>
+          <option value="">Select Region</option>
           <option *ngFor="let city of dropdowns.cities" [value]="city.cityId">{{ city.cityName }}</option>
         </select>
       </div>
       <br>
 
-      <div class="form-group">
+      <div *ngIf="false" class="form-group">
         <label for="company">Unit</label>
         <div *ngIf="userAccessLevel == UserType.STATE_ADMIN" class="card">
 
-          <div *ngIf="false" class="card-body">
+          <div  class="card-body">
             <div class="form-group">
 
               <select (change)="onCompanyChange()" class="form-control" id="company" [(ngModel)]="modal.comp.id">
@@ -125,16 +124,18 @@
       <div class="card">
         <div class="card-body">
           <div *ngFor="let compDept of modal.vendor.companyDepartmentList" class="card">
-            <p><b>Unit</b>:{{compDept.companyName}} </p>
-            <p><b>Department</b>:{{compDept.departmentName}}</p>
-
-            <i *ngIf="false && userAccessLevel == UserType.STATE_ADMIN"
-              (click)="deleteCompanyDepartment(compDept.companyId, compDept.departmentId)" class="fa fa-trash"></i>
+            <p><b>Unit</b>: {{ compDept.companyName }}</p>
+      
+            <div *ngFor="let dept of compDept.department">
+              <p><b>Department</b>: {{ dept.departmentName }}</p>
+              <p><b>Employees in this Department</b>: {{ dept.employeeCount }}</p> <!-- Display department employee count -->
+            </div>
+      
           </div>
           <br>
         </div>
-
       </div>
+      
 
       <div class="form-group">
         <label for="address">Address</label>

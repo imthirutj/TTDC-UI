@@ -341,13 +341,13 @@
 
           <!-- City Name -->
           <div class="mb-3">
-            <label for="City" class="form-label">City Name</label>
+            <label for="City" class="form-label">Region Name</label>
 
             <input *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg" id="City"
               [(ngModel)]="modal.employee.cityName" name="City" />
             <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE" (change)="onCityChange()"
               class="form-select" id="City" [(ngModel)]="modal.employee.cityId" name="cityId">
-              <option value="">Select City</option>
+              <option value="">Select Region</option>
               <option *ngFor="let city of dropdowns.cities" [value]="city.cityId">{{ city.cityName }}</option>
             </select>
           </div>

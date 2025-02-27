@@ -130,39 +130,39 @@ export class VendorManagementComponent {
   }
 
   addCompanyDepartment() {
-    if (!this.modal.comp.id || !this.modal.dept.id) {
-      this.dataService.showSnackBar('Please select Unit and department');
-      return;
-    }
+    // if (!this.modal.comp.id || !this.modal.dept.id) {
+    //   this.dataService.showSnackBar('Please select Unit and department');
+    //   return;
+    // }
 
-    // Check if the companyId and departmentId already exist in the companyDepartmentList
-    const existingEntry = this.modal.vendor.companyDepartmentList.find(
-      item => item.companyId == this.modal.comp.id && item.departmentId == this.modal.dept.id
-    );
+    // // Check if the companyId and departmentId already exist in the companyDepartmentList
+    // const existingEntry = this.modal.vendor.companyDepartmentList.find(
+    //   item => item.companyId == this.modal.comp.id && item.departmentId == this.modal.dept.id
+    // );
 
-    if (existingEntry) {
-      // If a match is found, show an error message
-      this.dataService.showSnackBar('This company and department combination already exists');
-      return;
-    }
+    // if (existingEntry) {
+    //   // If a match is found, show an error message
+    //   this.dataService.showSnackBar('This company and department combination already exists');
+    //   return;
+    // }
 
-    // If no match is found, create the new data object
-    const data = {
-      companyId: this.modal.comp.id,
-      companyName: this.getCompanyNameById(this.modal.comp.id),
-      departmentId: this.modal.dept.id,
-      departmentName: this.getDeptNameById(this.modal.dept.id)
-    };
+    // // If no match is found, create the new data object
+    // const data = {
+    //   companyId: this.modal.comp.id,
+    //   companyName: this.getCompanyNameById(this.modal.comp.id),
+    //   departmentId: this.modal.dept.id,
+    //   departmentName: this.getDeptNameById(this.modal.dept.id)
+    // };
 
-    // Add the new data to the companyDepartmentList
-    this.modal.vendor.companyDepartmentList.push(data);
+    // // Add the new data to the companyDepartmentList
+    // this.modal.vendor.companyDepartmentList.push(data);
   }
 
   deleteCompanyDepartment(companyId: number, departmentId: number) {
-    // Filter out the company-department combination from the list
-    this.modal.vendor.companyDepartmentList = this.modal.vendor.companyDepartmentList.filter(
-      item => !(item.companyId === companyId && item.departmentId === departmentId)
-    );
+    // // Filter out the company-department combination from the list
+    // this.modal.vendor.companyDepartmentList = this.modal.vendor.companyDepartmentList.filter(
+    //   item => !(item.companyId === companyId && item.departmentId === departmentId)
+    // );
   }
 
   getCompanyNameById(companyId: any): string {

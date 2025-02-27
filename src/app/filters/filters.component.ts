@@ -369,7 +369,7 @@ export class FiltersComponent implements OnInit {
   }
 
 
-  showDialog: boolean = false;
+  showDialog: boolean = true;
   openFilterModal() {
     this.showDialog = true;
   }

@@ -24,7 +24,7 @@
           <th>Unit ID</th>
           <th>Unit Name</th>
           <!-- <th>Company SName</th>   -->
-          <th>City</th>   
+          <th>Region</th>   
           <th>#</th>   
         </tr>
       </thead>
@@ -84,9 +84,9 @@
 
       <div class="col-md-6">
         <div class="form-group">
-          <label for="cityId">City</label>
+          <label for="cityId">Region</label>
           <select class="form-select" id="cityId" [(ngModel)]="modal.company.cityId" name="cityId">
-            <option value="">Select City</option>
+            <option value="">Select Region</option>
             <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
           </select>
         </div>

@@ -107,12 +107,12 @@ export class SidebarComponent {
         route: '/department', 
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
       },
-      { 
-        label: 'Company/Unit List', 
-        icon: 'fa-solid fa-building', 
-        route: '/company', 
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]  
-      },
+      // { 
+      //   label: 'Company/Unit List', 
+      //   icon: 'fa-solid fa-building', 
+      //   route: '/company', 
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]  
+      // },
       { 
         label: 'Designation List', 
         icon: 'fa-solid fa-id-badge', 
