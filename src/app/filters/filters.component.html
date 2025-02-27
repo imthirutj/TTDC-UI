@@ -127,10 +127,10 @@
 
       <div *ngIf="filters.deptId.show" class="col-md-4">
         <div class="form-group">
-          <label for="department">Department</label>
+          <label for="department">Section</label>
           <select [(ngModel)]="filters.deptId.value" (change)="onDepartmentChange()" class="form-control"
             id="department">
-            <option value="">Select Department</option>
+            <option value="">Select Section</option>
             <option *ngFor="let department of departments" [value]="department.departmentId">{{
               department.departmentFName
               }}</option>

@@ -139,39 +139,6 @@
         </div>
       </div>
 
-
-      <!-- <div class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/employee-work-report','LOGGED_IN')">
-        <div style="background-color: #176e2a; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today : Logged In </h3>
-            <h2 class="card-text">{{loggedInCounts.loggedInCount}}</h2>
-          </div>
-        </div>
-      </div> -->
-<!-- 
-      <div class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/employee-work-report','NOT_LOGGED_IN')">
-        <div style="background-color: #75264f; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today :Not Logged In</h3>
-            <h2 class="card-text">{{loggedInCounts.notLoggedInCount}}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee-work-report','LEAVE')">
-        <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today: Leave</h3>
-            <h2 class="card-text">{{loggedInCounts.leaveCount}}</h2>
-          </div>
-        </div>
-      </div> -->
-
-
       <div class="col-md-4 mb-4"
       style="cursor: pointer;"
       (click)="applyFilterAndNavigate('/employee-work-report','OD')">
@@ -188,32 +155,13 @@
       {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
     </p>
 
-    <p>
+    <h4>
       <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
       <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
-    </p>
+    </h4>
 
     <div class="row">
       
-      <div class="col-md-4 mb-4">
-        <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total Leave</h3>
-            <h2 class="card-text">{{monthlyCounts.leaveCount}}</h2>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4 mb-4">
-        <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total OD</h3>
-            <h2 class="card-text">{{monthlyCounts.odCount}}</h2>
-          </div>
-        </div>
-      </div>
-
       <div class="col-md-4 mb-4" style="cursor: pointer;"
         (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
         <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
@@ -365,64 +313,21 @@
         </div>
       </div>
 
-      <!-- <div class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/employee-work-report','LOGGED_IN')">
-        <div style="background-color: #176e2a; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today : Logged In </h3>
-            <h2 class="card-text">{{loggedInCounts.loggedInCount}}</h2>
-          </div>
-        </div>
-      </div>
-      
-
-      <div class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/employee-work-report','NOT_LOGGED_IN')">
-        <div style="background-color: #75264f; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today :Not Logged In</h3>
-            <h2 class="card-text">{{loggedInCounts.notLoggedInCount}}</h2>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee-work-report','LEAVE')">
-        <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today: Leave</h3>
-            <h2 class="card-text">{{loggedInCounts.leaveCount}}</h2>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee-work-report','OD')">
-        <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today: OD</h3>
-            <h2 class="card-text">{{loggedInCounts.odCount}}</h2>
-          </div>
-        </div>
-      </div> -->
 
     </div>
 
-    <p *ngIf="false">
+    <h4 *ngIf="false">
       {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
-    </p>
+    </h4>
 
-    <p>
+    <h4>
       <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
       <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
-    </p>
+    </h4>
     <div class="row">
       
 
-      <div class="col-md-4 mb-4">
+      <!-- <div class="col-md-4 mb-4">
         <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Leave</h3>
@@ -439,7 +344,7 @@
             <h2 class="card-text">{{monthlyCounts.odCount}}</h2>
           </div>
         </div>
-      </div>
+      </div> -->
       
       <div class="col-md-4 mb-4" style="cursor: pointer;"
         (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
@@ -568,7 +473,7 @@ userAccessLevel== UserType.CITY_ADMIN" class="container mt-4">
         <th>Total Employees</th>
         <th>Total Designations</th>
         <th>Total Vendors</th>
-        <th>Total Departments</th>
+        <th>Total Section</th>
       </tr>
     </thead>
     <tbody>

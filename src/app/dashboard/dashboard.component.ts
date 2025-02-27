@@ -146,9 +146,9 @@ export class DashboardComponent {
     },
     shiftStatus: {
       value: '',
-      show: true,
+      show: false,
       key: 'shiftStatus',
-      includeInSearchParams: true
+      includeInSearchParams: false
     },
   };
 

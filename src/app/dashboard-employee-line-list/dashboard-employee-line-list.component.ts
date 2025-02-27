@@ -62,6 +62,14 @@ export class DashboardEmployeeLineListComponent {
   todayAttendanceSummaryDashboard: AttendanceSummaryDashboard = new AttendanceSummaryDashboard();
   paymentGeneratedList: any[] = [];
 
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1,
+    pageSize: 10
+  }
+
+  totalDays: number = 0;
+
   filters: any = {
     display: {
       value: 'NONE',
@@ -69,7 +77,7 @@ export class DashboardEmployeeLineListComponent {
       key: 'display',
       includeInSearchParams: false
     },
-    reqStatus:{
+    reqStatus: {
       value: '',
       show: true,
       key: 'reqStatus',
@@ -82,7 +90,7 @@ export class DashboardEmployeeLineListComponent {
       key: 'filterRange',
       includeInSearchParams: true
     },
-    
+
     fromDate: {
       value: new Date().toISOString().split('T')[0], // Default to current month
       show: true,
@@ -158,7 +166,7 @@ export class DashboardEmployeeLineListComponent {
   mismatchQualification: any = {};
 
   loggedInCounts: any = {};
-  reports:any[] = [];
+  reports: any[] = [];
 
   monthlyCounts: any = {};
 
@@ -180,16 +188,23 @@ export class DashboardEmployeeLineListComponent {
   }
 
   ngOnInit() {
-   
+
   }
 
 
   onFilterChanged(event: any) {
+
+    this.pageAttributes.currentPage = 1;
     console.log('Filters updated in parent component:', this.filters);
-  
+
     this.route.queryParams.subscribe(params => {
       if (params['passedFilter'] == '1') {
         this.dataService.applyFilter(this.filters).then(() => {
+          //if this.filters.reqStatus is empty,redirect to page 
+          if (this.filters.reqStatus.value == '') {
+            this.router.navigate(['/dashboard-employee-report']);
+            return;
+          }
           this.search();
         });
       } else {
@@ -199,7 +214,7 @@ export class DashboardEmployeeLineListComponent {
   }
 
   search() {
-
+    this.pageAttributes.currentPage = 1;
     this.getEmployeeLineListReports();
 
 
@@ -207,14 +222,23 @@ export class DashboardEmployeeLineListComponent {
 
   getEmployeeLineListReports() {
     const payload = this.dataService.getPayloadValue(this.filters);
-
-    this.dashboardService.getEmployeeLineListReports(payload).subscribe((response: any) => {
+    const fpayload = {
+      ...payload,
+      pageNumber: this.pageAttributes.currentPage,
+      pageSize: this.pageAttributes.pageSize
+    }
+    this.dashboardService.getEmployeeLineListReports(fpayload).subscribe((response: any) => {
       if (response.success) {
         this.reports = response.data;
+        this.pageAttributes.totalPages = response.totalPages;
+        this.totalDays = response.totalDays;
       }
     });
   }
 
+  getTotalOD(): number {
+    return this.reports ? this.reports.reduce((sum, report) => sum + (report.dates?.length || 0), 0) : 0;
+  }
 
 
 
