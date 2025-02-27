@@ -49,5 +49,10 @@ export class DashboardService {
     const queryParams = this.dataService.buildQueryParams(payload);
     return this.http.get(`${this.apiUrl}Dashboard/GetPresentAbsentCount?${queryParams}`);
   }
+
+  getMonthlyPresentAbsentCount(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Dashboard/GetMonthlyPresentAbsentCount?${queryParams}`);
+  }
   
 }
