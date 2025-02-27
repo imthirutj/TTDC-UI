@@ -3,20 +3,20 @@
   Excel</button>
 
 <div class="Department-list-container">
-    <h3>Department List</h3>
+    <h3>Section List</h3>
     <table id="departments" class="table table-bordered">
       <thead>
         <tr>
           <th>#</th>
-          <th>Department ID</th>
-          <th>Department Name</th>
+          <!-- <th>Department ID</th> -->
+          <th>Section Name</th>
           <!-- <th>Department SName</th>         -->
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let department of Department; let i = index">
             <td>{{ i + 1 }}</td>
-            <td>{{ department.departmentId  }}</td>
+            <!-- <td>{{ department.departmentId  }}</td> -->
             <td>{{ department.departmentFName }}</td>
             <!-- <td>{{ department.departmentSName }}</td> -->
           </tr>          
