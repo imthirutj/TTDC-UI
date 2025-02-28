@@ -374,7 +374,7 @@ export class FiltersComponent implements OnInit {
   }
 
 
-  showDialog: boolean = true;
+  showDialog: boolean = false;
   openFilterModal() {
     this.showDialog = true;
   }

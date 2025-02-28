@@ -19,9 +19,9 @@
 
 
 
-<!-- <app-common-dialog [showDialog]="showDialog" [dialogTitle]="'Filters'" [showCloseIcon]="true" [showSubmitButton]="true"
+<app-common-dialog [showDialog]="showDialog" [dialogTitle]="'Filters'" [showCloseIcon]="true" [showSubmitButton]="true"
   (closeDialog)="showDialog = false" (submitDialog)="search()">
-  -->
+ 
   <div *ngIf="this.filters.display.value != 'NONE'" style="background:blanchedalmond;" class="container">
     <div class="row">
       <ng-container *ngIf="filters?.filterRange?.value == 0">
@@ -371,4 +371,4 @@
   
 
 <br>
-<!-- </app-common-dialog> -->
+</app-common-dialog>
