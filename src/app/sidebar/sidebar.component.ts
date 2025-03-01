@@ -58,6 +58,41 @@ export class SidebarComponent {
         route: '/dashboard-employee-report', 
          allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER, UserType.EMPLOYEE] 
       },
+
+
+      { 
+        label: 'Designation Wise Report', 
+        icon: 'fa-solid fa-tachometer-alt', 
+        route: '/designation-wise-report', 
+         allowedUserTypes: [UserType.STATE_ADMIN] 
+      },
+      { 
+        label: 'Section Wise Report', 
+        icon: 'fa-solid fa-tachometer-alt', 
+        route: '/section-wise-report', 
+         allowedUserTypes: [UserType.STATE_ADMIN] 
+      },
+      { 
+        label: 'Unit Wise Report', 
+        icon: 'fa-solid fa-tachometer-alt', 
+        route: '/unit-wise-report', 
+         allowedUserTypes: [UserType.STATE_ADMIN] 
+      },
+      { 
+        label: 'Vendor Wise Report', 
+        icon: 'fa-solid fa-tachometer-alt', 
+        route: '/vendor-wise-report', 
+         allowedUserTypes: [UserType.STATE_ADMIN] 
+      },
+      { 
+        label: 'Region Wise Report', 
+        icon: 'fa-solid fa-tachometer-alt', 
+        route: '/region-wise-report', 
+         allowedUserTypes: [UserType.STATE_ADMIN] 
+      },
+
+
+
       { 
         label: 'Employee List', 
         icon: 'fa-solid fa-users', 

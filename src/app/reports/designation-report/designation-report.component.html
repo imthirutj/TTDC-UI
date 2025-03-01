@@ -1,0 +1,46 @@
+<div>
+    <h2>Designation Wise Report: {{this.totalCounts}}</h2>
+    
+</div>
+<div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" 
+    (triggerParentFunction)="onFilterChanged($event)">
+    </app-filter>
+   
+</div>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Designation</th>
+            <th>Employee Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let datas of designationWiseReportData">
+            <!-- Unit Name Row -->
+            <tr>
+                <td style="text-align: center;" colspan="9">
+                    <strong>
+                        {{ datas.companyName }}
+                        : {{ datas.designations.length }} Designation
+                    </strong>
+                </td>
+            </tr>
+            <tr *ngFor="let obj of datas.designations; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ obj.designationName }}</td>
+                <td>{{ obj.employeeCount }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;" colspan="2">
+                    Total: 
+                </td>
+                <strong>{{ getTotal(datas, 'employeeCount') }}</strong>
+            </tr>
+        </ng-container>
+
+    </tbody>
+</table>

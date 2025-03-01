@@ -88,6 +88,11 @@ import { EmployeeBasedReportsComponent } from './employee-based-reports/employee
 import { DashboardEmployeeReportComponent } from './dashboard-employee-report/dashboard-employee-report.component';
 import { DashboardEmployeeLineListComponent } from './dashboard-employee-line-list/dashboard-employee-line-list.component';
 import { SampePageComponent } from './sampe-page/sampe-page.component';
+import { DesignationReportComponent } from './reports/designation-report/designation-report.component';
+import { DepartmentReportComponent } from './reports/department-report/department-report.component';
+import { UnitReportComponent } from './reports/unit-report/unit-report.component';
+import { VendorReportComponent } from './reports/vendor-report/vendor-report.component';
+import { RegionReportComponent } from './reports/region-report/region-report.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +151,12 @@ import { SampePageComponent } from './sampe-page/sampe-page.component';
     EmployeeBasedReportsComponent,
     DashboardEmployeeReportComponent,
     DashboardEmployeeLineListComponent,
-    SampePageComponent
+    SampePageComponent,
+    DesignationReportComponent,
+    DepartmentReportComponent,
+    UnitReportComponent,
+    VendorReportComponent,
+    RegionReportComponent
 
   ],
   imports: [

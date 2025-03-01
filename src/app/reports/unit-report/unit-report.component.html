@@ -1,0 +1,48 @@
+<div>
+    <h2>Unit Wise Report: {{this.unitWiseReportData.length}}</h2>
+    
+</div>
+<div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" 
+    (triggerParentFunction)="onFilterChanged($event)">
+    </app-filter>
+   
+</div>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Section</th>
+            <th>Employee Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let datas of unitWiseReportData">
+            <!-- Unit Name Row -->
+            <tr>
+                <td style="text-align: center;" colspan="9">
+                    <strong>
+                        {{ datas.companyFName }}
+                        : {{ datas.departments.length }} Sections
+                    </strong>
+                </td>
+            </tr>
+            <tr *ngFor="let obj of datas.departments; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ obj.departmentName }}</td>
+                <td>{{ obj.employeeCount }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: center;" colspan="2">
+                    Total: 
+                </td>
+                <td>
+                    <strong>{{ getTotal(datas, 'employeeCount') }}</strong>
+                </td>
+            </tr>
+        </ng-container>
+
+    </tbody>
+</table>

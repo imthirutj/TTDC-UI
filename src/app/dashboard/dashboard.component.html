@@ -1,3 +1,9 @@
+
+<div *ngIf="userAccessLevel == UserType.STATE_ADMIN">
+  <h2>Dashboard  
+   
+  </h2>
+</div>
 <div class="cards-filter">
   <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="search()">
   </app-filter>
@@ -267,13 +273,21 @@
     </div>
   </div>
 
+
+
+
+
+
+
+
   <!-- State Section -->
 
   <div *ngIf="userAccessLevel == UserType.STATE_ADMIN
   || userAccessLevel == UserType.CITY_ADMIN">
     <div class="row">
 
-      <div *ngIf="this.filters.companyId.value==0" style="cursor: pointer;" (click)="applyFilterAndNavigate('/company')"
+      <div *ngIf="this.filters.companyId.value==0" style="cursor: pointer;" 
+      (click)="applyFilterAndNavigate('/unit-wise-report')"
         class="col-md-4 mb-4">
         <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
@@ -294,7 +308,7 @@
       </div>
 
       <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/designation')" class="col-md-4 mb-4">
+        (click)="applyFilterAndNavigate('/designation-wise-report')" class="col-md-4 mb-4">
         <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Designation</h3>

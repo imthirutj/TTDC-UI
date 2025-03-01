@@ -48,6 +48,12 @@ import { DashboardEmployeeReportComponent } from './dashboard-employee-report/da
 import { DashboardEmployeeLineListComponent } from './dashboard-employee-line-list/dashboard-employee-line-list.component';
 import { sample } from 'rxjs';
 import { SampePageComponent } from './sampe-page/sampe-page.component';
+import { DesignationReportComponent } from './reports/designation-report/designation-report.component';
+import { DepartmentReportComponent } from './reports/department-report/department-report.component';
+import { UnitReportComponent } from './reports/unit-report/unit-report.component';
+import { Vendor } from './utils/interface/vendor';
+import { VendorReportComponent } from './reports/vendor-report/vendor-report.component';
+import { RegionReportComponent } from './reports/region-report/region-report.component';
 
 const routes: Routes = [
 
@@ -290,6 +296,37 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
+  {
+    path:'designation-wise-report',
+    component:DesignationReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'section-wise-report',
+    component:DepartmentReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'unit-wise-report',
+    component:UnitReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'vendor-wise-report',
+    component:VendorReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'region-wise-report',
+    component:RegionReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+
   {
     path:'sample',
     component:SampePageComponent,

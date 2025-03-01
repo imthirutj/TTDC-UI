@@ -1,5 +1,9 @@
 <div class="Department-list-container">
  
+  <h3>Payslip Generated Employees:
+    <strong>{{totalCount}}</strong>
+    <!-- {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}} -->
+  </h3>
 
   <div class="cards-filter">
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
@@ -14,10 +18,6 @@
       Excel</button>
   </div>
 
-  <h3>Payslip Generated Employees:
-    <strong>{{totalCount}}</strong>
-    <!-- {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}} -->
-  </h3>
   <table id="vendorPaymentTable" class="table table-bordered">
     <thead>
       <tr>

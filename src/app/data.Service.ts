@@ -402,4 +402,12 @@ export class DataService {
     });
   }
   
+
+  unitName = '';
+  //get setter for unit Name
+  setUnitName(name: string) {
+    this.unitName = name;
+  }
+
+  
 }

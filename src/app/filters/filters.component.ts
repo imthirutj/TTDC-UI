@@ -48,7 +48,7 @@ export class FiltersComponent implements OnInit {
 
   //#region Constructor
   constructor(private masterDataService: MasterDataService,
-    private dataService: DataService,
+    public dataService: DataService,
     private router: Router
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
@@ -64,6 +64,7 @@ export class FiltersComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.dataService.setUnitName('');
     if (this.filters) {
       const filterDefaults = [
         { objName: 'display', key: 'display', label: 'display', defaultValue: '', show: false, includeInSearchParams: false },
@@ -446,6 +447,7 @@ export class FiltersComponent implements OnInit {
          else if (key === 'companyId') {  
           const companyObj = this.companies.find(c => c.companyId == filter.value);  
           displayValue = companyObj ? companyObj.companyFName : filter.value; 
+          this.dataService.setUnitName(companyObj.companyFName);
         }
 
 
@@ -461,10 +463,9 @@ export class FiltersComponent implements OnInit {
   }
 
   resetFilters() {
-    //reload the copmponent
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([this.router.url]);
+    //reload all compoent
+    window.location.reload();
+    
   }
 
 
