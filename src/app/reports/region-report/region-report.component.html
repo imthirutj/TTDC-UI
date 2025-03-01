@@ -1,5 +1,5 @@
 <div>
-    <h2>Unit Wise Report: {{this.ReportData.length}}</h2>
+    <h2>Region Wise Report: {{this.ReportData.length}}</h2>
     
 </div>
 <div class="cards-filter">
@@ -24,14 +24,14 @@
             <tr>
                 <td style="text-align: center;" colspan="9">
                     <strong>
-                        {{ datas.regionName }}
-                        : {{ datas.units.length }} Sections
+                        {{ datas.regionName ||  'NA'}}
+                        : {{ datas.units.length }} Unit
                     </strong>
                 </td>
             </tr>
             <tr *ngFor="let obj of datas.units; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ obj.unitName }}</td>
+                <td>{{ obj.unitName || 'NA' }}</td>
                 <td>{{ obj.employeeCount }}</td>
             </tr>
             <tr>
