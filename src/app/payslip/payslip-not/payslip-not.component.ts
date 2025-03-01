@@ -20,6 +20,7 @@ export class PayslipNotComponent {
   payslips: any[] = []
   employee: any;
 
+  totalCount: number = 0
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
@@ -156,6 +157,7 @@ export class PayslipNotComponent {
         if (response.success ) {
           this.Employees = response.data.pendingRecords;
           this.pageAttributes.totalPages = response.totalPages;
+          this.totalCount = response.totalCount;
         }
       }
     );

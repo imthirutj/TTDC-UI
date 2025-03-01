@@ -1,7 +1,5 @@
 <div class="Department-list-container">
-  <h3>Payslip Generated Employees:
-    {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
-  </h3>
+ 
 
   <div class="cards-filter">
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
@@ -11,18 +9,22 @@
     <button (click)="this.dataService.downloadPDF('vendorPaymentTable')" class="btn btn-primary">
       Download as PDF
     </button>
-    <button (click)="dataService.downloadExcelTable('vendorPaymentTable', 'paygenerated-report')" class="btn btn-success">Download as
+    <button (click)="dataService.downloadExcelTable('vendorPaymentTable', 'paygenerated-report')"
+      class="btn btn-success">Download as
       Excel</button>
   </div>
 
-
+  <h3>Payslip Generated Employees:
+    <strong>{{totalCount}}</strong>
+    <!-- {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}} -->
+  </h3>
   <table id="vendorPaymentTable" class="table table-bordered">
     <thead>
       <tr>
         <th [rowSpan]="2">#</th>
         <th [rowSpan]="2">Employee Name</th>
         <th [rowSpan]="2">Employee Code</th>
-        <th *ngIf="userAccessLevel != UserType.EMPLOYEE" [rowSpan]="2">Unit Name</th>
+        <!-- <th *ngIf="userAccessLevel != UserType.EMPLOYEE" [rowSpan]="2">Unit Name</th> -->
         <th [rowSpan]="2">Vendor Name</th>
         <th [rowSpan]="2">Designation Name</th>
 
@@ -41,7 +43,7 @@
 
         <th [rowSpan]="2">Other Deductions</th>
 
-        <th [rowSpan]="2">View Slips</th>       
+        <th [rowSpan]="2">View Slips</th>
       </tr>
       <tr>
         <th>Amount</th>
@@ -53,94 +55,99 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of EmpLists; let i = index">
-        <td>
-          {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
-        </td>
-        <!-- <td>{{ department.employeeId  }}</td> -->
-        <td>{{ d.employeeName }}</td>
-        <td>{{ d.employeeCode }}</td>
-        <td *ngIf="userAccessLevel != UserType.EMPLOYEE">{{ d.companyFName }}</td>
-        <td>{{d.vendorName}}</td>
-        <td>{{ d.designationName }}</td>
-        <td>{{ d.presentDays }}</td>
-        <td>{{ d.totalEmpCost | currency:'INR'}}</td>
+      <ng-container *ngFor="let obj of EmpLists; let i = index">
+        <!-- Unit Name Row -->
+        <tr>
+          <td style="text-align: center;" colspan="9"><strong>Unit Name: {{ obj.companyName }}</strong></td>
+        </tr>
+        <tr *ngFor="let d of obj.employees; let i = index">
+          <td>
+            {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
+          </td>
+          <!-- <td>{{ department.employeeId  }}</td> -->
+          <td>{{ d.employeeName }}</td>
+          <td>{{ d.employeeCode }}</td>
+          <!-- <td *ngIf="userAccessLevel != UserType.EMPLOYEE">{{ d.companyFName }}</td> -->
+          <td>{{d.vendorName}}</td>
+          <td>{{ d.designationName }}</td>
+          <td>{{ d.presentDays }}</td>
+          <td>{{ d.totalEmpCost | currency:'INR'}}</td>
 
-        <td>{{ d.grossSalary | currency:'INR' }}</td>
-        <td>{{ d.netSalary | currency:'INR' }}</td>
-        <td>
-          <button (click)="openPassbookModal(d)" class="btn btn-primary" type="button">
-            <span *ngIf="userAccessLevel== UserType.MANAGER ||
-                  userAccessLevel== UserType.VENDOR ||
-                   userAccessLevel== UserType.STATE_ADMIN ||
-                   userAccessLevel== UserType.CITY_ADMIN">
-              View Passbook</span>
-            <span *ngIf="userAccessLevel== UserType.EMPLOYEE"> View/Upload Passbook</span>
-          </button>
-        </td>
-       
+          <td>{{ d.grossSalary | currency:'INR' }}</td>
+          <td>{{ d.netSalary | currency:'INR' }}</td>
+          <td>
+            <button (click)="openPassbookModal(d)" class="btn btn-primary" type="button">
+              <span *ngIf="userAccessLevel== UserType.MANAGER ||
+                    userAccessLevel== UserType.VENDOR ||
+                     userAccessLevel== UserType.STATE_ADMIN ||
+                     userAccessLevel== UserType.CITY_ADMIN">
+                View Passbook</span>
+              <span *ngIf="userAccessLevel== UserType.EMPLOYEE"> View/Upload Passbook</span>
+            </button>
+          </td>
 
-        <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
-        <td>{{ d.epfEmployerContribution  | currency:'INR' }}</td>
-        <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
-        <td>{{ d.esiEmployerContribution | currency:'INR' }}</td>
-        <td>0</td>
 
-        <td>
-          <ng-container *ngIf="d.isEditing">
-            <input type="number" [(ngModel)]="d.otherDeductions" class="form-control" />
-            <button class="btn btn-success btn-sm" (click)="updateOtherDeductions(d)">
-              <i class="fas fa-save"></i> <!-- Save Icon -->
+          <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
+          <td>{{ d.epfEmployerContribution | currency:'INR' }}</td>
+          <td>{{ d.esiEmployeeContribution | currency:'INR' }}</td>
+          <td>{{ d.esiEmployerContribution | currency:'INR' }}</td>
+          <td>0</td>
+
+          <td>
+            <ng-container *ngIf="d.isEditing">
+              <input type="number" [(ngModel)]="d.otherDeductions" class="form-control" />
+              <button class="btn btn-success btn-sm" (click)="updateOtherDeductions(d)">
+                <i class="fas fa-save"></i> <!-- Save Icon -->
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="cancelOtherDeductionsEdit(d)">
+                <i class="fas fa-times"></i> <!-- Close Icon -->
+              </button>
+            </ng-container>
+            <ng-container *ngIf="!d.isEditing ">
+              {{ d.otherDeductions | currency: 'INR' }}
+              <button *ngIf="d.otherDeductions == 0 && 
+                            userAccessLevel== UserType.MANAGER &&
+                            d.invoiceGenerated ==0" class="btn btn-warning btn-sm" (click)="toggleOtherDeductions(d)">
+                <i class="fas fa-edit"></i> <!-- Edit Icon -->
+              </button>
+            </ng-container>
+          </td>
+          <td>
+            <button class="btn btn-primary" type="button" [routerLink]="['/payslip', d.payslipRecordId]"
+              [queryParams]="{ empId: d.employeeId }">
+              View Pay Slips
             </button>
-            <button class="btn btn-danger btn-sm" (click)="cancelOtherDeductionsEdit(d)">
-              <i class="fas fa-times"></i> <!-- Close Icon -->
-            </button>
-          </ng-container>
-          <ng-container *ngIf="!d.isEditing ">
-            {{ d.otherDeductions | currency: 'INR' }}
-            <button *ngIf="d.otherDeductions == 0 && 
-                          userAccessLevel== UserType.MANAGER &&
-                          d.invoiceGenerated ==0" 
-                          class="btn btn-warning btn-sm"
-              (click)="toggleOtherDeductions(d)">
-              <i class="fas fa-edit"></i> <!-- Edit Icon -->
-            </button>
-          </ng-container>
-        </td>
-        <td>
-          <button class="btn btn-primary" type="button" [routerLink]="['/payslip', d.payslipRecordId]"
-            [queryParams]="{ empId: d.employeeId }">
-            View Pay Slips
-          </button>
-        </td>
-       
-      </tr>
+          </td>
+
+
+        </tr>
+        <tr>
+          <td colspan="6" class="text-right"><strong>Total:</strong></td>
+          <td>{{ getTotal(obj, 'totalEmpCost') | currency:'INR' }}</td>
+          <td>{{ getTotal(obj, 'grossSalary') | currency:'INR' }}</td>
+          <td>{{ getTotal(obj, 'netSalary') | currency:'INR' }}</td>
+          <td></td>
+          <td>{{ getTotal(obj, 'epfEmployeeContribution') | currency:'INR' }}</td>
+          <td>{{ getTotal(obj, 'epfEmployerContribution') | currency:'INR' }}</td>
+          <td>{{ getTotal(obj, 'esiEmployeeContribution') | currency:'INR' }}</td>
+          <td>{{ getTotal(obj, 'esiEmployerContribution') | currency:'INR' }}</td>
+          <td></td>
+          <td>{{ getTotal(obj, 'otherDeductions') | currency:'INR' }}</td>
+          <td></td>
+        </tr>
+
+      </ng-container>
+
     </tbody>
     <tfoot *ngIf="EmpLists.length > 0">
-      <tr>
-        <td colspan="7" class="text-right"><strong>Total:</strong></td>
-        <td>{{ getTotal('totalEmpCost') | currency:'INR' }}</td>
 
-        <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
-        <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
-        <td></td>
-        
-        <td>{{ getTotal('epfEmployeeContribution') | currency:'INR' }}</td>
-        <td>{{ getTotal('epfEmployerContribution') | currency:'INR' }}</td>
-        <td>{{ getTotal('esiEmployeeContribution') | currency:'INR' }}</td>
-        <td>{{ getTotal('esiEmployerContribution') | currency:'INR' }}</td>
-        <td></td>
-        <td>{{ getTotal('otherDeductions') | currency:'INR' }}</td>
-               
-        <td></td>
-      </tr>
     </tfoot>
   </table>
-  
+
   <div>
     <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getEmployeeList()">
     </app-server-pagination>
-  
+
     <div class="d-flex justify-content-between">
       <!-- Page Size Dropdown -->
       <div class="d-flex align-items-center">

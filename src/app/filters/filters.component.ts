@@ -89,10 +89,10 @@ export class FiltersComponent implements OnInit {
         { objName: 'qualificationMismatched', key: 'qualificationMismatched', label: 'Qualification Mismatched', defaultValue: '0', show: false, includeInSearchParams: false },
         { objName: 'loggedInType', key: 'loggedInType', label: 'Logged In Type', defaultValue: '0', show: false, includeInSearchParams: false },
         { objName: 'attnNotFilled', key: 'attnNotFilled', label: 'Attendance Filter', defaultValue: '0', show: false, includeInSearchParams: false },
-        { objName: 'salaryRangeMin', key: 'salaryRangeMin', label: 'Salary Range :Min', defaultValue: '0', show: false, includeInSearchParams: false },
-        { objName: 'salaryRangeMax', key: 'salaryRangeMax', label: 'Salary Range :Max', defaultValue: '0', show: false, includeInSearchParams: false },
-        { objName: 'otherDeductionsMin', key: 'otherDeductionsMin', label: 'Other Deductions Range :Min', defaultValue: '0', show: false, includeInSearchParams: false },
-        { objName: 'otherDeductionsMax', key: 'otherDeductionsMax', label: 'Other Deductions Range :Max', defaultValue: '0', show: false, includeInSearchParams: false },
+        { objName: 'salaryRangeMin', key: 'salaryRangeMin', label: 'Salary Range(Min)', defaultValue: '0', show: false, includeInSearchParams: false },
+        { objName: 'salaryRangeMax', key: 'salaryRangeMax', label: 'Salary Range(Max)', defaultValue: '0', show: false, includeInSearchParams: false },
+        { objName: 'otherDeductionsMin', key: 'otherDeductionsMin', label: 'Other Deductions Range(Min)', defaultValue: '0', show: false, includeInSearchParams: false },
+        { objName: 'otherDeductionsMax', key: 'otherDeductionsMax', label: 'Other Deductions Range(Max)', defaultValue: '0', show: false, includeInSearchParams: false },
 
         { objName: 'filterRange', key: 'filterRange', label: 'Filter Range', defaultValue: '0', show: false, includeInSearchParams: true },
 

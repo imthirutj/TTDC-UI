@@ -39,6 +39,7 @@ export class PayslipRecordsComponent {
     totalPages: 1,
     pageSize:10
   }
+  totalCount: number = 0;
   filters: any = {
     selectedMonth: {
       value: Number(new Date().getMonth()) + 1, // Default to current month
@@ -175,7 +176,7 @@ export class PayslipRecordsComponent {
         if (response.success ) {
           this.EmpLists = response.data.paidRecords;
           this.pageAttributes.totalPages = response.totalPages;
-
+          this.totalCount = response.totalCount;
         } 
       }
     );
@@ -201,9 +202,10 @@ export class PayslipRecordsComponent {
   }
 
 
-  getTotal(field: string): number {
-    return this.EmpLists.reduce((sum, record) => sum + (record[field] || 0), 0);
+  getTotal(obj: any, key: string): number {
+    return obj.employees.reduce((sum:any, emp:any) => sum + (emp[key] || 0), 0);
   }
+  
 
   passbookImage(event: any): void {
     const file = event.target.files[0]; // Allow only one file

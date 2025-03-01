@@ -1,27 +1,29 @@
 <div class="Department-list-container">
-  <h3>Payslip Not Generated Employees:
-    {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
-  </h3>
 
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <button *ngIf="false" style="float:left" class="btn btn-primary" (click)="search()">Search</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <button style="float: left;" class="btn btn-success" (click)="submit_vendor_wise()">Generate Payslip
+          All</button>
+      </div>
+
+    </div>
+  </div>
   <div class="cards-filter">
     <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
       (triggerParentFunction)="getEmployeeList()">
     </app-filter>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="form-group">
-          <button *ngIf="false" style="float:left" class="btn btn-primary" (click)="search()">Search</button>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <button style="float: left;" class="btn btn-success" (click)="submit_vendor_wise()">Generate Payslip
-            All</button>
-        </div>
 
-      </div>
-    </div>
-
+    <h3>Payslip Not Generated Employees:
+      <strong>{{totalCount}}</strong>
+      <!-- {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}} -->
+    </h3>
 
     <table class="table table-bordered">
       <thead>
@@ -31,7 +33,7 @@
           <th>Employee Name</th>
           <th>Employee Code</th>
           <th>Designation Name</th>
-          <th>Unit Name</th>
+          <!-- <th>Unit Name</th> -->
           <th>Vendor Name</th>
           <th>Section Name</th>
           <!-- <th>Category Name</th>       -->
@@ -40,31 +42,39 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let obj of Employees; let i = index">
-          <td>
-            {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
-          </td>
-          <!-- <td>{{ department.employeeId  }}</td> -->
-          <td>{{ obj.employeeName }}</td>
-          <td>{{ obj.employeeCode }}</td>
-          <td>{{ obj.designationName }}</td>
-          <td>{{ obj.companyFName }}</td>
-          <td>{{ obj.vendorName }}</td>
-          <td>{{ obj.departmentFName }}</td>
-          <!-- <td>{{ obj.categoryFName }} </td> -->
+        <ng-container *ngFor="let employee of Employees">
 
-          <td>
-            <button class="btn btn-primary" type="button" (click)="generate_payslip(obj)">
-              Generate Slip
-            </button>
-          </td>
-        </tr>
+          <!-- Unit Name Row -->
+          <tr>
+            <td style="text-align: center;" colspan="9"><strong>Unit Name: {{ employee.companyName }}</strong></td>
+          </tr>
+          <tr *ngFor="let obj of employee.employees; let i = index">
+            <td>
+              {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
+            </td>
+            <!-- <td>{{ department.employeeId  }}</td> -->
+            <td>{{ obj.employeeName }}</td>
+            <td>{{ obj.employeeCode }}</td>
+            <td>{{ obj.designationName }}</td>
+            <!-- <td>{{ obj.companyFName }}</td> -->
+            <td>{{ obj.vendorName }}</td>
+            <td>{{ obj.departmentFName }}</td>
+            <!-- <td>{{ obj.categoryFName }} </td> -->
+
+            <td>
+              <button class="btn btn-primary" type="button" (click)="generate_payslip(obj)">
+                Generate Slip
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+
       </tbody>
     </table>
     <div>
       <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getEmployeeList()">
       </app-server-pagination>
-    
+
       <div class="d-flex justify-content-between">
         <!-- Page Size Dropdown -->
         <div class="d-flex align-items-center">

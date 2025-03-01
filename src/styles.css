@@ -1,7 +1,6 @@
 @import '~font-awesome/css/font-awesome.css';
-* {
-  font-size: 13px !important;
-}
+
+
 
 html,
 body {
@@ -95,10 +94,10 @@ body {
 }
 
 .my-body {
-  padding: 27px;
+  padding: 15px;
   position: relative;
   /* top: -10px; */
-  top: 60px;
+  top: 30px;
 }
 
 .btn-primary {
