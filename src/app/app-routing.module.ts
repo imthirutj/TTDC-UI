@@ -46,6 +46,8 @@ import { LeaveAndOdAnalysisComponent } from './leave-and-od-analysis/leave-and-o
 import { EmployeeBasedReportsComponent } from './employee-based-reports/employee-based-reports.component';
 import { DashboardEmployeeReportComponent } from './dashboard-employee-report/dashboard-employee-report.component';
 import { DashboardEmployeeLineListComponent } from './dashboard-employee-line-list/dashboard-employee-line-list.component';
+import { sample } from 'rxjs';
+import { SampePageComponent } from './sampe-page/sampe-page.component';
 
 const routes: Routes = [
 
@@ -288,11 +290,19 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
+  {
+    path:'sample',
+    component:SampePageComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
   {path:'error', component:ErrorComponent},
   
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
   { path: '**', redirectTo: '/login' },
+
+  
   // Add more routes here
 ];
 

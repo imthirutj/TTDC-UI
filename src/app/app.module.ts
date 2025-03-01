@@ -87,6 +87,7 @@ import { LeaveAndOdAnalysisComponent } from './leave-and-od-analysis/leave-and-o
 import { EmployeeBasedReportsComponent } from './employee-based-reports/employee-based-reports.component';
 import { DashboardEmployeeReportComponent } from './dashboard-employee-report/dashboard-employee-report.component';
 import { DashboardEmployeeLineListComponent } from './dashboard-employee-line-list/dashboard-employee-line-list.component';
+import { SampePageComponent } from './sampe-page/sampe-page.component';
 
 @NgModule({
   declarations: [
@@ -144,7 +145,8 @@ import { DashboardEmployeeLineListComponent } from './dashboard-employee-line-li
     LeaveAndOdAnalysisComponent,
     EmployeeBasedReportsComponent,
     DashboardEmployeeReportComponent,
-    DashboardEmployeeLineListComponent
+    DashboardEmployeeLineListComponent,
+    SampePageComponent
 
   ],
   imports: [

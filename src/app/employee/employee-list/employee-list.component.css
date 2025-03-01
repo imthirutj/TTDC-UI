@@ -47,7 +47,7 @@
   input:checked + .slider:before {
     transform: translateX(26px);
   }
-  
-  .emp-table{
+/*   
+  #emp-table{
     white-space: break-spaces !important;
-  }
+  } */

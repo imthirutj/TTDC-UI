@@ -431,7 +431,7 @@
 </div>
 
 
-<div class="container mt-4">
+<div *ngIf="false" class="container mt-4">
   <div class="row">
     <div *ngIf="userAccessLevel!= UserType.EMPLOYEE" class="col-md-6">
       <div *ngIf="paymentGeneratedList.length > 0; else noData">
@@ -497,51 +497,53 @@ userAccessLevel== UserType.CITY_ADMIN" class="container mt-4">
 
 
 
-<button class="btn btn-primary mt-2" (click)="toggleTable()">
-  {{ showFullTable ? 'Show Less' : 'View More Details' }}
-</button>
-<div *ngIf="userAccessLevel!= UserType.EMPLOYEE && showFullTable" class="container mt-4">
-  <div class="row">
-    <div class="col-md-6" *ngFor="let column of columnNames">
-      <h3>{{ column.label }}</h3>
-
-      <table *ngIf="column.data?.length; else loading">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>{{ column.label }}</th>
-            <th>Unit</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of column.data; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>
-
-              {{ row[column.output] || 'N/A' }}
-              <span *ngIf="column.key=='experience' && row[column.output]!=0">Year(s)</span>
-            </td>
-            <td>{{ row['CompanyFName'] || 'N/A' }}</td>
-            <td>
-              <b>{{ row?.Total }}</b>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td [attr.colspan]="2"><strong>Total:</strong></td>
-            <td>{{ getRepTotal(column.data) }}</td>
-          </tr>
-        </tfoot>
-      </table>
-
-
-      <!-- Loading message -->
-      <ng-template #loading>
-        <p>Loading...</p>
-      </ng-template>
+<div *ngIf="false">
+  <button class="btn btn-primary mt-2" (click)="toggleTable()">
+    {{ showFullTable ? 'Show Less' : 'View More Details' }}
+  </button>
+  <div *ngIf="userAccessLevel!= UserType.EMPLOYEE && showFullTable" class="container mt-4">
+    <div class="row">
+      <div class="col-md-6" *ngFor="let column of columnNames">
+        <h3>{{ column.label }}</h3>
+  
+        <table *ngIf="column.data?.length; else loading">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>{{ column.label }}</th>
+              <th>Unit</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of column.data; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+  
+                {{ row[column.output] || 'N/A' }}
+                <span *ngIf="column.key=='experience' && row[column.output]!=0">Year(s)</span>
+              </td>
+              <td>{{ row['CompanyFName'] || 'N/A' }}</td>
+              <td>
+                <b>{{ row?.Total }}</b>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td [attr.colspan]="2"><strong>Total:</strong></td>
+              <td>{{ getRepTotal(column.data) }}</td>
+            </tr>
+          </tfoot>
+        </table>
+  
+  
+        <!-- Loading message -->
+        <ng-template #loading>
+          <p>Loading...</p>
+        </ng-template>
+      </div>
     </div>
+  
   </div>
-
 </div>

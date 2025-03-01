@@ -1,21 +1,21 @@
 <!-- Filter Button -->
-<!-- <button type="button" class="btn btn-primary" (click)="openFilterModal()">
+<button type="button" class="btn btn-primary" (click)="openFilterModal()">
   <i class="fas fa-filter"></i> Filter
-</button> -->
+</button>
 <button style="background-color: cadetblue;" type="button" class="btn btn-primary" (click)="onFilterChange()">
   Refresh
 </button>
-<!-- <button type="button" class="btn btn-primary" (click)="resetFilters()">
+<button type="button" class="btn btn-primary" (click)="resetFilters()">
   <i class="fas fa-reset"></i> Reset
-</button> -->
+</button>
 
-<!-- <div class="card">
+<div style="background: antiquewhite;" class="card">
   <div *ngIf="getFilteredFields().length > 0" class="mt-3">
-    <div *ngFor="let field of getFilteredFields()">
-      <p><strong>{{ field.label }}:</strong> {{ field.value }}</p>
-    </div>
+    <span *ngFor="let field of getFilteredFields()">
+      <span><strong>{{ field.label }}:</strong> {{ field.value }}</span>,
+    </span>
   </div>
-</div> -->
+</div>
 
 
 
@@ -362,12 +362,7 @@
     </div>
   </div>
 
-
-  <div *ngIf="this.filters.display.value != 'NONE'" class="d-flex justify-content-end">
-    <button type="button" class="btn btn-primary" (click)="search()">
-      <i class="fas fa-reset"></i> Submit
-    </button>
-  </div>
+  
   
 
 <br>

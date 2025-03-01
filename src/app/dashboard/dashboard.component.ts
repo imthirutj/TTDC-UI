@@ -63,7 +63,7 @@ export class DashboardComponent {
   paymentGeneratedList: any[] = [];
 
   filters: any = {
-    role: { value: '', show: true, key: 'role', includeInSearchParams: true },
+    role: { value: '', show: false, key: 'role', includeInSearchParams: true },
     filterRange: {
       value: 1,
       show: false,
@@ -205,8 +205,8 @@ export class DashboardComponent {
   search() {
     this.getDashboardCount();
     this.getPaymentGeneratedList();
-    this.getAllReports();
-    this.getExpQualMismatchCount();
+  //  this.getAllReports();
+   // this.getExpQualMismatchCount();
     this.getLoggedInCounts();
     this.getMonthlyPresentAbsentCount();
     this.getUnitWiseReport();
@@ -261,7 +261,7 @@ export class DashboardComponent {
     this.dashboardService.getPaymentGeneratedList(payload).subscribe((response: any) => {
       if (response.success) {
         this.paymentGeneratedList = response.data;
-        this.prepareChartData();
+        //this.prepareChartData();
       }
     })
   }

@@ -1,32 +1,36 @@
-<div class="cards-filter">
-  <app-filter [filters]="filters" (filterChanged)="search()" 
-  (triggerParentFunction)="onFilterChanged($event)">
+<div class="cards-filter ">
+  <app-filter [filters]="filters" (filterChanged)="search()" (triggerParentFunction)="onFilterChanged($event)">
   </app-filter>
   <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 
-  <button (click)="dataService.downloadExcelTable('emp-table', 'Employees')" class="btn btn-success">Download as
-    Excel</button>
-
 </div>
 
-<button *ngIf="userAccessLevel == UserType.STATE_ADMIN ||
+<div class="d-flex gap-2">
+  <button *ngIf="userAccessLevel == UserType.STATE_ADMIN ||
                 userAccessLevel == UserType.CITY_ADMIN ||
-                userAccessLevel == UserType.MANAGER" 
-                class="btn btn-success mb-3" type="button" (click)="openModal(Action.CREATE)">
-  Add Employee
-</button>
+                userAccessLevel == UserType.MANAGER" class="btn btn-success mb-3" type="button"
+    (click)="openModal(Action.CREATE)">
+    <i class="fas fa-user-plus"></i> Add Employee
+  </button>
+  <button (click)="dataService.downloadExcelTable('emp-table', 'Employees')" class="btn btn-success mb-3">Download as
+    Excel</button>
+</div>
 
-<h3>Employee List</h3>
+
+<div class="d-flex gap-2">
+  <h3>Employee List:</h3>
+  <h2> <b>{{totalCount}}</b></h2>
+</div>
 <div style="overflow-y: auto; max-height: 700px;" class="Employee-list-container">
 
-  <table style="white-space: break-spaces !important;" id="emp-table" class="table table-bordered">
+  <table id="emp-table" class="table table-bordered">
     <thead>
       <tr>
         <th [rowSpan]="2">#</th>
         <th [colSpan]="9" style="text-align: center;">Personal Info</th>
         <th [colSpan]="3" style="text-align: center;">Qualification</th>
         <th [colSpan]="3" style="text-align: center;">Experience</th>
-   
+
         <th [rowSpan]="2">Bank Details</th>
         <th [rowSpan]="2">Total Wages</th>
         <th [rowSpan]="2">Last Logged In</th>
@@ -49,134 +53,144 @@
         <th>Designation Name</th>
 
         <th>Employment Type</th>
-        <th >Aadhaar</th>
+        <th>Aadhaar</th>
         <th>Required</th>
         <th>Actual</th>
         <th>Upload</th>
         <th>Required</th>
         <th>Actual</th>
         <th>Upload</th>
-       
+
 
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let employee of Employees; let i = index">
-        <td>
-          {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
-          <button class="btn btn-primary" type="button" (click)="openModal(Action.UPDATE, employee)">
-            Edit
-          </button>
-          <button class="btn btn-danger" type="button" (click)="openModal(Action.VIEW, employee)">
-            View
-          </button>
-        </td>
-        <td>{{ employee.employeeName }}</td>
-        <td>{{ employee.employeeCode }}</td>
+      <ng-container *ngFor="let company of Employees">
+        <!-- Unit Name Row -->
+        <tr>
+          <td style="text-align: center;" colspan="9"><strong>Unit Name: {{ company.companyName }}</strong></td>
+        </tr>
+        <tr *ngFor="let employee of company.employees; let i = index">
+          <td>
+
+            <div class="d-flex gap-2">
+              {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
+              <button class="btn btn-primary btn-sm" type="button" (click)="openModal(Action.UPDATE, employee)">
+                Edit
+              </button>
+              <button class="btn btn-primary btn-sm" type="button" (click)="openModal(Action.VIEW, employee)">
+                View
+              </button>
+            </div>
+          </td>
+
+          <td>{{ employee.employeeName }}</td>
+          <td>{{ employee.employeeCode }}</td>
 
 
-        <td>{{ employee.contactNo }}</td>
+          <td>{{ employee.contactNo }}</td>
 
-        <td>
-          {{ employee.companyFName }}
-        </td>
-        <td>
-          {{ employee.vendorName }}
-        </td>
+          <td>
+            {{ employee.companyFName }}
+          </td>
+          <td>
+            {{ employee.vendorName }}
+          </td>
 
-        <td>{{ employee.departmentFName }}</td>
-        <td>{{ employee.designationName }}</td>
-
-
-        <td>{{ employee.employementType }}</td>
-        <td>{{ employee.aadhaarNumber }}
-          <button type="button" class="btn btn-primary" (click)="show_Certificate(employee, ModuleType.ADHAR)">
-            <i class="fas fa-eye"></i>
-          </button>
-        </td>
-        <td>
-          {{ getDegreeNames(employee) }}
-
-        </td>
-        <!-- <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : ''}">
-          <span>
-            {{ employee.degreeName != '' ? employee.degreeName : 'NA' }} 
-          </span>                   
-        </td> -->
-        <td>
-          <span>
-            {{ employee.degreeName != '' ? employee.degreeName : 'NA' }}
-          </span>
-        </td>
-        <td>
-          <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            (click)="show_Certificate(employee, ModuleType.EDUCATION_CERT)">
-            <i class="fas fa-file-alt"></i>
-          </button>
-        </td>
-        <td>
-          <span *ngIf="employee.minimumExpYears">
-            {{employee.minimumExpYears }} Years
-          </span>
-
-          <span *ngIf="!employee.minimumExpYears">
-            NA
-          </span>
-        </td>
-        <td>
-          <span>
-            {{ employee.experience }} Years
-          </span>
-        </td>
-        <!--Experience Certificate-->
-        <td>
-          <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            (click)="show_Certificate(employee, ModuleType.EXPERIENCE_CERT)">
-            <i class="fas fa-file-alt"></i>
-          </button>
-        </td>
+          <td>{{ employee.departmentFName }}</td>
+          <td>{{ employee.designationName }}</td>
 
 
-       
-
-
-        <!--Update Bank Details Action-->
-        <td>
-          <button class="btn btn-primary" type="button" (click)="openBankModal(employee.employeeId)">
-            <i class="fas fa-university"></i>
-          </button>
-        </td>
-
-        <!-- Total Wages Column (Editable) -->
-        <td>
-          <ng-container *ngIf="employee.isEditing">
-            <input style="width:100px" type="number" [(ngModel)]="employee.totalWages" class="form-control" />
-            <button class="btn btn-success btn-sm" (click)="updateTotalWages(employee)">
-              <i class="fas fa-save"></i> <!-- Save Icon -->
+          <td>{{ employee.employementType }}</td>
+          <td>{{ employee.aadhaarNumber }}
+            <button type="button" class="btn btn-primary" (click)="show_Certificate(employee, ModuleType.ADHAR)">
+              <i class="fas fa-eye"></i>
             </button>
-            <button class="btn btn-danger btn-sm" (click)="cancelEdit(employee)">
-              <i class="fas fa-times"></i> <!-- Close Icon -->
+          </td>
+          <td>
+            {{ getDegreeNames(employee) }}
+
+          </td>
+          <!-- <td [style]="{ backgroundColor: employee.notMatchedQualification ? '#ffa19c' : ''}">
+            <span>
+              {{ employee.degreeName != '' ? employee.degreeName : 'NA' }} 
+            </span>                   
+          </td> -->
+          <td>
+            <span>
+              {{ employee.degreeName != '' ? employee.degreeName : 'NA' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              (click)="show_Certificate(employee, ModuleType.EDUCATION_CERT)">
+              <i class="fas fa-file-alt"></i>
             </button>
-          </ng-container>
-          <ng-container *ngIf="!employee.isEditing">
-            {{ employee.totalWages | currency: 'INR' }}
-            <!-- i Icon-->
-            <i (click)="openSalStructModal(employee.employeeId)" class="fas fa-info-circle"></i>
-            <button class="btn btn-warning btn-sm" (click)="toggleEditWages(employee)">
-              <i class="fas fa-edit"></i> <!-- Edit Icon -->
+          </td>
+          <td>
+            <span *ngIf="employee.minimumExpYears">
+              {{employee.minimumExpYears }} Years
+            </span>
+
+            <span *ngIf="!employee.minimumExpYears">
+              NA
+            </span>
+          </td>
+          <td>
+            <span>
+              {{ employee.experience }} Years
+            </span>
+          </td>
+          <!--Experience Certificate-->
+          <td>
+            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              (click)="show_Certificate(employee, ModuleType.EXPERIENCE_CERT)">
+              <i class="fas fa-file-alt"></i>
             </button>
-          </ng-container>
-        </td>
-        <td>
-          <a *ngIf="employee.locationCoordinates"
-            [href]="'https://www.google.com/maps?q=' + employee.locationCoordinates?.latitude + ',' + employee.locationCoordinates?.longitude" 
-            target="_blank"
-            class="btn btn-success">
-            View
-          </a>
-        </td>
-        
-      </tr>
+          </td>
+
+
+
+
+
+          <!--Update Bank Details Action-->
+          <td>
+            <button class="btn btn-primary" type="button" (click)="openBankModal(employee.employeeId)">
+              <i class="fas fa-university"></i>
+            </button>
+          </td>
+
+          <!-- Total Wages Column (Editable) -->
+          <td>
+            <ng-container *ngIf="employee.isEditing">
+              <input style="width:100px" type="number" [(ngModel)]="employee.totalWages" class="form-control" />
+              <button class="btn btn-success btn-sm" (click)="updateTotalWages(employee)">
+                <i class="fas fa-save"></i> <!-- Save Icon -->
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="cancelEdit(employee)">
+                <i class="fas fa-times"></i> <!-- Close Icon -->
+              </button>
+            </ng-container>
+            <ng-container *ngIf="!employee.isEditing">
+              {{ employee.totalWages | currency: 'INR' }}
+              <!-- i Icon-->
+              <i (click)="openSalStructModal(employee.employeeId)" class="fas fa-info-circle"></i>
+              <button class="btn btn-warning btn-sm" (click)="toggleEditWages(employee)">
+                <i class="fas fa-edit"></i> <!-- Edit Icon -->
+              </button>
+            </ng-container>
+          </td>
+          <td>
+            <a *ngIf="employee.locationCoordinates"
+              [href]="'https://www.google.com/maps?q=' + employee.locationCoordinates?.latitude + ',' + employee.locationCoordinates?.longitude"
+              target="_blank" class="btn btn-success">
+              View
+            </a>
+          </td>
+
+        </tr>
+      </ng-container>
+
     </tbody>
   </table>
 </div>
@@ -184,7 +198,7 @@
 <div>
   <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getEmployeeList()">
   </app-server-pagination>
-  
+
   <div class="d-flex justify-content-between">
     <!-- Page Size Dropdown -->
     <div class="d-flex align-items-center">
@@ -205,9 +219,8 @@
 
 
 <!--Salary Structure Modal-->
-<app-common-dialog [showDialog]="modalSalStruct.show" [dialogTitle]="modalSalStruct.title" 
-[showCloseIcon]="true" (closeDialog)="closeSalStructModal()"
-  [showSubmitButton]="false">
+<app-common-dialog [showDialog]="modalSalStruct.show" [dialogTitle]="modalSalStruct.title" [showCloseIcon]="true"
+  (closeDialog)="closeSalStructModal()" [showSubmitButton]="false">
 
   <div class="container">
     <div class="row">
@@ -241,12 +254,9 @@
   </div>
 </app-common-dialog>
 
-<app-common-dialog 
-[showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" 
-[dialogTitle]="modal.title"
+<app-common-dialog [showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" [dialogTitle]="modal.title"
   [showCloseIcon]="true" [showSubmitButton]="modal.action==Action.UPDATE || modal.action==Action.CREATE"
-   (submitDialog)="saveEmployee()"
-  (closeDialog)="closeModal()">
+  (submitDialog)="saveEmployee()" (closeDialog)="closeModal()">
 
   <div class="container mt-4">
     <!-- Card 1: Personal Details -->
@@ -277,10 +287,8 @@
         </div>
         <div class="mb-3">
           <label for="EmployeeCode" class="form-label">Employee Code</label>
-          <input type="text" class="form-control" id="EmployeeCode" 
-            [(ngModel)]="modal.employee.employeeCode"
-            name="EmployeeCode" placeholder="Enter Employee Code" required
-             [disabled]="modal.action === 'VIEW'">
+          <input type="text" class="form-control" id="EmployeeCode" [(ngModel)]="modal.employee.employeeCode"
+            name="EmployeeCode" placeholder="Enter Employee Code" required [disabled]="modal.action === 'VIEW'">
         </div>
 
 
@@ -358,8 +366,7 @@
             <input [disabled]="true" *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg"
               id="City" [(ngModel)]="modal.employee.companyFName" />
             <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE"
-              (change)="onCompanyChange()" class="form-select" id="CompanyId" 
-              [(ngModel)]="modal.employee.companyId"
+              (change)="onCompanyChange()" class="form-select" id="CompanyId" [(ngModel)]="modal.employee.companyId"
               name="companyId">
               <option value="">Select Unit</option>
               <option *ngFor="let company of dropdowns.companies" [value]="company.companyId">{{ company.companyFName }}
@@ -390,8 +397,7 @@
               (change)="onDepartmentChange()" class="form-select" id="DesignationId"
               [(ngModel)]="modal.employee.departmentId" name="departmentId">
               <option value="">Select Section</option>
-              <option *ngFor="let department of dropdowns.departments" 
-                  [value]="department.departmentId">{{
+              <option *ngFor="let department of dropdowns.departments" [value]="department.departmentId">{{
                 department.departmentFName }}</option>
             </select>
           </div>

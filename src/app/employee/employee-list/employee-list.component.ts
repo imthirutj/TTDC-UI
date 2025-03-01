@@ -32,9 +32,9 @@ export class EmployeeListComponent {
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    pageSize: 10
+    pageSize: 100
   }
-
+  totalCount: number = 0;
   dropdowns = {
     cities: [] as City[],
     companies: [] as Company[],
@@ -315,6 +315,7 @@ export class EmployeeListComponent {
         if (response.success) {
           this.Employees = response.data;
           this.pageAttributes.totalPages = response.totalPages;
+          this.totalCount = response.totalCount;
           // Loop through each employee and process their qualifications
           this.Employees.forEach((employee: any) => {
             // Format qualifications if requiredQualifications exist

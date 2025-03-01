@@ -4,6 +4,7 @@ import { MasterDataService } from '../services/master-data.service'; // Make sur
 import { DataService } from '../data.Service';
 import { UserType } from '../common/user-type.enum';
 import { el } from '@fullcalendar/core/internal-common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-filter',
@@ -47,7 +48,8 @@ export class FiltersComponent implements OnInit {
 
   //#region Constructor
   constructor(private masterDataService: MasterDataService,
-    private dataService: DataService
+    private dataService: DataService,
+    private router: Router
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
@@ -72,17 +74,17 @@ export class FiltersComponent implements OnInit {
         { objName: 'role', key: 'role', label: 'Role', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'selectedMonth', key: 'month', label: 'Month', defaultValue: new Date().getMonth() + 1, show: false, includeInSearchParams: true },
         { objName: 'selectedYear', key: 'year', label: 'Year', defaultValue: new Date().getFullYear(), show: false, includeInSearchParams: true },
-        { objName: 'cityId', key: 'cityId', label: 'City', defaultValue: '', show: false, includeInSearchParams: false },
-        { objName: 'companyId', key: 'companyId', label: 'Company', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'cityId', key: 'cityId', label: 'Region', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'companyId', key: 'companyId', label: 'Unit', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'designationId', key: 'designationId', label: 'Designation', defaultValue: '', show: false, includeInSearchParams: false },
-        { objName: 'deptId', key: 'deptId', label: 'Department', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'deptId', key: 'deptId', label: 'Section', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'catId', key: 'catId', label: 'Category', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'employeeId', key: 'employeeId', label: 'Employee ID', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'employeeName', key: 'employeeName', label: 'Employee Name', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'employeeCode', key: 'employeeCode', label: 'Employee Code', defaultValue: '', show: false, includeInSearchParams: false },
-        { objName: 'vendorId', key: 'vendorId', label: 'Vendor ID', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'vendorId', key: 'vendorId', label: 'Vendor', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'vendorName', key: 'vendorName', label: 'Vendor Name', defaultValue: '', show: false, includeInSearchParams: false },
-        { objName: 'managerId', key: 'managerId', label: 'Manager ID', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'managerId', key: 'managerId', label: 'Manager', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'managerName', key: 'managerName', label: 'Manager Name', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'qualificationMismatched', key: 'qualificationMismatched', label: 'Qualification Mismatched', defaultValue: '0', show: false, includeInSearchParams: false },
         { objName: 'loggedInType', key: 'loggedInType', label: 'Logged In Type', defaultValue: '0', show: false, includeInSearchParams: false },
@@ -93,9 +95,9 @@ export class FiltersComponent implements OnInit {
         { objName: 'otherDeductionsMax', key: 'otherDeductionsMax', label: 'Other Deductions Range :Max', defaultValue: '0', show: false, includeInSearchParams: false },
 
         { objName: 'filterRange', key: 'filterRange', label: 'Filter Range', defaultValue: '0', show: false, includeInSearchParams: true },
-       
-        { objName: 'fromMonth', key: 'fromMonth', label: 'To Month', defaultValue: new Date().getMonth() + 1, show: false, includeInSearchParams: true },
-        { objName: 'fromYear', key: 'fromYear', label: 'To Year', defaultValue: new Date().getFullYear(), show: false, includeInSearchParams: true },
+
+        { objName: 'fromMonth', key: 'fromMonth', label: 'From Month', defaultValue: new Date().getMonth() + 1, show: false, includeInSearchParams: true },
+        { objName: 'fromYear', key: 'fromYear', label: 'From Year', defaultValue: new Date().getFullYear(), show: false, includeInSearchParams: true },
         { objName: 'toMonth', key: 'toMonth', label: 'To Month', defaultValue: new Date().getMonth() + 1, show: false, includeInSearchParams: true },
         { objName: 'toYear', key: 'toYear', label: 'To Year', defaultValue: new Date().getFullYear(), show: false, includeInSearchParams: true },
 
@@ -128,13 +130,13 @@ export class FiltersComponent implements OnInit {
         }
       });
 
-      if(this.filters.filterRange.value == 0){
+      if (this.filters.filterRange.value == 0) {
         this.filters.fromMonth.value = 0;
-        this.filters.fromYear.value =0;
+        this.filters.fromYear.value = 0;
         this.filters.toMonth.value = 0;
         this.filters.toYear.value = 0
       }
-      else{
+      else {
         this.filters.selectedMonth.value = 0;
         this.filters.selectedYear.value = 0;
       }
@@ -232,7 +234,7 @@ export class FiltersComponent implements OnInit {
 
       this.filters.shiftStatus.show = false;
       this.filters.shiftStatus.includeInSearchParams = false;
-      this.filters.shiftStatus.value ='';
+      this.filters.shiftStatus.value = '';
     }
 
     //Set Def VAlue for all
@@ -240,7 +242,7 @@ export class FiltersComponent implements OnInit {
     this.filters.catId.includeInSearchParams = false;
     this.filters.catId.value = 0;
 
-    
+
 
 
   }
@@ -303,26 +305,26 @@ export class FiltersComponent implements OnInit {
   onActiveStatusChange() {
     this.onFilterChange();
   }
-  onShiftStatuschange(){
-    this.onFilterChange(); 
+  onShiftStatuschange() {
+    this.onFilterChange();
   }
 
-  onFromDateChange(){
-    this.onFilterChange(); 
+  onFromDateChange() {
+    this.onFilterChange();
   }
-  onToDateChange(){
-    this.onFilterChange(); 
+  onToDateChange() {
+    this.onFilterChange();
   }
-  onLeaveRequestStatusChange(){
-    this.onFilterChange(); 
-  }
-
-  onOdRequestStatusChange(){
-    this.onFilterChange(); 
+  onLeaveRequestStatusChange() {
+    this.onFilterChange();
   }
 
-  onLogTypeChange(){
-    this.onFilterChange(); 
+  onOdRequestStatusChange() {
+    this.onFilterChange();
+  }
+
+  onLogTypeChange() {
+    this.onFilterChange();
   }
   //#endregion
 
@@ -421,8 +423,8 @@ export class FiltersComponent implements OnInit {
         let displayValue = filter.value; // Default to the stored value
 
         // Map numerical values to their corresponding names
-        if (key === 'selectedMonth') {
-          displayValue = this.dataService.monthNames[filter.value - 1];
+        if (key === 'selectedMonth' || key === 'fromMonth' || key === 'toMonth') {
+          displayValue = this.dataService.monthNames[filter.value - 1]; // Convert 1-12 to JAN-DEC
         } else if (key === 'selectedYear') {
           displayValue = filter.value; // Year can be displayed as is
         } else if (key === 'designationId') {
@@ -430,13 +432,22 @@ export class FiltersComponent implements OnInit {
           displayValue = designationObj ? designationObj.designationName : filter.value; // Use .name
         } else if (key === 'deptId') {
           const deptObj = this.departments.find(d => d.departmentId == filter.value);
-          displayValue = deptObj ? deptObj.name : filter.value; // Use .name
+          displayValue = deptObj ? deptObj.departmentFName  : filter.value; // Use .name
         } else if (key === 'vendorId') {
-          const vendorObj = this.vendors.find(v => v.value == filter.value);
-          displayValue = vendorObj ? vendorObj.name : filter.value; // Use .name
+          const vendorObj = this.vendors.find(v => v.vendorId == filter.value);
+          displayValue = vendorObj ? vendorObj.vendorName  : filter.value; // Use .name
         } else if (key === 'loggedInType') {
           displayValue = filter.value === '0' ? 'Guest' : 'Logged In';  // Example mapping
         }
+        else if (key === 'cityId') {
+          const cityObj = this.cities.find(c => c.cityId == filter.value);
+          displayValue = cityObj ? cityObj.cityName : filter.value; // Map cityId to cityName
+        }
+         else if (key === 'companyId') {  
+          const companyObj = this.companies.find(c => c.companyId == filter.value);  
+          displayValue = companyObj ? companyObj.companyFName : filter.value; 
+        }
+
 
         filteredFields.push({
           name: key,
@@ -450,9 +461,10 @@ export class FiltersComponent implements OnInit {
   }
 
   resetFilters() {
-    this.filters = JSON.parse(JSON.stringify(this.originalFilters)); // Restore original filters
-
-    this.onFilterChange();
+    //reload the copmponent
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([this.router.url]);
   }
 
 
