@@ -27,7 +27,7 @@
     <thead>
       <tr>
         <th [rowSpan]="2">#</th>
-        <th [colSpan]="9" style="text-align: center;">Personal Info</th>
+        <th [colSpan]="8" style="text-align: center;">Personal Info</th>
         <th [colSpan]="3" style="text-align: center;">Qualification</th>
         <th [colSpan]="3" style="text-align: center;">Experience</th>
 
@@ -42,9 +42,9 @@
 
         <th>Contact Number</th>
 
-        <th>
+        <!-- <th>
           Unit Name
-        </th>
+        </th> -->
         <th>
           Vendor
         </th>
@@ -90,9 +90,9 @@
 
           <td>{{ employee.contactNo }}</td>
 
-          <td>
+          <!-- <td>
             {{ employee.companyFName }}
-          </td>
+          </td> -->
           <td>
             {{ employee.vendorName }}
           </td>
@@ -107,7 +107,7 @@
               <i class="fas fa-eye"></i>
             </button>
           </td>
-          <td>
+          <td style="width:100px">
             {{ getDegreeNames(employee) }}
 
           </td>
