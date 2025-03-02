@@ -58,7 +58,24 @@ export class SidebarComponent {
         route: '/dashboard-employee-report',
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER, UserType.EMPLOYEE]
       },
-
+      {
+        label: 'Logged In & Not Logged In',
+        icon: 'fa-solid fa-user-tie',
+        route: '/loggedin-notloggedin-report',
+        allowedUserTypes: [UserType.STATE_ADMIN]
+      },
+      {
+        label: 'Leave Report',
+        icon: 'fa-solid fa-user-tie',
+        route: '/leave-report',
+        allowedUserTypes: [UserType.STATE_ADMIN]
+      },
+      {
+        label: 'OD Report',
+        icon: 'fa-solid fa-user-tie',
+        route: '/od-report',
+        allowedUserTypes: [UserType.STATE_ADMIN]
+      },
       {
         label: 'Designation Wise Report',
         icon: 'fa-solid fa-user-tie', // Represents job roles or designations
@@ -260,7 +277,7 @@ export class SidebarComponent {
         label: 'Leave And OD Analysis',
         icon: 'fa-solid fa-line-chart',
         route: '/leave-and-od-analysis',
-        allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN]
+        allowedUserTypes: [UserType.MANAGER, UserType.CITY_ADMIN]
       },
       {
         label: 'Employee Based Reports',

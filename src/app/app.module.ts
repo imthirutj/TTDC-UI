@@ -93,6 +93,9 @@ import { DepartmentReportComponent } from './reports/department-report/departmen
 import { UnitReportComponent } from './reports/unit-report/unit-report.component';
 import { VendorReportComponent } from './reports/vendor-report/vendor-report.component';
 import { RegionReportComponent } from './reports/region-report/region-report.component';
+import { LogNotLogReportComponent } from './reports/log-not-log-report/log-not-log-report.component';
+import { LeaveReportComponent } from './reports/leave-report/leave-report.component';
+import { OdReportComponent } from './reports/od-report/od-report.component';
 
 @NgModule({
   declarations: [
@@ -156,7 +159,10 @@ import { RegionReportComponent } from './reports/region-report/region-report.com
     DepartmentReportComponent,
     UnitReportComponent,
     VendorReportComponent,
-    RegionReportComponent
+    RegionReportComponent,
+    LogNotLogReportComponent,
+    LeaveReportComponent,
+    OdReportComponent
 
   ],
   imports: [

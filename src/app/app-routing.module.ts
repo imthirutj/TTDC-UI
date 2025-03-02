@@ -54,6 +54,9 @@ import { UnitReportComponent } from './reports/unit-report/unit-report.component
 import { Vendor } from './utils/interface/vendor';
 import { VendorReportComponent } from './reports/vendor-report/vendor-report.component';
 import { RegionReportComponent } from './reports/region-report/region-report.component';
+import { LogNotLogReportComponent } from './reports/log-not-log-report/log-not-log-report.component';
+import { LeaveReportComponent } from './reports/leave-report/leave-report.component';
+import { OdReportComponent } from './reports/od-report/od-report.component';
 
 const routes: Routes = [
 
@@ -323,6 +326,25 @@ const routes: Routes = [
   {
     path:'region-wise-report',
     component:RegionReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+
+  {
+    path:'loggedin-notloggedin-report',
+    component:LogNotLogReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'leave-report',
+    component:LeaveReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'od-report',
+    component:OdReportComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
