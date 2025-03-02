@@ -413,54 +413,88 @@ export class FiltersComponent implements OnInit {
   }
 
   //#endregion
-
-
   getFilteredFields() {
     const filteredFields: any[] = [];
-
+  
+    let fromMonth = '';
+    let fromYear = '';
+    let toMonth = '';
+    let toYear = '';
+  
+    let fromDate = '';
+    let toDate = '';
+  
     Object.keys(this.filters).forEach((key) => {
       const filter = this.filters[key];
       if (filter.show && filter.value) {
-        let displayValue = filter.value; // Default to the stored value
-
-        // Map numerical values to their corresponding names
-        if (key === 'selectedMonth' || key === 'fromMonth' || key === 'toMonth') {
-          displayValue = this.dataService.monthNames[filter.value - 1]; // Convert 1-12 to JAN-DEC
-        } else if (key === 'selectedYear') {
-          displayValue = filter.value; // Year can be displayed as is
+        let displayValue = filter.value;
+  
+        if (key === 'fromMonth') {
+          fromMonth = this.dataService.monthNames[filter.value - 1]; 
+          return;
+        } else if (key === 'toMonth') {
+          toMonth = this.dataService.monthNames[filter.value - 1]; 
+          return;
+        } else if (key === 'fromYear') {
+          fromYear = filter.value;
+          return;
+        } else if (key === 'toYear') {
+          toYear = filter.value;
+          return;
+        } else if (key === 'fromDate') {
+          fromDate = filter.value;
+          return; // **Skip adding individual fromDate**
+        } else if (key === 'toDate') {
+          toDate = filter.value;
+          return; // **Skip adding individual toDate**
         } else if (key === 'designationId') {
           const designationObj = this.designations.find(d => d.designationId == filter.value);
-          displayValue = designationObj ? designationObj.designationName : filter.value; // Use .name
+          displayValue = designationObj ? designationObj.designationName : filter.value;
         } else if (key === 'deptId') {
           const deptObj = this.departments.find(d => d.departmentId == filter.value);
-          displayValue = deptObj ? deptObj.departmentFName  : filter.value; // Use .name
+          displayValue = deptObj ? deptObj.departmentFName : filter.value;
         } else if (key === 'vendorId') {
           const vendorObj = this.vendors.find(v => v.vendorId == filter.value);
-          displayValue = vendorObj ? vendorObj.vendorName  : filter.value; // Use .name
-        } else if (key === 'loggedInType') {
-          displayValue = filter.value === '0' ? 'Guest' : 'Logged In';  // Example mapping
-        }
-        else if (key === 'cityId') {
+          displayValue = vendorObj ? vendorObj.vendorName : filter.value;
+        } else if (key === 'cityId') {
           const cityObj = this.cities.find(c => c.cityId == filter.value);
-          displayValue = cityObj ? cityObj.cityName : filter.value; // Map cityId to cityName
-        }
-         else if (key === 'companyId') {  
-          const companyObj = this.companies.find(c => c.companyId == filter.value);  
-          displayValue = companyObj ? companyObj.companyFName : filter.value; 
+          displayValue = cityObj ? cityObj.cityName : filter.value;
+        } else if (key === 'companyId') {
+          const companyObj = this.companies.find(c => c.companyId == filter.value);
+          displayValue = companyObj ? companyObj.companyFName : filter.value;
           this.dataService.setUnitName(companyObj.companyFName);
         }
-
-
+  
         filteredFields.push({
           name: key,
-          value: displayValue,  // Use the mapped label instead of the numeric value
-          label: filter.label || key  // Ensure label exists
+          value: displayValue,
+          label: filter.label || key
         });
       }
     });
-
+  
+    // Add Month-Year Range
+    if (fromMonth && fromYear && toMonth && toYear) {
+      filteredFields.unshift({
+        name: 'monthYearRange',
+        value: `From: ${fromMonth} ${fromYear} To: ${toMonth} ${toYear}`,
+        label: 'Period'
+      });
+    }
+  
+    // Add Date Range (only once)
+    if (fromDate && toDate) {
+      filteredFields.unshift({
+        name: 'dateRange',
+        value: ` ${fromDate} To ${toDate}`,
+        label: 'Date Range'
+      });
+    }
+  
     return filteredFields;
   }
+  
+  
 
   resetFilters() {
     //reload all compoent
