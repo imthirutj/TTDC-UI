@@ -1,7 +1,6 @@
-
 <div *ngIf="userAccessLevel == UserType.STATE_ADMIN">
-  <h2>Dashboard  
-   
+  <h2>Dashboard
+
   </h2>
 </div>
 <div class="cards-filter">
@@ -63,27 +62,6 @@
         </div>
       </div>
 
-
-      <!-- <div class="col-md-4 mb-4">
-        <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total Leave</h3>
-            <h2 class="card-text">{{loggedInCounts.leaveCount}}</h2>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4 mb-4"
-      >
-        <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today: OD</h3>
-            <h2 class="card-text">{{loggedInCounts.odCount}}</h2>
-          </div>
-        </div>
-      </div> -->
-
       <div class="col-md-4 mb-4">
         <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
@@ -111,169 +89,6 @@
     </div>
   </div>
 
-  <!-- Manager Section -->
-
-  <div *ngIf="userAccessLevel == UserType.MANAGER">
-    <div class="row">
-
-      <div [routerLink]="['/employee']" class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/employee')">
-        <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total Employees</h3>
-            <h2 class="card-text">{{dashboardData.totalEmployees}}</h2>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/designation')" class="col-md-4 mb-4">
-        <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Designation Count</h3>
-            <h2 class="card-text">{{dashboardData.totalDesignationCount}}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="this.filters.vendorId.value==0" class="col-md-4 mb-4" style="cursor: pointer;" class="col-md-4 mb-4"
-        (click)="applyFilterAndNavigate('/vendor-management')">
-        <div style="background-color: #4590c2; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total Vendors</h3>
-            <h2 class="card-text">{{dashboardData.totalVendor}}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 mb-4"
-      style="cursor: pointer;"
-      (click)="applyFilterAndNavigate('/employee-work-report','OD')">
-        <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Today OD</h3>
-            <h2 class="card-text">{{loggedInCounts.odCount}}</h2>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <p *ngIf="false">
-      {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
-    </p>
-
-    <h4>
-      <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
-      <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
-    </h4>
-
-    <div class="row">
-      
-      <div class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
-        <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Payment Generated</h3>
-            <h2 class="card-text">{{dashboardData.paymentGeneratedCount }}</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/payslip-records-waiting','PAYMENT_GENERATED')">
-        <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Payment Not Generated</h3>
-            <h2 class="card-text">{{dashboardData.paymentNotGeneratedCount }}</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div style="background-color: #cc293a; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Payment Processed </h3>
-            <h2 class="card-text">{{dashboardData.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Vendor Section -->
-
-  <div *ngIf="userAccessLevel == UserType.VENDOR">
-    <div class="row">
-
-      <div *ngIf="this.filters.companyId.value==0" class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/company')">
-        <div style="background-color: #00a9c8;" class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-
-            <h3 class="card-title">
-
-              Total Company
-            </h3>
-            <h2 class="card-text">{{dashboardData.totalCompany}}</h2>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/designation')" class="col-md-4 mb-4">
-        <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total Designation</h3>
-            <h2 class="card-text">{{dashboardData.totalDesignationCount}}</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4" style="cursor: pointer;" (click)="applyFilterAndNavigate('/employee')">
-        <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total Employee</h3>
-            <h2 class="card-text">{{dashboardData.totalEmployees}}</h2>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <p *ngIf="false">
-      {{this.filters.selectedMonth.value | monthName}} - {{this.filters.selectedYear.value}}
-    </p>
-
-    <p>
-      <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
-      <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
-    </p>
-
-    <div class="row">
-      <div class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
-        <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Payment Generated </h3>
-            <h2 class="card-text">{{dashboardData.paymentGeneratedCount}}</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4" style="cursor: pointer;"
-        (click)="applyFilterAndNavigate('/payslip-records-waiting','PAYMENT_GENERATED')">
-        <div style="background-color: #b834a2; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Payment Not Generated</h3>
-            <h2 class="card-text">{{dashboardData.paymentNotGeneratedCount }}</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div style="background-color: #cc293a; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Payment Processed </h3>
-            <h2 class="card-text">{{dashboardData.paymentProcessedForSelectedMonth | currency:'INR'}}</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
 
 
 
@@ -282,13 +97,14 @@
 
   <!-- State Section -->
 
-  <div *ngIf="userAccessLevel == UserType.STATE_ADMIN
-  || userAccessLevel == UserType.CITY_ADMIN">
+  <div>
     <div class="row">
 
-      <div *ngIf="this.filters.companyId.value==0" style="cursor: pointer;" 
-      (click)="applyFilterAndNavigate('/unit-wise-report')"
-        class="col-md-4 mb-4">
+      <div *ngIf="(userAccessLevel ==UserType.STATE_ADMIN ||
+                  userAccessLevel ==UserType.CITY_ADMIN    ||
+                 userAccessLevel == UserType.VENDOR) ||
+                    filters.companyId.value==0" style="cursor: pointer;"
+        (click)="applyFilterAndNavigate('/unit-wise-report')" class="col-md-4 mb-4">
         <div style="background-color: #ff3078; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Unit</h3>
@@ -298,7 +114,7 @@
       </div>
 
       <div *ngIf="this.filters.vendorId.value==0" style="cursor: pointer;" class="col-md-4 mb-4"
-        (click)="applyFilterAndNavigate('/vendor-management')">
+        (click)="applyFilterAndNavigate('/vendor-wise-report')">
         <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
             <h3 class="card-title">Total Vendors</h3>
@@ -307,7 +123,10 @@
         </div>
       </div>
 
-      <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
+      <div *ngIf="(userAccessLevel ==UserType.STATE_ADMIN ||
+                   userAccessLevel ==UserType.CITY_ADMIN    ||
+                  userAccessLevel == UserType.VENDOR) 
+                  ||this.filters.designationId.value==0" style="cursor: pointer;"
         (click)="applyFilterAndNavigate('/designation-wise-report')" class="col-md-4 mb-4">
         <div style="background-color: #02c3a4; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
@@ -317,7 +136,11 @@
         </div>
       </div>
 
-      <div *ngIf="this.filters.designationId.value==0" style="cursor: pointer;"
+      <div *ngIf="(userAccessLevel ==UserType.STATE_ADMIN ||
+                userAccessLevel ==UserType.CITY_ADMIN    ||
+                userAccessLevel == UserType.VENDOR    ||
+                userAccessLevel == UserType.MANAGER) ||
+                this.filters.employeeCode.value==0" style="cursor: pointer;"
         (click)="applyFilterAndNavigate('/employee')" class="col-md-4 mb-4">
         <div style="background-color: #3e9cd6; " class="card shadow-sm dashboard-bg">
           <div class="card-body">
@@ -339,27 +162,6 @@
       <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
     </h4>
     <div class="row">
-      
-
-      <!-- <div class="col-md-4 mb-4">
-        <div style="background-color: #549130; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total Leave</h3>
-            <h2 class="card-text">{{monthlyCounts.leaveCount}}</h2>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4 mb-4">
-        <div style="background-color: #5757b3; " class="card shadow-sm dashboard-bg">
-          <div class="card-body">
-            <h3 class="card-title">Total OD</h3>
-            <h2 class="card-text">{{monthlyCounts.odCount}}</h2>
-          </div>
-        </div>
-      </div> -->
-      
       <div class="col-md-4 mb-4" style="cursor: pointer;"
         (click)="applyFilterAndNavigate('/payslip-records','PAYMENT_GENERATED')">
         <div style="background-color: #ffb902; " class="card shadow-sm dashboard-bg">
@@ -389,30 +191,24 @@
     </div>
 
   </div>
-
-  <!-- <div class="row">
-    <div class="col-md-4 mb-4">
-      <div style="background-color: #00a9c8; " class="card shadow-sm dashboard-bg">
-        <div class="card-body">
-          <h3 class="card-title">Today Present Employees</h3>
-          <h3 class="card-text">{{attendanceSummaryDashboard.totalPresentDays}}</h3>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </div>
 
 <button (click)="dataService.downloadPDF('paymentTable')" class="btn btn-primary">Download as PDF</button>
 <button (click)="dataService.downloadExcelTable('paymentTable', 'payment-report')" class="btn btn-success">Download as
   Excel</button>
 
+
+<h3>Payment Generated Details</h3>
+<p>
+  <b>From</b>:{{this.filters.fromMonth.value | monthName}} - {{this.filters.fromYear.value}}
+  <b>To</b>:{{this.filters.toMonth.value | monthName}} - {{this.filters.toYear.value}}
+</p>
 <div *ngIf="userAccessLevel!= UserType.EMPLOYEE" class="container mt-4">
   <table id="paymentTable" class="table table-striped">
     <thead>
       <tr>
         <th>#</th>
-        <th>Month</th>
-        <th>Year</th>
+        <th>Unit</th>
         <th *ngIf="userAccessLevel!= UserType.EMPLOYEE">Total Employee</th>
         <th *ngIf="userAccessLevel!= UserType.EMPLOYEE">Payment Generated Count</th>
         <th *ngIf="userAccessLevel!= UserType.EMPLOYEE">Payment Not Generated Count</th>
@@ -422,8 +218,7 @@
     <tbody>
       <tr *ngFor="let payment of paymentGeneratedList; let i =index">
         <td>{{i+1}}</td>
-        <td>{{ payment.month | monthName }}</td>
-        <td>{{ payment.year }}</td>
+        <td>{{payment.companyName}}</td>
         <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.totalEmployee }}</td>
         <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.paymentGeneratedCount }}</td>
         <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.paymentNotGeneratedCount }}</td>
@@ -475,8 +270,7 @@
 </div>
 
 
-<div *ngIf="userAccessLevel== UserType.STATE_ADMIN ||
-userAccessLevel== UserType.CITY_ADMIN" class="container mt-4">
+<div *ngIf="false" class="container mt-4">
   <h3>Unit Wise Count</h3>
 
   <table class="table table-bordered" *ngIf="unitWiseReport?.length; else noData">
@@ -519,7 +313,7 @@ userAccessLevel== UserType.CITY_ADMIN" class="container mt-4">
     <div class="row">
       <div class="col-md-6" *ngFor="let column of columnNames">
         <h3>{{ column.label }}</h3>
-  
+
         <table *ngIf="column.data?.length; else loading">
           <thead>
             <tr>
@@ -533,7 +327,7 @@ userAccessLevel== UserType.CITY_ADMIN" class="container mt-4">
             <tr *ngFor="let row of column.data; let i = index">
               <td>{{ i + 1 }}</td>
               <td>
-  
+
                 {{ row[column.output] || 'N/A' }}
                 <span *ngIf="column.key=='experience' && row[column.output]!=0">Year(s)</span>
               </td>
@@ -550,14 +344,14 @@ userAccessLevel== UserType.CITY_ADMIN" class="container mt-4">
             </tr>
           </tfoot>
         </table>
-  
-  
+
+
         <!-- Loading message -->
         <ng-template #loading>
           <p>Loading...</p>
         </ng-template>
       </div>
     </div>
-  
+
   </div>
 </div>

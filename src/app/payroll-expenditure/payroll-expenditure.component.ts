@@ -29,7 +29,12 @@ export class PayrollExpenditureComponent {
   Units: any[] = [];
 
 
-  modalAnalysis={
+  modalAnalysisRaise={
+    show: false,
+    title:'Generate Analysis',
+    unit: new UnitReports()
+  }
+  modalAnalysisEmployee={
     show: false,
     title:'Generate Analysis',
     unit: new UnitReports()
@@ -117,22 +122,53 @@ export class PayrollExpenditureComponent {
     );
   }
 
-  openAnalysis(unit: any) {
-    this.modalAnalysis.show = true;
-    this.modalAnalysis.unit = unit;
+  openAnalysisRaise(unit: any) {
+    this.modalAnalysisRaise.show = true;
+    this.modalAnalysisRaise.unit = unit;
   }
 
-  closeAnalysis() {
-    this.modalAnalysis.show = false;
-    this.modalAnalysis.unit =  new UnitReports();
+  closeAnalysisRaise() {
+    this.modalAnalysisRaise.show = false;
+    this.modalAnalysisRaise.unit =  new UnitReports();
   }
 
-  generateAnalysis() {
+  openAnalysisEmp(unit: any) {
+    this.modalAnalysisEmployee.show = true;
+    this.modalAnalysisEmployee.unit = unit;
+  }
+
+  closeAnalysisEmp() {
+    this.modalAnalysisEmployee.show = false;
+    this.modalAnalysisEmployee.unit =  new UnitReports();
+  }
+
+  generateAnalysisRaise() {
     //so increment the generatedSalarySum by 10% of OverallSalarySum
-    this.modalAnalysis.unit.generatedSalarySum = 
-      this.modalAnalysis.unit.OverallSalarySum 
-      + (this.modalAnalysis.unit.OverallSalarySum *  this.modalAnalysis.unit.percentage / 100);
-    console.log('Generated Salary Sum:', this.modalAnalysis.unit.generatedSalarySum);
+    this.modalAnalysisRaise.unit.generatedSalarySum = 
+      this.modalAnalysisRaise.unit.OverallSalarySum 
+      + (this.modalAnalysisRaise.unit.OverallSalarySum *  this.modalAnalysisRaise.unit.percentage / 100);
+    console.log('Generated Salary Sum:', this.modalAnalysisRaise.unit.generatedSalarySum);
   }
+
+  generateAnalysisEmp() {
+    const unit = this.modalAnalysisEmployee.unit;
+  
+    if (!unit.TotalEmployees || unit.TotalEmployees === 0) {
+      console.warn('Total Employees cannot be zero.');
+      return;
+    }
+  
+    // Get the average salary per employee
+    const averageSalary = unit.OverallSalarySum / unit.TotalEmployees;
+  
+    // Ensure the user enters a valid number
+    const newEmployeeCount = unit.newEmployeeCount || 0;
+  
+    // Calculate the new salary sum
+    unit.generatedSalarySum = unit.OverallSalarySum + (averageSalary * newEmployeeCount);
+  
+    console.log('New Generated Salary Sum:', unit.generatedSalarySum);
+  }
+  
 
 }
