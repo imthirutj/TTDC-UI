@@ -32,7 +32,7 @@ export class EmployeeListComponent {
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    pageSize: 100
+    pageSize: 1200
   }
   totalCount: number = 0;
   dropdowns = {
@@ -596,5 +596,8 @@ export class EmployeeListComponent {
       : 'N/A'; // Return 'N/A' if requiredQualifications is null/undefined
   }
 
+  getTotal(obj: any, key: string): number {
+    return obj.employees.length;
+  }
 
 }

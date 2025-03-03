@@ -2,15 +2,14 @@
 
 
   <div class="cards-filter">
-    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-      (triggerParentFunction)="search()">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" (triggerParentFunction)="search()">
     </app-filter>
     <button (click)="this.dataService.downloadPDF('vendorPaymentTable')" class="btn btn-primary">
       Download as PDF
     </button>
     <button (click)="dataService.downloadExcelTable('vendorPaymentTable', 'VendorPayments')" class="btn btn-success">
       Download as Excel
-  </button>
+    </button>
     <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
   </div>
 
@@ -51,17 +50,17 @@
 }" class="invoice-label">
         {{ companyVendors.invoiceGenerated ? 'Invoice Generated' : 'Invoice Not Generated' }}
       </p>
-     
+
       <p *ngIf="companyVendors.invoiceGenerated" [ngClass]="{
         'invoice-generated': companyVendors.invoiceGenerated && 
         companyVendors.paymentStatus =='PAID',
         'invoice-not-generated': !(companyVendors.invoiceGenerated && 
         companyVendors.paymentStatus =='PAID')
     }" class="invoice-label">
-            {{ companyVendors.invoiceGenerated && 
-            companyVendors.paymentStatus =='PAID'
-            ? 'Payment Paid To Vendor' : 'Payment Not Paid To Vendor' }}
-          </p>
+        {{ companyVendors.invoiceGenerated &&
+        companyVendors.paymentStatus =='PAID'
+        ? 'Payment Paid To Vendor' : 'Payment Not Paid To Vendor' }}
+      </p>
 
     </div>
 
@@ -71,7 +70,7 @@
           <th>#</th>
           <th>Employee Name</th>
           <th>Employee Code</th>
-          <th>Unit Name</th>
+          <!-- <th>Unit Name</th> -->
           <th>Vendor Name</th>
           <th>Designation Name</th>
           <th>No. Of Days Worked</th>
@@ -84,35 +83,58 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let d of payRecords; let i = index">
+        <ng-container *ngFor="let obj of payRecords; let i = index">
+          <!-- Unit Name Row -->
+          <tr>
+            <td style="text-align: center;" colspan="9">
+              <strong>Unit Name: {{ obj.companyName }}</strong>
+            </td>
+          </tr>
+          <tr *ngFor="let d of obj.employees; let i = index">
 
-          <td>
-            {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
-          </td>
-          <!-- <td>{{ department.employeeId  }}</td> -->
-          <td>{{ d.employeeName }}</td>
-          <td>{{ d.employeeCode }}</td>
-          <td>{{ d.companyFName }}</td>
-          <td>{{d.vendorName}}</td>
-          <td>{{ d.designationName }}</td>
-          <td>{{ d.presentDays }}</td>
-          <td>{{d.totalEmpCost | currency:'INR'}}</td>
-          <td>{{d.grossSalary | currency:'INR'}}</td>
+            <td>
+              {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
+            </td>
+            <!-- <td>{{ department.employeeId  }}</td> -->
+            <td>{{ d.employeeName }}</td>
+            <td>{{ d.employeeCode }}</td>
+            <!-- <td>{{ d.companyFName }}</td> -->
+            <td>{{d.vendorName}}</td>
+            <td>{{ d.designationName }}</td>
+            <td>{{ d.presentDays }}</td>
+            <td>{{d.totalEmpCost | currency:'INR'}}</td>
+            <td>{{d.grossSalary | currency:'INR'}}</td>
 
-          <td>{{d.epfEmployerContribution | currency:'INR'}}</td>
-          <td>{{d.esiEmployerContribution | currency:'INR'}}</td>
+            <td>{{d.epfEmployerContribution | currency:'INR'}}</td>
+            <td>{{d.esiEmployerContribution | currency:'INR'}}</td>
 
-          <td>{{d.serviceCharge | currency:'INR'}}</td>
-          <td>{{d.totalWages | currency:'INR'}}</td>
-        
-        </tr>
+            <td>{{d.serviceCharge | currency:'INR'}}</td>
+            <td>{{d.totalWages | currency:'INR'}}</td>
+
+          </tr>
+          <tr>
+            <td colspan="6" class="text-right"><strong>Total:</strong></td>
+            <td>{{ getTotalEmp(obj, 'totalEmpCost') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj, 'grossSalary') | currency:'INR' }}</td>
+     
+            <td>{{ getTotalEmp(obj, 'epfEmployerContribution') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj, 'esiEmployerContribution') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'serviceCharge') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'totalWages') | currency:'INR' }}</td>
+            <td></td>
+          </tr>
+
+        </ng-container>
+
+
+        '
       </tbody>
       <tfoot *ngIf="payRecords.length > 0">
         <tr>
-          <td colspan="7" class="text-right"><strong>Total:</strong></td>
+          <td colspan="6" class="text-right"><strong>Total:</strong></td>
           <td>{{ getTotal('totalEmpCost') | currency:'INR' }}</td>
           <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
-         
+
           <td>{{ getTotal('epfEmployerContribution') | currency:'INR' }}</td>
           <td>{{ getTotal('esiEmployerContribution') | currency:'INR' }}</td>
           <td>{{ getTotal('serviceCharge') | currency:'INR' }}</td>
@@ -123,7 +145,7 @@
 
     <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="fetchPayRecords()">
     </app-server-pagination>
-  
+
     <div class="d-flex justify-content-between">
       <!-- Page Size Dropdown -->
       <div class="d-flex align-items-center">
@@ -139,28 +161,22 @@
         </select>
       </div>
     </div>
-    
+
   </div>
 
 
   <!--GEnerate Invoive Modal-->
-<app-common-dialog
-[showDialog]="modalGenerateInv.show"
-[showCloseIcon]="true"
-[dialogTitle]="modalGenerateInv.title"
-(closeDialog)="modalGenerateInv.show = false"
-[showSubmitButton]="true"
-(submitDialog)="generateInvoice()">
+  <app-common-dialog [showDialog]="modalGenerateInv.show" [showCloseIcon]="true" [dialogTitle]="modalGenerateInv.title"
+    (closeDialog)="modalGenerateInv.show = false" [showSubmitButton]="true" (submitDialog)="generateInvoice()">
 
-<!--Input box Invoice No-->
-<div class="row">
-  <div class="col-md-6">
-    <label for="invoiceNo">Invoice No:</label>
-    <input type="text" class="form-control" id="invoiceNo"
-     [(ngModel)]="modalGenerateInv.invoiceNo">
-  </div>
-</div>
-</app-common-dialog>
+    <!--Input box Invoice No-->
+    <div class="row">
+      <div class="col-md-6">
+        <label for="invoiceNo">Invoice No:</label>
+        <input type="text" class="form-control" id="invoiceNo" [(ngModel)]="modalGenerateInv.invoiceNo">
+      </div>
+    </div>
+  </app-common-dialog>
 
   <app-common-dialog [showDialog]="isVendorModalOpen" [showCloseIcon]="true" [dialogTitle]="vendorPayment.title"
     (closeDialog)="isVendorModalOpen = false" [showSubmitButton]="true" (submitDialog)="updateVendorModal()"
@@ -195,7 +211,7 @@
     <div class="row">
       <div class="col-md-6">
         <b for="netAmount">Total Amount:</b>
-        <span>{{selectedVendor.netAmount  | currency:'INR'}}</span>
+        <span>{{selectedVendor.netAmount | currency:'INR'}}</span>
 
       </div>
     </div>

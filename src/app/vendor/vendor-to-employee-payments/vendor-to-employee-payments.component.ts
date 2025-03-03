@@ -117,8 +117,15 @@ export class VendorToEmployeePaymentsComponent {
     })
   }
 
+
   getTotal(field: string): number {
-    return this.vendorEmployeePayments.reduce((sum, record) => sum + (record[field] || 0), 0);
+    return this.vendorEmployeePayments.reduce((sum, record) => {
+      return sum + record.employees.reduce((empSum:any, employee:any) => empSum + (employee[field] || 0), 0);
+    }, 0);
+  }
+  
+  getTotalEmp(obj: any, key: string): number {
+    return obj.employees.reduce((sum:any, emp:any) => sum + (emp[key] || 0), 0);
   }
   
 

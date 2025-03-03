@@ -28,7 +28,7 @@ export class EmployeeBasedReportsComponent {
     user: any;
     userAccessLevel: any;
   
-    Reports: EmployeeReport[] = [];
+    Reports: any[] = [];
   
   
     modalAnalysis={
@@ -40,7 +40,7 @@ export class EmployeeBasedReportsComponent {
     pageAttributes = {
       currentPage: 1,
       totalPages: 1,
-      pageSize: 10
+      pageSize: 1200
     }
 
   
@@ -173,6 +173,16 @@ export class EmployeeBasedReportsComponent {
       } else {
         console.error("URL is null or undefined");
       }
+    }
+
+    getTotal(field: string): number {
+      return this.Reports.reduce((sum, record) => {
+        return sum + record.employees.reduce((empSum:any, employee:any) => empSum + (employee[field] || 0), 0);
+      }, 0);
+    }
+    
+    getTotalEmp(obj: any, key: string): number {
+      return obj.employees.reduce((sum:any, emp:any) => sum + (emp[key] || 0), 0);
     }
     
     

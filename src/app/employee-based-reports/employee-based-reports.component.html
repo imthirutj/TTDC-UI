@@ -21,7 +21,7 @@
         <th>#</th>
         <th>Employee Name</th>
         <th>Employee Code</th>
-        <th>Company</th>
+       
         <th>Vendor</th>
         <th>Section</th>
         <th>Designation</th>
@@ -31,33 +31,57 @@
         <th>OD Days</th>
         <th>Holiday Days</th>
         <th>Week Off Days</th>
-        <!-- <th>Total Working Hours</th>
-        <th>Late Work Days</th>
-        <th>Comp Off Requested</th>
-        <th>Comp Off Approved</th> -->
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of Reports; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ row.employeeName }}</td>
-        <td>{{ row.employeeCode }}</td>
-        <td>{{ row.companyFName }}</td>
-        <td>{{ row.vendorName }}</td>
-        <td>{{ row.departmentFName }}</td>
-        <td>{{ row.designationName }}</td>
-        <td>{{ row.presentDays }}</td>
-        <td>{{ row.absentDays }}</td>
-        <td>{{ row.leaveDays }}</td>
-        <td>{{ row.odDays }}</td>
-        <td>{{ row.holidayDays }}</td>
-        <td>{{ row.weekOffDays }}</td>
-        <!-- <td>{{ row.totalWorkingHours }}</td>
-        <td>{{ row.lateWorkDays }}</td>
-        <td>{{ row.compOffRequested }}</td>
-        <td>{{ row.compOffApproved }}</td> -->
-      </tr>
+      <ng-container *ngFor="let obj of Reports; let i = index">
+
+         <!-- Unit Name Row -->
+         <tr>
+          <td style="text-align: center;" colspan="9">
+            <strong>Unit Name: {{ obj.companyFName }}</strong>
+          </td>
+        </tr>
+        <tr *ngFor="let row of obj.employees; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.employeeName }}</td>
+          <td>{{ row.employeeCode }}</td>
+        
+          <td>{{ row.vendorName }}</td>
+          <td>{{ row.departmentFName }}</td>
+          <td>{{ row.designationName }}</td>
+          <td>{{ row.presentDays }}</td>
+          <td>{{ row.absentDays }}</td>
+          <td>{{ row.leaveDays }}</td>
+          <td>{{ row.odDays }}</td>
+          <td>{{ row.holidayDays }}</td>
+          <td>{{ row.weekOffDays }}</td>
+        </tr>
+        <tr>
+          <td colspan="6" class="text-right"><strong>Total:</strong></td>
+          <td>{{ getTotalEmp(obj,'presentDays')  }}</td>
+          <td>{{ getTotalEmp(obj,'absentDays')  }}</td>
+          <td>{{ getTotalEmp(obj,'leaveDays') }}</td>
+          <td>{{ getTotalEmp(obj,'odDays') }}</td>
+          <td>{{ getTotalEmp(obj,'holidayDays') }}</td>
+          <td>{{ getTotalEmp(obj,'weekOffDays')  }}</td>
+          
+        </tr>
+      </ng-container>
+   
     </tbody>
+    <tfoot *ngIf="Reports.length > 0">
+      <tr style="font-weight: bold;">
+        <td colspan="6" class="text-right"><strong>Total:</strong></td>
+          <td>{{ getTotal('presentDays')  }}</td>
+          <td>{{ getTotal('absentDays')  }}</td>
+          <td>{{ getTotal('leaveDays') }}</td>
+          <td>{{ getTotal('odDays') }}</td>
+          <td>{{ getTotal('holidayDays') }}</td>
+          <td>{{ getTotal('weekOffDays')  }}</td>
+          
+      </tr>
+    </tfoot>
   </table>
 
   <ng-template #noData>

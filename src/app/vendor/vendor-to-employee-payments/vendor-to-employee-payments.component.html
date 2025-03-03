@@ -1,52 +1,58 @@
 <div class="container">
- 
-    <div class="cards-filter">
-      <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
-        (triggerParentFunction)="fetchVendorEmployeePaymentDetails()">
-      </app-filter>
-      <button *ngIf="false"  style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
-      <button (click)="dataService.downloadExcelTable('vendor-employee-payment', 'Vendor-Employee-Payments')" class="btn btn-success">
-        Download as Excel
+
+  <div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)"
+      (triggerParentFunction)="fetchVendorEmployeePaymentDetails()">
+    </app-filter>
+    <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    <button (click)="dataService.downloadExcelTable('vendor-employee-payment', 'Vendor-Employee-Payments')"
+      class="btn btn-success">
+      Download as Excel
     </button>
-   
-    </div>
-  
-    <div class="container mt-4">
-      <h3>Vendor To Employee Payment Details: 
-        {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
-      </h3>
-      <table id="vendor-employee-payment" class="table table-striped table-bordered">
-        <thead>
+
+  </div>
+
+  <div class="container mt-4">
+    <h3>Vendor To Employee Payment Details:
+      {{this.filters.selectedMonth.value | monthName }} {{this.filters.selectedYear.value}}
+    </h3>
+    <table id="vendor-employee-payment" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Employee Name</th>
+          <th scope="col">Employee Code</th>
+          <th scope="col">Vendor Name</th>
+          <th scope="col">Total Earnings</th>
+          <th scope="col">Total Deductions</th>
+          <th scope="col">EPF</th>
+          <th scope="col">ESI</th>
+          <th scope="col">Gross Salary</th>
+          <th scope="col">Net Salary</th>
+          <th scope="col">Paid To Employee</th>
+          <th scope="col">Difference</th>
+          <th scope="col">Payment Type</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let obj of vendorEmployeePayments; let i = index">
+          <!-- Unit Name Row -->
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Employee Name</th>
-            <th scope="col">Employee Code</th>
-            <th scope="col">Vendor Name</th>
-            <th scope="col">Total Earnings</th>
-            <th scope="col">Total Deductions</th>
-            <th scope="col">EPF</th>
-            <th scope="col">ESI</th>
-            <th scope="col">Gross Salary</th>
-            <th scope="col">Net Salary</th>
-            <th scope="col">Paid To Employee</th>
-            <th scope="col">Difference</th>
-            <th scope="col">Payment Type</th>
-            
-            
+            <td style="text-align: center;" colspan="9">
+              <strong>Unit Name: {{ obj.companyName }}</strong>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <tr 
-          *ngFor="let vep of vendorEmployeePayments; let i = index" 
-          [ngClass]="{'highlight-row': (vep.difference) > 0}"
-        >
+          <tr *ngFor="let vep of obj.employees; let i = index"
+            [ngClass]="{'highlight-row': (vep.difference) > 0}">
             <td>
               {{i+1}}
             </td>
             <td>{{ vep.employeeName }}</td>
             <td>{{ vep.employeeCode }}</td>
             <td>{{ vep.vendorName }}</td>
-            <td>{{ vep.totalEarnings | currency:'INR'  }}</td>
+            <td>{{ vep.totalEarnings | currency:'INR' }}</td>
             <td>{{ vep.totalDeductions | currency:'INR' }}</td>
             <td>{{ vep.totalEpf | currency:'INR' }}</td>
             <td>{{ vep.totalEsi | currency:'INR' }}</td>
@@ -55,25 +61,39 @@
             <td>{{ vep.paidToEmployee | currency:'INR' }}</td>
             <td>{{ (vep.difference) | currency:'INR' }}</td>
             <td>{{ vep.paymentType }}</td>
-           
-           
+
+
           </tr>
-        </tbody>
-        <tfoot *ngIf="vendorEmployeePayments.length > 0">
           <tr>
             <td colspan="4" class="text-right"><strong>Total:</strong></td>
-            <td>{{ getTotal('totalEarnings') | currency:'INR' }}</td>
-            <td>{{ getTotal('totalDeductions') | currency:'INR' }}</td>
-            <td>{{ getTotal('totalEpf') | currency:'INR' }}</td>
-            <td>{{ getTotal('totalEsi') | currency:'INR' }}</td>
-            <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
-            <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
-            <td>{{ getTotal('paidToEmployee') | currency:'INR' }}</td>
-            <td>{{ getTotal('difference') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'totalEarnings') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'totalDeductions') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'totalEpf') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'totalEsi') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'grossSalary') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'netSalary') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'paidToEmployee') | currency:'INR' }}</td>
+            <td>{{ getTotalEmp(obj,'difference') | currency:'INR' }}</td>
             <td></td>
           </tr>
-        </tfoot>
-      </table>
-    </div>
-  
+        </ng-container>
+
+      </tbody>
+      <tfoot *ngIf="vendorEmployeePayments.length > 0">
+        <tr>
+          <td colspan="4" class="text-right"><strong>Total:</strong></td>
+          <td>{{ getTotal('totalEarnings') | currency:'INR' }}</td>
+          <td>{{ getTotal('totalDeductions') | currency:'INR' }}</td>
+          <td>{{ getTotal('totalEpf') | currency:'INR' }}</td>
+          <td>{{ getTotal('totalEsi') | currency:'INR' }}</td>
+          <td>{{ getTotal('grossSalary') | currency:'INR' }}</td>
+          <td>{{ getTotal('netSalary') | currency:'INR' }}</td>
+          <td>{{ getTotal('paidToEmployee') | currency:'INR' }}</td>
+          <td>{{ getTotal('difference') | currency:'INR' }}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
+
+</div>
