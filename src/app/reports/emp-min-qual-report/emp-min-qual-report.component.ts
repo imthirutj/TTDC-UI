@@ -6,11 +6,12 @@ import { ReportService } from '../report.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-log-not-log-report',
-  templateUrl: './log-not-log-report.component.html',
-  styleUrls: ['./log-not-log-report.component.css']
+  selector: 'app-emp-min-qual-report',
+  templateUrl: './emp-min-qual-report.component.html',
+  styleUrls: ['./emp-min-qual-report.component.css']
 })
-export class LogNotLogReportComponent {
+export class EmpMinQualReportComponent {
+
 UserType = UserType;
   userAccessLevel: any;
   user: any;
@@ -22,22 +23,20 @@ UserType = UserType;
     totalPages: 1,
     pageSize: 1200
   }
-  selectedTab: string = 'LOGGED_IN';
+
 
   filters: any = {
-    role: { value: '', show: false, key: 'role', includeInSearchParams: true },
-
-    reqStatus: {
-      value: 'LOGGED_IN',
-      show: true,
-      key: 'reqStatus',
-      includeInSearchParams: true
+    selectedMonth: {
+      value: Number(new Date().getMonth()) + 1, // Default to current month
+      show: false,
+      key: 'month',
+      includeInSearchParams: false
     },
-    date: {
-      value: new Date().toISOString().split('T')[0], // Default to current month
-      show: true,
-      key: 'date',
-      includeInSearchParams: true
+    selectedYear: {
+      value: new Date().getFullYear(), // Default to current year
+      show: false,
+      key: 'year',
+      includeInSearchParams: false
     },
     cityId: {
       value: '',
@@ -51,13 +50,66 @@ UserType = UserType;
       key: 'compId',
       includeInSearchParams: true
     },
-    vendorId:{
+    designationId: {
+      value: '',
+      show: true,
+      key: 'designationId',
+      includeInSearchParams: true
+    },
+    deptId: {
+      value: '',
+      show: true,
+      key: 'deptId',
+      includeInSearchParams: true
+    },
+    catId: {
+      value: '',
+      show: true,
+      key: 'catId',
+      includeInSearchParams: true
+    },
+    employeeId: {
+      value: '',
+      show: false,
+      key: 'employeeId',
+      includeInSearchParams: false
+    },
+    employeeName: {
+      value: '',
+      show: true,
+      key: 'employeeName',
+      includeInSearchParams: true
+    },
+    employeeCode: {
+      value: '',
+      show: true,
+      key: 'employeeCode',
+      includeInSearchParams: true
+    },
+    vendorId: {
       value: '',
       show: true,
       key: 'vendorId',
       includeInSearchParams: true
+    },
+    qualificationMismatched: {
+      value: '0',
+      show: false,
+      key: 'qualificationMismatched',
+      includeInSearchParams: false
+    },
+    loggedInType: {
+      value: '0',
+      show: false,
+      key: 'loggedInType',
+      includeInSearchParams: true
+    },
+    activeStatus: {
+      value: 'ACTIVE',
+      show: true,
+      key: 'activeStatus',
+      includeInSearchParams: true
     }
-
   };
   constructor(
 
@@ -98,12 +150,11 @@ UserType = UserType;
 
   fetchReport() {
     const payload = this.dataService.getPayloadValue(this.filters);
-    this.reportService.getLoggedNotLoggedRep(payload).subscribe(
+    this.reportService.getCompanyWiseEmpQualfList(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
           this.Reports = response.data;
-          this.totalCounts= response.totalUniqueDesignation;
         }
       }
     );

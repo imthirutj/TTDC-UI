@@ -50,4 +50,10 @@ export class ReportService {
     const queryParams = this.dataService.buildQueryParams(payload);
     return this.http.get(`${this.apiUrl}Report/GetUnitWiseLogCount?${queryParams}`);
   }
+
+  // Report/GetCompanyWiseEmpQualfList
+  getCompanyWiseEmpQualfList(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Report/GetCompanyWiseEmpQualfList?${queryParams}`);
+  }
 }

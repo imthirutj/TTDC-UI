@@ -7,30 +7,13 @@
     
   
     <div class="container mt-4">
-      <h3>Employee:
+      <h3>Employee Minimum Qualification List:
        {{getTotalEmployees()}}
       </h3>
       <div>
         <span> {{ this.filters.date.value| date: 'dd-MMM-yyyy' }}</span>
       </div>
 
-      <!-- Tabs for switching between Logged In and Logged Out Employees -->
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="selectedTab === 'LOGGED_IN'" 
-      (click)="selectedTab = 'LOGGED_IN'; this.filters.reqStatus.value= 'LOGGED_IN';
-       fetchReport()">
-        Logged In Employees
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="selectedTab === 'NOT_LOGGED_IN'" 
-      (click)="selectedTab = 'NOT_LOGGED_IN'; 
-       this.filters.reqStatus.value= 'NOT_LOGGED_IN';fetchReport()">
-       Not Logged In
-      </a>
-    </li>
-  </ul>
     
       <table id="emp-report" class="table table-bordered" *ngIf="Reports?.length; else noData">
         <thead class="thead-dark">

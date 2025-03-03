@@ -107,7 +107,12 @@ export class SidebarComponent {
         route: '/region-wise-report',
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
-
+      {
+        label: 'Employee Min Qualifications',
+        icon: 'fa-solid fa-map-marked-alt', // Represents geographic regions
+        route: '/emp-min-qual-report',
+        allowedUserTypes: [UserType.STATE_ADMIN]
+      },
 
 
 

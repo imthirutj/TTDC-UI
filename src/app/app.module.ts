@@ -96,6 +96,7 @@ import { RegionReportComponent } from './reports/region-report/region-report.com
 import { LogNotLogReportComponent } from './reports/log-not-log-report/log-not-log-report.component';
 import { LeaveReportComponent } from './reports/leave-report/leave-report.component';
 import { OdReportComponent } from './reports/od-report/od-report.component';
+import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min-qual-report.component';
 
 @NgModule({
   declarations: [
@@ -162,7 +163,8 @@ import { OdReportComponent } from './reports/od-report/od-report.component';
     RegionReportComponent,
     LogNotLogReportComponent,
     LeaveReportComponent,
-    OdReportComponent
+    OdReportComponent,
+    EmpMinQualReportComponent
 
   ],
   imports: [

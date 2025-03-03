@@ -57,6 +57,7 @@ import { RegionReportComponent } from './reports/region-report/region-report.com
 import { LogNotLogReportComponent } from './reports/log-not-log-report/log-not-log-report.component';
 import { LeaveReportComponent } from './reports/leave-report/leave-report.component';
 import { OdReportComponent } from './reports/od-report/od-report.component';
+import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min-qual-report.component';
 
 const routes: Routes = [
 
@@ -326,6 +327,12 @@ const routes: Routes = [
   {
     path:'region-wise-report',
     component:RegionReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'emp-min-qual-report',
+    component:EmpMinQualReportComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
