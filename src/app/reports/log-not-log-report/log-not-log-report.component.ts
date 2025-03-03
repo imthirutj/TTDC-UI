@@ -15,12 +15,30 @@ UserType = UserType;
   userAccessLevel: any;
   user: any;
 
-  ReportData: any = [];
+  Reports: any = [];
   totalCounts : number=0;
+  pageAttributes = {
+    currentPage: 1,
+    totalPages: 1,
+    pageSize: 1200
+  }
+  selectedTab: string = 'LOGGED_IN';
+
   filters: any = {
     role: { value: '', show: false, key: 'role', includeInSearchParams: true },
 
-
+    reqStatus: {
+      value: 'LOGGED_IN',
+      show: true,
+      key: 'reqStatus',
+      includeInSearchParams: true
+    },
+    date: {
+      value: new Date().toISOString().split('T')[0], // Default to current month
+      show: true,
+      key: 'date',
+      includeInSearchParams: true
+    },
     cityId: {
       value: '',
       show: true,
@@ -74,25 +92,29 @@ UserType = UserType;
     });
   }
   search() {
-    this.fetchRegionWiseReport();
+    this.fetchReport();
 
   }
 
-  fetchRegionWiseReport() {
+  fetchReport() {
     const payload = this.dataService.getPayloadValue(this.filters);
-    this.reportService.getRegionWiseCount(payload).subscribe(
+    this.reportService.getLoggedNotLoggedRep(payload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
-          this.ReportData = response.data;
+          this.Reports = response.data;
           this.totalCounts= response.totalUniqueDesignation;
         }
       }
     );
   }
 
-  getTotal(obj: any, key: string): number {
-    return obj.units.reduce((sum:any, emp:any) => sum + (emp[key] || 0), 0);
+  getTotalEmployees(): number {
+    return this.Reports.reduce((sum: number, record: any) => {
+      return sum + record.employees.length;
+    }, 0);
   }
+  
+  
 
 }

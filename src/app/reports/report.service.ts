@@ -45,4 +45,9 @@ export class ReportService {
     const queryParams = this.dataService.buildQueryParams(payload);
     return this.http.get(`${this.apiUrl}Report/GetRegionWiseCount?${queryParams}`);
   }
+
+  getLoggedNotLoggedRep(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Report/GetUnitWiseLogCount?${queryParams}`);
+  }
 }

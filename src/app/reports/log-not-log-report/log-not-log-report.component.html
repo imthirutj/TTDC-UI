@@ -1,1 +1,117 @@
-<p>log-not-log-report works!</p>
+<div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="search()"
+    (triggerParentFunction)="onFilterChanged($event)">
+   </app-filter>
+      <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
+    </div>
+    
+  
+    <div class="container mt-4">
+      <h3>Employee:
+       {{getTotalEmployees()}}
+      </h3>
+      <div>
+        <span> {{ this.filters.date.value| date: 'dd-MMM-yyyy' }}</span>
+      </div>
+
+      <!-- Tabs for switching between Logged In and Logged Out Employees -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="selectedTab === 'LOGGED_IN'" 
+      (click)="selectedTab = 'LOGGED_IN'; this.filters.reqStatus.value= 'LOGGED_IN';
+       fetchReport()">
+        Logged In Employees
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="selectedTab === 'NOT_LOGGED_IN'" 
+      (click)="selectedTab = 'NOT_LOGGED_IN'; 
+       this.filters.reqStatus.value= 'NOT_LOGGED_IN';fetchReport()">
+       Not Logged In
+      </a>
+    </li>
+  </ul>
+    
+      <table id="emp-report" class="table table-bordered" *ngIf="Reports?.length; else noData">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>Employee Name</th>
+            <th>Employee Code</th>
+            <th>Designation</th>
+          
+          
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let obj of Reports; let i = index">
+    
+             <!-- Unit Name Row -->
+             <tr>
+              <td style="text-align: center;" colspan="9">
+                <strong>Unit Name: {{ obj.companyName }}</strong>
+              </td>
+            </tr>
+            <tr *ngFor="let row of obj.employees; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ row.employeeName }}</td>
+              <td>{{ row.employeeCode }}</td>
+            
+              <td>{{ row.designationName }}</td>
+   
+            
+            </tr>
+            <tr>
+              <td colspan="6" class="text-right"><strong>Total:</strong></td>
+           
+            
+          
+              
+            </tr>
+          </ng-container>
+       
+        </tbody>
+        <tfoot *ngIf="Reports.length > 0">
+          <tr style="font-weight: bold;">
+            <td colspan="6" class="text-right"><strong>Total:</strong></td>
+       
+            
+              
+              
+          </tr>
+        </tfoot>
+      </table>
+    
+      <ng-template #noData>
+        <p>No records found.</p>
+      </ng-template>
+    
+    
+      <!-- No Data Message -->
+      <ng-template #noData>
+        <p>No records found.</p>
+      </ng-template>
+    </div>
+    
+    
+    <div>
+      <app-server-pagination [pageAttributes]="pageAttributes" 
+      (triggerParentFunction)="fetchReport()">
+      </app-server-pagination>
+    
+      <div class="d-flex justify-content-between">
+        <!-- Page Size Dropdown -->
+        <div class="d-flex align-items-center">
+          <label for="pageSize" class="me-2">Page Size:</label>
+          <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize">
+            <option [value]="10">10</option>
+            <option [value]="20">20</option>
+            <option [value]="30">30</option>
+            <option [value]="50">50</option>
+            <option [value]="100">100</option>
+            <option [value]="120">120</option>
+            <option [value]="120">150</option>
+          </select>
+        </div>
+      </div>
+    </div>

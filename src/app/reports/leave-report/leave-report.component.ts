@@ -132,7 +132,7 @@ export class LeaveReportComponent {
         pageSize: this.pageAttributes.pageSize
       }
   
-      this.employeeWorkDetailsService.getEmployeeBasedReports(fpayload).subscribe(
+      this.reportService.getLoggedNotLoggedRep(fpayload).subscribe(
         (response:any)=>{
           this.Reports = response.data;
           this.pageAttributes.totalPages = response.totalPages;

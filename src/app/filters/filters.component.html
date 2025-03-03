@@ -360,6 +360,18 @@
         </div>
       </div>
 
+      <!-- date-->
+      <div *ngIf="filters.date.show" class="col-md-4">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input [(ngModel)]="filters.date.value" (change)="onDateChange()"
+           class="form-control" id="date"
+            type="date">
+        </div>
+      </div>
+
+
+
     </div>
   </div>
 

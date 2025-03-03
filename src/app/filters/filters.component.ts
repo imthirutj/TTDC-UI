@@ -68,7 +68,7 @@ export class FiltersComponent implements OnInit {
     if (this.filters) {
       const filterDefaults = [
         { objName: 'display', key: 'display', label: 'display', defaultValue: '', show: false, includeInSearchParams: false },
-        { objName: 'reqStatus', key: 'reqStatus', label: 'reqStatus', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'reqStatus', key: 'reqStatus', label: 'Status', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'date', key: 'date', label: 'Date', defaultValue: new Date().toISOString().split('T')[0], show: false, includeInSearchParams: false },
 
 
@@ -314,6 +314,9 @@ export class FiltersComponent implements OnInit {
     this.onFilterChange();
   }
   onToDateChange() {
+    this.onFilterChange();
+  }
+  onDateChange() {
     this.onFilterChange();
   }
   onLeaveRequestStatusChange() {
