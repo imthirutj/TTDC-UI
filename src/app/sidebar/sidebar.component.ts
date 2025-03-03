@@ -60,22 +60,23 @@ export class SidebarComponent {
       },
       {
         label: 'Logged In & Not Logged In',
-        icon: 'fa-solid fa-user-tie',
+        icon: 'fa-solid fa-user-check', // Represents login/logout status
         route: '/loggedin-notloggedin-report',
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
       {
         label: 'Leave Report',
-        icon: 'fa-solid fa-user-tie',
+        icon: 'fa-solid fa-calendar-minus', // Represents leave or absence
         route: '/leave-report',
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
       {
         label: 'OD Report',
-        icon: 'fa-solid fa-user-tie',
+        icon: 'fa-solid fa-briefcase', // Represents official duty/work
         route: '/od-report',
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
+      
       {
         label: 'Designation Wise Report',
         icon: 'fa-solid fa-user-tie', // Represents job roles or designations

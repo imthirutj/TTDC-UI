@@ -21,35 +21,53 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let employee of EmployeesData.employees; let i=index">
-      <td>
-        {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
-      </td>
-      <td>{{ employee.employeeCode }}</td>
-      <td>{{ employee.employeeName }}</td>
-      <td>{{ employee.NetSalary | currency: 'INR'}}</td>
-      <td>
-        <ng-container *ngIf="employee.isEditing">
-          <input type="number" [(ngModel)]="employee.amount" class="form-control" />
-          <button class="btn btn-success btn-sm" (click)="updateAmount(employee)">
-            <i class="fas fa-save"></i> <!-- Save Icon -->
-          </button>
-          <button class="btn btn-danger btn-sm" (click)="cancelEdit(employee)">
-            <i class="fas fa-times"></i> <!-- Close Icon -->
-          </button>
-        </ng-container>
-        <ng-container *ngIf="!employee.isEditing">
-          {{ employee.amount | currency: 'INR' }}
-          <button class="btn btn-warning btn-sm" (click)="toggleAmount(employee)">
-            <i class="fas fa-edit"></i> <!-- Edit Icon -->
-          </button>
-        </ng-container>
-      </td>
-      <td>{{ (employee.NetSalary - employee.amount) | currency: 'INR' }}</td>
+    <ng-container *ngFor="let obj of EmployeesData.companies; let i = index">
+       <!-- Unit Name Row -->
+       <tr>
+        <td style="text-align: center;" colspan="9">
+          <strong>Unit Name: {{ obj.companyName }}</strong>
+        </td>
+      </tr>
+      <tr *ngFor="let employee of obj.employees; let i=index">
+        <td>
+          {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
+        </td>
+        <td>{{ employee.employeeCode }}</td>
+        <td>{{ employee.employeeName }}</td>
+        <td>{{ employee.NetSalary | currency: 'INR'}}</td>
+        <td>
+          <ng-container *ngIf="employee.isEditing">
+            <input type="number" [(ngModel)]="employee.amount" class="form-control" />
+            <button class="btn btn-success btn-sm" (click)="updateAmount(employee)">
+              <i class="fas fa-save"></i> <!-- Save Icon -->
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="cancelEdit(employee)">
+              <i class="fas fa-times"></i> <!-- Close Icon -->
+            </button>
+          </ng-container>
+          <ng-container *ngIf="!employee.isEditing">
+            {{ employee.amount | currency: 'INR' }}
+            <button class="btn btn-warning btn-sm" (click)="toggleAmount(employee)">
+              <i class="fas fa-edit"></i> <!-- Edit Icon -->
+            </button>
+          </ng-container>
+        </td>
+        <td>{{ (employee.NetSalary - employee.amount) | currency: 'INR' }}</td>
+  
+      </tr>
+      <tr>
+        <td colspan="3" class="text-right"><strong>Total:</strong></td>
+       
+        <td>{{ getTotalEmp(obj,'NetSalary') }}</td>
+        <td>{{ getTotalEmp(obj,'amount') }}</td>
+        <td>{{ getTotalEmp(obj, 'NetSalary', 'amount') | currency: 'INR' }}</td> 
+        
+      </tr>
+      </ng-container>
 
-    </tr>
+  
   </tbody>
-  <tfoot *ngIf="this.EmployeesData.employees.length > 0">
+  <tfoot *ngIf="this.EmployeesData.companies.length > 0">
     <tr>
       <td colspan="3">Total</td>
       <td>{{this.EmployeesData.totalAmount.totalPayslipAmount | currency:'INR' }}</td>

@@ -23,14 +23,14 @@ export class ManagerEmployeePaymentEntryComponent {
   userAccessLevel: any;
 
   EmployeesData: any={
-    employees:{},
+    companies:[],
     totalAmount:{}
   };
 
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    pageSize: 10
+    pageSize: 1200
   }
 
   filters: any = {
@@ -135,7 +135,7 @@ export class ManagerEmployeePaymentEntryComponent {
       (response:any)=>{
         if(response.success){
           this.EmployeesData = {
-            employees: response.data.employees, // Store employees array
+            companies: response.data.companies, // Store employees array
             totalAmount: response.data.totalAmount // Store total amount
           };
           
@@ -177,6 +177,10 @@ export class ManagerEmployeePaymentEntryComponent {
     );
   }
   
-
+  getTotalEmp(obj: any, key: string, subtractKey?: string): number {
+    return obj.employees.reduce((sum: number, emp: any) => 
+      sum + ((subtractKey ? (emp[key] || 0) - (emp[subtractKey] || 0) : (emp[key] || 0))), 0);
+  }
+  
 
 }
