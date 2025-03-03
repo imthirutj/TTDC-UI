@@ -8,53 +8,87 @@
   
     <div class="container mt-4">
       <h3>Employee Minimum Qualification List:
-       {{getTotalEmployees()}}
+        {{getTotalEmployees()}}
       </h3>
       <div>
         <span> {{ this.filters.date.value| date: 'dd-MMM-yyyy' }}</span>
       </div>
 
     
-      <table id="emp-report" class="table table-bordered" *ngIf="Reports?.length; else noData">
+      <table id="emp-report" class="table table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th>#</th>
+            <th [rowSpan]="2" >#</th>
+            <th [colSpan]="3">Personal</th>
+            <th [colSpan]="2" style="text-align: center;">Qualification</th>
+            <th [colSpan]="2" style="text-align: center;">Experience</th>
+    
+          
+          </tr>
+          <tr>
+    
             <th>Employee Name</th>
             <th>Employee Code</th>
-            <th>Designation</th>
-          
-          
+            <th>Section</th>
+    
+            <th>Required</th>
+            <th>Actual</th>
+            <th>Required</th>
+            <th>Actual</th>
+    
+    
           </tr>
         </thead>
         <tbody>
           <ng-container *ngFor="let obj of Reports; let i = index">
-    
-             <!-- Unit Name Row -->
-             <tr>
-              <td style="text-align: center;" colspan="9">
-                <strong>Unit Name: {{ obj.companyName }}</strong>
-              </td>
-            </tr>
-            <tr *ngFor="let row of obj.employees; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ row.employeeName }}</td>
-              <td>{{ row.employeeCode }}</td>
-            
-              <td>{{ row.designationName }}</td>
-   
-            
-            </tr>
+            <!-- Unit Name Row -->
             <tr>
-              <td colspan="6" class="text-right">
-                <strong>Total Employees: {{ getTotalEmployeesForUnit(obj) }}</strong>
-              </td>
-          
-              
+              <td style="background: burlywood; text-align: center; font-weight: bold;" colspan="9">
+                Unit Name: {{ obj.companyName }}
+              </td> 
             </tr>
+            
+            <!-- Designation Row -->
+            <ng-container *ngFor="let desig of obj.designations">
+              <tr>
+                <td style="text-align: center; font-weight: bold;" colspan="9">
+                  Designation: {{ desig.designationName }} - Total Employees: {{ desig.employees.length }}
+                </td>
+              </tr>
+              
+              <!-- Employee Rows -->
+              <tr *ngFor="let row of desig.employees; let j = index">
+                <td>{{ j + 1 }}</td>
+                <td>{{ row.employeeName }}</td>
+                <td>{{ row.employeeCode }}</td>
+                <td>{{ row.departmentFName }}</td>
+                <td style="width:100px">
+                  {{ getDegreeNames(row) }}
+      
+                </td>
+                <td>
+                  <span>
+                    {{ row.degreeName != '' ? row.degreeName : 'NA' }}
+                  </span>
+                </td>
+                <td>
+                  <span *ngIf="row.minimumExpYears">
+                    {{row.minimumExpYears }} Years
+                  </span>
+      
+                  <span *ngIf="!row.minimumExpYears">
+                    NA
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    {{ row.experience }} Years
+                  </span>
+                </td>
+              </tr>
+            </ng-container>
           </ng-container>
-       
         </tbody>
-        
       </table>
     
       <ng-template #noData>

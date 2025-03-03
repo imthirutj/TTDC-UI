@@ -132,6 +132,7 @@ UserType = UserType;
 
   }
   onFilterChanged(event: any) {
+    this.pageAttributes.currentPage = 1;
     console.log('Filters updated in parent component:', this.filters);
     this.route.queryParams.subscribe(params => {
       if (params['passedFilter'] == '1') {
@@ -144,13 +145,19 @@ UserType = UserType;
     });
   }
   search() {
+    this.pageAttributes.currentPage = 1;
     this.fetchReport();
 
   }
 
   fetchReport() {
     const payload = this.dataService.getPayloadValue(this.filters);
-    this.reportService.getCompanyWiseEmpQualfList(payload).subscribe(
+    const fpayload = {
+      ...payload,
+      pageNumber: this.pageAttributes.currentPage,
+      pageSize: this.pageAttributes.pageSize
+    }
+    this.reportService.getCompanyWiseEmpQualfList(fpayload).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response.success) {
@@ -160,11 +167,24 @@ UserType = UserType;
     );
   }
 
+  getDegreeNames(employee: any): string {
+    return employee?.requiredQualifications
+      ? employee.requiredQualifications
+        .map((q: any) => q.degreeName)
+        .filter((name: any) => name) // Remove null or undefined values
+        .join(', ')
+      : 'N/A'; // Return 'N/A' if requiredQualifications is null/undefined
+  }
+
+
   getTotalEmployees(): number {
     return this.Reports.reduce((sum: number, record: any) => {
-      return sum + record.employees.length;
+      return sum + record.designations.reduce((designationSum: number, designation: any) => {
+        return designationSum + designation.employees.length;
+      }, 0);
     }, 0);
   }
+  
   
   getTotalEmployeesForUnit(unit: any): number {
     return unit.employees ? unit.employees.length : 0;
