@@ -27,13 +27,14 @@ export class ShiftReportComponent {
     }
     
   shiftTypes: string[] = [
-    'WEEKOFF',
-    // 'HOLIDAY', 
+    
     'MORNING',
     'AFTERNOON',
     'NIGHT',
     'GENERAL',
-    'BREAK'
+    'BREAK',
+    'WEEKOFF',
+    // 'HOLIDAY', 
   ];
     selectedTab: string = '';
 

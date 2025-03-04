@@ -414,9 +414,11 @@
 
                         <td>
                             <p *ngIf="entry.oldStatus && entry.oldStatus!=  entry.status">
-                                <b>Previous Status:{{ entry.oldStatus }}</b>
+                                Previous Status:{{ entry.oldStatus }}
+                                
                             </p>
-                            {{ entry.status }}
+                            <b> {{ entry.status }}</b>
+                           
                         </td>
 
                         <td>
