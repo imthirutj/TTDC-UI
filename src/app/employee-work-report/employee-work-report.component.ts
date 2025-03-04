@@ -813,7 +813,7 @@ export class EmployeeWorkReportComponent {
     this.getAvailableCompensatedDates(employee.empId);
     Object.entries(employee.dates).forEach(([date, details]) => {
       const record = details as DateDetails; // Use your defined class
-      if (['','ABSENT', 'ABSENT-LWT', 'HOLIDAY', 'WEEKOFF'].includes(record.status)
+      if ([null,'','ABSENT', 'ABSENT-LWT', 'HOLIDAY', 'WEEKOFF'].includes(record.status)
         || record.hasOverwrited == 1) {
         this.absentWeekOffHolidayData.push({ ...record, newStatus: '', date: date, isCompensated: record.isCompensated == '1' ? 'YES' : 'NO' });
       }
