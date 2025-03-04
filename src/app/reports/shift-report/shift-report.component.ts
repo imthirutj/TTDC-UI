@@ -7,13 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeWorkDetailsComponent } from 'src/app/employee-work-details/employee-work-details.component';
 import { EmployeeWorkDetailsService } from 'src/app/employee-work-details/employee-work-details.service';
 
-
 @Component({
-  selector: 'app-leave-report',
-  templateUrl: './leave-report.component.html',
-  styleUrls: ['./leave-report.component.css']
+  selector: 'app-shift-report',
+  templateUrl: './shift-report.component.html',
+  styleUrls: ['./shift-report.component.css']
 })
-export class LeaveReportComponent {
+export class ShiftReportComponent {
 
   UserType = UserType;
     userAccessLevel: any;
@@ -26,9 +25,26 @@ export class LeaveReportComponent {
       totalPages: 1,
       pageSize: 1200
     }
+    
+  shiftTypes: string[] = [
+    'WEEKOFF',
+    // 'HOLIDAY', 
+    'MORNING',
+    'AFTERNOON',
+    'NIGHT',
+    'GENERAL',
+    'BREAK'
+  ];
+    selectedTab: string = '';
+
     filters: any = {
       role: { value: '', show: false, key: 'role', includeInSearchParams: true },
-  
+      shiftStatus: {
+        value: '',
+        show: true,
+        key: 'shiftStatus',
+        includeInSearchParams: true
+      },
       fromDate: {
         value: new Date().toISOString().split('T')[0], // Default to current month
         show: true,
@@ -132,21 +148,14 @@ export class LeaveReportComponent {
         pageSize: this.pageAttributes.pageSize
       }
   
-      this.employeeWorkDetailsService.getEmployeeBasedReports(fpayload).subscribe(
+      this.reportService.getCompanyWiseEmpShiftList(fpayload).subscribe(
         (response:any)=>{
           this.Reports = response.data;
           this.pageAttributes.totalPages = response.totalPages;
+          this.totalCounts = response.totalCount;
         }
       );
     }
   
-    getTotal(field: string): number {
-      return this.Reports.reduce((sum:any, record:any) => {
-        return sum + record.employees.reduce((empSum:any, employee:any) => empSum + (employee[field] || 0), 0);
-      }, 0);
-    }
-    
-    getTotalEmp(obj: any, key: string): number {
-      return obj.employees.reduce((sum:any, emp:any) => sum + (emp[key] || 0), 0);
-    }
+   
 }

@@ -134,6 +134,12 @@ export class SidebarComponent {
         route: '/emp-min-qual-report',
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
+      {
+        label: 'Shift Report',
+        icon: 'fa-solid fa-map-marked-alt', // Represents geographic regions
+        route: '/shift-report',
+        allowedUserTypes: [UserType.STATE_ADMIN]
+      },
 
       // { 
       //   label: 'State List', 

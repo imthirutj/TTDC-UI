@@ -219,18 +219,21 @@
       <tr *ngFor="let payment of paymentGeneratedList; let i =index">
         <td>{{i+1}}</td>
         <td>{{payment.companyName}}</td>
-        <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.totalEmployee }}</td>
-        <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.paymentGeneratedCount }}</td>
-        <td *ngIf="userAccessLevel!= UserType.EMPLOYEE">{{ payment.paymentNotGeneratedCount }}</td>
+        <td>{{ payment.totalEmployee }}</td>
+        <td>{{ payment.paymentGeneratedCount }}</td>
+        <td>{{ payment.paymentNotGeneratedCount }}</td>
         <td>{{ payment.totalAmount | currency:'INR' }}</td>
       </tr>
     </tbody>
     <tfoot *ngIf="paymentGeneratedList.length > 0">
       <tr>
-        <td [attr.colspan]="userAccessLevel != UserType.EMPLOYEE ? 6 : 3" class="text-right">
+        <td colspan="2" class="text-right">
           <strong>Total:</strong>
         </td>
 
+        <td>{{ getTotal('totalEmployee') }}</td>
+        <td>{{ getTotal('paymentGeneratedCount') }}</td>
+        <td>{{ getTotal('paymentNotGeneratedCount')  }}</td>
         <td>{{ getTotal('totalAmount') | currency:'INR' }}</td>
       </tr>
     </tfoot>

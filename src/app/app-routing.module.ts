@@ -58,6 +58,7 @@ import { LogNotLogReportComponent } from './reports/log-not-log-report/log-not-l
 import { LeaveReportComponent } from './reports/leave-report/leave-report.component';
 import { OdReportComponent } from './reports/od-report/od-report.component';
 import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min-qual-report.component';
+import { ShiftReportComponent } from './reports/shift-report/shift-report.component';
 
 const routes: Routes = [
 
@@ -352,6 +353,12 @@ const routes: Routes = [
   {
     path:'od-report',
     component:OdReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'shift-report',
+    component:ShiftReportComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },

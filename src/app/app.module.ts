@@ -97,6 +97,7 @@ import { LogNotLogReportComponent } from './reports/log-not-log-report/log-not-l
 import { LeaveReportComponent } from './reports/leave-report/leave-report.component';
 import { OdReportComponent } from './reports/od-report/od-report.component';
 import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min-qual-report.component';
+import { ShiftReportComponent } from './reports/shift-report/shift-report.component';
 
 @NgModule({
   declarations: [
@@ -164,7 +165,8 @@ import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min
     LogNotLogReportComponent,
     LeaveReportComponent,
     OdReportComponent,
-    EmpMinQualReportComponent
+    EmpMinQualReportComponent,
+    ShiftReportComponent
 
   ],
   imports: [

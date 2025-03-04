@@ -279,13 +279,14 @@
       <!--shiftStatus-->
       <div *ngIf="filters.shiftStatus.show" class="col-md-4">
         <div class="form-group">
-          <label for="shiftStatus">Today Shift Filter</label>
+          <label for="shiftStatus"> Shift Filter</label>
           <select [(ngModel)]="filters.shiftStatus.value" (change)="onShiftStatuschange()" class="form-control"
             id="shiftStatus">
             <option value="">All</option>
             <option *ngFor="let shift of shiftTypes" [value]="shift">
               {{ shift }}
             </option>
+            <option value="NOT_ASSIGNED">Not Assigned</option>
           </select>
         </div>
       </div>
