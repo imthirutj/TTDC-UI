@@ -21,7 +21,7 @@
             <th [rowSpan]="2" >#</th>
             <th [colSpan]="3">Personal</th>
             <th [colSpan]="2" style="text-align: center;">Qualification</th>
-            <th [colSpan]="2" style="text-align: center;">Experience</th>
+            <th [colSpan]="3" style="text-align: center;">Experience</th>
     
           
           </tr>
@@ -33,8 +33,11 @@
     
             <th>Required</th>
             <th>Actual</th>
+
+
             <th>Required</th>
             <th>Actual</th>
+            <th>TTDC</th>
     
     
           </tr>
@@ -83,6 +86,11 @@
                 <td>
                   <span>
                     {{ row.experience }} Years
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    {{ row.ttdcExperience }} Years
                   </span>
                 </td>
               </tr>

@@ -31,7 +31,7 @@
         <th [rowSpan]="2">#</th>
         <th [colSpan]="8" style="text-align: center;">Personal Info</th>
         <th [colSpan]="3" style="text-align: center;">Qualification</th>
-        <th [colSpan]="3" style="text-align: center;">Experience</th>
+        <th [colSpan]="4" style="text-align: center;">Experience</th>
 
         <th [rowSpan]="2">Bank Details</th>
         <th [rowSpan]="2">Total Wages</th>
@@ -59,8 +59,10 @@
         <th>Required</th>
         <th>Actual</th>
         <th>Upload</th>
+
         <th>Required</th>
         <th>Actual</th>
+        <th>TTDC</th>
         <th>Upload</th>
 
 
@@ -129,6 +131,8 @@
               <i class="fas fa-file-alt"></i>
             </button>
           </td>
+
+          <!--Experience-->
           <td>
             <span *ngIf="employee.minimumExpYears">
               {{employee.minimumExpYears }} Years
@@ -142,6 +146,9 @@
             <span>
               {{ employee.experience }} Years
             </span>
+          </td>
+          <td>
+            {{ employee.ttdcExperience }} Years
           </td>
           <!--Experience Certificate-->
           <td>
@@ -456,6 +463,15 @@
             <label for="experience" class="form-label">Experience(years)</label>
             <input type="number" class="form-control" id="experience" [(ngModel)]="modal.employee.experience"
               name="experience" placeholder="Enter experience" [disabled]="modal.action === 'VIEW'">
+          </div>
+
+           <!--TTDC Experience -->
+           <div class="mb-3">
+            <label for="ttdcExperience" class="form-label">TTDC Experience(years)</label>
+            <input type="number" class="form-control" id="ttdcExperience"
+             [(ngModel)]="modal.employee.ttdcExperience"
+              name="ttdcExperience" placeholder="Enter ttdc Experience" 
+              [disabled]="modal.action === 'VIEW'">
           </div>
         </form>
       </div>

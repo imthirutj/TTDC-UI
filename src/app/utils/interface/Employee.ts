@@ -26,6 +26,7 @@ export class Employee {
     cityName: string;
     degreeId: string;
     experience: string;
+    ttdcExperience: string;
     loginName: string;
     loginPassword: string;
     employementType: any;
@@ -62,6 +63,7 @@ export class Employee {
         this.degreeId = '';
         this.employementType = '';
         this.experience = '';
+        this.ttdcExperience = '';
         this.loginName = 'qwerty';
         this.loginPassword = '12345';
         this.totalExperience = '';
