@@ -32,7 +32,7 @@ export class EmployeeListComponent {
   pageAttributes = {
     currentPage: 1,
     totalPages: 1,
-    pageSize: 1200
+    pageSize: 100
   }
   totalCount: number = 0;
   dropdowns = {

@@ -31,10 +31,7 @@ export class ShiftReportComponent {
     'MORNING',
     'AFTERNOON',
     'NIGHT',
-    'GENERAL',
-    'BREAK',
-    'WEEKOFF',
-    // 'HOLIDAY', 
+    'GENERAL', 
   ];
     selectedTab: string = '';
 

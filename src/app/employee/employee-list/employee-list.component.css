@@ -85,3 +85,25 @@
     max-width: 100%;
   } */
   
+  @keyframes blink {
+    50% {
+      background-color: red;
+      color: white;
+    }
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+  }
+  
+  .blinking {
+    animation: blink 1s infinite;
+  }
+  
+  .shaking {
+    animation: shake 0.5s infinite;
+  }
+  

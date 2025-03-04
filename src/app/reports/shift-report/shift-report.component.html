@@ -48,14 +48,14 @@
 
         <!-- Unit Name Row -->
         <tr style="background: rgb(239, 190, 118);">
-          <td style="text-align: center; " colspan="9">
+          <td style="text-align: left; " colspan="9">
             <strong>Unit Name: {{ obj.companyName }}</strong>
           </td>
         </tr>
         <!-- Shift Row -->
         <ng-container *ngFor="let shift of obj.shifts">
           <tr>
-            <td style="text-align: center;" colspan="9">
+            <td style="text-align: left;" colspan="9">
               <span>
                 Shift: <b>{{ shift.shiftName }}</b> - Total: {{ shift.employees.length }}
               </span>
