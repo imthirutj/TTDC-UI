@@ -150,9 +150,9 @@
                                 [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].workingShift), 'color': 'white' }">
                                 {{ employee.dates[date].workingShift | titlecase }} Shift</p> -->
 
-                            <p *ngIf="employee.dates[date].shift"
-                                [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].shift), 'color': 'white' }">
-                                {{ employee.dates[date].shift | titlecase }} Shift</p>
+                            <p *ngIf="employee.dates[date].workingShift"
+                                [ngStyle]="{ 'background-color': getShiftColor(employee.dates[date].workingShift), 'color': 'white' }">
+                                {{ employee.dates[date].workingShift | titlecase }} Shift</p>
                         </div>
 
 
