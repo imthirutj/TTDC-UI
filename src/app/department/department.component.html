@@ -1,7 +1,10 @@
 
 <button (click)="dataService.downloadExcelTable('departments', 'Departments')" class="btn btn-success">Download as
   Excel</button>
-
+  <!-- Add Section Button -->
+  <button class="btn btn-primary" (click)="openModal(Action.CREATE)">
+    <i class="fas fa-plus"></i> Add Section
+  </button>
 <div class="Department-list-container">
     <h3>Section List</h3>
     <table id="departments" class="table table-bordered">
@@ -23,4 +26,22 @@
       </tbody>
     </table>
   </div>
-  
+
+  <!-- Common Dialog for Adding/Editing Sections -->
+<app-common-dialog
+[showDialog]="modal.show" 
+[dialogTitle]="modal.title" 
+[showCloseIcon]="true"
+[showSubmitButton]="true" 
+(submitDialog)="saveDepartment()"
+(closeDialog)="closeModal()">
+ <div class="container">
+   <div class="row">
+     <div class="col-md-12">
+       <label for="sectionName" class="form-label">Section Name</label>
+       <input type="text" class="form-control" id="sectionName" [(ngModel)]="modal.obj.departmentFName"
+       name="sectionName" placeholder="Enter Section Name">
+     </div>
+   </div>
+ </div>
+</app-common-dialog>

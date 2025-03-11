@@ -163,6 +163,9 @@ export class MasterDataService {
     return this.http.post(`${this.apiUrl}Master/InsertUpdateDesignation`, payload);
   }
 
+  save_Department(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Master/InsertUpdateDepartment`, payload);
+  }
   get_Designation_Qualification(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/Get_Designation_Qualification`+query);
   }

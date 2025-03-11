@@ -23,24 +23,7 @@ export class DesignationComponent implements OnInit {
   };
 
   filters: any = {
-    cityId: {
-      value: '',
-      show: true,
-      key: 'cityId',
-      includeInSearchParams: true
-    },
-    companyId: {
-      value: '',
-      show: true,
-      key: 'compId',
-      includeInSearchParams: true
-    },
-    deptId: {
-      value: '',
-      show: true,
-      key: 'deptId',
-      includeInSearchParams: true
-    }
+   
   };
 
   constructor(private masterDataService: MasterDataService,
@@ -95,7 +78,7 @@ export class DesignationComponent implements OnInit {
   openModal(action: Action, obj?: Designation): void {
     this.modal.show = true;
     this.modal.action = action;
-    this.modal.title = action == Action.UPDATE ? 'Edit Designation' : action == Action.CREATE ? 'Add Designation-Qualification' : '';
+    this.modal.title = action == Action.UPDATE ? 'Edit Designation' : action == Action.CREATE ? 'Add Designation' : '';
 
     if (action == Action.UPDATE || action == Action.VIEW) {
       if (obj) {

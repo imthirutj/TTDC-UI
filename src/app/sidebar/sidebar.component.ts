@@ -176,7 +176,7 @@ export class SidebarComponent {
         label: 'Section Master',
         icon: 'fa-solid fa-sitemap',
         route: '/department',
-        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]
+        allowedUserTypes: [UserType.MANAGER,UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]
       },
       // { 
       //   label: 'Company/Unit List', 
