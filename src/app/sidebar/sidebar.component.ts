@@ -172,12 +172,6 @@ export class SidebarComponent {
         route: '/vendor-management',
         allowedUserTypes: [UserType.VENDOR]
       },
-      {
-        label: 'Section Master',
-        icon: 'fa-solid fa-sitemap',
-        route: '/department',
-        allowedUserTypes: [UserType.MANAGER,UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]
-      },
       // { 
       //   label: 'Company/Unit List', 
       //   icon: 'fa-solid fa-building', 
@@ -189,6 +183,13 @@ export class SidebarComponent {
         icon: 'fa-solid fa-id-badge',
         route: '/designation',
         allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER]
+      },
+      
+      {
+        label: 'Section Master',
+        icon: 'fa-solid fa-sitemap',
+        route: '/department',
+        allowedUserTypes: [UserType.MANAGER,UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]
       },
       {
         label: 'Degree Master',
