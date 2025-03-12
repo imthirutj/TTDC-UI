@@ -61,8 +61,8 @@
         <th>Upload</th>
 
         <th>Required</th>
-        <th>Actual</th>
-        <th>TTDC</th>
+        <th>Past</th>
+        <th>Current</th>
         <th>Upload</th>
 
 
@@ -465,14 +465,14 @@
 
           <!-- Experience -->
           <div class="mb-3">
-            <label for="experience" class="form-label">Experience(years)</label>
+            <label for="experience" class="form-label">Experience-Past(years)</label>
             <input type="number" class="form-control" id="experience" [(ngModel)]="modal.employee.experience"
               name="experience" placeholder="Enter experience" [disabled]="modal.action === 'VIEW'">
           </div>
 
            <!--TTDC Experience -->
            <div class="mb-3">
-            <label for="ttdcExperience" class="form-label">TTDC Experience(years)</label>
+            <label for="ttdcExperience" class="form-label">Experience-Current(years)</label>
             <input type="number" class="form-control" id="ttdcExperience"
              [(ngModel)]="modal.employee.ttdcExperience"
               name="ttdcExperience" placeholder="Enter ttdc Experience" 
