@@ -81,8 +81,8 @@
               {{ ((pageAttributes.currentPage - 1) * pageAttributes.pageSize) + (i + 1) }}
               <button 
               [ngClass]="{
-                'btn btn-primary btn-sm': employee.degreeName  && employee.totalWages,
-                'btn btn-danger btn-sm blinking shaking': !employee.degreeName || !employee.totalWages
+                'btn btn-primary btn-sm': employee.companyId  && employee.vendorId && employee.designationId && employee.departmentId && employee. employee.degreeName  && employee.totalWages,
+                'btn btn-danger btn-sm blinking shaking':!employee.companyId || !employee.vendorId || !employee.designationId || !employee.departmentId || !employee.degreeName || !employee.totalWages
               }"
               type="button" (click)="openModal(Action.UPDATE, employee)">
                 Edit
