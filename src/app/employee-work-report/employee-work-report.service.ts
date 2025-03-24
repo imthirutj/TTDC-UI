@@ -44,6 +44,10 @@ export class EmployeeWorkReportService {
     const url = `${this.apiUrl}EmpWorkReport/GetAvailableCompensatedDates?${queryParams}`;
     return this.http.get<any>(url);
   }
+
+  submitEligible(payload:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Employee/UpdateEmployeeSalaryEligible`, payload);
+  }
   
 
 }

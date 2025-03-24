@@ -223,6 +223,18 @@ export class EmployeeWorkReportComponent {
   };
 
 
+  modalReasonPopup: any = {
+    show: false,
+    title: 'Enter the Reason',
+    obj:{
+      month: '',
+      year: '',
+      status: '',
+      employeeId: '',
+      reason: ''
+    }
+  }
+
   //#endRegion
 
   constructor(
@@ -1012,5 +1024,51 @@ export class EmployeeWorkReportComponent {
     }, 100);
   }
   
+  showReasonModal(obj: EmployeeStatus){
+    this.modalReasonPopup.show = true;
+    const data = {
+      employeeId: obj.empId,
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value,
+      status: null,
+      reason: null
+    }
+    this.modalReasonPopup.obj = {... data};
+  }
+  closeReasonModal(){
+    this.modalReasonPopup.show = false;
+    this.modalReasonPopup.obj = {};
+  }
+
+  submitEligible(status: number, obj: EmployeeStatus = new EmployeeStatus()) {
+    let payload: any = { status: status };
+  
+    if (status == 1) {
+      payload = {
+        ...payload,
+        employeeId: obj.empId,
+        month: this.filters.selectedMonth.value,
+        year: this.filters.selectedYear.value,
+        reason: null
+      };
+    } else if (status == 0) {
+      payload = { 
+        ...payload,
+        ...this.modalReasonPopup.obj
+       };
+    } else {
+      this.dataService.showSnackBar('Please select the status');
+      return;
+    }
+  
+    this.employeeWorkReportService.submitEligible(payload).subscribe((response) => {
+      if (response.success) {
+        this.dataService.showSnackBar(response.message);
+        this.search();
+      }
+    });
+  
+    this.closeReasonModal();
+  }
   
 }

@@ -24,7 +24,7 @@
 
         <button (click)="this.dataService.downloadPDF('workshift')" class="btn btn-primary">
             Download as PDF
-          </button>
+        </button>
 
         <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 
@@ -75,6 +75,8 @@
                             (change)="onHeaderCheckboxChange(date, $event)" />
                         {{ date | date: 'dd MMM yyyy' }} - {{ date | date: 'EEE' }}
 
+                    </th>
+                    <th>certified that the individual is eligible for full salary
                     </th>
                 </tr>
             </thead>
@@ -185,6 +187,22 @@
                             <input *ngIf="isAssignWeekOff" type="checkbox" [(ngModel)]="employee.dates[date].selected"
                                 (change)="onRowCheckboxChange(date, employee)" />
                         </div>
+                    </td>
+                    <td class="ellipsis">
+                        <div *ngIf="!employee.salaryEligible  || employee.salaryEligible == null">
+                            <button (click)="submitEligible(1, employee)" class="btn btn-primary">Yes</button>
+                            <button class="btn btn-secondary" (click)="showReasonModal(employee)">No</button>
+                        </div>
+                        <div *ngIf="employee.salaryEligible">
+                            <div *ngIf="employee.salaryEligible.status == 1">
+                                YES
+                            </div>
+                            <div *ngIf="employee.salaryEligible.status == 0">
+                                NO
+                                <p>{{ employee.salaryEligible.reason }}</p>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
             </tbody>
@@ -415,10 +433,10 @@
                         <td>
                             <p *ngIf="entry.oldStatus && entry.oldStatus!=  entry.status">
                                 Previous Status:{{ entry.oldStatus }}
-                                
+
                             </p>
                             <b> {{ entry.status }}</b>
-                           
+
                         </td>
 
                         <td>
@@ -642,4 +660,18 @@
         </div>
 
     </app-common-dialog>
+
+    <!--Reason Modal-->
+    <app-common-dialog [showDialog]="modalReasonPopup.show " [dialogTitle]="modalReasonPopup.title "
+        [showCloseIcon]="true " [showSubmitButton]="true " (closeDialog)="closeReasonModal() "
+        (submitDialog)="submitEligible(0, undefined) ">
+        <div class="row">
+            <div class="col-12">
+                <textarea [(ngModel)]="modalReasonPopup.obj.reason" class="form-control"
+                    placeholder="Reason"></textarea>
+            </div>
+        </div>
+    </app-common-dialog>
+
+
 </div>
