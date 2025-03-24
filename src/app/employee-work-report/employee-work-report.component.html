@@ -108,7 +108,9 @@
 
                         <button *ngIf="isAdjustable(employee) && 
                             userAccessLevel != UserType.EMPLOYEE &&
-                            !employee.hasSalaryGenerated" (click)="openAdjustModal(employee)"
+                            !employee.hasSalaryGenerated &&
+                            (!employee.salaryEligible  || employee.salaryEligible == null)"
+                             (click)="openAdjustModal(employee)"
                             style="background-color: #a60015;" class="btn btn-secondary">Adjust</button>
 
                         <p *ngIf="employee.hasSalaryGenerated">Salary Already generated</p>
