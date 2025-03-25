@@ -116,7 +116,9 @@
                         <p *ngIf="employee.hasSalaryGenerated">Salary Already generated</p>
                         <i class="fas fa-info-circle" (click)="openEmployeeReportModal(employee)"></i>
                     </td>
-                    <td *ngFor="let date of getCurrentDates()">
+                    <td *ngFor="let date of getCurrentDates()"
+                    [ngStyle]="{'background-color': employee.dates[date].oldStatus && employee.dates[date].oldStatus != employee.dates[date].status
+                                         ? '#ffcccb' : 'transparent'}">
 
                         <!-- Status Dropdown -->
                         <select *ngIf=" false && !isOtherStatus(employee.dates[date].status)"
@@ -181,6 +183,16 @@
                                     class="btn btn-sm btn-outline-success mt-1">Approve</button>
                             </div>
                         </div>
+
+                        <!-- Remarks and OldStatus-->
+                         <div>
+                            <div *ngIf="employee.dates[date].oldStatus && employee.dates[date].oldStatus != employee.dates[date].status">
+                                Changed From:<b> {{ employee.dates[date].oldStatus }}</b>
+                            </div>
+                            <div *ngIf="employee.dates[date].remarks">
+                                Remarks: <b>{{ employee.dates[date].remarks }}</b>
+                            </div>
+                         </div>
 
                         <div>
                             <div *ngIf="false" (click)="openModal(employee.dates[date], employee)" class="triangle">

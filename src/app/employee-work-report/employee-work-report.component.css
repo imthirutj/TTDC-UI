@@ -177,14 +177,14 @@
 
 
 
-th:first-child {  /* S.NO Column */
+#workshift th:first-child {  /* S.NO Column */
 
   position: sticky;
   left: 0;
   background-color: #c1171f; /* Ensure it doesn't overlap */
   z-index: 2;
 }
-td:first-child {  /* S.NO Column */
+#workshift td:first-child {  /* S.NO Column */
  
   position: sticky;
   left: 0;
@@ -192,7 +192,7 @@ td:first-child {  /* S.NO Column */
   z-index: 2;
 }
 
-th:nth-child(2) {  /* Employee Column */
+#workshift th:nth-child(2) {  /* Employee Column */
 
   position: sticky;
   left: 50px;  /* Adjust based on the column width */
@@ -200,7 +200,7 @@ th:nth-child(2) {  /* Employee Column */
   z-index: 2;
 }
 
-td:nth-child(2) {  /* Employee Column */
+#workshift td:nth-child(2) {  /* Employee Column */
 
   position: sticky;
   left: 50px;  /* Adjust based on the column width */
@@ -209,6 +209,6 @@ td:nth-child(2) {  /* Employee Column */
 }
 
 /* Optional: Add a box-shadow to indicate separation */
-th:first-child, th:nth-child(2), td:first-child, td:nth-child(2) {
+#workshift th:first-child, th:nth-child(2), td:first-child, td:nth-child(2) {
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
 }
