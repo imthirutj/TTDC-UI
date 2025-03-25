@@ -174,3 +174,41 @@
   text-overflow: clip;
   background-color: #f1f1f1;  /* Optional, just to highlight on hover */
 }
+
+
+
+th:first-child {  /* S.NO Column */
+
+  position: sticky;
+  left: 0;
+  background-color: #c1171f; /* Ensure it doesn't overlap */
+  z-index: 2;
+}
+td:first-child {  /* S.NO Column */
+ 
+  position: sticky;
+  left: 0;
+  background-color: #f4f4f4;
+  z-index: 2;
+}
+
+th:nth-child(2) {  /* Employee Column */
+
+  position: sticky;
+  left: 50px;  /* Adjust based on the column width */
+  background-color: #c1171f;
+  z-index: 2;
+}
+
+td:nth-child(2) {  /* Employee Column */
+
+  position: sticky;
+  left: 50px;  /* Adjust based on the column width */
+  background-color: #f4f4f4;
+  z-index: 2;
+}
+
+/* Optional: Add a box-shadow to indicate separation */
+th:first-child, th:nth-child(2), td:first-child, td:nth-child(2) {
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
