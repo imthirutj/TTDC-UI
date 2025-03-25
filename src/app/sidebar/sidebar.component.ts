@@ -20,6 +20,8 @@ export class SidebarComponent {
   user: any;
   userAccessLevel: any;
 
+  isAdmin: number = 0;
+
   allMenuItems = [];
 
   constructor(private dataService: DataService,
@@ -28,6 +30,7 @@ export class SidebarComponent {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
       this.userAccessLevel = user.role;
+      this.isAdmin = user.isAdmin;
       console.log('User Access Level:', this.userAccessLevel);
       this.menuItems = this.getMenuItemsBasedOnUserType(this.userAccessLevel);
     });
@@ -46,6 +49,11 @@ export class SidebarComponent {
   getMenuItemsBasedOnUserType(userAccessLevel: any): any[] {
     // Filter the menu items based on the userType
     const allMenuItems = [
+
+
+
+
+
       {
         label: 'Dashboard',
         icon: 'fa-solid fa-tachometer-alt',
@@ -76,7 +84,7 @@ export class SidebarComponent {
         route: '/od-report',
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
-      
+
       {
         label: 'Designation Wise Report',
         icon: 'fa-solid fa-user-tie', // Represents job roles or designations
@@ -107,7 +115,7 @@ export class SidebarComponent {
         route: '/region-wise-report',
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
-    
+
 
 
       {
@@ -141,80 +149,13 @@ export class SidebarComponent {
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
 
-      // { 
-      //   label: 'State List', 
-      //   icon: 'fa-solid fa-map-marked-alt', 
-      //   route: '/state', 
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
-      // },
-      {
-        label: 'Region Master',
-        icon: 'fa-solid fa-city',
-        route: '/city',
-        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]
-      },
-      {
-        label: 'Holiday Master',
-        icon: 'fa-solid fa-city',
-        route: '/holiday-mgmt',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]
-      },
-
-      // { 
-      //   label: 'Category List', 
-      //   icon: 'fa-solid fa-th-list', 
-      //   route: '/category', 
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
-      // },
-      {
-        label: 'Vendor Management',
-        icon: 'fa-solid fa-store',
-        route: '/vendor-management',
-        allowedUserTypes: [UserType.VENDOR]
-      },
-      // { 
-      //   label: 'Company/Unit List', 
-      //   icon: 'fa-solid fa-building', 
-      //   route: '/company', 
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]  
-      // },
-      {
-        label: 'Designation Master',
-        icon: 'fa-solid fa-id-badge',
-        route: '/designation',
-        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER]
-      },
-      
-      {
-        label: 'Section Master',
-        icon: 'fa-solid fa-sitemap',
-        route: '/department',
-        allowedUserTypes: [UserType.MANAGER,UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]
-      },
-      {
-        label: 'Degree Master',
-        icon: 'fa-solid fa-graduation-cap',
-        route: '/degree',
-        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]
-      },
-      {
-        label: 'Designation Qualification',
-        icon: 'fa-solid fa-tasks',
-        route: '/DesignationQualification',
-        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]
-      },
       {
         label: 'Shift Management',
         icon: 'fa-solid fa-clock',
         route: '/shift-management',
         allowedUserTypes: [UserType.CITY_ADMIN, UserType.MANAGER]
       },
-      // {
-      //   label: 'Employee Report',
-      //   icon: 'fa-solid fa-chart-line',
-      //   route: '/employee-report',
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
-      // },
+
       {
         label: 'Employee Payment Entry',
         icon: 'fa-solid fa-receipt',
@@ -245,30 +186,14 @@ export class SidebarComponent {
         route: '/compensation-request',
         allowedUserTypes: [UserType.EMPLOYEE]
       },
-      // {
-      //   label: 'OD Request',
-      //   icon: 'fa-solid fa-file-alt',
-      //   route: '/odslipcompanylist',
-      //   allowedUserTypes: [ UserType.EMPLOYEE] 
-      // },
-      // {
-      //   label: 'OD Slip Approval',
-      //   icon: 'fa-solid fa-check-circle',
-      //   route: '/odslipapproval',
-      //   allowedUserTypes: [ UserType.MANAGER] 
-      // },
+
       {
         label: 'Leave Request',
         icon: 'fa-solid fa-envelope-open-text',
         route: '/empleaverequest',
         allowedUserTypes: [UserType.EMPLOYEE]
       },
-      // {
-      //   label: 'Leave Approval',
-      //   icon: 'fa-solid fa-thumbs-up',
-      //   route: '/Leaveapproval',
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
-      // },
+
       {
         label: 'My Employee Profile',
         icon: 'fa-solid fa-id-badge',
@@ -281,12 +206,7 @@ export class SidebarComponent {
         route: '/payroll-expenditure',
         allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN]
       },
-      // { 
-      //   label: 'Future Payroll Needs', 
-      //   icon: 'fa-solid fa-line-chart', 
-      //   route: '/future-payroll-needs', 
-      //   allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN] 
-      // },
+
       {
         label: 'Leave And OD Analysis',
         icon: 'fa-solid fa-line-chart',
@@ -299,10 +219,115 @@ export class SidebarComponent {
         route: '/employee-based-reports',
         allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN]
       },
+      //Masters
+      {
+        label: 'Region Master',
+        icon: 'fa-solid fa-city',
+        route: '/city',
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN],
+        isAdmin: true
+      },
+      {
+        label: 'Holiday Master',
+        icon: 'fa-solid fa-city',
+        route: '/holiday-mgmt',
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN],
+        isAdmin: true
+      },
+      {
+        label: 'Vendor Management',
+        icon: 'fa-solid fa-store',
+        route: '/vendor-management',
+        allowedUserTypes: [UserType.VENDOR],
+        isAdmin: true
+      },
+
+      {
+        label: 'Designation Master',
+        icon: 'fa-solid fa-id-badge',
+        route: '/designation',
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER],
+        isAdmin: true
+      },
+
+      {
+        label: 'Section Master',
+        icon: 'fa-solid fa-sitemap',
+        route: '/department',
+        allowedUserTypes: [UserType.MANAGER, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN],
+        isAdmin: true
+      },
+      {
+        label: 'Degree Master',
+        icon: 'fa-solid fa-graduation-cap',
+        route: '/degree',
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER],
+        isAdmin: true
+      },
+      {
+        label: 'Designation Qualification',
+        icon: 'fa-solid fa-tasks',
+        route: '/DesignationQualification',
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER],
+        isAdmin: true
+      },
+      // { 
+      //   label: 'State List', 
+      //   icon: 'fa-solid fa-map-marked-alt', 
+      //   route: '/state', 
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
+      // },
+      // { 
+      //   label: 'Category List', 
+      //   icon: 'fa-solid fa-th-list', 
+      //   route: '/category', 
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
+      // },
+      // { 
+      //   label: 'Company/Unit List', 
+      //   icon: 'fa-solid fa-building', 
+      //   route: '/company', 
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]  
+      // },
+      // {
+      //   label: 'OD Request',
+      //   icon: 'fa-solid fa-file-alt',
+      //   route: '/odslipcompanylist',
+      //   allowedUserTypes: [ UserType.EMPLOYEE] 
+      // },
+      // {
+      //   label: 'OD Slip Approval',
+      //   icon: 'fa-solid fa-check-circle',
+      //   route: '/odslipapproval',
+      //   allowedUserTypes: [ UserType.MANAGER] 
+      // },
+      // {
+      //   label: 'Employee Report',
+      //   icon: 'fa-solid fa-chart-line',
+      //   route: '/employee-report',
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
+      // },
+      // {
+      //   label: 'Leave Approval',
+      //   icon: 'fa-solid fa-thumbs-up',
+      //   route: '/Leaveapproval',
+      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
+      // },
+      // { 
+      //   label: 'Future Payroll Needs', 
+      //   icon: 'fa-solid fa-line-chart', 
+      //   route: '/future-payroll-needs', 
+      //   allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN] 
+      // },
     ];
 
 
-    return allMenuItems.filter(item => item.allowedUserTypes.includes(userAccessLevel) || item.allowedUserTypes.includes('ALL' as UserType));
+    return allMenuItems.filter(item =>
+      (item.allowedUserTypes.includes(userAccessLevel) && this.isAdmin == 0 )    ||
+      (item.allowedUserTypes.includes('ALL' as UserType) && this.isAdmin == 0 )  ||
+      (item.isAdmin == true && (userAccessLevel == UserType.STATE_ADMIN && this.isAdmin == 1))
+    );
+
   }
 
 
