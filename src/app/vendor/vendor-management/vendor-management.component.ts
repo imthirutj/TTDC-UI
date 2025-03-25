@@ -269,7 +269,11 @@ export class VendorManagementComponent {
       });
     }
     else {
-      this.vendorService.addVendor(this.modal.vendor).subscribe((response) => {
+      let payload:any ={
+        ...this.modal.vendor
+      }
+      delete payload['companyDepartmentListWise'];
+      this.vendorService.addVendor(payload).subscribe((response) => {
         if (response.success) {
           this.getVendors();
         }
