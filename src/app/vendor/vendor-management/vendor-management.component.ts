@@ -256,7 +256,12 @@ export class VendorManagementComponent {
   }
   updateVendorModal() {
     if (this.modal.isEdit) {
-      this.vendorService.updateVendor(this.modal.vendor).subscribe((response) => {
+      //remove companyDepartmentListWise from vendor
+      let payload:any ={
+        ...this.modal.vendor
+      }
+      delete payload['companyDepartmentListWise'];
+      this.vendorService.updateVendor(payload).subscribe((response) => {
         if (response.success) {
           this.dataService.showSnackBar('Vendor updated successfully');
           this.getVendors();
