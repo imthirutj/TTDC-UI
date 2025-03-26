@@ -389,7 +389,11 @@ export class VendorPaymentDetailsComponent implements OnInit {
     this.vendorService.generateVendeorInvoiceDetails(payload).subscribe((response) => {
       console.log('Vendor Invoice Details:', response);
       this.dataService.openConfirmationDialog(response.message);
-      this.navigateVendorInvoice( this.modalGenerateInv.vendor, 'VIEW');
+
+      if(response.success){
+        this.navigateVendorInvoice( this.modalGenerateInv.vendor, 'VIEW');
+      }
+      
     });
   }
 
