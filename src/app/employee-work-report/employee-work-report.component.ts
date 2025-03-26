@@ -1070,5 +1070,19 @@ export class EmployeeWorkReportComponent {
   
     this.closeReasonModal();
   }
+
+  undoEligible(obj: EmployeeStatus){
+    const  payload = {
+      employeeId: obj.empId,
+      month: this.filters.selectedMonth.value,
+      year: this.filters.selectedYear.value,
+    };
+    this.employeeWorkReportService.undoEligible(payload).subscribe((response) => {
+      if (response.success) {
+        this.dataService.showSnackBar(response.message);
+        this.search();
+      }
+    });
+  }
   
 }

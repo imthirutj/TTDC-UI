@@ -48,6 +48,10 @@ export class EmployeeWorkReportService {
   submitEligible(payload:any): Observable<any> {
     return this.http.post(`${this.apiUrl}Employee/UpdateEmployeeSalaryEligible`, payload);
   }
+
+  undoEligible(payload:any): Observable<any> {
+    return this.http.post(`${this.apiUrl}Employee/UndoSalaryEligible`, payload);
+  }
   
 
 }
