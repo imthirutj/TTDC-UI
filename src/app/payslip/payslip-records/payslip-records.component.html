@@ -18,6 +18,13 @@
       Excel</button>
   </div>
 
+  
+  <button *ngIf="userAccessLevel== UserType.STATE_ADMIN ||
+                userAccessLevel== UserType.CITY_ADMIN ||
+                userAccessLevel== UserType.MANAGER" 
+                class="btn btn-success" type="button" (click)="deletePayslipConfirm()">
+      Delete Payslip For All
+  </button>
   <table id="vendorPaymentTable" class="table table-bordered">
     <thead>
       <tr>

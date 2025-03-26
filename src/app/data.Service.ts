@@ -162,6 +162,30 @@ export class DataService {
     });
   }
 
+  openConfirmationDialog2(config: {
+    title: string;
+    message: string;
+    onYes: () => void;
+  }): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        title: config.title,
+        message: config.message
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // User clicked Yes
+        config.onYes();
+      } else {
+        // User clicked Cancel
+        console.log('Action canceled');
+      }
+    });
+  }
+
   downloadPDF(elementId: string): void {
     const element = document.getElementById(elementId);
 

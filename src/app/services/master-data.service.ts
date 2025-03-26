@@ -200,6 +200,11 @@ export class MasterDataService {
     return this.http.post(`${this.apiUrl}payroll/GenerateAllPayslip?${queryParams}`,{});
   }
 
+  deletePayslip(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.post(`${this.apiUrl}payroll/DeletePayslip?${queryParams}`,{});
+  }
+
   getShifts(): Observable<any> {
     return this.http.get(`${this.apiUrl}Shift/GetShifts`);
   }

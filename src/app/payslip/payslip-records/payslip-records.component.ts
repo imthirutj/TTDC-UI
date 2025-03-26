@@ -290,6 +290,27 @@ export class PayslipRecordsComponent {
     );
   }
 
-  
+  deletePayslipConfirm(){
+    this.dataService.openConfirmationDialog2({
+      title: ``,
+      message: `Are you sure Want to Delete Payslip For All Employees?`,
+      onYes: () => {
+          this.deletePayslip();
+      }
+    });
+  }
 
+  deletePayslip(){
+    
+    const payload = this.dataService.getPayloadValue(this.filters);
+    this.masterDataService.deletePayslip(payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar(response.message);
+          this.getEmployeeList();
+        }
+      }
+    )
+  }
 }
