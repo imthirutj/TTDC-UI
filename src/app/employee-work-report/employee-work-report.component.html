@@ -69,7 +69,7 @@
                 <tr>
                     <th>S.NO</th>
                     <th>Employee</th>
-                    <th style="width:200px">#</th>
+                    <th>###########</th>
                     <th *ngFor="let date of getCurrentDates()">
                         <input *ngIf="isAssignWeekOff" type="checkbox" [checked]="headerSelection[date] || false"
                             (change)="onHeaderCheckboxChange(date, $event)" />
@@ -89,22 +89,30 @@
                         {{ employee.employeeName }} ({{employee.empCode}})
 
                     </td>
-                    <td class="ellipsis">
+                    <td >
                         <p>
                             <b>Present:</b> {{ employee.reports.totalPresentDays }},
+                        </p>
+                        <p>
                             <b>Absent:</b> {{ employee.reports.totalAbsentDays }},
                         </p>
                         <p>
                             <b>WeekOff:</b> {{ employee.reports.weekOff }},
+                        </p>
+                        <p>
                             <b>Holiday:</b> {{ employee.reports.holiday }},
                         </p>
                         <p>
                             <b>Leave:</b> {{ employee.reports.leaveApprovedDays }},
-                            <!--Hide OD-->
-                            <span>
-                                <b>OD:</b> {{ employee.reports.odApprovedDays }}
-                            </span>
                         </p>
+                        <p>
+                            <b>OD:</b> {{ employee.reports.odApprovedDays }}
+                        </p>
+                        <b style="background: aquamarine;">Payable Days: {{ employee.reports.totalPresentDays +
+                            employee.reports.weekOff +
+                            employee.reports.holiday +
+                            employee.reports.leaveApprovedDays+
+                            employee.reports.odApprovedDays}}</b>
 
                         <button *ngIf="isAdjustable(employee) && 
                             userAccessLevel != UserType.EMPLOYEE &&
