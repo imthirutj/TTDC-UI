@@ -209,8 +209,9 @@
                         </div>
                         <div *ngIf="employee.salaryEligible">
                             <button *ngIf="userAccessLevel == UserType.STATE_ADMIN||
-                                            userAccessLevel == UserType.CITY_ADMIN" 
-                                (click)="undoEligible(employee)" class="btn btn-primary">Undo</button>
+                                            userAccessLevel == UserType.CITY_ADMIN"
+                                            style="background-color: chocolate;" 
+                                (click)="undoEligible(employee)" class="btn btn-secondary">Undo</button>
                             <div *ngIf="employee.salaryEligible.status == 1">
                                 YES
                             </div>
