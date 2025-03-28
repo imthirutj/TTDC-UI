@@ -180,8 +180,10 @@ export class FiltersComponent implements OnInit {
       this.filters.vendorName.show = false;
 
       this.filters.cityId.show = false;
-      this.filters.companyId.show = false;
+      this.filters.companyId.show = true;
       this.filters.deptId.show = false;
+
+      this.fetchCompanies();
     }
     if (this.userAccessLevel == UserType.MANAGER) {
       this.filters.cityId.show = false;
@@ -343,7 +345,10 @@ export class FiltersComponent implements OnInit {
   }
 
   fetchCompanies() {
-    const payload = { cityId: this.filters.cityId.value };
+    let payload:any = { 
+      cityId: this.filters.cityId.value,
+      vendorId: this.filters.vendorId.value
+    };
     this.masterDataService.getCompany(payload).subscribe((response) => {
       if (response.success) this.companies = response.data;
     });

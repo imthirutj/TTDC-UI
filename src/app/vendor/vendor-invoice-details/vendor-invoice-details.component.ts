@@ -29,6 +29,7 @@ export class VendorInvoiceDetailsComponent {
   month: any;
   year: any;
   vendorID: any;
+  compId:any;
 
   continuousIndex:number = 0;
 
@@ -48,6 +49,7 @@ export class VendorInvoiceDetailsComponent {
 
   vendorDetails: any={};
   vendorInvoiceDetails = {
+    company: {} as any,
     cumulativeInvoice: {
       invoiceRecords: [] as Array<{
         designationName: string;
@@ -99,6 +101,7 @@ export class VendorInvoiceDetailsComponent {
       this.month = params['month'];
       this.year = params['year'];
       this.vendorID = params['vendorId'];
+      this.compId = params['compId'];
       this.type = params['type'];
 
       if(!this.type){
@@ -106,9 +109,15 @@ export class VendorInvoiceDetailsComponent {
         return;
       }
 
+      if(!this.month || !this.year || !this.vendorID || !this.compId){
+        this.dataService.showSnackBar('Invalid URL');
+        return;
+      }
+
       console.log('Month:', this.month);
       console.log('Year:', this.year);
       console.log('Vendor ID:', this.vendorID);
+      console.log('Company ID:', this.compId);
     });
 
     this.dataService.asyncGetUser().then((user:any) => {
@@ -128,7 +137,8 @@ export class VendorInvoiceDetailsComponent {
     var payload={
       month: this.month,
       year: this.year,
-      vendorId: this.vendorID
+      vendorId: this.vendorID,
+      compId: this.compId
     }
     if(this.type== 'VIEW'){
       this.vendorService.viewVendorInvoiceDetails(payload).subscribe((response) => {

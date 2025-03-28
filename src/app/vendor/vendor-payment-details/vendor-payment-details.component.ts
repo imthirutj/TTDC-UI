@@ -359,13 +359,24 @@ export class VendorPaymentDetailsComponent implements OnInit {
   }
 
   navigateVendorInvoice(vendor: any, type: 'VIEW' | 'PREVIEW') {
+    if(!this.filters.companyId.value){
+      this.dataService.showSnackBar('Please select Unit');
+      return;
+    }
     const month = vendor.month;
     const year = vendor.year;
     const vendorId = vendor.vendorId;
-    this.router.navigate(['/vendor-invoice-details'], { queryParams: { month: month, year: year, vendorId: vendorId, type: type } });
+    this.router.navigate(['/vendor-invoice-details'],
+       { queryParams: 
+        { month: month, year: year, vendorId: vendorId, type: type, compId: this.filters.companyId.value } 
+      });
   }
 
   openGenerateInvoiceModal(vendor:any){
+    if(!this.filters.companyId.value){
+      this.dataService.showSnackBar('Please select Unit');
+      return;
+    }
     this.modalGenerateInv.show=true;
     this.modalGenerateInv.vendor=vendor;
     this.modalGenerateInv.invoiceNo='';
