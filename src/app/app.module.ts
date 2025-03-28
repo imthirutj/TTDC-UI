@@ -98,6 +98,7 @@ import { LeaveReportComponent } from './reports/leave-report/leave-report.compon
 import { OdReportComponent } from './reports/od-report/od-report.component';
 import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min-qual-report.component';
 import { ShiftReportComponent } from './reports/shift-report/shift-report.component';
+import { SalarySummaryComponent } from './reports/salary-summary/salary-summary.component';
 
 @NgModule({
   declarations: [
@@ -166,7 +167,8 @@ import { ShiftReportComponent } from './reports/shift-report/shift-report.compon
     LeaveReportComponent,
     OdReportComponent,
     EmpMinQualReportComponent,
-    ShiftReportComponent
+    ShiftReportComponent,
+    SalarySummaryComponent
 
   ],
   imports: [

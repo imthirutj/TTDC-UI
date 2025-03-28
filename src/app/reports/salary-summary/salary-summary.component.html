@@ -1,0 +1,63 @@
+<div>
+    <h2>Salary summary Report</h2>
+    
+</div>
+<div class="cards-filter">
+    <app-filter [filters]="filters" (filterChanged)="onFilterChanged($event)" 
+    (triggerParentFunction)="onFilterChanged($event)">
+    </app-filter>
+   
+</div>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Unit Name</th>
+            <th>Total Employees</th>
+            <th>Eligible for Full Salary</th>
+            <th>Not Eligible</th>
+            <th>Salary Not Generated</th>
+            <th>Total Wages</th>
+            <th>Total Salary Generated</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let datas of ReportData">
+            <!-- Vendor Name Row -->
+            <tr>
+                <td style="text-align: left;" colspan="7">
+                    <strong>
+                        {{ datas.vendorName || 'Not Assigned' }}
+                        : {{ datas.companies.length }} units
+                    </strong>
+                </td>
+            </tr>
+
+            <!-- Company Details -->
+            <tr *ngFor="let obj of datas.companies; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ obj.companyFname || 'Not Assigned' }}</td>
+                <td>{{ obj.totalEmployeeCount || 0 }}</td>
+                <td>{{ obj.fullSalaryEligibleCount || 0 }}</td>
+                <td>{{ obj.notEligibleCount || 0 }}</td>
+                <td>{{ obj.salaryNotGeneratedCount || 0 }}</td>
+                <td>{{ obj.totalWages | number }}</td>
+                <td>{{ obj.totalSalaryGenerated | number }}</td>
+            </tr>
+
+            <!-- Total Row for Each Vendor -->
+            <tr>
+                <td style="text-align: left;" colspan="2"><strong>Total:</strong></td>
+                <td><strong>{{ getTotal(datas, 'totalEmployeeCount') }}</strong></td>
+                <td><strong>{{ getTotal(datas, 'fullSalaryEligibleCount') }}</strong></td>
+                <td><strong>{{ getTotal(datas, 'notEligibleCount') }}</strong></td>
+                <td><strong>{{ getTotal(datas, 'salaryNotGeneratedCount') }}</strong></td>
+                <td><strong>{{ getTotal(datas, 'totalWages') | number }}</strong></td>
+                <td><strong>{{ getTotal(datas, 'totalSalaryGenerated') | number }}</strong></td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+
