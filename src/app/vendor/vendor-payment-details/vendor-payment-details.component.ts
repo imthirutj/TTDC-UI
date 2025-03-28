@@ -390,12 +390,18 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
 
   generateInvoice() {
+    if(!this.filters.companyId.value){
+      this.dataService.showSnackBar('Please select Unit');
+      return;
+    }
+
     var invoiceNo = this.modalGenerateInv.invoiceNo;
     var payload={
       month: this.filters.selectedMonth.value,
       year: this.filters.selectedYear.value,
       vendorId: this.filters.vendorId.value,
-      invoiceNo: invoiceNo
+      invoiceNo: invoiceNo,
+      compId: this.filters.companyId.value
     }
     this.vendorService.generateVendeorInvoiceDetails(payload).subscribe((response) => {
       console.log('Vendor Invoice Details:', response);
