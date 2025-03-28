@@ -59,6 +59,7 @@ import { LeaveReportComponent } from './reports/leave-report/leave-report.compon
 import { OdReportComponent } from './reports/od-report/od-report.component';
 import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min-qual-report.component';
 import { ShiftReportComponent } from './reports/shift-report/shift-report.component';
+import { SalarySummaryComponent } from './reports/salary-summary/salary-summary.component';
 
 const routes: Routes = [
 
@@ -359,6 +360,12 @@ const routes: Routes = [
   {
     path:'shift-report',
     component:ShiftReportComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'salary-summary-report',
+    component:SalarySummaryComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },

@@ -115,6 +115,12 @@ export class SidebarComponent {
         route: '/region-wise-report',
         allowedUserTypes: [UserType.STATE_ADMIN]
       },
+      {
+        label: 'Salary Summary Report',
+        icon: 'fa-solid fa-money', // Represents geographic regions
+        route: '/salary-summary-report',
+        allowedUserTypes: [UserType.STATE_ADMIN]
+      },
 
 
 

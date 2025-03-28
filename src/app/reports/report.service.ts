@@ -62,4 +62,10 @@ export class ReportService {
     const queryParams = this.dataService.buildQueryParams(payload);
     return this.http.get(`${this.apiUrl}Report/GetCompanyWiseEmpShiftList?${queryParams}`);
   }
+
+  //Report/GetSalarySummaryReport
+  getSalarySummaryReport(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Report/GetSalarySummaryReport?${queryParams}`);
+  }
 }
