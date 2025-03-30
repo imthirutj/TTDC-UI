@@ -178,11 +178,17 @@
     </div>
   </app-common-dialog>
 
-  <app-common-dialog [showDialog]="isVendorModalOpen" [showCloseIcon]="true" [dialogTitle]="vendorPayment.title"
-    (closeDialog)="isVendorModalOpen = false" [showSubmitButton]="true" (submitDialog)="updateVendorModal()"
+  <app-common-dialog [showDialog]="isVendorModalOpen" 
+    [showCloseIcon]="true" [dialogTitle]="vendorPayment.title"
+    (closeDialog)="isVendorModalOpen = false" [showSubmitButton]="true" 
+    (submitDialog)="updateVendorModal()"
     [maxWidth]="'900px'">
 
     <div class="row">
+      <div class="col-md-6">
+        <b for="totalPayableAmount">UNIT:</b>
+        <span>{{ this.dataService.unitName }}</span>
+      </div>
       <div class="col-md-6">
         <b for="totalPayableAmount">Total:</b>
         <span>{{selectedVendor.totalWages | currency:'INR'}}</span>

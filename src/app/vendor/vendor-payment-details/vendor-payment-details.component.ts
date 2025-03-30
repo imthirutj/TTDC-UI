@@ -154,6 +154,10 @@ export class VendorPaymentDetailsComponent implements OnInit {
   }
 
   fetchPayRecordsbyComp() {
+    if(!this.filters.companyId.value){
+      this.dataService.showSnackBar('Please select Unit');
+      return;
+    }
     if(!this.filters.selectedMonth.value || !this.filters.selectedYear.value || !this.filters.vendorId.value){
       this.dataService.showSnackBar('Please select month/year/vendor');
       return;
@@ -171,6 +175,10 @@ export class VendorPaymentDetailsComponent implements OnInit {
   }
 
   fetchPayRecords(){
+    if(!this.filters.companyId.value){
+      this.dataService.showSnackBar('Please select Unit');
+      return;
+    }
     if(!this.filters.selectedMonth.value || !this.filters.selectedYear.value || !this.filters.vendorId.value){
       this.dataService.showSnackBar('Please select month/year/vendor');
       return;
@@ -239,7 +247,11 @@ export class VendorPaymentDetailsComponent implements OnInit {
 
   openVendorModal(type: 'VIEW' | 'UPDATE', vendor: any) {
     this.isVendorModalOpen = true;
-
+    if(!vendor.vendorId || !vendor.month || !vendor.year || !vendor.companyId){
+      this.dataService.showSnackBar('Please select month/year/vendor/Company');
+      return;
+      
+    }
     if (type === 'VIEW') {
       this.vendorPayment.title = 'View Vendor Payment Details - '+vendor.vendorName;
       this.vendorPayment.submit_disabled = true;
@@ -251,7 +263,8 @@ export class VendorPaymentDetailsComponent implements OnInit {
     const payload = {
       vendorId: vendor.vendorId,
       month: vendor.month,
-      year: vendor.year
+      year: vendor.year,
+      compId: vendor.companyId
     }
     this.vendorService.getVendorPayStatus(payload).subscribe((response: any) => {
       if (response.success) {
