@@ -143,6 +143,12 @@ export class SidebarComponent {
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER]
       },
       {
+        label: 'PF Report',
+        icon: 'fa-solid fa-money-bill-wave',
+        route: '/pf-report',
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER]
+      },
+      {
         label: 'Employee Min Qualifications',
         icon: 'fa-solid fa-map-marked-alt', // Represents geographic regions
         route: '/emp-min-qual-report',

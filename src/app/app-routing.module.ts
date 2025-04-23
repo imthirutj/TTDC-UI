@@ -60,6 +60,7 @@ import { OdReportComponent } from './reports/od-report/od-report.component';
 import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min-qual-report.component';
 import { ShiftReportComponent } from './reports/shift-report/shift-report.component';
 import { SalarySummaryComponent } from './reports/salary-summary/salary-summary.component';
+import { PfGenerationReportComponent } from './pf-generation-report/pf-generation-report.component';
 
 const routes: Routes = [
 
@@ -366,6 +367,12 @@ const routes: Routes = [
   {
     path:'salary-summary-report',
     component:SalarySummaryComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+  {
+    path:'pf-report',
+    component:PfGenerationReportComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
