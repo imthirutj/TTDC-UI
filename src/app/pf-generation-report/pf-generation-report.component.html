@@ -26,15 +26,19 @@
             <th rowspan="2">Payable Wages per person per month</th>
             <th rowspan="2">Gross Salary</th>
             <th rowspan="2">Net Salary</th>
-            <th colspan="2">Payable to the EPF</th>
-            <th rowspan="2">EPF Generated Status</th>
+            <th colspan="2">Generated PF</th>
+           
             <th rowspan="2">EPF Credited Status</th>
-            <th rowspan="2">PF A/C Credited Status</th>
+            <th colspan="2">Credited PF</th>
           </tr>
           <tr>
             <th>Employee PF</th>
             <th>Employer PF</th>
+
+            <th>Employee PF</th>
+            <th>Employer PF</th>
           </tr>
+          
         </thead>
         <tbody>
           <ng-container *ngFor="let obj of EmpLists; let i = index">
@@ -52,11 +56,12 @@
               <td>{{ d.netSalary | currency:'INR' }}</td>
               <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
               <td>{{ d.epfEmployerContribution | currency:'INR' }}</td>
-              <td>
-                {{ d.epfEmployerContribution && d.epfEmployerContribution != 0 ? 'Generated' : 'Not Generated' }}
-              </td>
-              <td>Not Credited</td>
-              <td>Pending</td>
+             
+         
+              <td>{{ d.epfEmployerContribution != 0 ? 'Credited' : '-'}}  </td>
+
+              <td>{{ d.epfEmployeeContribution | currency:'INR' }}</td>
+              <td>{{ d.epfEmployerContribution | currency:'INR' }}</td>
             </tr>
           </ng-container>
         </tbody>
