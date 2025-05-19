@@ -696,6 +696,7 @@
 <app-common-dialog [showDialog]="salaryUpdateModal.show" [dialogTitle]="salaryUpdateModal.title" [showCloseIcon]="true"
   [showSubmitButton]="true" (submitDialog)="updateAllSalaries()" (closeDialog)="closeSalaryUpdateModal()">
 
+  <p>*under Development</p>
   <div class="mb-3">
     <label for="salary" class="form-label">Percentage</label>
     <input type="number" class="form-control" id="percenatge" [(ngModel)]=" this.salaryUpdateModal.percentage"
