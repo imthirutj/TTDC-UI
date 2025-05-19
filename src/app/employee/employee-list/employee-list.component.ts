@@ -600,4 +600,62 @@ export class EmployeeListComponent {
     return obj.employees.length;
   }
 
+
+
+  modalUniform = {
+    show: false,
+    title: '',
+    empId: null,
+    uniforms: [{ id:0 ,type: '', qty: null, size: '' }],
+  };
+  openUniformModal(empId: any) {
+    this.modalUniform.show = true;
+    this.modalUniform.title = 'Uniform Details';
+    this.modalUniform.empId = empId;
+    this.modalUniform.uniforms = [{id:0, type: '', qty: null, size: '' }];
+    const payload = {
+      empId: empId
+    }
+    this.masterDataService.getEmpUniformDetails(payload).subscribe(
+      (response: any) => {
+        if (response.success) {
+          if (response.data != null) {
+            this.modalUniform.uniforms = response.data;
+          }
+        }
+      }
+    );
+  }
+
+  addUniformField() {
+    this.modalUniform.uniforms.push({ id:0,type: '', qty: null, size: '' });
+  }
+
+  removeUniformField(index: number) {
+    if (this.modalUniform.uniforms.length > 1) {
+      this.modalUniform.uniforms.splice(index, 1);
+    } else {
+      this.dataService.showSnackBar('At least one uniform field is required.');
+    }
+  }
+
+  closeUniformModal(){
+    this.modalUniform.show = false;
+    this.modalUniform.title = '';
+    this.modalUniform.uniforms = [];
+  }
+
+  submitUniformDetails() {
+    const   empId=  this.modalUniform.empId;
+    this.masterDataService.saveUniformDetails(this.modalUniform.uniforms, empId).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('Uniform Details updated successfully.');
+          this.closeUniformModal();
+        }
+      }
+    );
+  }
+
 }

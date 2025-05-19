@@ -306,4 +306,14 @@ export class MasterDataService {
     const url = `${this.apiUrl}Payroll/GetSalStructByEmpId?empId=${empId}`;
     return this.http.get(url);
   }
+
+  getEmpUniformDetails(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Employee/GetEmpUniformDetails?${queryParams}`);
+  }
+
+  saveUniformDetails(payload:any, empId: any): Observable<any> {
+    const url = `${this.apiUrl}Employee/saveUniformDetails?employeeId=${empId}`;
+    return this.http.post(url,payload);
+  }
 }
