@@ -316,4 +316,9 @@ export class MasterDataService {
     const url = `${this.apiUrl}Employee/saveUniformDetails?employeeId=${empId}`;
     return this.http.post(url,payload);
   }
+
+  updateAllEmployeeWages(payload:any): Observable<any> {
+    let queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.post(`${this.apiUrl}Payroll/UpdateAllEmployeeWages?${queryParams}`, {});
+  }
 }

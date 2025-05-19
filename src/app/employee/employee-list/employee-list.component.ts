@@ -387,7 +387,12 @@ export class EmployeeListComponent {
       this.dataService.showSnackBar('Please enter a percentage.');
       return;
     }
-    this.masterDataService.updateAllEmployeeWages(this.percentage).subscribe(
+    let payload = this.dataService.getPayloadValue(this.filters);
+    payload = {
+      ...payload,
+      percentage: this.percentage
+    }
+    this.masterDataService.updateAllEmployeeWages(payload).subscribe(
       (response: any) => {
         this.dataService.showSnackBar(response.message);
         this.closeSalaryUpdateModal();
