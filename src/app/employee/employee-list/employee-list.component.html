@@ -42,6 +42,9 @@
         <th [rowSpan]="2">Total Wages</th>
         <th [rowSpan]="2">Last Logged In</th>
         <th [rowSpan]="2">Uniform</th>
+
+        <!--Employment History-->
+        <th [rowSpan]="2">Employment History</th>
       </tr>
       <tr>
 
@@ -212,6 +215,12 @@
               <i class="fas fa-tshirt"></i>
             </button>
 
+          </td>
+          <!--Employment History-->
+          <td>
+            <button class="btn btn-primary" type="button" (click)="openEmploymentHistoryModal(employee.employeeId)">
+              <i class="fas fa-history"></i>
+            </button>
           </td>
 
         </tr>
@@ -702,5 +711,36 @@
     <input type="number" class="form-control" id="percenatge" [(ngModel)]=" this.salaryUpdateModal.percentage"
       name="percenatge" placeholder="Enter Percenatge">
   </div>
+
+</app-common-dialog>
+
+
+<!--Employment History Modal-->
+<app-common-dialog [showDialog]="modalEmpHistory.show" 
+[dialogTitle]="modalEmpHistory.title" [showCloseIcon]="true"
+  [showSubmitButton]="false" (closeDialog)="closeEmpHistoryModal()"
+  [maxWidth]="'1000px'">
+<div class="employment-history-container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Establishment Name</th>
+        <th>Member ID</th>
+        <th>Date of Joining</th>
+        <th>Date of Exit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of modalEmpHistory.employmentHistory; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ record.establishment_name }}</td>
+        <td>{{ record.member_id }}</td>
+        <td>{{ record.date_of_joining | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ record.date_of_exit ? (record.date_of_exit | date: 'dd/MM/yyyy') : '—' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 </app-common-dialog>

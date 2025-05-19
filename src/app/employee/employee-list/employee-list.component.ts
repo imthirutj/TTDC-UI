@@ -693,4 +693,32 @@ export class EmployeeListComponent {
     );
   }
 
+
+   modalEmpHistory:any = {
+    show: false,
+    title: 'Employment History',
+    empId: null,
+    employmentHistory: [],
+  };
+
+  openEmploymentHistoryModal(empId: any) {
+    this.modalEmpHistory.show = true;
+    const payload = {
+      empId: empId
+    }
+    this.masterDataService.getEmpEmploymentHistory(payload).subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.modalEmpHistory.employmentHistory = response.data;
+        }
+      }
+    );
+  }
+
+
+  closeEmpHistoryModal(){
+    this.modalEmpHistory.show = false;
+    this.modalEmpHistory.title = '';
+    this.modalEmpHistory.employmentHistory = [];
+  }
 }
