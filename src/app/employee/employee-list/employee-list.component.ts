@@ -402,13 +402,15 @@ export class EmployeeListComponent {
   }
 
   decrementPercentage() {
- if (this.salaryUpdateModal.percentage > 0) {
- this.salaryUpdateModal.percentage--;
- }
+ if (this.salaryUpdateModal.percentage > -50) {
+      this.salaryUpdateModal.percentage--;
+    }
   }
 
   incrementPercentage() {
- this.salaryUpdateModal.percentage++;
+ if (this.salaryUpdateModal.percentage < 50) {
+      this.salaryUpdateModal.percentage++;
+    }
   }
 
 

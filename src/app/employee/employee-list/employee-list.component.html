@@ -701,8 +701,8 @@
     <label for="percentage" class="form-label">Percentage Increase</label>
     <div class="input-group">
       <button class="btn btn-outline-secondary" type="button" (click)="decrementPercentage()">-</button>
-      <input type="number" class="form-control" id="percentage" [(ngModel)]="salaryUpdateModal.percentage"
-        name="percentage" placeholder="Enter percentage" min="0" step="1">
+ <input type="number" class="form-control" id="percentage" [(ngModel)]="salaryUpdateModal.percentage"
+        name="percentage" placeholder="Enter percentage" min="0" step="1" (keydown)="$event.preventDefault()">
       <span class="input-group-text">%</span>
       <button class="btn btn-outline-secondary" type="button" (click)="incrementPercentage()">+</button>
     </div>
