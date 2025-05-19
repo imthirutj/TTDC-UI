@@ -65,8 +65,8 @@ export class EmployeeListComponent {
   salaryUpdateModal = {
     show: false,
     title: 'Update All Employee Salaries',
+    percentage: 0
   }
-  percentage: number | null = null;
 
   formData = new FormData();
 
@@ -374,23 +374,23 @@ export class EmployeeListComponent {
   openSalaryUpdateModal(): void {
     this.salaryUpdateModal.show = true;
     this.salaryUpdateModal.title = 'Update All Employee Salaries';
-    this.percentage = null; // Reset percentage input
+     this.salaryUpdateModal.percentage = 0;
   }
 
   closeSalaryUpdateModal(): void {
     this.salaryUpdateModal.show = false;
-    this.percentage = null;
+    this.salaryUpdateModal.percentage = 0;
   }
 
   updateAllSalaries(): void {
-    if (this.percentage === null || this.percentage === undefined) {
+    if ( this.salaryUpdateModal.percentage ==0) {
       this.dataService.showSnackBar('Please enter a percentage.');
       return;
     }
     let payload = this.dataService.getPayloadValue(this.filters);
     payload = {
       ...payload,
-      percentage: this.percentage
+      percentage:  this.salaryUpdateModal.percentage
     }
     this.masterDataService.updateAllEmployeeWages(payload).subscribe(
       (response: any) => {

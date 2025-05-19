@@ -7,7 +7,8 @@
   </button>
   <button (click)="dataService.downloadExcelTable('emp-table', 'Employees')" class="btn btn-success mb-3">Download as
     Excel</button>
- <button class="btn btn-primary mb-3" type="button" (click)="openSalaryUpdateModal()">
+  <button *ngIf="userAccessLevel == UserType.STATE_ADMIN" class="btn btn-primary mb-3" type="button"
+    (click)="openSalaryUpdateModal()">
     <i class="fas fa-money-check-alt"></i> Update Salary
   </button>
 
@@ -290,16 +291,7 @@
 </app-common-dialog>
 
 
-<!-- Update Salary Modal -->
-<app-common-dialog [showDialog]="salaryUpdateModal.show" [dialogTitle]="salaryUpdateModal.title"
-  [showCloseIcon]="true" [showSubmitButton]="true" (submitDialog)="updateAllSalaries()"
-  (closeDialog)="salaryUpdateModal.show = false">
-  <div class="mb-3">
-    <label for="percentageIncrease" class="form-label">Percentage Increase (%)</label>
-    <input type="number" class="form-control" id="percentageIncrease" [(ngModel)]="percentage"
-      name="percentageIncrease" placeholder="Enter percentage">
-  </div>
-</app-common-dialog>
+
 <app-common-dialog [showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" [dialogTitle]="modal.title"
   [showCloseIcon]="true" [showSubmitButton]="modal.action==Action.UPDATE || modal.action==Action.CREATE"
   (submitDialog)="saveEmployee()" (closeDialog)="closeModal()">
@@ -658,43 +650,56 @@
 <app-common-dialog [showDialog]="modalUniform.show" [dialogTitle]="modalUniform.title" [showCloseIcon]="true"
   [showSubmitButton]="true" (submitDialog)="submitUniformDetails()" (closeDialog)="closeUniformModal()">
 
-    <div *ngFor="let uniform of modalUniform.uniforms; let i = index" class="mb-3">
-        <div class="row">
-            <!-- Type -->
-            <div class="col-md-4">
-                <label for="uniformType{{i}}" class="form-label">Type</label>
-                <select id="uniformType{{i}}" class="form-select" [(ngModel)]="uniform.type" name="uniformType{{i}}">
-                    <option value="">Select Type</option>
-                    <option value="Shirt">Shirt</option>
-                    <option value="Pants">Pants</option>
-                    <option value="T-Shirt">T-Shirt</option>
-                    <option value="Other">Other</option>
-                    
-                </select>
-            </div>
-            <!-- Qty -->
-            <div class="col-md-4">
-                <label for="uniformQty{{i}}" class="form-label">Qty</label>
-                <input type="number" class="form-control" id="uniformQty{{i}}" [(ngModel)]="uniform.qty" name="uniformQty{{i}}">
-            </div>
-            <!-- Size -->
-            <div class="col-md-4">
-                <label for="uniformSize{{i}}" class="form-label">Size</label>
-                <input type="text" class="form-control" id="uniformSize{{i}}" [(ngModel)]="uniform.size" name="uniformSize{{i}}">
-            </div>
+  <div *ngFor="let uniform of modalUniform.uniforms; let i = index" class="mb-3">
+    <div class="row">
+      <!-- Type -->
+      <div class="col-md-4">
+        <label for="uniformType{{i}}" class="form-label">Type</label>
+        <select id="uniformType{{i}}" class="form-select" [(ngModel)]="uniform.type" name="uniformType{{i}}">
+          <option value="">Select Type</option>
+          <option value="Shirt">Shirt</option>
+          <option value="Pants">Pants</option>
+          <option value="T-Shirt">T-Shirt</option>
+          <option value="Other">Other</option>
 
-            <!--Remove button-->
-            <div class="col-md-12 mt-2 text-end">
-                <button type="button" class="btn btn-danger" (click)="removeUniformField(i)">
-                    <i class="fas fa-trash"></i> Remove
-                </button>
-            </div>
-        </div>
-    </div>
+        </select>
+      </div>
+      <!-- Qty -->
+      <div class="col-md-4">
+        <label for="uniformQty{{i}}" class="form-label">Qty</label>
+        <input type="number" class="form-control" id="uniformQty{{i}}" [(ngModel)]="uniform.qty" name="uniformQty{{i}}">
+      </div>
+      <!-- Size -->
+      <div class="col-md-4">
+        <label for="uniformSize{{i}}" class="form-label">Size</label>
+        <input type="text" class="form-control" id="uniformSize{{i}}" [(ngModel)]="uniform.size"
+          name="uniformSize{{i}}">
+      </div>
 
-    <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-primary" (click)="addUniformField()">
-            <i class="fas fa-plus"></i>
+      <!--Remove button-->
+      <div class="col-md-12 mt-2 text-end">
+        <button type="button" class="btn btn-danger" (click)="removeUniformField(i)">
+          <i class="fas fa-trash"></i> Remove
         </button>
+      </div>
     </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <button type="button" class="btn btn-primary" (click)="addUniformField()">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</app-common-dialog>
+
+<!--Update Salary Modal-->
+<app-common-dialog [showDialog]="salaryUpdateModal.show" [dialogTitle]="salaryUpdateModal.title" [showCloseIcon]="true"
+  [showSubmitButton]="true" (submitDialog)="updateAllSalaries()" (closeDialog)="closeSalaryUpdateModal()">
+
+  <div class="mb-3">
+    <label for="salary" class="form-label">Percentage</label>
+    <input type="number" class="form-control" id="percenatge" [(ngModel)]=" this.salaryUpdateModal.percentage"
+      name="percenatge" placeholder="Enter Percenatge">
+  </div>
+
 </app-common-dialog>
