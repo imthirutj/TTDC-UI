@@ -62,6 +62,12 @@ export class EmployeeListComponent {
     bankDetails: new BankDetails()
   }
 
+  salaryUpdateModal = {
+    show: false,
+    title: 'Update All Employee Salaries',
+  }
+  percentage: number | null = null;
+
   formData = new FormData();
 
 
@@ -365,6 +371,30 @@ export class EmployeeListComponent {
     );
   }
 
+  openSalaryUpdateModal(): void {
+    this.salaryUpdateModal.show = true;
+    this.salaryUpdateModal.title = 'Update All Employee Salaries';
+    this.percentage = null; // Reset percentage input
+  }
+
+  closeSalaryUpdateModal(): void {
+    this.salaryUpdateModal.show = false;
+    this.percentage = null;
+  }
+
+  updateAllSalaries(): void {
+    if (this.percentage === null || this.percentage === undefined) {
+      this.dataService.showSnackBar('Please enter a percentage.');
+      return;
+    }
+    this.masterDataService.updateAllEmployeeWages(this.percentage).subscribe(
+      (response: any) => {
+        this.dataService.showSnackBar(response.message);
+        this.closeSalaryUpdateModal();
+        this.getEmployeeList(); // Refresh the list
+      }
+    );
+  }
 
   // paginate(): void {
   //   const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
