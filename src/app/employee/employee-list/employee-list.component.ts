@@ -401,6 +401,18 @@ export class EmployeeListComponent {
     );
   }
 
+  decrementPercentage() {
+ if (this.salaryUpdateModal.percentage > 0) {
+ this.salaryUpdateModal.percentage--;
+ }
+  }
+
+  incrementPercentage() {
+ this.salaryUpdateModal.percentage++;
+  }
+
+
+
   // paginate(): void {
   //   const startIndex = (this.pageAttributes.currentPage - 1) * this.pageAttributes.itemsPerPage;
   //   const endIndex = startIndex + this.pageAttributes.itemsPerPage;
