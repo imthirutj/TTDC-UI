@@ -7,6 +7,10 @@
   </button>
   <button (click)="dataService.downloadExcelTable('emp-table', 'Employees')" class="btn btn-success mb-3">Download as
     Excel</button>
+ <button class="btn btn-primary mb-3" type="button" (click)="openSalaryUpdateModal()">
+    <i class="fas fa-money-check-alt"></i> Update Salary
+  </button>
+
 </div>
 <div class="cards-filter ">
   
@@ -282,6 +286,17 @@
   </div>
 </app-common-dialog>
 
+
+<!-- Update Salary Modal -->
+<app-common-dialog [showDialog]="salaryUpdateModal.show" [dialogTitle]="salaryUpdateModal.title"
+  [showCloseIcon]="true" [showSubmitButton]="true" (submitDialog)="updateAllSalaries()"
+  (closeDialog)="salaryUpdateModal.show = false">
+  <div class="mb-3">
+    <label for="percentageIncrease" class="form-label">Percentage Increase (%)</label>
+    <input type="number" class="form-control" id="percentageIncrease" [(ngModel)]="percentage"
+      name="percentageIncrease" placeholder="Enter percentage">
+  </div>
+</app-common-dialog>
 <app-common-dialog [showDialog]="modal.show && modal.module == ModuleType.EMPLOYEE" [dialogTitle]="modal.title"
   [showCloseIcon]="true" [showSubmitButton]="modal.action==Action.UPDATE || modal.action==Action.CREATE"
   (submitDialog)="saveEmployee()" (closeDialog)="closeModal()">
