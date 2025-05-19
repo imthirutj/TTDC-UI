@@ -108,3 +108,13 @@
   }
   
 
+  /* Styling for the salary update modal */
+  .salary-update-modal .modal-body {
+    padding: 20px;
+  }
+  
+  .salary-update-modal input[type="number"] {
+    width: 150px; /* Adjust the width as needed */
+    display: inline-block; /* To allow the label to be on the same line */
+    margin-left: 10px;
+  }
