@@ -112,6 +112,8 @@ export class FiltersComponent implements OnInit {
         { objName: 'leaveReqStatus', key: 'leaveReqStatus', label: 'Leave Request Status', defaultValue: 'ALL', show: false, includeInSearchParams: false },
         { objName: 'odReqStatus', key: 'odReqStatus', label: 'OD Request Status', defaultValue: 'ALL', show: false, includeInSearchParams: false },
         { objName: 'logType', key: 'logType', label: 'Today LoggedIn Filter', defaultValue: 'ALL', show: false, includeInSearchParams: false },
+
+        { objName: 'filterPfCredited', key: 'filterPfCredited', label: 'Pf Credited', defaultValue: 'ALL', show: false, includeInSearchParams: false },
       ];
 
       // Ensure filters are properly initialized
@@ -330,6 +332,10 @@ export class FiltersComponent implements OnInit {
   }
 
   onLogTypeChange() {
+    this.onFilterChange();
+  }
+
+  onPfCreditedChange(){
     this.onFilterChange();
   }
   //#endregion

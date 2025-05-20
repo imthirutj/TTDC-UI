@@ -131,6 +131,12 @@ payId: any
       key: 'otherDeductionsMax',
       includeInSearchParams:true
     },
+    filterPfCredited:{
+      value: '0',
+      show: true,
+      key: 'filterPfCredited',
+      includeInSearchParams:true
+    }
   };
   
   constructor(private masterDataService: MasterDataService,

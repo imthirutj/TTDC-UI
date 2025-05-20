@@ -371,6 +371,20 @@
         </div>
       </div>
 
+      <!--filterPfCredited-->
+      <div *ngIf="filters.filterPfCredited.show" class="col-md-4">
+        <div class="form-group">
+          <label for="filterPfCredited">PF Credited</label>
+          <select [(ngModel)]="filters.filterPfCredited.value" (change)="onPfCreditedChange()"
+           class="form-control"
+            id="filterPfCredited">
+            <option value="0">All</option>
+            <option value="1">Credited</option>
+            <option value="2">Not Credited</option>
+          </select>
+        </div>
+      </div>
+
 
 
     </div>
