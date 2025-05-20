@@ -218,9 +218,16 @@
           </td>
           <!--Employment History-->
           <td>
-            <button class="btn btn-primary" type="button" (click)="openEmploymentHistoryModal(employee.employeeId)">
+            <!-- <button class="btn btn-primary" type="button" (click)="openEmploymentHistoryModal(employee.employeeId)">
               <i class="fas fa-history"></i>
+            </button> -->
+
+            <!--pf passbook button-->
+            <button class="btn btn-primary" type="button" (click)="openPfPassbookModal(employee.employeeId)">
+              <i class="fas fa-book"></i>
             </button>
+            
+
           </td>
 
         </tr>
@@ -710,7 +717,7 @@
     <label for="percentage" class="form-label">Percentage Increase</label>
     <div class="input-group">
       <button class="btn btn-outline-secondary" type="button" (click)="decrementPercentage()">-</button>
- <input type="number" class="form-control" id="percentage" [(ngModel)]="salaryUpdateModal.percentage"
+      <input type="number" class="form-control" id="percentage" [(ngModel)]="salaryUpdateModal.percentage"
         name="percentage" placeholder="Enter percentage" min="0" step="1" (keydown)="$event.preventDefault()">
       <span class="input-group-text">%</span>
       <button class="btn btn-outline-secondary" type="button" (click)="incrementPercentage()">+</button>
@@ -721,31 +728,89 @@
 
 
 <!--Employment History Modal-->
-<app-common-dialog [showDialog]="modalEmpHistory.show" 
-[dialogTitle]="modalEmpHistory.title" [showCloseIcon]="true"
-  [showSubmitButton]="false" (closeDialog)="closeEmpHistoryModal()"
-  [maxWidth]="'1000px'">
-<div class="employment-history-container">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Establishment Name</th>
-        <th>Member ID</th>
-        <th>Date of Joining</th>
-        <th>Date of Exit</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let record of modalEmpHistory.employmentHistory; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ record.establishment_name }}</td>
-        <td>{{ record.member_id }}</td>
-        <td>{{ record.date_of_joining | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ record.date_of_exit ? (record.date_of_exit | date: 'dd/MM/yyyy') : '—' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<app-common-dialog [showDialog]="modalEmpHistory.show" [dialogTitle]="modalEmpHistory.title" [showCloseIcon]="true"
+  [showSubmitButton]="false" (closeDialog)="closeEmpHistoryModal()" [maxWidth]="'1000px'">
+  <div class="employment-history-container">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Establishment Name</th>
+          <th>Member ID</th>
+          <th>Date of Joining</th>
+          <th>Date of Exit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of modalEmpHistory.employmentHistory; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ record.establishment_name }}</td>
+          <td>{{ record.member_id }}</td>
+          <td>{{ record.date_of_joining | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ record.date_of_exit ? (record.date_of_exit | date: 'dd/MM/yyyy') : '—' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
+</app-common-dialog>
+
+<!-- Pf passbook Modal-->
+<app-common-dialog [showDialog]="modalPfPassbook.show" [dialogTitle]="modalPfPassbook.title" [showCloseIcon]="true"
+  [showSubmitButton]="false" (closeDialog)="closePfPassbookModal()" [maxWidth]="'100%'">
+  <div class="employment-history-container">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Establishment Name</th>
+          <th>Member ID</th>
+          <th>Office</th>
+          <th>Date of Joining EPF</th>
+          <th>Date of Cessation EPF</th>
+          <th>Date of Cessation EPS</th>
+          <th>Passbook Status</th>
+          <th>Transaction Month</th>
+          <th>Approved On</th>
+          <th>Employee Share (₹)</th>
+          <th>Employer Share (₹)</th>
+          <th>Pension Balance (₹)</th>
+          <th>Credit/Debit</th>
+          <th>Particulars</th>
+          <th>Wage Month</th>
+          <th>Wage Year</th>
+          <th>Transaction Approved On</th>
+          <th>Inserted Date</th>
+          <th>UAN Number</th>
+          <!-- <th>Passbook</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of modalPfPassbook.pfPassbook; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ record.est_name }}</td>
+          <td>{{ record.member_id }}</td>
+          <td>{{ record.office }}</td>
+          <td>{{ record.doj_epf | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ record.doc_epf | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ record.doc_eps | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ record.passbook_status }}</td>
+          <td>{{ record.tr_date_my | date: 'MMMM yyyy' }}</td>
+          <td>{{ record.approved_on | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ record.cr_ee_share }}</td>
+          <td>{{ record.cr_er_share }}</td>
+          <td>{{ record.cr_pen_bal }}</td>
+          <td>{{ record.db_cr_flag }}</td>
+          <td>{{ record.particular }}</td>
+          <td>{{ record.wage_month }}</td>
+          <td>{{ record.wage_year }}</td>
+          <td>{{ record.tr_approved | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ record.inserted_date | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td>{{ record.uan_number }}</td>
+          <!-- <td><a [href]="record.passbook_url" target="_blank">View Passbook</a></td> -->
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 </app-common-dialog>

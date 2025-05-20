@@ -735,4 +735,32 @@ export class EmployeeListComponent {
     this.modalEmpHistory.title = '';
     this.modalEmpHistory.employmentHistory = [];
   }
+
+
+  modalPfPassbook: any ={
+    show: false,
+    title: 'PF Passbook',
+    empId: null,
+    pfPassbook: [],
+  }
+
+  openPfPassbookModal(empId: any) {
+    this.modalPfPassbook.show = true;
+    const payload = {
+      empId: empId
+    }
+    this.masterDataService.getEmpPfPassbook(payload).subscribe(
+      (response: any) => {
+        if (response.success) {
+          this.modalPfPassbook.pfPassbook = response.data;
+        }
+      }
+    );
+  }
+
+  closePfPassbookModal(){
+    this.modalPfPassbook.show = false;
+    this.modalPfPassbook.title = '';
+    this.modalPfPassbook.pfPassbook = [];
+  }
 }

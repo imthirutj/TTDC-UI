@@ -327,4 +327,9 @@ export class MasterDataService {
     return this.http.get(`${this.apiUrl}EmployementHistory/GetEmployeeEmploymentHistory?${queryParams}`);
   }
 
+  getEmpPfPassbook(payload:any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    return this.http.get(`${this.apiUrl}Employment/GetEmployeePfPassbook?${queryParams}`);
+  }
+
 }
