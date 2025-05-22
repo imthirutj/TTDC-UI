@@ -184,7 +184,7 @@ export class SidebarComponent {
         label: 'Vendor Payment Details',
         icon: 'fa-solid fa-receipt',
         route: '/vendor-payment-details',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.VENDOR, UserType.MANAGER],
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.VENDOR, UserType.CITY_ADMIN, UserType.MANAGER],
         isAdmin:0
       },
       {
