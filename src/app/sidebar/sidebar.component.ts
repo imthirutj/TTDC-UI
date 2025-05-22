@@ -184,7 +184,8 @@ export class SidebarComponent {
         label: 'Vendor Payment Details',
         icon: 'fa-solid fa-receipt',
         route: '/vendor-payment-details',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.VENDOR]
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.VENDOR, UserType.MANAGER],
+        isAdmin:0
       },
       {
         label: 'Vendor To Employee Payment',
@@ -333,12 +334,17 @@ export class SidebarComponent {
       // },
     ];
 
+    return allMenuItems.filter(item => {
+      if (item.label == 'Vendor Payment Details') {
+        console.log('Just for Debugging');
+      }
+      return (
+        (item.allowedUserTypes.includes(userAccessLevel) && this.isAdmin === 0) ||
+        (item.allowedUserTypes.includes('ALL' as UserType) && this.isAdmin === 0) ||
+        (item.isAdmin === true && userAccessLevel === UserType.STATE_ADMIN && this.isAdmin === 1)
+      );
+    });
 
-    return allMenuItems.filter(item =>
-      (item.allowedUserTypes.includes(userAccessLevel) && this.isAdmin == 0 )    ||
-      (item.allowedUserTypes.includes('ALL' as UserType) && this.isAdmin == 0 )  ||
-      (item.isAdmin == true && (userAccessLevel == UserType.STATE_ADMIN && this.isAdmin == 1))
-    );
 
   }
 

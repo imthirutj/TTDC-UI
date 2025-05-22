@@ -20,7 +20,8 @@
       </span>
     </h3>
     <div *ngIf="payRecords.length > 0" class="d-flex flex-wrap gap-2">
-      <button *ngIf="!companyVendors.invoiceGenerated && userAccessLevel == UserType.VENDOR" class="btn btn-primary"
+      <button *ngIf="!companyVendors.invoiceGenerated && 
+        (userAccessLevel == UserType.VENDOR || userAccessLevel == UserType.MANAGER)" class="btn btn-primary"
         (click)="navigateVendorInvoice(companyVendors, 'PREVIEW')">
         Preview Invoice
       </button>
