@@ -319,7 +319,7 @@ export class MasterDataService {
 
   updateAllEmployeeWages(payload:any): Observable<any> {
     let queryParams = this.dataService.buildQueryParams(payload);
-    return this.http.post(`${this.apiUrl}Payroll/UpdateAllEmployeeWages?${queryParams}`, {});
+    return this.http.post(`${this.apiUrl}Employee/AdjustSalariesByPercentage?${queryParams}`, {});
   }
 
   getEmpEmploymentHistory(payload:any): Observable<any> {

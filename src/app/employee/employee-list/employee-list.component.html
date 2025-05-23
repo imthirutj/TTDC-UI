@@ -710,15 +710,15 @@
 
 <!--Update Salary Modal-->
 <app-common-dialog [showDialog]="salaryUpdateModal.show" [dialogTitle]="salaryUpdateModal.title" [showCloseIcon]="true"
-  [showSubmitButton]="true" (submitDialog)="updateAllSalaries()" (closeDialog)="closeSalaryUpdateModal()">
+  [showSubmitButton]="true" (submitDialog)="confirmSalaryPercentageUpdate()" (closeDialog)="closeSalaryUpdateModal()">
 
-  <p class="text-muted">*Under Development - applies to all employees based on current filters. Whole numbers only.</p>
+  <p class="text-muted">*Applies to all employees based on current filters.</p>
   <div class="mb-3">
     <label for="percentage" class="form-label">Percentage Increase</label>
     <div class="input-group">
       <button class="btn btn-outline-secondary" type="button" (click)="decrementPercentage()">-</button>
       <input type="number" class="form-control" id="percentage" [(ngModel)]="salaryUpdateModal.percentage"
-        name="percentage" placeholder="Enter percentage" min="0" step="1" (keydown)="$event.preventDefault()">
+        name="percentage" placeholder="Enter percentage" min="-99" step="1" (keydown)="$event.preventDefault()">
       <span class="input-group-text">%</span>
       <button class="btn btn-outline-secondary" type="button" (click)="incrementPercentage()">+</button>
     </div>

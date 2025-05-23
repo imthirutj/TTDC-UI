@@ -382,15 +382,29 @@ export class EmployeeListComponent {
     this.salaryUpdateModal.percentage = 0;
   }
 
-  updateAllSalaries(): void {
+
+  confirmSalaryPercentageUpdate(){
     if ( this.salaryUpdateModal.percentage ==0) {
       this.dataService.showSnackBar('Please enter a percentage.');
       return;
     }
+
+    const percentage = this.salaryUpdateModal.percentage;
+    const empCount = this.totalCount;
+     this.dataService.openConfirmationDialog2({
+      title: ``,
+      message: `Are you sure Want to Update ${percentage}%  Salary For ${empCount} Employees?`,
+      onYes: () => {
+          this.updateAllSalaries();
+      }
+    });
+  }
+  updateAllSalaries(): void {
+    
     let payload = this.dataService.getPayloadValue(this.filters);
     payload = {
       ...payload,
-      percentage:  this.salaryUpdateModal.percentage
+      salaryPercent:  this.salaryUpdateModal.percentage
     }
     this.masterDataService.updateAllEmployeeWages(payload).subscribe(
       (response: any) => {
