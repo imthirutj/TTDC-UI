@@ -189,8 +189,8 @@ export class EmployeeWorkReportComponent {
       key: 'vendorId',
       includeInSearchParams: true
     },
-    
-    attnNotFilled:{
+
+    attnNotFilled: {
       value: '0',
       show: true,
       key: 'attnNotFilled',
@@ -202,11 +202,11 @@ export class EmployeeWorkReportComponent {
       key: 'leaveReqStatus',
       includeInSearchParams: true
     },
-    odReqStatus:{
-      value:'ALL',
-      show:true,
-      key:'odReqStatus',
-      includeInSearchParams:true
+    odReqStatus: {
+      value: 'ALL',
+      show: true,
+      key: 'odReqStatus',
+      includeInSearchParams: true
     },
     // loggedInType:{
     //   value: '0',
@@ -214,11 +214,11 @@ export class EmployeeWorkReportComponent {
     //   key: 'loggedInType',
     //   includeInSearchParams: true
     // },
-    logType:{
-      value:'ALL',
-      show:true,
-      key:'logType',
-      includeInSearchParams:true
+    logType: {
+      value: 'ALL',
+      show: true,
+      key: 'logType',
+      includeInSearchParams: true
     }
   };
 
@@ -226,7 +226,7 @@ export class EmployeeWorkReportComponent {
   modalReasonPopup: any = {
     show: false,
     title: 'Enter the Reason',
-    obj:{
+    obj: {
       month: '',
       year: '',
       status: '',
@@ -268,7 +268,7 @@ export class EmployeeWorkReportComponent {
   }
 
   onFilterChanged(event: any) {
-    this.pageAttributes.currentPage=1;
+    this.pageAttributes.currentPage = 1;
     console.log('Filters updated in parent component:', this.filters);
     this.route.queryParams.subscribe(params => {
       if (params['passedFilter'] == '1') {
@@ -283,7 +283,7 @@ export class EmployeeWorkReportComponent {
   }
 
   search() {
-    this.pageAttributes.currentPage=1;
+    this.pageAttributes.currentPage = 1;
     this.fetchEmployeeStatus();
   }
 
@@ -342,7 +342,7 @@ export class EmployeeWorkReportComponent {
   }
 
   fetchEmployeeStatus() {
-    if ((this.filters.role.value =='CITY_ADMIN' || this.filters.role.value =='STATE_ADMIN') &&
+    if ((this.filters.role.value == 'CITY_ADMIN' || this.filters.role.value == 'STATE_ADMIN') &&
       this.filters.companyId.value == '') {
       this.dataService.showSnackBar('Please select Unit to view report');
       return;
@@ -819,13 +819,13 @@ export class EmployeeWorkReportComponent {
     this.absentWeekOffHolidayData = [];
     this.leaveRequestedDays = [];
     this.odRequestedDays = [];
-    this.compensatedRequestedDays=[];
+    this.compensatedRequestedDays = [];
 
     const employee = this.modalAttrAdjust.employeeStatus as EmployeeStatus; // Ensure correct type
     this.getAvailableCompensatedDates(employee.empId);
     Object.entries(employee.dates).forEach(([date, details]) => {
       const record = details as DateDetails; // Use your defined class
-      if ([null,'','ABSENT', 'ABSENT-LWT', 'HOLIDAY', 'WEEKOFF'].includes(record.status)
+      if ([null, '', 'ABSENT', 'ABSENT-LWT', 'HOLIDAY', 'WEEKOFF'].includes(record.status)
         || record.hasOverwrited == 1) {
         this.absentWeekOffHolidayData.push({ ...record, newStatus: '', date: date, isCompensated: record.isCompensated == '1' ? 'YES' : 'NO' });
       }
@@ -846,23 +846,23 @@ export class EmployeeWorkReportComponent {
   }
 
   updateCompensateRequest(obj: any, compensatedStatusId: number) {
-   var CompensateRequest = {
-    employeeId: obj.employeeId,
-    date: obj.date,
-    compensatedStatusId: compensatedStatusId,
-    compensateManagerRemarks: obj.compensateManagerRemarks
-   }
-
-   this.masterDataService.updateCompensationRequest(CompensateRequest).subscribe(
-    response => {
-      console.log('API Response:', response);
-      if (response.success) {
-        this.dataService.showSnackBar('CompensateRequest updated successfully');
-        this.search();
-        this.closeAdjustModal();
-      }
+    var CompensateRequest = {
+      employeeId: obj.employeeId,
+      date: obj.date,
+      compensatedStatusId: compensatedStatusId,
+      compensateManagerRemarks: obj.compensateManagerRemarks
     }
-   )
+
+    this.masterDataService.updateCompensationRequest(CompensateRequest).subscribe(
+      response => {
+        console.log('API Response:', response);
+        if (response.success) {
+          this.dataService.showSnackBar('CompensateRequest updated successfully');
+          this.search();
+          this.closeAdjustModal();
+        }
+      }
+    )
 
   }
 
@@ -919,9 +919,17 @@ export class EmployeeWorkReportComponent {
       (currentYear === this.filters.selectedYear.value && currentMonth > this.filters.selectedMonth.value) ||
       (currentYear === this.filters.selectedYear.value && currentMonth === this.filters.selectedMonth.value && currentDay > 25));
 
-
-   // return val;
+    
     return true;
+  }
+
+  checkSameUser(employee: EmployeeStatus): boolean {
+    //check employeeId from session and employee.empId
+    const user = this.dataService.getUser();
+    if (user && user.employeeId && user.employeeId == employee.empId) {
+      return true;
+    }
+    return false
   }
 
   isAssignWeekOff: boolean = false;
@@ -945,7 +953,7 @@ export class EmployeeWorkReportComponent {
     }
 
     // Perform sorting based on the selected column and order
-    this.absentWeekOffHolidayData.sort((a:any, b:any) => {
+    this.absentWeekOffHolidayData.sort((a: any, b: any) => {
       let valueA = a[column];
       let valueB = b[column];
 
@@ -967,39 +975,39 @@ export class EmployeeWorkReportComponent {
 
 
 
-  
-    isDownload: boolean = false;
-  
-    // Download Excel with column exclusion support
+
+  isDownload: boolean = false;
+
+  // Download Excel with column exclusion support
   downloadExcelTable(tableId: string, fileName: string, excludeColumns: string[] = []) {
     const table = document.getElementById(tableId) as HTMLTableElement;
     if (!table) {
       console.error("Table not found!");
       return;
     }
-  
-    this.isDownload=true; this.daysPerPage = 31;
+
+    this.isDownload = true; this.daysPerPage = 31;
     setTimeout(() => {
       // Convert table to sheet
       const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table);
-  
+
       // Get column headers (A1, B1, C1, etc.)
       const range = XLSX.utils.decode_range(ws["!ref"]!);
       const headers: string[] = [];
-  
+
       for (let C = range.s.c; C <= range.e.c; ++C) {
         const cellAddress = { c: C, r: range.s.r }; // Get header cell (first row)
         const cellRef = XLSX.utils.encode_cell(cellAddress);
         const cellValue = ws[cellRef]?.v; // Read cell value
-  
+
         if (cellValue) headers.push(cellValue.toString());
       }
-  
+
       // Find column indexes to exclude
       const excludeIndexes = headers
         .map((header, index) => (excludeColumns.includes(header) ? index : -1))
         .filter(index => index !== -1);
-  
+
       // Remove excluded columns
       excludeIndexes.reverse().forEach(colIdx => {
         for (let R = range.s.r; R <= range.e.r; ++R) {
@@ -1007,24 +1015,24 @@ export class EmployeeWorkReportComponent {
           delete ws[cellRef];
         }
       });
-  
+
       // Recalculate range after column removal
       const newCols = headers.length - excludeIndexes.length;
       ws["!ref"] = XLSX.utils.encode_range({
         s: { c: 0, r: range.s.r },
         e: { c: newCols - 1, r: range.e.r },
       });
-  
+
       // Create workbook and export
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "Payments");
       XLSX.writeFile(wb, `${fileName}.xlsx`);
-  
-      this.isDownload=false; this.daysPerPage = 7;
+
+      this.isDownload = false; this.daysPerPage = 7;
     }, 100);
   }
-  
-  showReasonModal(obj: EmployeeStatus){
+
+  showReasonModal(obj: EmployeeStatus) {
     this.modalReasonPopup.show = true;
     const data = {
       employeeId: obj.empId,
@@ -1033,16 +1041,16 @@ export class EmployeeWorkReportComponent {
       status: null,
       reason: null
     }
-    this.modalReasonPopup.obj = {... data};
+    this.modalReasonPopup.obj = { ...data };
   }
-  closeReasonModal(){
+  closeReasonModal() {
     this.modalReasonPopup.show = false;
     this.modalReasonPopup.obj = {};
   }
 
   submitEligible(status: number, obj: EmployeeStatus = new EmployeeStatus()) {
     let payload: any = { status: status };
-  
+
     if (status == 1) {
       payload = {
         ...payload,
@@ -1052,27 +1060,27 @@ export class EmployeeWorkReportComponent {
         reason: null
       };
     } else if (status == 0) {
-      payload = { 
+      payload = {
         ...payload,
         ...this.modalReasonPopup.obj
-       };
+      };
     } else {
       this.dataService.showSnackBar('Please select the status');
       return;
     }
-  
+
     this.employeeWorkReportService.submitEligible(payload).subscribe((response) => {
       if (response.success) {
         this.dataService.showSnackBar(response.message);
         this.search();
       }
     });
-  
+
     this.closeReasonModal();
   }
 
-  undoEligible(obj: EmployeeStatus){
-    const  payload = {
+  undoEligible(obj: EmployeeStatus) {
+    const payload = {
       employeeId: obj.empId,
       month: this.filters.selectedMonth.value,
       year: this.filters.selectedYear.value,
@@ -1084,5 +1092,5 @@ export class EmployeeWorkReportComponent {
       }
     });
   }
-  
+
 }

@@ -115,6 +115,7 @@
                             employee.reports.odApprovedDays}}</b>
 
                         <button *ngIf="isAdjustable(employee) && 
+                            !checkSameUser(employee) &&
                             userAccessLevel != UserType.EMPLOYEE &&
                             !employee.hasSalaryGenerated &&
                             (!employee.salaryEligible  || employee.salaryEligible == null)"
@@ -122,6 +123,12 @@
                             style="background-color: #a60015;" class="btn btn-secondary">Adjust</button>
 
                         <p *ngIf="employee.hasSalaryGenerated">Salary Already generated</p>
+
+                        <div *ngIf="checkSameUser(employee)">
+                            <p style="color: #a60015;" *ngIf="userAccessLevel == UserType.MANAGER">
+                                Manager cannot adjust own attendance.Please contact your RM.
+                            </p>
+                        </div>
                         <i class="fas fa-info-circle" (click)="openEmployeeReportModal(employee)"></i>
                     </td>
                     <td *ngFor="let date of getCurrentDates()"
