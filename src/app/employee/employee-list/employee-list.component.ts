@@ -10,6 +10,7 @@ import { ModuleTypeLabels } from 'src/app/common/labels';
 import { BankDetails } from 'src/app/utils/interface/BankDetails';
 import { WageDetails } from 'src/app/utils/interface/WageDetails';
 import { ActivatedRoute } from '@angular/router';
+import { PfUpdateService } from 'src/app/pf-update/pf-update.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -162,7 +163,8 @@ export class EmployeeListComponent {
   constructor(
     private masterDataService: MasterDataService,
     public dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private pfService: PfUpdateService
   ) {
     this.dataService.asyncGetUser().then((user: any) => {
       this.user = user;
@@ -750,6 +752,14 @@ export class EmployeeListComponent {
     this.modalEmpHistory.employmentHistory = [];
   }
 
+  modalEmpPf: any = {
+    show: false,
+    title: 'Update PF',
+    empId: null,
+    month: null,
+    year: null,
+    password: '',
+  }
 
   modalPfPassbook: any = {
     show: false,
@@ -758,8 +768,63 @@ export class EmployeeListComponent {
     pfPassbook: [],
   }
 
+  openPfUpdateModal() {
+    this.modalEmpPf.show = true;
+    this.modalEmpPf.title = 'Update PF';
+    this.modalEmpPf.empId = null;
+    this.modalEmpPf.month = null;
+    this.modalEmpPf.year = null;
+  }
+
+  closePfUpdateModal() {
+    this.modalEmpPf.show = false;
+    this.modalEmpPf.title = '';
+    this.modalEmpPf.empId = null;
+    this.modalEmpPf.month = null;
+    this.modalEmpPf.year = null;
+  }
+
+  pfUpdateConfirm() {
+    if (!this.modalEmpPf.empId || !this.modalEmpPf.month || !this.modalEmpPf.year || !this.modalEmpPf.password) {
+      this.dataService.showSnackBar('Please fill all the fields.');
+      return;
+    }
+
+    this.dataService.openConfirmationDialog2({
+      title: ``,
+      message: `Are you sure Want to Update PF For ${this.modalEmpPf.empId}?`,
+      onYes: () => {
+        this.pfUpdate();
+      }
+    });
+
+  }
+
+  pfUpdate() {
+    const payload = {
+      empId: this.modalEmpPf.empId,
+      month: this.modalEmpPf.month,
+      year: this.modalEmpPf.year,
+      password: this.modalEmpPf.password
+    }
+    this.pfService.pfUpdateByEmpId(payload).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response.status) {
+          this.dataService.showSnackBar('PF updated successfully.');
+          this.closePfUpdateModal();
+        }
+      }
+    );
+
+  }
+
   openPfPassbookModal(empId: any) {
     this.modalPfPassbook.show = true;
+    this.getPfData(empId);
+  }
+
+  getPfData(empId: any) {
     const payload = {
       empId: empId
     }

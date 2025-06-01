@@ -38,6 +38,12 @@ export class PfUpdateService {
     return this.http.get(url);
   }
 
+  pfUpdateByEmpId(payload: any): Observable<any> {
+    const queryParams = this.dataService.buildQueryParams(payload);
+    const url = `${this.apiUrl}Employment/UpdateEmployeePfPassbook?${queryParams}`;
+    return this.http.post(url,{});
+  }
+
   //bulkUpdatePf
   bulkUpdatePf(payload: any): Observable<any> {
     const queryParams = this.dataService.buildQueryParams(payload);

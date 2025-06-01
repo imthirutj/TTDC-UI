@@ -758,6 +758,13 @@
 <!-- Pf passbook Modal-->
 <app-common-dialog [showDialog]="modalPfPassbook.show" [dialogTitle]="modalPfPassbook.title" [showCloseIcon]="true"
   [showSubmitButton]="false" (closeDialog)="closePfPassbookModal()" [maxWidth]="'100%'">
+
+  <div>
+    <!--button to PF update-->
+    <button class="btn btn-primary" type="button" (click)="openPfUpdateModal()">
+      <i class="fas fa-edit"></i> Update PF
+    </button>
+  </div>
   <div class="employment-history-container">
     <table class="table table-bordered">
       <thead>
@@ -813,4 +820,19 @@
     </table>
 
   </div>
+</app-common-dialog>
+
+<!--PF Update Modal-->
+<app-common-dialog [showDialog]="modalEmpPf.show" 
+[dialogTitle]="modalEmpPf.title" [showCloseIcon]="true"
+  [showSubmitButton]="true" 
+  (submitDialog)="pfUpdateConfirm()" 
+  (closeDialog)="closePfUpdateModal()">
+
+  <!--password-->
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" [(ngModel)]="modalEmpPf.password" required>
+  </div>
+ 
 </app-common-dialog>
