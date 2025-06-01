@@ -100,6 +100,7 @@ import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min
 import { ShiftReportComponent } from './reports/shift-report/shift-report.component';
 import { SalarySummaryComponent } from './reports/salary-summary/salary-summary.component';
 import { PfGenerationReportComponent } from './pf-generation-report/pf-generation-report.component';
+import { PfUpdateComponent } from './pf-update/pf-update.component';
 
 @NgModule({
   declarations: [
@@ -170,7 +171,8 @@ import { PfGenerationReportComponent } from './pf-generation-report/pf-generatio
     EmpMinQualReportComponent,
     ShiftReportComponent,
     SalarySummaryComponent,
-    PfGenerationReportComponent
+    PfGenerationReportComponent,
+    PfUpdateComponent
 
   ],
   imports: [

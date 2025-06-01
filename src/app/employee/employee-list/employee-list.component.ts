@@ -374,7 +374,7 @@ export class EmployeeListComponent {
   openSalaryUpdateModal(): void {
     this.salaryUpdateModal.show = true;
     this.salaryUpdateModal.title = 'Update All Employee Salaries';
-     this.salaryUpdateModal.percentage = 0;
+    this.salaryUpdateModal.percentage = 0;
   }
 
   closeSalaryUpdateModal(): void {
@@ -383,28 +383,28 @@ export class EmployeeListComponent {
   }
 
 
-  confirmSalaryPercentageUpdate(){
-    if ( this.salaryUpdateModal.percentage ==0) {
+  confirmSalaryPercentageUpdate() {
+    if (this.salaryUpdateModal.percentage == 0) {
       this.dataService.showSnackBar('Please enter a percentage.');
       return;
     }
 
     const percentage = this.salaryUpdateModal.percentage;
     const empCount = this.totalCount;
-     this.dataService.openConfirmationDialog2({
+    this.dataService.openConfirmationDialog2({
       title: ``,
       message: `Are you sure Want to Update ${percentage}%  Salary For ${empCount} Employees?`,
       onYes: () => {
-          this.updateAllSalaries();
+        this.updateAllSalaries();
       }
     });
   }
   updateAllSalaries(): void {
-    
+
     let payload = this.dataService.getPayloadValue(this.filters);
     payload = {
       ...payload,
-      salaryPercent:  this.salaryUpdateModal.percentage
+      salaryPercent: this.salaryUpdateModal.percentage
     }
     this.masterDataService.updateAllEmployeeWages(payload).subscribe(
       (response: any) => {
@@ -416,13 +416,13 @@ export class EmployeeListComponent {
   }
 
   decrementPercentage() {
- if (this.salaryUpdateModal.percentage > -50) {
+    if (this.salaryUpdateModal.percentage > -50) {
       this.salaryUpdateModal.percentage--;
     }
   }
 
   incrementPercentage() {
- if (this.salaryUpdateModal.percentage < 50) {
+    if (this.salaryUpdateModal.percentage < 50) {
       this.salaryUpdateModal.percentage++;
     }
   }
@@ -669,13 +669,13 @@ export class EmployeeListComponent {
     show: false,
     title: '',
     empId: null,
-    uniforms: [{ id:0 ,type: '', qty: null, size: '' }],
+    uniforms: [{ id: 0, type: '', qty: null, size: '' }],
   };
   openUniformModal(empId: any) {
     this.modalUniform.show = true;
     this.modalUniform.title = 'Uniform Details';
     this.modalUniform.empId = empId;
-    this.modalUniform.uniforms = [{id:0, type: '', qty: null, size: '' }];
+    this.modalUniform.uniforms = [{ id: 0, type: '', qty: null, size: '' }];
     const payload = {
       empId: empId
     }
@@ -691,7 +691,7 @@ export class EmployeeListComponent {
   }
 
   addUniformField() {
-    this.modalUniform.uniforms.push({ id:0,type: '', qty: null, size: '' });
+    this.modalUniform.uniforms.push({ id: 0, type: '', qty: null, size: '' });
   }
 
   removeUniformField(index: number) {
@@ -702,14 +702,14 @@ export class EmployeeListComponent {
     }
   }
 
-  closeUniformModal(){
+  closeUniformModal() {
     this.modalUniform.show = false;
     this.modalUniform.title = '';
     this.modalUniform.uniforms = [];
   }
 
   submitUniformDetails() {
-    const   empId=  this.modalUniform.empId;
+    const empId = this.modalUniform.empId;
     this.masterDataService.saveUniformDetails(this.modalUniform.uniforms, empId).subscribe(
       (response: any) => {
         console.log('API Response:', response);
@@ -722,7 +722,7 @@ export class EmployeeListComponent {
   }
 
 
-   modalEmpHistory:any = {
+  modalEmpHistory: any = {
     show: false,
     title: 'Employment History',
     empId: null,
@@ -744,14 +744,14 @@ export class EmployeeListComponent {
   }
 
 
-  closeEmpHistoryModal(){
+  closeEmpHistoryModal() {
     this.modalEmpHistory.show = false;
     this.modalEmpHistory.title = '';
     this.modalEmpHistory.employmentHistory = [];
   }
 
 
-  modalPfPassbook: any ={
+  modalPfPassbook: any = {
     show: false,
     title: 'PF Passbook',
     empId: null,
@@ -772,7 +772,7 @@ export class EmployeeListComponent {
     );
   }
 
-  closePfPassbookModal(){
+  closePfPassbookModal() {
     this.modalPfPassbook.show = false;
     this.modalPfPassbook.title = '';
     this.modalPfPassbook.pfPassbook = [];

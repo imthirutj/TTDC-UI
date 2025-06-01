@@ -1,0 +1,109 @@
+<app-filter [filters]="filters" (filterChanged)="search()" (triggerParentFunction)="onFilterChanged($event)">
+</app-filter>
+
+<!-- Bulk update ePF button-->
+<div class="">
+  <div>
+    For <b>{{pfNotCreditedCount}}</b> Employees, PFs not credited/Updated.
+  </div>
+  <button class="btn btn-primary" (click)="openBulkUpdateModal()">Bulk Update PF</button>
+
+  <!-- cancel update-->
+  <button class="btn btn-secondary" (click)="openCancelUpdateModal()">
+    Cancel Bulk Update
+  </button>
+</div>
+
+
+
+<!-- Bulk Update Modal -->
+<app-common-dialog [dialogTitle]="modalPf.title" [showCloseIcon]="true" [showSubmitButton]="true"
+  [showDialog]="modalPf.show" (closeDialog)="closeBulkUpdateModal()"
+   (submitDialog)="bulkUpdateConfirm()">
+
+  <div style="color:red">
+    <p>
+      Note: This action will update PF details for <strong>{{ pfNotCreditedCount }}</strong> employees.
+      Each update will approximately consume <strong>6 rupees</strong> per employee.
+    </p>
+    <p>
+      Total estimated cost: <strong>{{ pfNotCreditedCount * 6 | currency:'INR' }}</strong>
+    </p>
+  </div>
+  <div class="modal-body">
+    <label for="password">Enter Password:</label>
+    <input type="password" class="form-control" id="password" [(ngModel)]="modalPf.password">
+  </div>
+
+</app-common-dialog>
+
+
+<!--Cancel Updae-->
+<app-common-dialog [dialogTitle]="modalCancelPf.title" [showCloseIcon]="true"
+ [showSubmitButton]="true"
+  [showDialog]="modalCancelPf.show" 
+  (closeDialog)="closeCancelUpdateModal()" 
+  (submitDialog)="cancelBulkUpdateConfirm()">
+
+  <div style="color:red">
+    <p>
+      Note: This action will cancel the PF update for employees.
+      Amount won't be returned for PF Generated Employees
+    </p>
+  </div>
+  <div class="modal-body">
+    <label for="password">Enter Password:</label>
+    <input type="password" class="form-control" id="password" [(ngModel)]="modalCancelPf.password">
+  </div>
+
+</app-common-dialog>
+
+<div *ngIf="data?.length">
+  <div *ngFor="let item of data" class="card mb-3">
+    <div class="card-header">
+      <h5>Summary Item</h5>
+    </div>
+    <div class="card-body">
+      <div *ngFor="let key of getKeys(item)">
+        <div *ngIf="key !== 'summary'">
+          <strong>{{ key }}:</strong> {{ item[key] }}
+        </div>
+        <div *ngIf="key === 'summary'">
+          <strong>{{ key }}:</strong>
+          <pre (dblclick)="toggleJson(key, item)"
+            [innerText]="isExpanded(item) ? formatJson(item[key]) : truncateJson(item[key])"
+            style="cursor: pointer;"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div>
+  <app-server-pagination [pageAttributes]="pageAttributes" (triggerParentFunction)="getData()">
+  </app-server-pagination>
+
+  <div class="d-flex justify-content-between">
+    <!-- Page Size Dropdown -->
+    <div class="d-flex align-items-center">
+      <label for="pageSize" class="me-2">Page Size:</label>
+      <select id="pageSize" class="form-select" [(ngModel)]="pageAttributes.pageSize">
+        <option [value]="10">10</option>
+        <option [value]="20">20</option>
+        <option [value]="30">30</option>
+        <option [value]="50">50</option>
+        <option [value]="100">100</option>
+        <option [value]="120">120</option>
+      </select>
+
+      <!-- Show input field only when 'Other' is selected -->
+      <input type="number" class="form-control ms-2" [(ngModel)]="pageAttributes.pageSize" placeholder="Custom No" />
+    </div>
+
+  </div>
+</div>

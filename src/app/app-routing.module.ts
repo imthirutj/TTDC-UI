@@ -61,6 +61,7 @@ import { EmpMinQualReportComponent } from './reports/emp-min-qual-report/emp-min
 import { ShiftReportComponent } from './reports/shift-report/shift-report.component';
 import { SalarySummaryComponent } from './reports/salary-summary/salary-summary.component';
 import { PfGenerationReportComponent } from './pf-generation-report/pf-generation-report.component';
+import { PfUpdateComponent } from './pf-update/pf-update.component';
 
 const routes: Routes = [
 
@@ -375,6 +376,12 @@ const routes: Routes = [
     component:PfGenerationReportComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
+  },
+  {
+    path:'pf-update',
+    component:PfUpdateComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: [UserType.STATE_ADMIN] },
   },
 
   {

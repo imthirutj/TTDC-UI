@@ -109,11 +109,24 @@ export class AuthInterceptor implements HttpInterceptor {
 
   // Handle HTTP error and print status code and error response
   private handleError(error: HttpErrorResponse): void {
-    if (error.status !== 200) {
-      this.snackBar.openFromComponent(SnackBarComponent, {
-        data: { message: 'Error Occured While Processing...' },  // Pass dynamic message
-        duration: 5000
-      });
+    let message = 'Error occurred while processing...';
+
+    if (error.error) {
+      // Try to extract error message from backend response
+      if (typeof error.error === 'string') {
+        message = error.error;
+      } else if (typeof error.error === 'object' && error.error.message) {
+        message = error.error.message;
+      }
     }
+
+    this.snackBar.openFromComponent(SnackBarComponent, {
+      data: { message },
+      duration: 5000
+    });
+
+    console.error('HTTP Error:', error.status, message, error);
   }
+
+
 }

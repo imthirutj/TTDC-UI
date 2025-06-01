@@ -284,54 +284,15 @@ export class SidebarComponent {
         allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER],
         isAdmin: true
       },
-      // { 
-      //   label: 'State List', 
-      //   icon: 'fa-solid fa-map-marked-alt', 
-      //   route: '/state', 
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN] 
-      // },
-      // { 
-      //   label: 'Category List', 
-      //   icon: 'fa-solid fa-th-list', 
-      //   route: '/category', 
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR] 
-      // },
-      // { 
-      //   label: 'Company/Unit List', 
-      //   icon: 'fa-solid fa-building', 
-      //   route: '/company', 
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN]  
-      // },
-      // {
-      //   label: 'OD Request',
-      //   icon: 'fa-solid fa-file-alt',
-      //   route: '/odslipcompanylist',
-      //   allowedUserTypes: [ UserType.EMPLOYEE] 
-      // },
-      // {
-      //   label: 'OD Slip Approval',
-      //   icon: 'fa-solid fa-check-circle',
-      //   route: '/odslipapproval',
-      //   allowedUserTypes: [ UserType.MANAGER] 
-      // },
-      // {
-      //   label: 'Employee Report',
-      //   icon: 'fa-solid fa-chart-line',
-      //   route: '/employee-report',
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]  
-      // },
-      // {
-      //   label: 'Leave Approval',
-      //   icon: 'fa-solid fa-thumbs-up',
-      //   route: '/Leaveapproval',
-      //   allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER] 
-      // },
-      // { 
-      //   label: 'Future Payroll Needs', 
-      //   icon: 'fa-solid fa-line-chart', 
-      //   route: '/future-payroll-needs', 
-      //   allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN] 
-      // },
+      //PF Update
+      {
+        label: 'PF Update',
+        icon: 'fa-solid fa-tasks',
+        route: '/pf-update',
+        allowedUserTypes: [UserType.STATE_ADMIN],
+        isAdmin: true
+      }
+      
     ];
 
     return allMenuItems.filter(item => {
