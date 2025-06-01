@@ -771,7 +771,6 @@ export class EmployeeListComponent {
   openPfUpdateModal() {
     this.modalEmpPf.show = true;
     this.modalEmpPf.title = 'Update PF';
-    this.modalEmpPf.empId = null;
     this.modalEmpPf.month = null;
     this.modalEmpPf.year = null;
   }
@@ -779,13 +778,12 @@ export class EmployeeListComponent {
   closePfUpdateModal() {
     this.modalEmpPf.show = false;
     this.modalEmpPf.title = '';
-    this.modalEmpPf.empId = null;
     this.modalEmpPf.month = null;
     this.modalEmpPf.year = null;
   }
 
   pfUpdateConfirm() {
-    if (!this.modalEmpPf.empId || !this.modalEmpPf.month || !this.modalEmpPf.year || !this.modalEmpPf.password) {
+    if (!this.modalEmpPf.empId  || !this.modalEmpPf.password) {
       this.dataService.showSnackBar('Please fill all the fields.');
       return;
     }
@@ -821,6 +819,7 @@ export class EmployeeListComponent {
 
   openPfPassbookModal(empId: any) {
     this.modalPfPassbook.show = true;
+    this.modalEmpPf.empId = empId;
     this.getPfData(empId);
   }
 
@@ -841,5 +840,7 @@ export class EmployeeListComponent {
     this.modalPfPassbook.show = false;
     this.modalPfPassbook.title = '';
     this.modalPfPassbook.pfPassbook = [];
+
+    this.modalEmpPf.empId = null;
   }
 }
