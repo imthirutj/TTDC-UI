@@ -34,8 +34,15 @@
     </p>
   </div>
   <div class="modal-body">
+    <!--passform field-->
     <label for="password">Enter Password:</label>
     <input type="password" class="form-control" id="password" [(ngModel)]="modalPf.password">
+
+    <!--Check box notEvenAnyPeriod-->
+    <div class="form-check mt-3">
+      <input type="checkbox" class="form-check-input" id="notEvenAnyPeriod" [(ngModel)]="modalPf.notEvenAnyPeriod">
+      <label class="form-check-label" for="notEvenAnyPeriod">Not even any period</label>
+    </div>
   </div>
 
 </app-common-dialog>

@@ -73,7 +73,8 @@ export class PfUpdateComponent {
   modalPf: any = {
     show: false,
     title: 'PF BULK UPDATE',
-    password: ''
+    password: '',
+    notEvenAnyPeriod: null
   }
 
   modalCancelPf: any = {
@@ -159,6 +160,7 @@ export class PfUpdateComponent {
     }
     this.modalPf.show = true;
     this.modalPf.password = '';
+    this.modalPf.notEvenAnyPeriod = null;
   }
 
   openCancelUpdateModal() {
@@ -223,6 +225,7 @@ export class PfUpdateComponent {
   bulkUpdate() {
     const payload = this.dataService.getPayloadValue(this.filters);
     payload.password = this.modalPf.password;
+    payload.notEvenAnyPeriod = this.modalPf.notEvenAnyPeriod ? 1 : 0;
     this.pfService.bulkUpdatePf(payload).subscribe(
       (response: any) => {
         if (response.status) {
