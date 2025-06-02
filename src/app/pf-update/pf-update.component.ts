@@ -222,6 +222,7 @@ export class PfUpdateComponent {
       }
     });
   }
+  
   bulkUpdate() {
     const payload = this.dataService.getPayloadValue(this.filters);
     payload.password = this.modalPf.password;
