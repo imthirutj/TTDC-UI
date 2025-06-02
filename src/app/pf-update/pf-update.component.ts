@@ -64,6 +64,10 @@ export class PfUpdateComponent {
     pageSize: 100
   }
   data: any[] = [];
+
+  totalEmployees: any = '-';
+  totalEmpWithUan: any = '-';
+  totalEmpWithoutUan: any = '-';
   pfNotCreditedCount: any = '-';
 
   modalPf: any = {
@@ -116,7 +120,11 @@ export class PfUpdateComponent {
     this.pfService.getPfNotCreditedCount(fpayload).subscribe(
       (response: any) => {
         if (response.success) {
-          this.pfNotCreditedCount = response.data;
+          this.pfNotCreditedCount = response.data.count;
+
+          this.totalEmployees = response.data.totalEmployees;
+          this.totalEmpWithUan = response.data.empWithUan;
+          this.totalEmpWithoutUan = response.data.empWithoutUan;
         }
       }
     );
