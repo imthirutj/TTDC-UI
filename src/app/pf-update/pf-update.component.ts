@@ -69,6 +69,7 @@ export class PfUpdateComponent {
   totalEmpWithUan: any = '-';
   totalEmpWithoutUan: any = '-';
   pfNotCreditedCount: any = '-';
+  pfNotCreditedForAny:any ='-';
 
   modalPf: any = {
     show: false,
@@ -126,6 +127,7 @@ export class PfUpdateComponent {
           this.totalEmployees = response.data.totalEmployees;
           this.totalEmpWithUan = response.data.empWithUan;
           this.totalEmpWithoutUan = response.data.empWithoutUan;
+          this.pfNotCreditedForAny = response.data.pfNotCreditedForAny;
         }
       }
     );

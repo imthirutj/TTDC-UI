@@ -6,8 +6,13 @@
   <div>Total Employees: <b>{{totalEmployees}} </b></div>
   <div>Employees with UAN: <b>{{totalEmpWithUan}} </b></div>
   <div>Employees without UAN: <b>{{totalEmpWithoutUan}} </b></div>
+
   <div>
-    For <b>{{pfNotCreditedCount}}</b> Employees, PFs not credited/Updated.
+    For <b>{{pfNotCreditedForAny}}</b> Employees, PFs not credited/Updated for Any Period.
+  </div>
+
+  <div>
+    For <b>{{pfNotCreditedCount}}</b> Employees, PFs not credited/Updated for filtered Month.
   </div>
   <button class="btn btn-primary" (click)="openBulkUpdateModal()">Bulk Update PF</button>
 
