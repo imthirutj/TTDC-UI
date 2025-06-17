@@ -206,6 +206,20 @@
         </div>
       </div>
 
+      <!-- employementType -->
+      <div *ngIf="filters.employementType.show" class="col-md-4">
+        <div class="form-group">
+          <label for="employementType">Employement Type</label>
+          <select [(ngModel)]="filters.employementType.value" (change)="onEmployementTypeChange()" class="form-control"
+            id="employementType">
+            <option value="">Select Employement Type</option>
+            <option value="1">Outsourcing</option>
+            <option value="2">Permanent</option>
+             <option value="3">Contract</option>
+          </select>
+        </div>
+      </div>
+
       <!--Filter Qualification Mismatch: qualificationMismatched-->
       <div *ngIf="filters.qualificationMismatched.show" class="col-md-4">
         <div class="form-group">

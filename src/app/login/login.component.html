@@ -24,6 +24,16 @@
             </select>
           </div>
 
+          <!-- If selectedRoleId is Manager(2), then show Type Permanent or Outsourcing -->
+          <div class="mb-3" *ngIf="selectedRoleId=='2'">
+            <label for="UserType" class="form-label">Select Type</label>
+            <select class="form-select" id="UserType" [(ngModel)]="selectedTypeId" name="UserType">
+              <option value="">Select Type</option>
+              <option value="1">Outsourcing</option>
+              <option value="2">Permanent</option>
+            </select>
+          </div>
+
           <!--For Admin Login Form-->
           <form *ngIf="selectedRoleId=='1' || selectedRoleId=='2'
           || selectedRoleId=='3'  || selectedRoleId=='5'" 

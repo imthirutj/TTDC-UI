@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string = '/';
 
   selectedRoleId: string = '';
+  selectedTypeId: string = '1'; // Default to Outsourcing
 
   constructor(private fb: FormBuilder,
     private masterDataService: MasterDataService,
@@ -163,6 +164,11 @@ export class LoginComponent implements OnInit {
       if (!this.loginForm.valid) {
         this.dataService.showSnackBar('Please  enter username and password');
         return;
+      }
+
+      // If selectedRoleId is Manager(2) and selectedTypeId is Permanent(2), append '_per' to username
+      if (this.selectedRoleId == '2' && this.selectedTypeId =='2') {
+       payload.username = payload.username + '_per';
       }
     }
 

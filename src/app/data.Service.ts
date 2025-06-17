@@ -98,6 +98,14 @@ export class DataService {
     return this.user?.companyId || null;
   }
 
+  getParentCompanyId(): string | null {
+    return this.user?.parentCompanyId || null;
+  }
+
+  getIsPermanentCompany(): boolean {
+    return this.user?.isPermanentCompany==1 || false;
+  }
+
   private getToken(): string | null {
     return (
       localStorage.getItem('authToken') || sessionStorage.getItem('authToken')

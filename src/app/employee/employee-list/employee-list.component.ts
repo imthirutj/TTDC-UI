@@ -134,6 +134,12 @@ export class EmployeeListComponent {
       key: 'employeeCode',
       includeInSearchParams: true
     },
+    employementType:{
+      value: '',
+      show: true,
+      key: 'employementType',
+      includeInSearchParams: true
+    },
     vendorId: {
       value: '',
       show: true,

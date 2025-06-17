@@ -83,6 +83,7 @@ export class FiltersComponent implements OnInit {
         { objName: 'employeeId', key: 'employeeId', label: 'Employee ID', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'employeeName', key: 'employeeName', label: 'Employee Name', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'employeeCode', key: 'employeeCode', label: 'Employee Code', defaultValue: '', show: false, includeInSearchParams: false },
+        { objName: 'employementType', key: 'employementType', label: 'Employement Type', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'vendorId', key: 'vendorId', label: 'Vendor', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'vendorName', key: 'vendorName', label: 'Vendor Name', defaultValue: '', show: false, includeInSearchParams: false },
         { objName: 'managerId', key: 'managerId', label: 'Manager', defaultValue: '', show: false, includeInSearchParams: false },
@@ -285,6 +286,10 @@ export class FiltersComponent implements OnInit {
   }
 
   onEmployeeChange() {
+    this.onFilterChange();
+  }
+
+  onEmployementTypeChange(){
     this.onFilterChange();
   }
 
