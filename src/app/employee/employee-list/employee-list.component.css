@@ -118,3 +118,37 @@
     display: inline-block; /* To allow the label to be on the same line */
     margin-left: 10px;
   }
+
+
+  
+
+#emp-table td:first-child {  /* S.NO Column */
+ 
+  position: sticky;
+  left: 0;
+  background-color: #f4f4f4;
+  z-index: 2;
+}
+
+
+
+#emp-table td:nth-child(2) {  /* Employee Column */
+
+  position: sticky;
+  left: 0px;  /* Adjust based on the column width */
+  background-color: #f4f4f4;
+  z-index: 2;
+}
+
+#emp-table td:nth-child(3) {  /* Employee Column */
+
+  position: sticky;
+  left: 100px;  /* Adjust based on the column width */
+  background-color: #f4f4f4;
+  z-index: 2;
+}
+
+/* Optional: Add a box-shadow to indicate separation */
+#emp-table th:first-child, th:nth-child(2), td:first-child, td:nth-child(2) {
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
