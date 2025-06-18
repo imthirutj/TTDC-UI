@@ -6,11 +6,6 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* .my-body *:not(.card *):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-  font-size: 10px;
-} */
-
-
 
 
 html,
@@ -26,6 +21,7 @@ body {
   scrollbar-color: #aaa #f0f0f0;
   /* Thumb and track colors for Firefox */
 }
+
 
 
 ::-webkit-scrollbar {
@@ -171,35 +167,6 @@ body {
 }
 
 
-/* 
-
-  thead {
-    position: sticky;
-    top: 0px;
-    z-index: 1;
-  }
-  
-  thead th {
-    background-color: #007bff;
-    color: white;
-    text-align: left;
-  }
-  thead tr {
-    background-color: #007bff; 
-    color: white;
-    text-align: left;
-  }
-  
-  thead tr th{
-    background-color: #007bff !important; 
-    color: white !important ;
-    text-align: left !important;
-  }
-
-  .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  } */
 
 /* Container for the table */
 .table-container {

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MasterDataService } from '../services/master-data.service';
 import { FormBuilder } from '@angular/forms';
 import { DataService } from '../data.Service';
@@ -235,6 +235,9 @@ export class EmployeeWorkReportComponent {
     }
   }
 
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
+
   //#endRegion
 
   constructor(
@@ -266,6 +269,15 @@ export class EmployeeWorkReportComponent {
     this.fetchShifts();
     this.generateDateRange();
   }
+
+  ngAfterViewInit() {
+  const savedScrollTop = localStorage.getItem('scrollTop');
+  if (savedScrollTop) {
+    setTimeout(() => {
+      this.scrollContainer.nativeElement.scrollTop = +savedScrollTop;
+    }, 0);
+  }
+}
 
   onFilterChanged(event: any) {
     this.pageAttributes.currentPage = 1;
