@@ -118,6 +118,9 @@ export class MasterDataService {
   getdegree(query:any): Observable<any> {
     return this.http.get(`${this.apiUrl}Master/Get_Degree`+query);
   }
+  getPayScale(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Master/GetAllPayScales`);
+  }
   // uploadMultipleCertificates(query: any): Observable<any> {
   //   return this.http.post(`${this.apiUrl}Employee/UploadEmpCertificates`, query);
   // }

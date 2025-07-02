@@ -33,6 +33,8 @@ export class Employee {
     totalExperience: any;
     requiredExperience: any;
     recordStatus:number;
+    retirementDate: string;
+    payScaleId: number;
 
     constructor() {
         this.employeeId = 0;
@@ -69,5 +71,7 @@ export class Employee {
         this.totalExperience = '';
         this.requiredExperience = '';
         this.recordStatus = 1;
+        this.retirementDate = '';
+        this.payScaleId = 0;
     }
 }

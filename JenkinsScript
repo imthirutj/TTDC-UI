@@ -1,11 +1,64 @@
-:: Set npm registry
-npm set registry https://registry.npmjs.org/
+pipeline {
+    agent any
+    environment {
+        ANGULAR_CLI_PATH = 'C:\\Users\\Administrator\\AppData\\Roaming\\npm\\ng.cmd'
+        PUBLISH_PATH = 'D:\\Publish Site\\TTDC-UI-Publish'
+    }
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
 
-:: Install dependencies with limited concurrency
-npm install --network-concurrency=4
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/MyTimesmed/TTDC-UI.git',
+                    credentialsId: 'timesmed'
+            }
+        }
 
-:: Build Angular app with production configuration
-"C:\Users\Administrator\AppData\Roaming\npm\ng" build --configuration production
+        stage('Set NPM Registry') {
+            steps {
+                bat 'npm set registry https://registry.npmjs.org/'
+            }
+        }
 
-:: Copy build output to publish folder
-xcopy "dist\*" "D:\Publish Site\TTDC-UI-Publish\" /E /I /H /Y
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm install --network-concurrency=4'
+            }
+        }
+
+        stage('Build Angular App') {
+            steps {
+                bat "\"${env.ANGULAR_CLI_PATH}\" build --configuration production"
+            }
+        }
+
+        stage('Deploy to IIS Folder') {
+            steps {
+                script {
+                    // Retry copy in case of transient issues
+                    def success = false
+                    def attempts = 0
+                    while (!success && attempts < 5) {
+                        try {
+                            bat "xcopy /E /I /H /Y \"dist\\*\" \"${env.PUBLISH_PATH}\""
+                            success = true
+                            echo "Angular build output copied successfully."
+                        } catch (Exception e) {
+                            attempts++
+                            echo "Attempt ${attempts} failed. Retrying in 5 seconds..."
+                            sleep(5)
+                        }
+                    }
+                    if (!success) {
+                        error "Failed to copy Angular build output after ${attempts} attempts."
+                    }
+                }
+            }
+        }
+    }
+}

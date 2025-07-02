@@ -36,7 +36,7 @@
     <thead>
       <tr>
         <th [rowSpan]="2">#</th>
-        <th [colSpan]="8" style="text-align: center;">Personal Info</th>
+        <th [colSpan]="7" style="text-align: center;">Personal Info</th>
         <th [colSpan]="3" style="text-align: center;">Qualification</th>
         <th [colSpan]="4" style="text-align: center;">Experience</th>
 
@@ -55,12 +55,6 @@
 
         <th>Contact Number</th>
 
-        <!-- <th>
-          Unit Name
-        </th> -->
-        <th>
-          Vendor
-        </th>
 
         <th>Section Name</th>
         <th>Designation Name</th>
@@ -111,9 +105,7 @@
           <!-- <td>
             {{ employee.companyFName }}
           </td> -->
-          <td>
-            {{ employee.vendorName }}
-          </td>
+         
 
           <td>{{ employee.departmentFName }}</td>
           <td>{{ employee.designationName }}</td>
@@ -389,9 +381,9 @@
             <select class="form-select" id="employementType" [(ngModel)]="modal.employee.employementType"
               name="employementType" required [disabled]="modal.action === 'VIEW'">
               <option value="">Select Type</option>
-              <!-- <option value="Permanent">Permanent</option>
-              <option value="Contract">Contract</option> -->
-              <option value="Outsourced">Outsourced </option>
+              <option value="Permanent">Permanent</option>
+              <option value="Contract">Contract</option>
+              
             </select>
           </div>
 
@@ -430,18 +422,6 @@
             </select>
           </div>
 
-          <!-- Vendor -->
-          <div class="mb-3">
-            <label for="vendorId" class="form-label">Vendor</label>
-            <input [disabled]="true" *ngIf="modal.action === Action.VIEW" type="text" class="form-control disabled-bg"
-              id="City" [(ngModel)]="modal.employee.vendorName" />
-            <select *ngIf="modal.action === Action.UPDATE || modal.action === Action.CREATE" class="form-select"
-              id="vendorId" [(ngModel)]="modal.employee.vendorId" name="vendorId">
-              <option value="">Select Vendor</option>
-              <option *ngFor="let vendor of dropdowns.vendors" [value]="vendor.vendorId">{{ vendor.vendorName }}
-              </option>
-            </select>
-          </div>
 
 
           <!-- Department Name -->
@@ -526,7 +506,36 @@
       </div>
     </div>
 
-    <!-- Card 4: Certificate Details -->
+    <!-- Card 4 : Retiremnet Date and Payscale-->
+    <div class="card mb-3">
+      <div class="card-header bg-secondary text-white">
+        Retiremnet Date and Payscale
+      </div>
+      <div class="card-body">
+        <form>
+          <!-- Retirement Date -->
+          <div class="mb-3">
+            <label for="retirementDate" class="form-label">Retirement Date</label>
+            <input type="date" class="form-control" id="retirementDate" [(ngModel)]="modal.employee.retirementDate"
+              name="retirementDate" placeholder="Enter Retirement Date" [disabled]="modal.action === 'VIEW'">
+          </div>
+
+          <!-- Payscale Dropdown -->
+          <div class="mb-3">
+            <label for="payscale" class="form-label">Payscale</label>
+            <select class="form-select" id="payscale" [(ngModel)]="modal.employee.payScaleId" name="payscaleId"
+              [disabled]="modal.action === 'VIEW'">
+              <option value="">Select Payscale</option>
+              <option *ngFor="let payscale of dropdowns.payscales" [value]="payscale.payScaleId">
+                L{{ payscale.payLevel }} - {{ payscale.payBand }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Card 5: Certificate Details -->
     <div *ngIf="modal.action === Action.VIEW || modal.action === Action.UPDATE" class="card mb-3">
       <div class="card-header bg-secondary text-white">
         Certificate Details

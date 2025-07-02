@@ -62,6 +62,7 @@ import { ShiftReportComponent } from './reports/shift-report/shift-report.compon
 import { SalarySummaryComponent } from './reports/salary-summary/salary-summary.component';
 import { PfGenerationReportComponent } from './pf-generation-report/pf-generation-report.component';
 import { PfUpdateComponent } from './pf-update/pf-update.component';
+import { PermanentEmployeeListComponent } from './a-permanent/permanent-employee-list/permanent-employee-list.component';
 
 const routes: Routes = [
 
@@ -139,12 +140,21 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
+
   {
     path: 'employee',
     component: EmployeeListComponent,
     canActivate: [AuthGuard],
     data: {  roles: ['ALL'] },
   },
+  {
+    path: 'permanent-employee',
+    component: PermanentEmployeeListComponent,
+    canActivate: [AuthGuard],
+    data: {  roles: ['ALL'] },
+  },
+
+
   {
     path: 'payslip-records',
     component: PayslipRecordsComponent,

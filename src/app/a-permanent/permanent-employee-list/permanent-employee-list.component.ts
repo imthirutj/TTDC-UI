@@ -43,7 +43,8 @@ export class PermanentEmployeeListComponent {
     vendors: [] as Vendor[],
     designation: [] as Designation[],
     category: [] as Category[],
-    degree: [] as any[]
+    degree: [] as any[],
+    payscales: [] as any[],
   };
 
   educertificateimage: any[] = [];
@@ -135,7 +136,7 @@ export class PermanentEmployeeListComponent {
       includeInSearchParams: true
     },
     employementType:{
-      value: '',
+      value: '2',
       show: true,
       key: 'employementType',
       includeInSearchParams: true
@@ -210,6 +211,7 @@ export class PermanentEmployeeListComponent {
     this.fetchDesignations();
     this.fetchCategory();
     this.fetchDegree();
+    this.fetchPayscale();
   }
 
   setValues() {
@@ -286,6 +288,14 @@ export class PermanentEmployeeListComponent {
     this.masterDataService.getdegree("").subscribe((response) => {
       if (response.success) {
         this.dropdowns.degree = response.data;
+      }
+    });
+  }
+
+  fetchPayscale() {
+    this.masterDataService.getPayScale().subscribe((response) => {
+      if (response.success) {
+        this.dropdowns.payscales = response.data;
       }
     });
   }
