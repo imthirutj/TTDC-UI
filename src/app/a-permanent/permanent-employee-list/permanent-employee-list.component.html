@@ -16,8 +16,7 @@
 <div class="cards-filter ">
 
 
-  <app-filter [filters]="filters" (filterChanged)="search()" 
-  (triggerParentFunction)="onFilterChanged($event)">
+  <app-filter [filters]="filters" (filterChanged)="search()" (triggerParentFunction)="onFilterChanged($event)">
   </app-filter>
   <button *ngIf="false" style="width:77px" class="btn btn-primary" (click)="search()">Search</button>
 
@@ -47,6 +46,9 @@
 
         <!--Employment History-->
         <th [rowSpan]="2">Employment History</th>
+
+        <th [rowSpan]="2">Retirement Date</th>
+        <th [rowSpan]="2">PayScale</th>
       </tr>
       <tr>
 
@@ -105,7 +107,7 @@
           <!-- <td>
             {{ employee.companyFName }}
           </td> -->
-         
+
 
           <td>{{ employee.departmentFName }}</td>
           <td>{{ employee.designationName }}</td>
@@ -220,7 +222,16 @@
             <button class="btn btn-primary" type="button" (click)="openPfPassbookModal(employee.employeeId)">
               <i class="fas fa-book"></i>
             </button>
-            
+
+
+          </td>
+
+          <!--Retirement Date-->
+          <td>{{ employee.retirementDate | date: 'dd-MMM-yyyy' }}</td>
+          <!--Payscale-->
+          <td>{{employee.payLevel}} -
+              {{employee.payBand}} -
+              {{employee.payGroup}}
 
           </td>
 
@@ -383,7 +394,7 @@
               <option value="">Select Type</option>
               <option value="Permanent">Permanent</option>
               <option value="Contract">Contract</option>
-              
+
             </select>
           </div>
 
@@ -834,16 +845,13 @@
 </app-common-dialog>
 
 <!--PF Update Modal-->
-<app-common-dialog [showDialog]="modalEmpPf.show" 
-[dialogTitle]="modalEmpPf.title" [showCloseIcon]="true"
-  [showSubmitButton]="true" 
-  (submitDialog)="pfUpdateConfirm()" 
-  (closeDialog)="closePfUpdateModal()">
+<app-common-dialog [showDialog]="modalEmpPf.show" [dialogTitle]="modalEmpPf.title" [showCloseIcon]="true"
+  [showSubmitButton]="true" (submitDialog)="pfUpdateConfirm()" (closeDialog)="closePfUpdateModal()">
 
   <!--password-->
   <div class="mb-3">
     <label for="password" class="form-label">Password</label>
     <input type="password" class="form-control" id="password" [(ngModel)]="modalEmpPf.password" required>
   </div>
- 
+
 </app-common-dialog>
