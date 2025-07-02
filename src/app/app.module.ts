@@ -101,6 +101,11 @@ import { ShiftReportComponent } from './reports/shift-report/shift-report.compon
 import { SalarySummaryComponent } from './reports/salary-summary/salary-summary.component';
 import { PfGenerationReportComponent } from './pf-generation-report/pf-generation-report.component';
 import { PfUpdateComponent } from './pf-update/pf-update.component';
+import { PermanentEmployeeListComponent } from './a-permanent/permanent-employee-list/permanent-employee-list.component';
+
+
+//Permanent 
+
 
 @NgModule({
   declarations: [
@@ -172,7 +177,10 @@ import { PfUpdateComponent } from './pf-update/pf-update.component';
     ShiftReportComponent,
     SalarySummaryComponent,
     PfGenerationReportComponent,
-    PfUpdateComponent
+    PfUpdateComponent,
+
+
+    PermanentEmployeeListComponent
 
   ],
   imports: [

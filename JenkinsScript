@@ -1,0 +1,11 @@
+:: Set npm registry
+npm set registry https://registry.npmjs.org/
+
+:: Install dependencies with limited concurrency
+npm install --network-concurrency=4
+
+:: Build Angular app with production configuration
+"C:\Users\Administrator\AppData\Roaming\npm\ng" build --configuration production
+
+:: Copy build output to publish folder
+xcopy "dist\*" "D:\Publish Site\TTDC-UI-Publish\" /E /I /H /Y

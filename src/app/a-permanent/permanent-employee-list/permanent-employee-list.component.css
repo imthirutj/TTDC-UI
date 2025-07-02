@@ -1,0 +1,154 @@
+/* The switch - container */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  /* Hide default checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* Slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  /* Slider before (circle inside the slider) */
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+  }
+  
+  /* When the checkbox is checked, move the slider (circle) to the right */
+  input:checked + .slider {
+    background-color: #4CAF50;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+/*   
+  #emp-table{
+    white-space: break-spaces !important;
+  } */
+/* 
+  th:first-child {
+    position: sticky;
+    left: 0;
+    background: rgb(174, 54, 54);
+    z-index: 2;
+  }
+ td:first-child {
+    position: sticky;
+    left: 0;
+ 
+    z-index: 2;
+  }
+  
+  th:nth-child(2) {
+    position: sticky;
+    left: 50px; 
+    z-index: 2;
+  }
+    td:nth-child(2) {
+    position: sticky;
+    left: 50px; 
+      background: white;
+    z-index: 2;
+  }
+  
+
+  .table {
+    overflow-x: auto;
+    display: block;
+    white-space: nowrap; 
+    max-width: 100%;
+  } */
+  
+  @keyframes blink {
+    50% {
+      background-color: red;
+      color: white;
+    }
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+    75% { transform: translateX(-3px); }
+  }
+  
+  .blinking {
+    animation: blink 1s infinite;
+  }
+  
+  .shaking {
+    animation: shake 0.5s infinite;
+  }
+  
+
+  /* Styling for the salary update modal */
+  .salary-update-modal .modal-body {
+    padding: 20px;
+  }
+  
+  .salary-update-modal input[type="number"] {
+    width: 150px; /* Adjust the width as needed */
+    display: inline-block; /* To allow the label to be on the same line */
+    margin-left: 10px;
+  }
+
+
+  
+
+#emp-table td:first-child {  /* S.NO Column */
+ 
+  position: sticky;
+  left: 0;
+  background-color: #f4f4f4;
+  z-index: 2;
+}
+
+
+
+#emp-table td:nth-child(2) {  /* Employee Column */
+
+  position: sticky;
+  left: 0px;  /* Adjust based on the column width */
+  background-color: #f4f4f4;
+  z-index: 2;
+}
+
+#emp-table td:nth-child(3) {  /* Employee Column */
+
+  position: sticky;
+  left: 100px;  /* Adjust based on the column width */
+  background-color: #f4f4f4;
+  z-index: 2;
+}
+
+/* Optional: Add a box-shadow to indicate separation */
+#emp-table th:first-child, th:nth-child(2), td:first-child, td:nth-child(2) {
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}

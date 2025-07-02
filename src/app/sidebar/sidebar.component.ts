@@ -21,6 +21,7 @@ export class SidebarComponent {
   userAccessLevel: any;
 
   isAdmin: number = 0;
+  isPermanentCompany: number = 0;
 
   allMenuItems = [];
 
@@ -31,6 +32,7 @@ export class SidebarComponent {
       this.user = user;
       this.userAccessLevel = user.role;
       this.isAdmin = user.isAdmin;
+      this.isPermanentCompany = user.isPermanentCompany;
       console.log('User Access Level:', this.userAccessLevel);
       this.menuItems = this.getMenuItemsBasedOnUserType(this.userAccessLevel);
     });
@@ -128,8 +130,18 @@ export class SidebarComponent {
         label: 'Employee List',
         icon: 'fa-solid fa-users',
         route: '/employee',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER]
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER],
+        isPermanent: false
       },
+      {
+        label: 'Employee List - Permanent',
+        icon: 'fa-solid fa-users',
+        route: '/permanent-employee',
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.CITY_ADMIN, UserType.MANAGER],
+        isPermanent: true
+      },
+
+
       {
         label: 'Pay Generated',
         icon: 'fa-solid fa-file-invoice-dollar',
@@ -172,7 +184,8 @@ export class SidebarComponent {
         label: 'Employee Payment Entry',
         icon: 'fa-solid fa-receipt',
         route: '/manager-employee-payment',
-        allowedUserTypes: [UserType.STATE_ADMIN, UserType.MANAGER]
+        allowedUserTypes: [UserType.STATE_ADMIN, UserType.MANAGER],
+        isPermanent: false
       },
       {
         label: 'Employee Work Report',
@@ -185,7 +198,8 @@ export class SidebarComponent {
         icon: 'fa-solid fa-receipt',
         route: '/vendor-payment-details',
         allowedUserTypes: [UserType.STATE_ADMIN, UserType.VENDOR, UserType.CITY_ADMIN, UserType.MANAGER],
-        isAdmin:0
+        isAdmin: 0,
+        isPermanent: false
       },
       {
         label: 'Vendor To Employee Payment',
@@ -217,7 +231,8 @@ export class SidebarComponent {
         label: 'Payroll Expenditure',
         icon: 'fa-solid fa-line-chart',
         route: '/payroll-expenditure',
-        allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN]
+        allowedUserTypes: [UserType.MANAGER, UserType.STATE_ADMIN, UserType.CITY_ADMIN],
+        isPermanent: false
       },
 
       {
@@ -259,30 +274,30 @@ export class SidebarComponent {
         label: 'Designation Master',
         icon: 'fa-solid fa-id-badge',
         route: '/designation',
-        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.MANAGER],
-        isAdmin: true
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN],
+        isAdmin: true,
       },
 
       {
         label: 'Section Master',
         icon: 'fa-solid fa-sitemap',
         route: '/department',
-        allowedUserTypes: [UserType.MANAGER, UserType.CITY_ADMIN, UserType.COMPANY_ADMIN],
-        isAdmin: true
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN],
+        isAdmin: true,
       },
       {
         label: 'Degree Master',
         icon: 'fa-solid fa-graduation-cap',
         route: '/degree',
-        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER],
-        isAdmin: true
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN],
+        isAdmin: true,
       },
       {
         label: 'Designation Qualification',
         icon: 'fa-solid fa-tasks',
         route: '/DesignationQualification',
-        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN, UserType.VENDOR, UserType.MANAGER],
-        isAdmin: true
+        allowedUserTypes: [UserType.CITY_ADMIN, UserType.COMPANY_ADMIN],
+        isAdmin: true,
       },
       //PF Update
       {
@@ -290,18 +305,41 @@ export class SidebarComponent {
         icon: 'fa-solid fa-tasks',
         route: '/pf-update',
         allowedUserTypes: [UserType.STATE_ADMIN],
-        isAdmin: true
+        isAdmin: true,
       }
-      
+
     ];
 
     return allMenuItems.filter(item => {
-      if (item.label == 'Vendor Payment Details') {
+      if (item.label == 'Employee List') {
         console.log('Just for Debugging');
       }
+      const isItemPermanent = item.isPermanent ?? null; // null = available to both
+
+      if (userAccessLevel === UserType.MANAGER && item.allowedUserTypes.includes(UserType.MANAGER)) {
+        // Show to all managers if item.isPermanent is undefined/null
+        if (isItemPermanent === null) {
+          return true;
+        }
+
+        // Show based on manager type
+        if (this.isPermanentCompany === 1 && isItemPermanent === true) {
+          return true;
+        }
+        if (this.isPermanentCompany === 0 && isItemPermanent === false) {
+          return true;
+        }
+
+        return false;
+      }
+
       return (
+        //For Specific User Types
         (item.allowedUserTypes.includes(userAccessLevel) && this.isAdmin === 0) ||
+
+        //For All User Types
         (item.allowedUserTypes.includes('ALL' as UserType) && this.isAdmin === 0) ||
+        //For Administrator Login
         (item.isAdmin === true && userAccessLevel === UserType.STATE_ADMIN && this.isAdmin === 1)
       );
     });

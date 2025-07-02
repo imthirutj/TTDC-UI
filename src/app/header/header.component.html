@@ -1,25 +1,27 @@
-<div class="header" style="min-height: 110px;background-color:#a60015;">
-  <span
-  *ngIf="false">
+<div class="header" [ngStyle]="{ 
+       'min-height': '110px',
+       'background-color': userData.isPermanentCompany === 1 ? '#569256' : '#a60015' 
+     }">
+  <span *ngIf="false">
     <img src="/assets/images/logo/logo_3.png" alt="Logo" class="icon-img" />
-  <div style="padding: 10px;" class="header-text">
-    <p class="left-align" style="font-size:25px">
-      Tamilnadu Tourism Development Corporation - Dashboard
-    </p>
-  </div>
+    <div style="padding: 10px;" class="header-text">
+      <p class="left-align" style="font-size:25px">
+        Tamilnadu Tourism Development Corporation - Dashboard
+      </p>
+    </div>
   </span>
 
   <span *ngIf="userData.role=='STATE_ADMIN'">
     <div style="padding: 10px;" class="header-text">
       <p class="left-align" style="font-size:25px">
-       STATE ADMIN
+        STATE ADMIN
       </p>
     </div>
   </span>
   <span *ngIf="userData.role=='VENDOR'">
     <div style="padding: 10px;" class="header-text">
       <p class="left-align" style="font-size:25px">
-      VENDOR
+        VENDOR
       </p>
     </div>
   </span>
